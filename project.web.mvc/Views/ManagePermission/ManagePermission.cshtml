@@ -1,0 +1,66 @@
+﻿@{
+    ViewBag.Title = "ManagePermission";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using Microsoft.AspNet.Identity;
+<div id="page-heading">
+    <ol class="breadcrumb">
+        <li>
+            <a href="@Url.Action("Index", "Dashboards")">
+                <i class="fa fa-lg fa-home text-warning text-size-20">
+                </i>Trang Chủ
+            </a>
+        </li>
+        <li class="active">
+            Quản Lý Phân Quyền
+        </li>
+    </ol>
+</div>
+<div class="container" id="demo">
+
+
+
+
+
+    <div class="col-md-2">
+        <div class="row">
+            <h4>Danh Mục Quản Trị</h4>
+            @*<a class="list-group-item" href="@Url.Action("ManageRoleForCodeConfigAction", "ManagePermission")">Danh Mục Quản Lý Quyền</a>*@
+
+            <a class="list-group-item" href="@Url.Action("ManageAspNetRoles", "ManagePermission")">Role</a>
+
+            <a class="list-group-item" href="@Url.Action("ManageAspNetUsers", "ManagePermission")">User</a>
+
+        </div>
+        @if (User.IsInRole(project.config.library.Utilities.ConstantVariable.Value_AspNetRoles_System))
+        {
+            <text>
+
+                <div class="row">
+                    <h4>Cấu Hình Coder</h4>
+                    <a class="list-group-item" href="@Url.Action("ManageController", "ManagePermission")">Controller</a>
+
+                    <a class="list-group-item" href="@Url.Action("ManageActionGroup", "ManagePermission")">Action Group</a>
+
+                    <a class="list-group-item" href="@Url.Action("ManageAction", "ManagePermission")">Action</a>
+
+                    <a class="list-group-item" href="@Url.Action("ManageApp", "ManagePermission")">App</a>
+
+                    <a class="list-group-item" href="@Url.Action("ManageModule", "ManagePermission")">Module</a>
+
+                    <a class="list-group-item" href="@Url.Action("ManageRoleForCode", "ManagePermission")">Config Role for Code</a>
+
+                </div>
+            </text>
+        }
+
+    </div>
+    <div class="col-md-10" id="idPanelYeuCauCapTaiKhoan">
+        @*@Html.Action("Dashboards_YeuCauCapTaiKhoan", "ManagePermission")*@
+
+    </div>
+
+</div>
+@section Scripts{
+    @Scripts.Render("~/module/ManagePermission/ManageTaiKhoan/TaoTaiKhoan")
+}

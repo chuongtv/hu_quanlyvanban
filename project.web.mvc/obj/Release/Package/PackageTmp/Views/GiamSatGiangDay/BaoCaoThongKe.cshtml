@@ -1,0 +1,75 @@
+﻿@{
+    ViewBag.Title = "Báo cáo thống kê";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@*breadcrumb*@
+<div id="page-heading">
+    <ol class="breadcrumb">
+        <li>
+            <a href="@Url.Action("Index", "Home")">
+                <i class="fa fa-lg fa-home text-warning text-size-20">
+                </i> Trang chủ
+            </a>
+        </li>
+        <li class="active">
+            Báo cáo thống kê
+        </li>
+    </ol>
+</div>
+
+@*content*@
+<div class="container">
+
+
+    <div class="row">
+        <div class="col-sm-8">
+
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <td class="text-center w-50">#</td>
+                        <td width="300px">Loại báo cáo - thống kê</td>
+                        <td>Nội dung</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="text-center">1</td>
+                        <td>
+                            <a href="@Url.Action("TongHopTinhHinhVangBuGiangVienTheoTuan", "GiamSatGiangDay")" title="Nhấn để xem chi tiết báo cáo">
+                                Tổng hợp tình hình vắng - bù
+                            </a>
+                        </td>
+                        <td>
+                            Thống kê tình hình vắng bù giảng viên
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">2</td>
+                        <td>
+                            <a href="@Url.Action("TongHopTinhHinhGiangDayTheoTuan", "GiamSatGiangDay")" title="Nhấn để xem chi tiết báo cáo">
+                                Tổng hợp tình hình giảng dạy
+                            </a>
+                        </td>
+                        <td>
+                            Thống kê tình hình giảng dạy của giảng viên
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">3</td>
+                        <td>
+                            <a href="@Url.Action("ReportHieuSuatPhong", "GiamSatGiangDay")?boloc=3" title="Nhấn để xem chi tiết báo cáo">
+                                Tổng hợp Hiệu suất phòng
+                            </a>
+                        </td>
+                        <td>
+                            Hiệu suất sử dụng phòng học
+                        </td>
+                    </tr>
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,64 @@
+﻿@model nvngoc31122015.giamsatgiangday.library.BaoCaoThongKe.TongHopTinhHinhGiangDay
+
+
+@Html.HiddenFor(model => Model.GiangVien_Guid, new { id = "hidden_giangvienguid" })
+
+
+<div class="show" id="show">
+    <div class="form-group text-center"><h4>BẢNG TỔNG HỢP TÌNH HÌNH GIẢNG DẠY THEO NGÀY</h4></div>
+    <div class="row form-group col-sm-12">
+        <div class="col-sm-2">
+            @Html.DropDownListFor(model => Model.NamHoc_Guid, new SelectList(Model.ListNamHoc_Guid, "ValueString", "Name", Model.NamHocID), new { @class = "form-control chosen-select", id = "DDL_NamHoc_Guid" })
+            @Html.ValidationMessageFor(model => Model.NamHoc_Guid, null, new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-2">
+            <div id="data_TuNgay_Time">
+                <div class=" input-group date">
+                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    <input type="datetime" value="" name="TuNgay_Time" id="tungay_time" class="text-box single-line" placeholder="Từ ngày" />
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-2">
+            <div id="data_DenNgay_Time">
+                <div class=" input-group date">
+                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    <input type="datetime" value="" name="DenNgay_Time" id="denngay_time" class="text-box single-line" placeholder="Đến ngày" />
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-2">
+            @Html.DropDownListFor(model => Model.DonVi_Guid, new SelectList(Model.ListDonVi_Guid, "ValueString", "Name", Model.DonViName), new { @class = "form-control chosen-select", id = "DDL_DonVi_Guid" })
+            @Html.ValidationMessageFor(model => Model.DonViGuid, null, new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-2">
+            @Html.TextBoxFor(model => Model.GiangVienID, new { @class = "form-control", @placeholder = "Mã/ Họ tên giảng viên", id = "text_GiangVienID", data_otf_action = @Url.Action("LoadAutoCompleteGiangVien", "GiamSatGiangDay") })
+            @Html.ValidationMessageFor(model => Model.GiangVien_Guid, null, new { @class = "text-danger" })
+        </div>
+    @*</div>
+    <div class="row">*@
+        <div class="col-sm-2 text-right">
+            <button id="BaoCaoThongKe_TinhHinhGiangDayTheoNgay_buttonsearchNgay"
+                    type="button"
+                    title="Tìm kiếm"
+                    class="btn btn-primary"
+                    data-otf-target="#BaoCaoThongKe_TinhHinhGiangDay_DS_content"
+                    data-otf-action="@Url.Action("TinhHinhGiangDayTheoNgayGet_List", "GiamSatGiangDay", null, Request.Url.Scheme)"
+                    onclick="BaoCaoThongKe_TinhHinhGiangDay_IsSearchNgay(this)">
+                Tìm kiếm
+            </button>
+            <button id="BaoCaoThongKe_TinhHinhGiangDay_buttonExportNgay"
+                    type="button"
+                    title="Xuất dữ liệu"
+                    class=" btn btn-info"
+                    data-otf-target="#BaoCaoThongKe_TinhHinhGiangDay_DS_content"
+                    data-otf-action="@Url.Action("TongHopTinhHinhGiangDayTheoNgay_ExportExcel", "GiamSatGiangDay", null, Request.Url.Scheme)"
+                    onclick="BaoCaoThongKe_TinhHinhGiangDay_ExportNgay(this)">
+                Xuất dữ liệu
+            </button>
+
+        </div>
+    </div>
+</div>
+
+

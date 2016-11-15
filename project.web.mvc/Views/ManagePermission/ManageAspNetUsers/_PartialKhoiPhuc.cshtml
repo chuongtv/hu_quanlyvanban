@@ -1,0 +1,46 @@
+﻿@model nvngoc29082015.permission.library.ManageAspNetUsers.UpdateAspNetUsersView
+
+<div class="row">
+
+    <div class="col-sm-2">
+        @Html.Partial("~/Views/ManagePermission/ManageAspNetUsers/_PartialDanhMuc.cshtml")
+    </div>
+    <div class="col-sm-8">
+        <div class="row">
+            <h4>Đổi mật khẩu qua email</h4>
+            <div class="col-sm-12">
+                <p>
+                    Khôi phục mật mã ngẫu nhiên và gởi email về cho người dùng?
+                </p>
+                <a class="btn btn-success" href="javascript:void(0)"
+                   onclick="Set_GuiEmail(this)"
+                   data-otf-target1="#ManageUserRoleDetail_InfoUserRoleDetail_DS_content"
+                   data-otf-target2="#ManageUserRoleDetail_InfoUserRoleDetail_DS_content1"
+                   data-otf-action="@Url.Action("ForgotPassword", "ManagePermission", null, Request.Url.Scheme)?id=@Model.Id&s=true&pn=">
+                    Xác nhận gởi email
+                </a>
+
+            </div>
+        </div>
+        <hr />
+        <div class="row">
+            @*<div class=" col-sm-2">Mật Khẩu:</div>*@
+            <h4>Thay đổi mật mã</h4>
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <input id="textpassword" class="form-control" />
+                </div>
+                <button type="button" data-otf-action="@Url.Action("ForgotPassword", "ManagePermission", null, Request.Url.Scheme)?id=@Model.Id&s=false&pn=" onclick="CapNhatPassWord(this)"
+                        data-otf-input="#textpassword"
+                        class="btn btn-primary">
+                    <i class="fa fa-floppy-o"></i> Cập nhật
+                </button>
+                Hoặc
+                <a class="btn btn-link" href="@Url.Action("AspNetUsersDetail", "ManagePermission", null, Request.Url.Scheme)?id=@Model.Id">Trở lại</a>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+

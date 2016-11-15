@@ -1,0 +1,117 @@
+﻿@model MvcPaging.IPagedList<nvngoc31122015.giamsatgiangday.library.Models.GiamSatGiangDay_PhieuMuonPhong_ntdai_GetAllPhongRong_Result>
+@using MvcPaging
+
+<div class="table-responsive">
+    @if (Model.TotalItemCount > 0)
+    {
+        <div style="margin-bottom:25px;">
+            <div class="col-sm-6">
+                Kết quả tìm kiếm: <b>@Model.TotalItemCount</b> Phòng phù hợp
+            </div>
+            <div class="col-sm-6 text-right">
+                <span style="background-color:red;">&nbsp;&nbsp;&nbsp;&nbsp;</span> : Phòng đang bận <span style="background-color:chartreuse;">&nbsp;&nbsp;&nbsp;&nbsp;</span> : Phòng có thể cấp 
+            </div>
+        </div>
+        <text>
+            <div class="">
+                @foreach (var item in Model)
+                {
+                    string sty = "tiles-success";
+                    string sukien = "data-toggle=modal onclick=QLPhieuMuonPhong_ChiTietPhieuMuonPhongChiTiet_GetView(this) data-target=#modalQLPhieuMuonPhong_CapPhong";
+                    if (item.IsPhongBan.Value != 0)
+                    { sty = "tiles-alizarin"; sukien = ""; }
+                    <text>
+                        <div class="col-xs-12 col-md-2 col-sm-4 col-lg-2">
+
+                            <a href="javascript:void(0)"
+                               data-otf-action="@Url.Action("PhieuMuonPhong_ViewThongTinPhong", "GiamSatGiangDay", null, Request.Url.Scheme)?id=@item.PhongGuid&p=@ViewBag.PhieuMuonPhongGuid"
+                               data-otf-inputngaydatphong="#datengaydatphong"
+                               @sukien
+                               class="info-tiles @sty"
+                               data-tooltip="@if(item.LopHocID!=null){<text><i class=' fa fa-credit-card'></i>&nbsp;<b>Lớp</b>: @Html.Raw(item.LopHocID)</text>}@if (item.LopHocID != null){<text> <br /><i class='fa fa-calendar'></i>&nbsp;&nbsp;<b>Môn học</b>: @Html.Raw(item.MonHocName)</text>}@if (item.LopHocID != null){<text> <br /><i class='fa fa-building-o'></i>&nbsp;&nbsp;<b>Đơn vị</b>: @Html.Raw(item.Ho + " " + item.Tenlot + " " + item.Ten)</text>}">
+                                <div class="tiles-heading">
+                                    <div class="pull-left">Sức chứa</div>
+                                    <div class="pull-right">@item.SucChua</div>
+                                </div>
+                                <div class="tiles-body" style=" font-size: 25px;">
+                                    <div class="pull-right">@item.PhongID<span class="text-smallcaps"></span></div>
+                                </div>
+</a>
+
+
+
+</div>
+
+                    </text>
+                }
+
+
+            </div>
+
+        </text>
+    }
+    else
+    {
+        <text><br />
+    <div class="alert alert-dismissable alert-info">
+        <strong>Yêu cầu tìm kiếm lúc @{ var date = DateTime.Now; } @date.ToString("HH:mm:ss dd/MM/yyyy") không có dữ liệu</strong>
+        <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+    </div>
+        </text>
+    }
+    <div class="pager">
+        @if (Model.TotalItemCount > Model.PageSize)
+        {
+
+            <text>
+
+                @Html.Raw(Ajax.Pager(
+                       new Options
+                       {
+                           PageSize = Model.PageSize,
+                           TotalItemCount = Model.TotalItemCount,
+                           CurrentPage = Model.PageNumber,
+                           ItemTexts = new ItemTexts() { Next = "Next", Previous = "Previous", Page = "" },
+                           ItemIcon = new ItemIcon() { First = "icon-backward", Previous = "icon-chevron-left", Next = "icon-chevron-right", Last = "icon-forward" },
+                           TooltipTitles = new TooltipTitles() { Next = "Next page", Previous = "Previous page", Page = "Page {0}." },
+                           Size = Size.normal,
+                           Alignment = Alignment.centered,
+                           IsShowControls = true,
+                           IsShowFirstLast = true,
+                           CssClass = ""
+                       },
+                       new AjaxOptions
+                       {
+                           UpdateTargetId = "DanhSachPhong_Content"
+                       }, new
+                       {
+                           controller = "GiamSatGiangDay",
+                           action = "DanhSachPhongChuaChon",
+                           n = ViewData["n"],
+                           ca = ViewData["ca"],
+                           tt = ViewData["tt"],
+                           p = ViewData["p"],
+                           k = @ViewData["keysearch"]
+                       }))
+            </text>
+        }
+    </div>
+</div>
+
+@using (Html.BeginScriptContext())
+{
+    Html.AddScriptBlock(
+        @<script type="text/javascript">
+            $('[data-tooltip!=""]').qtip({ // Grab all elements with a non-blank data-tooltip attr.
+                content: {
+                    attr: 'data-tooltip' // Tell qTip2 to look inside this attr for its content
+                },
+                position: {
+                    target: 'mouse'//, // Position it where the click was...
+                    // adjust: { mouse: false } // ...but don't follow the mouse
+                }
+            })
+        </script>
+, true);
+
+}

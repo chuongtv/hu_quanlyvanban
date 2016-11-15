@@ -1,0 +1,175 @@
+﻿@*
+    Author:   			ntdai
+    Created: 			2016-3-18
+    Last Modified: 		2016-3-18
+*@
+
+@model MvcPaging.IPagedList<ntdai16032016.maketing.library.Models.QuanLyMaketting_EmailMoiGiang_ntdai_GetLichGiangGiangVienByDonVi_Result>
+@using MvcPaging
+
+@{var i = 1;}
+
+
+<div class="row">
+    @*các thao tác*@
+    <div class="show">
+        <div class="col-sm-4 col-sm-push-8" style="text-align:right;">
+            <div class="form-group ">
+
+                <button data-otf-mutil="true"
+                        onclick="QuanLyGuiMailMoiGiang_MailMoiGiang_NextToSendEmail(this)"
+                        data-otf-confirm="Bạn có chắc muốn gửi email mời giảng những giảng viên đã chọn?"
+                        data-otf-target="#CPXemDuLieuGiangDayGiagnVien"
+                        data-otf-action-target="@Url.Action("Get_DanhSachSendEmail", "QuanLyMaketting")"
+                        class=" btn btn-primary"
+                        title="Bước kế tiếp">
+                    <i class="fa fa-angle-right" aria-hidden="true"></i> Bước kế tiếp
+                </button>
+
+            </div>
+        </div>
+        <div class="col-sm-8  col-sm-pull-4">
+
+
+
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="table-responsive">
+        @if (Model.TotalItemCount > 0)
+        {
+            <div class="p-b-10">
+                Danh sách: <b>@Model.TotalItemCount</b> lịch giảng
+            </div>
+            <text>
+                <table class="table table-bordered datatables dataTable">
+                    <thead>
+                        <tr>
+                            <th class="text-center w-30">
+                                #
+                            </th>
+                            <th class="text-left w-150">
+                                Mã giảng viên
+                            </th>
+                            <th class="text-left w-150">
+                                Tên giảng viên
+                            </th>
+                            <th class="text-left w-100">
+                                Email
+                            </th>
+                            <th class="text-left w-100">
+                                Điện thoại
+                            </th>
+                            <th class="text-left ">
+                                Môn học
+                            </th>
+                            <th class="text-right w-100">
+                                Ngày
+                            </th>
+                            <th class="text-left w-50">
+                                Phòng
+                            </th>
+                            <th class="text-left w-50">
+                                Ca
+                            </th>
+                            <th class="text-left w-50">
+                                Lớp
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody id="listcheckall">
+                        @foreach (var item in Model)
+                        {
+                            <tr data="@item.ThoiKhoaBieuGuid" class="showhim">
+
+                                <td class="text-center w-50">
+                                    @Html.Raw((Model.PageNumber - 1) * Model.PageSize + i)
+                                    @{i++;}
+                                </td>
+                                <td class="text-left">
+                                    @Html.Raw(item.NhanVienID)
+                                </td>
+                                <td class="text-left">
+                                    @Html.Raw(item.Ho + " " + item.TenLot + " " + item.Ten)
+                                </td>
+                                <td class="text-left">
+                                    @Html.Raw(item.EmailCaNhan)
+                                </td>
+                                <td class="text-left">
+                                    @Html.Raw(item.SoDienThoaiDiDong)
+                                </td>
+                                <td class="text-left">
+                                    @Html.Raw(item.MonHocName)
+                                </td>
+
+                                <td class="text-right">
+                                    @Html.Raw(item.TuNgay.Value.ToString("dd/MM/yyyy"))
+                                </td>
+                                <td class="text-left">
+                                    @Html.Raw(item.PhongID)
+                                </td>
+                                <td class="text-left">
+                                    @Html.Raw(item.CaID)
+                                </td>
+                                <td class="text-left">
+                                    @Html.Raw(item.LopHocID)
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </text>
+        }
+        else
+        {
+            <text><br />
+        <div class="alert alert-dismissable alert-info">
+            <strong>Yêu cầu tìm kiếm lúc @{ var date = DateTime.Now; } @date.ToString("HH:mm:ss dd/MM/yyyy") không có dữ liệu</strong>
+            <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+        </div>
+            </text>
+        }
+
+    </div>
+    <div class="pager">
+        @if (Model.TotalItemCount > Model.PageSize)
+        {
+
+            <text>
+
+                @Html.Raw(Ajax.Pager(
+                       new Options
+                       {
+                           PageSize = Model.PageSize,
+                           TotalItemCount = Model.TotalItemCount,
+                           CurrentPage = Model.PageNumber,
+                           ItemTexts = new ItemTexts() { Next = "Next", Previous = "Previous", Page = "" },
+                           ItemIcon = new ItemIcon() { First = "icon-backward", Previous = "icon-chevron-left", Next = "icon-chevron-right", Last = "icon-forward" },
+                           TooltipTitles = new TooltipTitles() { Next = "Next page", Previous = "Previous page", Page = "Page {0}." },
+                           Size = Size.normal,
+                           Alignment = Alignment.centered,
+                           IsShowControls = true,
+                           IsShowFirstLast = true,
+                           CssClass = ""
+                       },
+                       new AjaxOptions
+                       {
+                           UpdateTargetId = "CPXemDuLieuGiangDayGiagnVien"
+                       }, new { controller = "QuanLyMaketting", action = "Get_DanhSachLichGiangGiangVien"}))
+            </text>
+        }
+    </div>
+</div>
+
+@using (Html.BeginScriptContext())
+{
+    Html.AddScriptBlock(
+        @<script type="text/javascript">
+            loadSelect("QuanLyDotGui");
+        </script>
+, true);
+}
+
+
+

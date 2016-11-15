@@ -1,0 +1,107 @@
+﻿@{
+    ViewBag.Title = "Xem thông tin thời khóa biểu";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div id="page-heading">
+    <ol class="breadcrumb">
+        <li>
+            <a href="@Url.Action("Index", "Home")">
+                <i class="fa fa-lg fa-home text-warning text-size-20">
+                </i> Trang chủ
+            </a>
+        </li>
+        <li class="active">
+            Xem thông tin thời khóa biểu
+        </li>
+    </ol>
+</div>
+<div class="container">
+    @*@Html.Action("LoadThoiKhoaBieuTheoTuan", "GiamSatGiangDay")*@
+    <a data-toggle="modal" title="trợ giúp"
+       data-target="#modalGiamSatGiangDay_ThoiKhoaBieuCaNhan_Help" class="pull-right" href="javascript:void(0)">
+        <i class="fa fa-question-circle" aria-hidden="true"></i> Trợ giúp
+    </a>
+
+
+    <div class="tab-container tab-info">
+        <ul class="nav nav-tabs">
+            <li class="active"><a data-toggle="tab" href="#home1">Xem dạng lịch</a></li>
+            <li class="">
+                <a data-toggle="tab" href="#profile1"
+                   data-otf-action="@Url.Action("ThoiKhoaBieuCaNhanList","GiamSatGiangDay")"
+                   onclick="load_data_thoikhoabieudanhsach(this)">Xem dạng danh sách</a>
+            </li>
+        </ul>
+        <div class="tab-content">
+            <div id="home1" class="tab-pane active">
+                @Html.Action("LoadThoiKhoaBieuTheoGiangVien", "GiamSatGiangDay")
+            </div>
+            <div id="profile1" class="tab-pane">
+                <div id="tabthoikhoabieudanhsach">
+                    @Html.Action("ThoiKhoaBieuCaNhanList", "GiamSatGiangDay")
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Chép đoạn này vào page để khai báo popup-->
+@section dialog {
+
+    <!-- GiamSatGiangDay_PhieuBaoTKB UNIT MODAL -->
+    <div class="modal inmodal fade" id="modalGiamSatGiangDay_ThoiKhoaBieuCaNhan" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg" id="modalGiamSatGiangDay_ThoiKhoaBieuCaNhan_c">
+        </div>
+    </div>
+    <!-- GiamSatGiangDay_PhieuBaoTKB UNIT END-->
+    <!-- GiamSatGiangDay_PhieuBaoTKB UNIT MODAL -->
+    <div class="modal inmodal fade" id="modalGiamSatGiangDay_ThoiKhoaBieuCaNhan_Help" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" id="modalGiamSatGiangDay_ThoiKhoaBieuCaNhan_Help_c">
+
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+                    <h4 class="modal-title">Thông tin hỗ trợ</h4>
+                </div>
+                <div class="modal-body">
+                    <div style="background-color:Blue;color:#fff;">Lớp bù, Lớp bù trước</div>
+                    <div style="background-color:Grey;color:#fff;">Lớp đã báo nghỉ</div>
+                    <div style="background-color:#3a87ad;color:#fff;">Lớp thường</div>
+         
+
+
+                    sét cứng loại phiếu (2dc705f2-c690-4906-a11e-7bf90672611b) Báo bù <br />
+                    sét cứng loại phiếu (f2268f88-d15a-4b37-abb3-5366c52a6447) Báo nghỉ<br />
+                    Được sét cứng trong store<br />
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- GiamSatGiangDay_PhieuBaoTKB UNIT END-->
+
+
+
+ 
+}
+
+@section Styles {
+
+    @Styles.Render("~/plugins/qtipstyles")
+    @Styles.Render("~/plugins/fullcalendarstyles")
+}
+
+@section Scripts {
+    @Scripts.Render("~/plugins/qtip")
+    @Scripts.Render("~/plugins/fullcalendar")
+    @Scripts.Render("~/module/GiamSatGiangDay/XemThoiKhoaBieu")
+
+    <script type="text/javascript">
+        function load_data_thoikhoabieudanhsach(element) {
+            $("#tabthoikhoabieudanhsach").load($(element).attr("data-otf-action"));
+        }
+
+
+
+    </script>
+}

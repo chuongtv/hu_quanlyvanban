@@ -1,0 +1,67 @@
+﻿@*
+    Author:   			pdgiai
+    Created: 			2016-1-4
+    Last Modified: 		2016-1-4
+*@
+
+@{
+    ViewBag.Title = "Lịch trình giảng dạy";
+}
+<div id="page-heading">
+    <ol class="breadcrumb">
+        <li>
+            <a href="@Url.Action("Index", "Home")">
+                <i class="fa fa-lg fa-home text-warning text-size-20">
+                </i> Trang chủ
+            </a>
+        </li>
+        <li>
+            <a href="@Url.Action("DSThoiKhoaBieuMoiGiang", "GiamSatGiangDay")">Thời khóa biểu</a>
+        </li>
+        <li class="active">
+            @ViewBag.Title
+        </li>
+    </ol>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 text-right">
+            <a class="btn btn-default"
+               href="@Url.Action("DSThoiKhoaBieuMoiGiang", "GiamSatGiangDay", null, Request.Url.Scheme)">Quay lại</a>
+        </div>
+    </div>
+    <div class="row">
+        <div id="GiamSatGiangDay_ThoiKhoaBieuChiTiet_DS_content">
+            @Html.Action("ThoiKhoaBieuChiTietGet_List", "GiamSatGiangDay", Request["id"])
+        </div>
+    </div>
+</div>
+
+<!--Chép đoạn này vào page để khai báo popup-->
+@section dialog {
+    <!-- GiamSatGiangDay_ThoiKhoaBieu UNIT MODAL -->
+    <div class="modal inmodal fade" id="modalGiamSatGiangDay_ThoiKhoaBieu" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" id="modalGiamSatGiangDay_ThoiKhoaBieu_c">
+        </div>
+    </div>
+    <!-- GiamSatGiangDay_ThoiKhoaBieu UNIT END-->
+}
+
+@section Styles {
+    @Styles.Render("~/plugins/chosenStyles")
+    @Styles.Render("~/plugins/dataPickerStyles")
+    <link href="~/Content/plugins/EasyAutocomplete/easy-autocomplete.css" rel="stylesheet" />
+}
+
+@section Scripts {
+    <script src="~/Content/plugins/metro-ui/docs/js/metro.js"></script>
+    <script src="~/Content/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+    <script src="~/Content/plugins/EasyAutocomplete/jquery.easy-autocomplete.js"></script>
+    @Scripts.Render("~/plugins/dropZone")
+    @Scripts.Render("~/plugins/chosen")
+    @Scripts.Render("~/plugins/dataPicker")
+    @Scripts.Render("~/module/GiamSatGiangDay/ThoiKhoaBieuMoiGiang")
+    @Scripts.Render("~/plugins/fancybox")
+
+}
+

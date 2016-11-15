@@ -1,0 +1,129 @@
+﻿@model  project.web.mvc.Views.FileModalView
+
+@{
+    string isDelete = Model.IsDelete == null ? "false" : Model.IsDelete;
+
+    string itemGuid = Model.ItemGuid == null ? Guid.Empty.ToString() : Model.ItemGuid;
+}
+
+
+<div class="dropzone-previews">
+    @if (Model.ListFilesUploaded != null)
+    {
+        foreach (ntdai09102015.quanlyfile.library.FileSystem item in Model.ListFilesUploaded)
+        {
+
+            @*<div class="dz-preview dz-image-preview">
+                <div class="dz-details">
+                    <div class="dz-filename">
+                        <span>  @item.ClientFileName</span>
+                    </div>
+                    <div data-dz-size="" class="dz-size">
+                        <strong>@item.FileSize</strong> MB
+                    </div>
+                    @if (item.FileType.ToLower().Equals(".png") ||
+                    item.FileType.ToLower().Equals(".jpg") ||
+                    item.FileType.ToLower().Equals(".jpge") ||
+                    item.FileType.ToLower().Equals(".gif") ||
+                    item.FileType.ToLower().Equals(".ico") ||
+                    item.FileType.ToLower().Equals(".tif")
+                    )
+                    {
+                        <a class="fancybox" rel="gallery" href="~/@item.MapPath/@item.ServerFileName" title="@item.ClientFileName">
+                            <img data-dz-thumbnail="" alt="@item.ClientFileName" src="~/@item.MapPath/@project.config.library.Utilities.ConstantVariable.sizeImage_W[0]-@project.config.library.Utilities.ConstantVariable.sizeImage_H[0]/@item.ServerFileName">
+                        </a>
+                    }
+                    else
+                    {
+                        <a href="~/Download.ashx?id=@item.FileSystemGuid" title="@item.ClientFileName">
+                            <img data-dz-thumbnail="" alt="@item.ClientFileName" src="~/Images/ico/@item.FileType.Replace(".","")_.png">
+                        </a>
+                    }
+                </div>
+                @if(isDelete=="true")
+                { 
+                <a class="dz-error-mark" id="link-@item.FileSystemGuid" onclick="DeleteFileSystem(this)" 
+                   data-otf-action-target="@Url.Action("LoadList", "FileSystem", null, Request.Url.Scheme)?q=@item.ItemGuid.ToString().ToUpper()"
+                   data-otf-target="#FileList-@item.ItemGuid.ToString().ToUpper()"
+                   data-otf-action="@Url.Action("Delete", "FileSystem", null, Request.Url.Scheme)?q=@item.FileSystemGuid"
+                   style="opacity: 1;">
+                    <span>✘</span>
+                </a>
+                }
+            </div>*@
+
+            <div class="sm-dz-preview sm-dz-image-preview">
+                <div class="sm-dz-details" style="border: 1px solid #808080;display: inline-block;padding-right: 10px;">
+
+                    @if (item.FileType.ToLower().Equals(".png") ||
+                                    item.FileType.ToLower().Equals(".jpg") ||
+                                    item.FileType.ToLower().Equals(".jpge") ||
+                                    item.FileType.ToLower().Equals(".gif") ||
+                                    item.FileType.ToLower().Equals(".ico") ||
+                                    item.FileType.ToLower().Equals(".tif")
+                                    )
+                    {
+                        <a class="fancybox" style="float:left;" rel="gallery" href="~/@item.MapPath/@item.ServerFileName" title="@item.ClientFileName">
+                            <img data-dz-thumbnail="" style="padding:5px;" height="32" src="~/@item.MapPath/@project.config.library.Utilities.ConstantVariable.sizeImage_W[0]-@project.config.library.Utilities.ConstantVariable.sizeImage_H[0]/@item.ServerFileName">@item.ClientFileName
+                        </a>
+                    }
+                    else
+                    {
+                        <a style="float:left;" href="~/Download.ashx?id=@item.FileSystemGuid">
+                            <img data-dz-thumbnail="" style="padding:5px;" height="32" src="~/Images/ico/@item.FileType.Replace(".","")_.png">@item.ClientFileName
+                        </a>
+                    }
+
+
+                    <a id="link-@item.FileSystemGuid" onclick="DeleteFileSystem(this)" data-otf-confirm="Bạn muốn xóa file?"
+                       data-otf-action-target="@Url.Action("v2_LoadOne", "FileSystem", null, Request.Url.Scheme)?q=@item.ItemGuid.ToString().ToUpper()&d=@isDelete"
+                       data-otf-target="#FileList-@item.ItemGuid.ToString().ToUpper()"
+                       data-otf-action="@Url.Action("Delete", "FileSystem", null, Request.Url.Scheme)?q=@item.FileSystemGuid"
+                       style="color: red; float: left; padding-left: 10px; padding-top: 6px;">
+                        <i class="fa fa-lg fa-times-circle"></i>
+                    </a>
+                </div>
+
+            </div>
+        }
+    }
+</div>
+
+
+
+<script>
+    function DeleteFileSystem(element) {
+        var $button = $(element);
+        if ($button.attr("data-otf-confirm"))
+            if (!confirm($button.attr("data-otf-confirm")))
+                return false;
+
+        
+        var idList = $button.attr("data-otf-target");
+        //chua kiem tra data-otf-mutil
+        
+        //trường họp 1 item
+        $.ajax({
+            type: 'Post',
+            cache: false,
+            url: $button.attr("data-otf-action"),
+            //data: { selectedIds: selectedIds },
+            //dataType: "json",
+            success: function (data) {
+                $(idList).load($button.attr("data-otf-action-target"), function myfunction() {
+                    $("#FileList-@itemGuid.ToUpper()").load('@Url.Action("v2_LoadOne", "FileSystem", null, Request.Url.Scheme)?q=@itemGuid.ToUpper()&d=@isDelete', function myfunction() {
+                        if ($("#FileList-@itemGuid.ToUpper() .dropzone-previews").html().trim() != "")
+                            $("#dropzone-@itemGuid.ToUpper()").addClass("hide");
+                        else
+                            $("#dropzone-@itemGuid.ToUpper()").removeClass("hide");
+                    });
+                });
+            }
+        }).done(function () {
+        });
+        return true;
+
+    }
+
+
+</script>

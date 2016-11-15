@@ -1,0 +1,134 @@
+﻿@*
+    Author:   			tvchuong
+    Created: 			2016-2-1
+    Last Modified: 		2016-2-1
+*@
+@model nvngoc31122015.giamsatgiangday.library.GiamSatGiangDay.UpdateCauHinhLoaiPhieuView
+
+<div class="modal-content">
+    <div class="modal-header">
+        <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+        <h4 class="modal-title">Cập nhật sản phẩm</h4>
+    </div>
+    <div class="modal-body">
+
+        @using (Ajax.BeginForm(
+                                    "CauHinhLoaiPhieuEdit",
+                                    "GiamSatGiangDay",
+                                    new AjaxOptions
+                                {
+                                    InsertionMode = InsertionMode.Replace,//cach thuc update du lieu. Thay the hay them vao
+                                    HttpMethod = "POST",
+                                    UpdateTargetId = "modalGiamSatGiangDay_CauHinhLoaiPhieu_c",
+                                    LoadingElementId = "loader"
+                                }, new { @class = "form-horizontal", id = "frm_EditCauHinhLoaiPhieu" }))
+        {
+
+
+            @Html.HiddenFor(model => Model.LoaiPhieuGuid)
+
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+            <div class="form-group ">
+                @Html.LabelFor(model => Model.LoaiPhieuID, new { @class = "col-sm-4 control-label", @for = "text_LoaiPhieuID" })
+                <div class="col-sm-8">
+                    @Html.TextBoxFor(model => Model.LoaiPhieuID, new { @class = "form-control", id = "text_LoaiPhieuID" })
+                    @Html.ValidationMessageFor(model => Model.LoaiPhieuID, null, new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group ">
+                @Html.LabelFor(model => Model.LoaiPhieuName, new { @class = "col-sm-4 control-label", @for = "text_LoaiPhieuName" })
+                <div class="col-sm-8">
+                    @Html.TextBoxFor(model => Model.LoaiPhieuName, new { @class = "form-control", id = "text_LoaiPhieuName" })
+                    @Html.ValidationMessageFor(model => Model.LoaiPhieuName, null, new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-sm-4">
+
+                </div>
+                <div class="col-sm-8">
+                    @Html.CheckBoxFor(model => Model.IsActive, new { @checked = "checked", id = "chek_IsActive" })
+                    @Html.LabelFor(model => Model.IsActive, new { @class = "", @for = "chek_IsActive" })
+                    @Html.ValidationMessageFor(model => Model.IsActive, null, new { @class = "text-danger" })
+                </div>
+
+            </div>
+        }
+        <div class="form-horizontal" style="display:none;">
+            <div class="form-group">
+                <label class="col-sm-2 control-label">
+                    File đính kèm
+                </label>
+                <div class="col-sm-10">
+
+                    @*2 hàm ulupload 1 cho xóa và k xóa*@
+                    @Html.Action("LoadUploadOne", "FileSystem", new { itemguid = Model.LoaiPhieuGuid, id = 1, auto = "false", isDelete = "true", mo = "CauHinhLoaiPhieu" })
+                    @*@Html.Action("LoadUploadOne", "FileSystem", new { itemguid = Model.ItemGuid, id = 1, auto = "false", isDelete = "false", mo = "CauHinhLoaiPhieu" })*@
+
+
+                    @*s = style hiển thị danh sách file 0:1; 0 dạng block, 1 là dạng list
+                        d ="true" :"fasle" cho phép delete hay k
+                        id quy định nơi upload file, nơi load file lên trong contantvalble*@
+                    @* @Html.Action("LoadUploadFiles", "FileSystem", new { itemguid = Model.LoaiPhieuGuid, id = 1, auto = "false", d = "true", s = 1, mo = "CauHinhLoaiPhieu" })*@
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+
+        <div class="col-sm-12  text-center">
+
+            <button type="button" aria-hidden="true" data-dismiss="modal"
+                    onclick="GiamSatGiangDay_CauHinhLoaiPhieu_DeleteView(this)"
+                    data-otf-action="@Url.Action("CauHinhLoaiPhieuDelete", "GiamSatGiangDay", null, Request.Url.Scheme)?id=@Model.LoaiPhieuGuid"
+                    data-otf-action-exit="@Url.Action("CauHinhLoaiPhieuGet_List", "GiamSatGiangDay", null, Request.Url.Scheme)"
+                    data-otf-confirm="Bạn muốn xóa dữ liệu này?"
+                    data-otf-target-exit="#GiamSatGiangDay_CauHinhLoaiPhieu_DS_content"
+                    data-target="#modalGiamSatGiangDay_CauHinhLoaiPhieu"
+                    class="btn btn-danger">
+                <i class="fa fa-trash-o"></i> Xóa
+            </button>
+            <button type="button" onclick="GiamSatGiangDay_CauHinhLoaiPhieu_OnSaveExit('#callbackGiamSatGiangDay_CauHinhLoaiPhieu', 'true', '#frm_EditCauHinhLoaiPhieu')" class="btn btn-success">Lưu & Thoát</button>
+            <button type="button" onclick="GiamSatGiangDay_CauHinhLoaiPhieu_OnSaveExit('#callbackGiamSatGiangDay_CauHinhLoaiPhieu', 'false', '#frm_EditCauHinhLoaiPhieu')" class="btn btn-primary"><i class="fa fa-floppy-o"></i> Lưu dữ liệu</button>
+            &nbsp;hoặc&nbsp;
+
+            <a class="btn btn-link" data-otf-action="@Url.Action("CauHinhLoaiPhieuGet_List", "GiamSatGiangDay", null, Request.Url.Scheme)" data-target="#GiamSatGiangDay_CauHinhLoaiPhieu_DS_content" aria-hidden="true" data-dismiss="modal" onclick="GiamSatGiangDay_CauHinhLoaiPhieu_BakList(this)"> Quay lại</a>
+
+            <input type="hidden" id="callbackGiamSatGiangDay_CauHinhLoaiPhieu"
+                   data-otf-target="#modalGiamSatGiangDay_CauHinhLoaiPhieu"
+                   data-otf-target-exit="#GiamSatGiangDay_CauHinhLoaiPhieu_DS_content"
+                   data-otf-action-exit="@Url.Action("CauHinhLoaiPhieuGet_List", "GiamSatGiangDay", null, Request.Url.Scheme)"
+                   data-otf-action="@Url.Action("CauHinhLoaiPhieuEdit", "GiamSatGiangDay", null, Request.Url.Scheme)?id=@Model.LoaiPhieuGuid" />
+
+
+        </div>
+    </div>
+
+</div>
+
+@using (Html.BeginScriptContext())
+{
+    Html.AddScriptBlock(
+        @<script type="text/javascript">
+            //Su dung cau hinh dropdownlist
+            //var config = {
+            //    '.chosen-select': {},
+            //    '.chosen-select-deselect': { allow_single_deselect: true },
+            //    '.chosen-select-no-single': { disable_search_threshold: 10 },
+            //    '.chosen-select-no-results': { no_results_text: 'Lỗi! Vui lòng chọn ít nhất 1 mục.' },
+            //    '.chosen-select-width': { width: "95%" }
+            //}
+            //for (var selector in config) {
+            //    $(selector).chosen(config[selector]);
+            //}
+
+        </script>
+, true);
+}
+
+
+
+

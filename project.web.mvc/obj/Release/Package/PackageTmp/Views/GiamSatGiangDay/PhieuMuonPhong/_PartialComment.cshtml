@@ -1,0 +1,29 @@
+﻿@model  List<nvngoc31122015.giamsatgiangday.library.GiamSatGiangDay.ListThongTinPhanHoiView>
+
+@foreach (var item in Model)
+{
+    //if (item.UserGuid != User.Identity.GetUserId())
+    //{
+        @*<text>*@
+            <div class="chat-message me">
+
+                <div class="chat-text">
+                    <p>@item.MaNhanVien - @item.TenNhanVien</p>
+                    @Html.Raw(item.NoiDung)
+                </div>
+            </div>
+     @*   </text>
+    }else
+    {
+         <text>
+            <div class="chat-message chat-primary">
+
+                <div class="chat-text">
+                    <p>@item.MaNhanVien - @item.TenNhanVien</p>
+                    @Html.Raw(item.NoiDung)
+                </div>
+            </div>
+        </text>
+    }*@
+
+}

@@ -1,0 +1,50 @@
+﻿@*
+    Author:   			ntdai
+    Created: 			2015-11-12
+    Last Modified: 		2015-11-12
+*@
+
+
+
+<div class="panel panel-gray">
+    <div class="panel-heading">
+        <h4><i class="fa fa-cloud icon-highlight icon-highlight-primary"></i> Tìm kiếm người dùng</h4>
+       
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-sm-12 ">
+                <div class="form-group">
+                    <div class="input-group">
+                        <input id="ManageUserRoleDetail_InfoUserRoleDetail_SearchInput_chua"
+                               placeholder="Lọc theo: Họ và tên có dấu, tên đăng nhập hoặc email..."
+                               onkeypress="return ManagePhanCapUser_EnterEvent(event, '#ManagePhanCapUser_buttonsearch_chua')"
+                               class="form-control " />
+                        <span class="input-group-btn">
+                            <button id="ManagePhanCapUser_buttonsearch_chua"
+                                    type="button"
+                                    title="Tìm kiếm"
+                                    class="btn btn-primary"
+                                    data-otf-target="#ManageUserRoleDetail_InfoUserRoleDetail_DS_content1"
+                                    data-otf-input="#ManageUserRoleDetail_InfoUserRoleDetail_SearchInput_chua"
+                                    data-otf-action="@Url.Action("ManagePhanCapUserGet_List_ChuaPhanQuyen", "ManagePermission", null, Request.Url.Scheme)?id=@Request["id"]&k="
+                                    onclick="ManagePhanCapUser_IsSearch(this)">
+                                Tìm kiếm
+                            </button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12" id="ManageUserRoleDetail_InfoUserRoleDetail_DS_content1">
+              
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+

@@ -1,0 +1,126 @@
+﻿@*
+    Author:   			ntdai
+    Created: 			2016-3-17
+    Last Modified: 		2016-3-17
+*@
+@{
+    ViewBag.Title = "Import danh sách Emails";
+}
+
+@*breadcrumb*@
+<div id="page-heading">
+    <ol class="breadcrumb">
+        <li>
+            <a href="@Url.Action("Index", "Dashboards")">
+                <i class="fa fa-lg fa-home text-warning text-size-20">
+                </i> Trang chủ
+            </a>
+        </li>
+        <li>
+            <a href="@Url.Action("Index","DoanhNghiep")">Quản lý Emails</a>
+        </li>
+        <li class="active">
+            Import danh sách Emails
+        </li>
+    </ol>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12" id="contentImport">
+            <div class="row">
+                <div class="col-sm-4">
+                    <a class="btn btn-default-alt" href='@Url.Action("ImportEmailsStep1", "QuanLyMaketting")' title="Quay lại"><i class="fa fa-lg fa-reply"></i> Quay lại</a>
+                </div>
+                
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12">
+                    @Html.Raw(ViewBag.Error)
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="ibox">
+                        <div class="ibox-content">
+                            <div class="mail-box">
+                                @if (Model != null)
+                                {
+                                    <table class="table table-striped">
+                                        <tr>
+                                            <th class="text-center w-50">#</th>
+                                            <th>
+                                            
+                                            </th>
+                                            <th>
+                                            
+                                            </th>
+                                            <th>
+                                            
+                                            </th>
+                                            <th>
+                                            
+                                            </th>
+                                            <th>
+                                            
+                                            </th>
+                                            <th>
+                                            
+                                            </th>
+                                            <th>
+                                            
+                                            </th>
+                                            <th>
+                                                Nội dung
+                                            </th>
+                                        </tr>
+                                        @foreach (System.Data.DataRow row in Model.Rows)
+                                        {
+                                            <tr class="row-error-@(row["IsDongLoi"].ToString())">
+                                                    <td class="text-center">
+                                                        @(row["#"].ToString())
+                                                    </td>       
+                                                    <td class="text-center">
+                                                    @(row["DanhXung"].ToString())
+                                                    </td>
+                                                    <td class="text-center">
+                                                    @(row["TenGoi"].ToString())
+                                                    </td>
+                                                    <td class="text-center">
+                                                    @(row["Email"].ToString())
+                                                    </td>
+                                                    <td class="text-center">
+                                                    @(row["GioiTinh"].ToString())
+                                                    </td>
+                                                    <td class="text-center">
+                                                    @(row["DiaChi"].ToString())
+                                                    </td>
+                                                    <td class="text-center">
+                                                    @(row["DonVi"].ToString())
+                                                    </td>
+                                                    <td class="text-center">
+                                                    @(row["DienThoai"].ToString())
+                                                    </td>
+                                                     <td class="text-center">
+                                                         <span class="text-danger"> @Html.Raw(row["ErrorContent"].ToString())</span>
+                                                    </td>
+                                                    
+                                                </tr>
+                                        }
+
+                                    </table>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+

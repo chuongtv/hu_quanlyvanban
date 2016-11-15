@@ -1,0 +1,50 @@
+﻿@model nvngoc31122015.giamsatgiangday.library.GiamSatGiangDay.ListThoiKhoaBieuView
+
+
+<div class="container">
+    <div class="row well">
+        @*các thao tác*@
+        <div class="show" id="show">
+            <div class="row form-group">
+                <div class="col-sm-2">
+                    @Html.DropDownListFor(model => Model.NamHocID, new SelectList(Model.ListNamHoc_Guid, "ValueString", "Name", Model.NamHocID), new { @class = "form-control chosen-select", id = "DDL_NamHoc" })
+                </div>
+                <div class="col-sm-2">
+                    @Html.DropDownListFor(model => Model.HocKy_Guid, new SelectList(Model.ListHocKy_Guid, "ValueString", "Name"), new { @class = "form-control chosen-select", id = "DDL_HocKy_Guid" })
+                </div>
+                <div class="col-sm-2">
+                    <button id="GiamSatGiangDay_ThoiKhoaBieu_buttonsearch"
+                            type="button"
+                            title="Tìm kiếm"
+                            class="btn btn-primary"
+                            data-otf-target="#GiamSatGiangDay_ThoiKhoaBieucanhan_DS_content"
+                            data-otf-input="#GiamSatGiangDay_ThoiKhoaBieu_SearchInput"
+                            data-otf-action="@Url.Action("ThoiKhoaBieuCaNhanGet_List", "GiamSatGiangDay", null, Request.Url.Scheme)?"
+                            onclick="GiamSatGiangDay_ThoiKhoaBieuCaNhan_IsSearch(this)">
+                        Tìm kiếm
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div id="GiamSatGiangDay_ThoiKhoaBieucanhan_DS_content">
+
+            <div class="alert alert-dismissable alert-info">
+                <strong>Vui lòng thao tác với bộ lọc để hiển thị thông tin!</strong>
+                <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+            </div>
+        </div>
+    </div>
+</div>
+@using (Html.BeginScriptContext())
+{
+    Html.AddScriptBlock(
+        @<script type="text/javascript">
+            function LoadbanDau() {
+                $("#GiamSatGiangDay_ThoiKhoaBieu_buttonsearch").click();
+            }
+            LoadbanDau();
+        </script>
+, true);
+}

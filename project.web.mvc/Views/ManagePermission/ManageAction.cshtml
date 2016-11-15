@@ -1,0 +1,123 @@
+﻿@*
+    Author:   			hanhat
+    Created: 			2015-10-22
+    Last Modified: 		2015-10-22
+*@
+
+
+@{
+
+    ViewBag.Title = "ManageAction";
+}
+<div id="page-heading">
+    <ol class="breadcrumb">
+        <li class="active">
+            <a href="@Url.Action("Index", "Dashboards")">
+                <i class="fa fa-lg fa-home text-warning text-size-20">
+                </i> Trang Chủ
+            </a>
+        </li>
+        <li>
+            <a href="@Url.Action("ManagePermission", "ManagePermission")">
+                <i>
+                </i>Quản Lý Phân Quyền
+            </a>
+        </li>
+        <li class="active">
+            ManageAction
+        </li>
+    </ol>
+</div>
+
+@*content*@
+<div class="container">
+    <div class="row">
+        @*các thao tác*@
+        <div class="show">
+            <div class="col-sm-4 col-sm-push-8" style="text-align:right;">
+                <div class="form-group ">
+                    <button data-otf-mutil="true"
+                            onclick="ManageAction_Action_DeleteMulti(this)"
+                            data-otf-confirm="Bạn có chắc muốn xóa những dòng đã chọn?"
+                            data-otf-target="#CPManageAction"
+                            data-otf-input="#SearchAction"
+                            data-otf-action-target="@Url.Action("ActionGet_List", "ManagePermission")?k="
+                            data-otf-action="@Url.Action("ActionDelete", "ManagePermission", null, Request.Url.Scheme)?id="
+                            class=" btn btn-danger"
+                            title="Xóa">
+                        <i class="fa fa-trash-o"></i> Xóa
+                    </button>
+                    <a class=" btn btn-success" href="@Url.Action("ActionCreate", "ManagePermission", null, Request.Url.Scheme)">
+                        <i class="fa fa-plus" title="Tạo mới"></i> Thêm mới
+                    </a>
+                </div>
+            </div>
+            <div class="col-sm-8  col-sm-pull-4">
+                <div class="form-group">
+                    <div class="col-sm-3">
+                        @Html.DropDownList("ddlListControler",
+                                                   new SelectList(ViewBag.ListControler, "ValueString", "Name"),
+                                          new
+                                          {
+                                              @class = "form-control chosen-select",
+                                              onchange = "DropdownlistChange(this,'#buttonsearch')",
+                                              id = "ddlListControler"
+                                          })
+                    </div>
+                    <div class="col-sm-3">
+                        @Html.DropDownList("ddlListGroup",
+                                          new SelectList(ViewBag.ListGroup, "ValueString", "Name"),
+                                          new
+                                          {
+                                              @class = "form-control chosen-select",
+                                              onchange = "DropdownlistChange(this,'#buttonsearch')",
+                                              id = "ddlListGroup"
+                                          })
+                    </div>
+                    <div class="input-group col-sm-6">
+                        <div class="input-group">
+                            <input id="SearchAction"
+                                   placeholder="Thông tin cần tìm"
+                                   onkeypress="return ManageAction_Action_EnterEvent(event, '#buttonsearch')"
+                                   class="form-control " />
+                            <span class="input-group-btn">
+                                <button id="buttonsearch"
+                                        type="button"
+                                        title="Tìm kiếm"
+                                        class="btn btn-primary"
+                                        data-otf-target="#CPManageAction"
+                                        data-otf-input="#SearchAction"
+                                        data-otf-input1="#ddlListControler"
+                                        data-otf-input2="#ddlListGroup"
+                                        data-otf-action="@Url.Action("ActionGet_List", "ManagePermission", null, Request.Url.Scheme)?k="
+                                        onclick="ManageAction_Action_IsSearch(this)">
+                                    Tìm kiếm
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div id="CPManageAction">
+                @Html.Action("ActionGet_List", "ManagePermission")
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Styles {
+    @Styles.Render("~/plugins/chosenStyles")
+    @Styles.Render("~/plugins/dataPickerStyles")
+}
+
+@section Scripts {
+    @Scripts.Render("~/plugins/chosen")
+    @Scripts.Render("~/module/ManagePermission/ManageAction")
+    <script src="~/Content/plugins/ckeditor/ckeditor.js"></script>
+}
+
+

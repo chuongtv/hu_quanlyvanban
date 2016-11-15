@@ -1,0 +1,134 @@
+﻿@*
+    Author:   			hanhat
+    Created: 			2015-10-21
+    Last Modified: 		2015-10-21
+*@
+
+
+@{
+    ViewBag.Title = "ManageActionGroup";
+
+    @model  nvngoc29082015.permission.library.ManageActionGroup.ActionGroup
+
+
+}
+<div id="page-heading">
+    <ol class="breadcrumb">
+        <li class="active">
+            <a href="@Url.Action("Index", "Dashboards")">
+                <i class="fa fa-lg fa-home text-warning text-size-20">
+                </i> Trang Chủ
+            </a>
+        </li>
+        <li>
+            <a href="@Url.Action("ManagePermission", "ManagePermission")">
+                <i>
+                </i>Quản Lý Phân Quyền
+            </a>
+        </li>
+        <li class="active">
+            Quản lý nhóm action
+        </li>
+    </ol>
+</div>
+
+@*content*@
+<div class="container">
+    <div class="row">
+        @*các thao tác*@
+        <div class="show">
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        @Html.DropDownListFor(model => Model.ListController,
+                        new SelectList(Model.ListController, "ValueString", "Name"),
+                                          new
+                                          {
+                                              @class = "form-control chosen-select",
+                                              id = "DDL_ControllerGuid",
+                                              @onchange = "onchangedddlcontroler(this,'#buttonsearch')"
+                                          })
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <div class="input-group">
+                        <input id="SearchActionGroup"
+                               placeholder="Thông tin cần tìm"
+                               onkeypress="return ManageActionGroup_ActionGroup_EnterEvent(event, '#buttonsearch')"
+                               class="form-control " />
+                        <span class="input-group-btn">
+                            <button id="buttonsearch"
+                                    type="button"
+                                    title="Tìm kiếm"
+                                    class="btn btn-primary"
+                                    data-otf-target="#CPManageActionGroup"
+                                    data-otf-input="#SearchActionGroup"
+                                    data-otf-input1="#DDL_ControllerGuid"
+                                    data-otf-action="@Url.Action("ActionGroupGet_List", "ManagePermission", null, Request.Url.Scheme)?k="
+                                    onclick="ManageActionGroup_ActionGroup_IsSearch(this)">
+                                Tìm kiếm
+                            </button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4" style="text-align:right;">
+                <div class="form-group ">
+                    <button data-otf-mutil="true"
+                            onclick="ManageActionGroup_ActionGroup_DeleteMulti(this)"
+                            data-otf-confirm="Bạn có chắc muốn xóa những dòng đã chọn?"
+                            data-otf-target="#CPManageActionGroup"
+                            data-otf-input="#SearchActionGroup"
+                            data-otf-action-target="@Url.Action("ActionGroupGet_List", "ManagePermission")?k="
+                            data-otf-action="@Url.Action("ActionGroupDelete", "ManagePermission", null, Request.Url.Scheme)?id="
+                            class=" btn btn-danger"
+                            title="Xóa">
+                        <i class="fa fa-trash-o"></i> Xóa
+                    </button>
+                    <a class=" btn btn-success" href="@Url.Action("ActionGroupCreate", "ManagePermission", null, Request.Url.Scheme)">
+                        <i class="fa fa-plus" title="Tạo mới"></i> Thêm mới
+                    </a>
+                </div>
+            </div>
+
+
+
+
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div id="CPManageActionGroup">
+                    @Html.Action("ActionGroupGet_List", "ManagePermission")
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+
+    function onchangedddl(element) {
+
+        $("#CPManageActionGroup").load($(element).attr("data-otf-action") + $(element).val());
+
+    }
+</script>
+
+@section Styles {
+    @Styles.Render("~/plugins/chosenStyles")
+    @Styles.Render("~/plugins/dataPickerStyles")
+}
+
+@section Scripts {
+    @Scripts.Render("~/plugins/chosen")
+    @Scripts.Render("~/module/ManagePermission/ManageActionGroup")
+    <script src="~/Content/plugins/ckeditor/ckeditor.js"></script>
+}
+
+
+
+
+
+

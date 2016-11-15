@@ -1,0 +1,43 @@
+﻿@model nvngoc29082015.permission.library.ManageRoleForCode.ChinhSuaRoleForCodeViewModel
+@{
+    ViewBag.Title = "SaveRoleForCode";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@ViewBag.Title.</h2>
+
+@using (Html.BeginForm("SaveRoleForCode", "ManagePermission", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    <hr />
+    @Html.Raw(ViewBag.StatusMessage)
+
+
+    @Html.ValidationSummary()
+
+    @Html.HiddenFor(m => Model.RoleForCodeGuid);
+    @Html.HiddenFor(m => Model.AppGuid);
+    @Html.HiddenFor(m => Model.ModuleGuid);
+
+    <div class="form-group">
+        @Html.LabelFor(m => Model.RoleForCodeName, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.RoleForCodeName, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => Model.Description, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextAreaFor(m => m.Description, new { @class = "form-control" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Lưu dữ liệu" class="btn btn-default" />
+            hoặc
+            @Html.ActionLink("Quay lại danh sách", "DanhSachRoleForCode", "ManagePermission")
+        </div>
+    </div>
+}
+

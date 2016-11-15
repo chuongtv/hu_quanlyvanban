@@ -1,0 +1,43 @@
+﻿@*
+    Author:   			ntdai
+    Created: 			2016-2-22
+    Last Modified: 		2016-2-22
+*@
+
+
+@{
+    ViewBag.Title = "Thêm mới";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div id="page-heading">
+    <ol class="breadcrumb">
+        <li>
+            <a href="@Url.Action("Index", "Home")">
+                <i class="fa fa-lg fa-home text-warning text-size-20">
+                </i> Trang chủ
+            </a>
+        </li>
+        <li class="active">
+            Tạo mới Phiếu mượn phòng
+        </li>
+    </ol>
+</div>
+
+@*content*@
+<div class="container" id="CPPhieuMuonPhong">
+        @Html.Partial("~/Views/GiamSatGiangDay/PhieuMuonPhong/_PartialCreate.cshtml")
+</div>
+
+@section Styles {
+    @Styles.Render("~/plugins/chosenStyles")
+}
+
+@section Scripts {
+    @Scripts.Render("~/plugins/chosen")
+    @Scripts.Render("~/module/GiamSatGiangDay/PhieuMuonPhong")
+    <script src="~/Content/plugins/ckeditor/ckeditor.js"></script>
+}
+
+
+

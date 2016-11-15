@@ -1,0 +1,82 @@
+﻿@*
+    Author:   			pdgiai
+    Created: 			2016-1-11
+    Last Modified: 		2016-1-11
+*@
+@{
+    ViewBag.Title = "Quản lý loại vi phạm";
+}
+<div class="container">
+    <div class="row col-sm-12"><h4>CẤU HÌNH LOẠI VI PHẠM</h4></div>
+    <div class="row">
+        @*các thao tác*@
+        <div class="show">
+            <div class="col-sm-4 col-sm-push-8" style="text-align:right;">
+                <div class="form-group ">
+                    <button data-otf-mutil="true"
+                            onclick="GiamSatGiangDay_CauHinhLoaiViPham_DeleteMulti(this)"
+                            data-otf-confirm="Bạn có chắc muốn xóa những dòng đã chọn?"
+                            data-otf-target="#GiamSatGiangDay_CauHinhLoaiViPham_DS_content"
+                            data-otf-input="#GiamSatGiangDay_CauHinhLoaiViPham_SearchInput"
+                            data-otf-action-target="@Url.Action("CauHinhLoaiViPhamGet_List", "GiamSatGiangDay")?idnv=@Request["id"]&k="
+                            data-otf-action="@Url.Action("CauHinhLoaiViPhamDelete", "GiamSatGiangDay", null, Request.Url.Scheme)?id="
+                            class=" btn btn-danger"
+                            title="Xóa">
+                        <i class="fa fa-trash-o"></i> Xóa
+                    </button>
+                    <a data-toggle="modal" onclick="GiamSatGiangDay_CauHinhLoaiViPham_GetView(this)"
+                       data-target="#modalGiamSatGiangDay_CauHinhLoaiViPham" class=" btn btn-success" data-otf-action="@Url.Action("CauHinhLoaiViPhamCreate", "GiamSatGiangDay", null, Request.Url.Scheme)?id=0" href="javascript:void(0)">
+                        <i class="fa fa-plus" title="Tạo mới"></i> Thêm mới
+                    </a>
+
+
+                </div>
+            </div>
+            <div class="col-sm-8  col-sm-pull-4">
+                <div class="form-group">
+                    <div class="input-group">
+                        <input id="GiamSatGiangDay_CauHinhLoaiViPham_SearchInput"
+                               placeholder="Thông tin cần tìm"
+                               onkeypress="return GiamSatGiangDay_CauHinhLoaiViPham_EnterEvent(event, '#GiamSatGiangDay_CauHinhLoaiViPham_buttonsearch')"
+                               class="form-control " />
+                        <span class="input-group-btn">
+                            <button id="GiamSatGiangDay_CauHinhLoaiViPham_buttonsearch"
+                                    type="button"
+                                    title="Tìm kiếm"
+                                    class="btn btn-primary"
+                                    data-otf-target="#GiamSatGiangDay_CauHinhLoaiViPham_DS_content"
+                                    data-otf-input="#GiamSatGiangDay_CauHinhLoaiViPham_SearchInput"
+                                    data-otf-action="@Url.Action("CauHinhLoaiViPhamGet_List", "GiamSatGiangDay", null, Request.Url.Scheme)?idnv=@Request["id"]&k="
+                                    onclick="GiamSatGiangDay_CauHinhLoaiViPham_IsSearch(this)">
+                                Tìm kiếm
+                            </button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12" id="GiamSatGiangDay_CauHinhLoaiViPham_DS_content">
+            @Html.Action("CauHinhLoaiViPhamGet_List", "GiamSatGiangDay", new { idnv = @Request["id"] })
+        </div>
+    </div>
+</div>
+<!--Chép đoạn này vào page để khai báo popup-->
+@section dialog {
+
+    <!-- GiamSatGiangDay_CauHinhLoaiViPham UNIT MODAL -->
+    <div class="modal inmodal fade" id="modalGiamSatGiangDay_CauHinhLoaiViPham" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog " id="modalGiamSatGiangDay_CauHinhLoaiViPham_c">
+        </div>
+	</div>
+    <!-- GiamSatGiangDay_CauHinhLoaiViPham UNIT END-->
+}
+@section Scripts {
+    @Scripts.Render("~/plugins/dropZone")
+    @Scripts.Render("~/module/GiamSatGiangDay/CauHinhLoaiViPham")
+    @Scripts.Render("~/plugins/fancybox")
+}
+
+
+

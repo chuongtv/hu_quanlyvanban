@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="PermissionDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="ioiort_Controller">
+    <Key>
+      <PropertyRef Name="ControllerGuid" />
+    </Key>
+    <Property Name="ControllerGuid" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="ControllerName" Type="nvarchar" MaxLength="256" />
+    <Property Name="Description" Type="nvarchar(max)" />
+  </EntityType>
+  <Function Name="ioiort_Controller_SelectAll" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <EntityContainer Name="PermissionDBModelStoreContainer">
+    <EntitySet Name="ioiort_Controller" EntityType="Self.ioiort_Controller" Schema="dbo" store:Type="Tables" />
+  </EntityContainer>
+</Schema>

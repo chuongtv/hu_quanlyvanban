@@ -1,0 +1,554 @@
+﻿@*
+    Author:   			pdgiai
+    Created: 			2016-2-1
+    Last Modified: 		2016-2-1
+*@
+@{
+    ViewBag.Title = "Đăng ký phiếu báo bù";
+}
+@model nvngoc31122015.giamsatgiangday.library.GiamSatGiangDay.UpdatePhieuBaoTKBView
+<div id="page-heading">
+    <ol class="breadcrumb">
+        <li>
+            <a href="@Url.Action("Index", "Home")">
+                <i class="fa fa-lg fa-home text-warning text-size-20">
+                </i> Trang chủ
+            </a>
+        </li>
+        <li>
+            <a href="@Url.Action("DSPhieuBaoBu", "GiamSatGiangDay")">
+                Quản lý phiếu báo bù
+            </a>
+        </li>
+        <li class="active">
+            Đăng ký phiếu báo bù
+        </li>
+    </ol>
+</div>
+<div class="container">
+    <div class="row text-center">
+        <div class="col-sm-12">
+            <h4>THÔNG TIN ĐĂNG KÝ BÁO BÙ</h4>
+        </div>
+    </div>
+    <div class="row">
+        @Html.Action("DangKyBaoBu_GetThongTinGiangVien", "GiamSatGiangDay", new { GiangVienGuid = @Request["GiangVienGuid"] })
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12" id="GiamSatGiangDay_PhieuBaoTKB_DS_content">
+            @Html.Action("PhieuBaoBuTKBChiTiet_GetList", "GiamSatGiangDay", new { idPhieuBao = @ViewData["PhieuBaoGuid"] })
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <hr />
+            @Html.Action("DangKyPhieuBaoBu_GetThongTinPhanHoi", "GiamSatGiangDay", new { ItemGuid = @ViewData["PhieuBaoGuid"] })
+        </div>
+    </div>
+
+    <div class="row form-group text-right">
+        <div class="col-sm-12">
+            <a title="Quay lại" href="@Url.Action("DSPhieuBaoBu", "GiamSatGiangDay", null, Request.Url.Scheme)" class="btn btn-default">Quay lại</a>
+            @if ((@User as project.web.mvc.Common.IOIORTPrincipal).HasPermission("PhieuBaoBuTKB_Update_GiamSatGiangDay"))
+            {
+                int check = 0;
+                if (Request["T"] == null)
+                {
+                    check = 1;
+                }
+                else if ((Request["T"] != "0" && Request["view"] != "0" && Request["PhieuBao"] == null))
+                {
+                    check = 1;
+                }
+                if (check == 0)
+                {
+                    string PhieuBaoGuid = "";
+                    if (Request["PhieuBao"] == null)
+                    {
+                        PhieuBaoGuid = ViewData["PhieuBaoGuid"].ToString();
+                    }
+                    else
+                    {
+                        PhieuBaoGuid = Request["PhieuBao"].ToString();
+                    }
+
+                    if ((@User as project.web.mvc.Common.IOIORTPrincipal).HasPermission("DangKyPhieuBaoBu_CapPhongBu_GiamSatGiangDay") == false)
+                    {
+                    if (Request["T"] != "-1")
+                    {
+                        <button type="button" onclick="DangKyPhieuBao_PhieuBaoTKB_Update(0, '@PhieuBaoGuid', '@Request["GiangVienGuid"]')" class="btn btn-success">
+                            Lưu phiếu
+                        </button>
+                    }
+                        <button type="button" onclick="DangKyPhieuBao_PhieuBaoTKB_Update(1, '@PhieuBaoGuid', '@Request["GiangVienGuid"]')" class="btn btn-primary">
+                            Lưu và gửi phiếu
+                        </button>
+
+                        @*if ((Request["T"] == "-1" || Request["T"] == "0") && Request["view"] != null)
+                        {
+                            <a data-otf-confirm="Bạn có chắc muôn xóa?"
+                               title="Xóa dữ liệu này" href="javascript:void(0)"
+                               onclick="GiamSatGiangDay_DangKyPhieuBao_DeleteMulti(this)"
+                               data-otf-action-target="@Url.Action("PhieuBaoTKBGet_List", "GiamSatGiangDay")"
+                               data-otf-action="@Url.Action("PhieuBaoTKBDelete", "GiamSatGiangDay", null, Request.Url.Scheme)?id=@PhieuBaoGuid&TrangThai=@Request["T"]"
+                               class="btn btn-default">
+                                <i class="fa fa-trash"></i> Xóa phiếu
+                            </a>
+                        }*@
+                    }
+                    
+                    @*if ((@User as project.web.mvc.Common.IOIORTPrincipal).HasPermission("PhieuMuonPhongCreate_GiamSatGiangDay"))
+                    {
+                        <button type="button" onclick="DangKyPhieuBao_PhieuBaoTKB_Update(0, '@PhieuBaoGuid', '@Request["GiangVienGuid"]')" class="btn btn-primary">
+                            <i class="fa fa-save" title="Lưu phiếu"></i> Lưu phiếu
+                        </button>
+                        if (Request["T"] != "0")
+                        {
+                        <button type="button" onclick="DangKyPhieuBao_PhieuBaoTKB_Update(-1, '@PhieuBaoGuid', '@Request["GiangVienGuid"]')" class="btn btn-danger">
+                            <i class="fa fa-dedent" title="Không duyệt"></i> Không duyệt
+                        </button>
+                        }
+                    }*@
+
+                    if ((@User as project.web.mvc.Common.IOIORTPrincipal).HasPermission("DangKyPhieuBaoBu_CapPhongBu_GiamSatGiangDay"))
+                    {
+                        <button type="button" onclick="DangKyPhieuBao_PhieuBaoTKB_Update(2, '@PhieuBaoGuid', '@Request["GiangVienGuid"]')" class="btn btn-primary">
+                           Lưu và duyệt phiếu
+                        </button>
+                        if (Request["T"] != "0")
+                        {
+                        <button type="button" onclick="DangKyPhieuBao_PhieuBaoTKB_Update(-1, '@PhieuBaoGuid', '@Request["GiangVienGuid"]')" class="btn btn-danger">
+                            Không duyệt
+                        </button>
+                        }
+                    }
+                }
+
+            }
+        </div>
+    </div>
+</div>
+
+<!--Chép đoạn này vào page để khai báo popup-->
+@section dialog {
+
+    <!-- GiamSatGiangDay_DangKyPhieuBao UNIT MODAL -->
+    <div class="modal inmodal fade" id="modalGiamSatGiangDay_DangKyPhieuBaoBu" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg" id="modalGiamSatGiangDay_DangKyPhieuBao_c">
+            <div class="modal-content">
+                    <div class="modal-header">
+                        <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+                        <h4 class="modal-title">Chọn ca báo bù</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div id='calendar'></div>
+                    </div>
+                    <div class="modal-footer">
+                        @*<button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>*@
+                    </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- GiamSatGiangDay_DangKyPhieuBao UNIT END-->
+
+    <!-- GiamSatGiangDay_CapPhong UNIT MODAL -->
+    <div class="modal inmodal fade" id="modalGiamSatGiangDay_CapPhong" tabindex="-2" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg" id="modalGiamSatGiangDay_CapPhong_c">
+            
+        </div>
+    </div>
+    <!-- GiamSatGiangDay_CapPhong UNIT END-->
+
+    <!-- GiamSatGiangDay_DangKyPhieuBao_DanhSachTKBCanBu UNIT MODAL -->
+    <div class="modal inmodal fade" id="modalGiamSatGiangDay_DangKyPhieuBao_DanhSachTKBCanBu" tabindex="-3" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg" id="modalGiamSatGiangDay_DangKyPhieuBao_DanhSachTKBCanBu_c">
+
+        </div>
+    </div>
+    <!-- GiamSatGiangDay_DangKyPhieuBao_DanhSachTKBCanBu UNIT END-->
+}
+
+
+@section Styles {
+    @Styles.Render("~/plugins/qtipstyles")
+    @Styles.Render("~/plugins/chosenStyles")
+    @Styles.Render("~/plugins/dataPickerStyles")
+    @Styles.Render("~/plugins/fullcalendarstyles")
+}
+@section Scripts {
+    @*<script src="~/Content/plugins/metro-ui/docs/js/metro.js"></script>
+    <script src="~/Content/plugins/slimScroll/jquery.slimscroll.min.js"></script>*@
+    @Scripts.Render("~/plugins/qtip")
+    @Scripts.Render("~/plugins/fullcalendarDangKyPhieuBao")
+    @Scripts.Render("~/plugins/dropZone")
+    @Scripts.Render("~/plugins/chosen")
+    @Scripts.Render("~/plugins/dataPicker")
+    @Scripts.Render("~/plugins/dayformat")
+    @Scripts.Render("~/module/GiamSatGiangDay/DangKyPhieuBao")
+    @Scripts.Render("~/plugins/fancybox")
+
+    <script type="text/javascript">
+
+    $('#calendar').fullCalendar({
+        header: {
+            left: 'prev,next today',
+            center: 'title',
+            right: 'agendaWeek,month'
+        },
+        lang: 'vi',
+        defaultView: 'agendaWeek',
+        eventLimit: true, // allow "more" link when too many events,
+        disableDragging: true,
+        allDaySlot: false,
+        minTime: "01:00:00",
+        maxTime: "18:00:00",
+        events: function (start, end, timezone, callback) {
+            $.ajax({
+                type: 'Get',
+                url: "/GiamSatGiangDay/DangKyPhieuBaoBu_LoadPhanCongLichTrucGiangVien" ,
+                data: {
+                    start: start.unix(),
+                    end: end.unix(),
+                    giangvienguid: @Html.Raw(Json.Encode(Request["GiangVienGuid"]))
+                    },
+                success: function (doc) {
+                    var events = doc;
+                    callback(events);
+                }
+            });
+        },
+        eventRender: function (event, element) {
+            element.qtip({
+                content: event.tooltip,
+                position: {
+                    target: 'mouse', // Track the mouse as the positioning target
+                    adjust: { x: 5, y: 5 } // Offset it slightly from under the mouse
+                }
+            });
+        },
+        eventClick: function (event, element) {
+            // xoa event
+            var idPhieuBao = @Html.Raw(Json.Encode(ViewData["PhieuBaoGuid"]))
+            $.ajax({
+                type: 'Post',
+                cache: false,
+                url: '/GiamSatGiangDay/PhieuBaoBuTKBChiTietCreate?idPhieuBao=' + idPhieuBao + '&idPhanCongLichTruc=' + event.PhanCongLichTrucGuid + '&GiangVienGuid=' + @Html.Raw(Json.Encode(Request["GiangVienGuid"])),
+                success: function (data) {
+                    $('#GiamSatGiangDay_PhieuBaoTKB_DS_content').load('/GiamSatGiangDay/PhieuBaoBuTKBChiTiet_GetList?T=0&view=1&idPhieuBao=' + idPhieuBao, function myfunction() {
+                        //DialogAlert('', 'Cập nhập dữ liệu thành công', 'info');
+                        if ($('#modalGiamSatGiangDay_DangKyPhieuBaoBu') != 'null')
+                            $('#modalGiamSatGiangDay_DangKyPhieuBaoBu').modal('hide');
+                    });
+
+
+                    //}
+                }
+            }).error(function () {
+                DialogAlert('Lỗi', 'Bạn đã đăng ký báo nghĩ ca này rồi!', 'info');
+            });
+        }
+
+    });
+
+
+    $('#modalGiamSatGiangDay_DangKyPhieuBaoBu').on('shown.bs.modal', function () {
+        $("#calendar").fullCalendar('render');
+    });
+
+    function DangKyPhieuBao_PhieuBaoTKB_Update(value,idPhieuBao,GiangVienGuid) {
+
+        //Kiem tra ngay bu
+        if($('#date_tungay').val() == "")
+        {
+            alert("Xin vui lòng nhập chọn ngày bù!");
+            return;
+        }
+        else
+        {
+            var date_regex = /^([1-9]|[1][012])\/|\/([1-9]|[1][0-9]|[2][0-9]|[3][01])\/|\/([1][6-9][0-9][0-9]|[2][0][01][0-9])$/;
+            if (!(date_regex.test($('#date_tungay').val()))) {
+                alert("Ngày bù không đúng định dạng dd/MM/yyyy");
+                return;
+            }
+        }
+
+        //kiem so phut bao bu
+        var CaGuidString = $('#CaHoc_Guid :selected').val();
+
+        if(value == 1 || value == 0)
+        {
+           
+            var idList = "#GiamSatGiangDay_PhieuBaoTKB_DS_content";
+            var PhanCongLichTrucGuid = '', Ngay='',Thu = '',CaGuid = '';
+            var checklop = "", checkMonhoc = "";
+            var checkvalue = 0, isLoi = 0, isNgayHoc=0;
+            var ngaybu=parseDate($('#date_tungay').val());
+            var ngayhoc = new Date();
+            $(idList + ' input.text-box').each(function (index, value) {
+
+                ngayhoc = parseDate($('#Ngayhoc_value'+index+'').val());
+                if(ngaybu < ngayhoc)
+                {
+                    isNgayHoc = 1;
+                }
+
+                if(checklop == "") checklop = $('#LopName_value'+index+'').val();
+                if(checkMonhoc == "") checkMonhoc = $('#MonHocName_value'+index+'').val();
+
+                if($('#LopName_value'+index+'').val() == checklop)
+                {
+                    checkvalue = (checkvalue + parseInt($('#date_value'+index+'').val()));
+                }
+                else if($('#MonHocName_value'+index+'').val() == checkMonhoc)
+                {
+                    checkvalue = (checkvalue + parseInt($('#date_value'+index+'').val()));
+                }
+                else
+                {
+                    isLoi = 1;
+                }
+                
+            });
+
+            if(isNgayHoc == 1)
+            {
+                alert("Thời gian bù không hợp lệ: Ngày bù phải lớn hơn ngày học!");
+                return;
+            }
+            
+
+            if(isLoi == 0)
+            {
+                var TongPhutBu = CaGuidString.split(/_(.+)?/)[0];
+                if(checkvalue > 0 && checkvalue > parseInt(TongPhutBu))
+                {
+                    alert("Thời gian bù không hợp lệ: Thời gian cần bù lớn hơn thời gian bù!");
+                    return;
+                }
+                
+            }
+            else
+            {
+                alert("Lớp bạn chọn bù không hợp lệ: khác lớp và khác môn học");
+                return;
+            }
+        }
+
+
+        //kiem tra noi dung phan hoi
+        var txtnoidung = document.getElementById("txt_noidung");
+        if((value == -1 || value == 1) && document.getElementById("txt_noidungphanhoi") != null)
+        {
+            if(document.getElementById("txt_noidungphanhoi").value == '')
+            {
+                alert("Xin vui lòng nhập phản hồi!");
+                return;
+            }
+            else
+            {
+                DangKyPhieuBao_ThongTinPhanHoi_Insert(idPhieuBao);
+            }
+        }
+        else if((value == 2) )
+        {   
+            if(document.getElementById("txt_noidungphanhoi").value != '')
+            {
+                DangKyPhieuBao_ThongTinPhanHoi_Insert(idPhieuBao);
+            }
+        }
+        //var idPhieuBao = @Html.Raw(Json.Encode(ViewData["PhieuBaoGuid"]))
+
+        $.ajax({
+            type: 'Post',
+            cache: false,
+            url: '/GiamSatGiangDay/PhieuBaoBuTKB_Update',
+            data: {
+                PhieuBaoGuid: idPhieuBao,
+                NoiDung: "",
+                TrangThai: value,
+                //NhanVien_Guid: @Html.Raw(Json.Encode(Request["GiangVienGuid"]))
+                NhanVien_Guid: GiangVienGuid
+            },
+            //contentType: 'application/json; charset=utf-8',
+            success: function (msg) {
+                if (msg == 'ok')
+                {
+                    if(value == 1 || value == 0)
+                    {
+                       
+                        var idList = "#GiamSatGiangDay_PhieuBaoTKB_DS_content";
+                        var PhanCongLichTrucGuid = '', Ngay='',Thu = '',CaGuid = '';
+                        PhanCongLichTrucGuid = $('#date_tungay').attr('data-off-TKBGuid');
+                        Ngay = $('#date_tungay').val();
+                        Thu = refrClock(Ngay);
+                        CaGuid = CaGuidString.split(/_(.+)?/)[1];
+                        //alert(Ngay + ' | ' + Thu + ' | ' + CaGuid + ' | ' + PhanCongLichTrucGuid + ' | ' + idPhieuBao);
+                        $.ajax({
+                            type: 'Post',
+                            cache: false,
+                            url: "/GiamSatGiangDay/PhieuBaoBuTKB_Upddate_TKBtmp",
+                            data: {
+                                PhanCongLichTrucGuid: PhanCongLichTrucGuid,
+                                Tungay: Ngay,
+                                Thu: Thu,
+                                Ca_Guid: CaGuid,
+                                PhieuBaoGuid: idPhieuBao
+                            },
+                            success: function (data) {
+                            }
+                        }).done(function () {
+                            window.location.href = "/GiamSatGiangDay/DSPhieuBaoBu";
+                        });
+                    }
+                    else
+                    {
+                        window.location.href = "/GiamSatGiangDay/DSPhieuBaoBu";
+                    }
+
+                }
+                   
+            }
+        }).done(function () {
+
+        });  
+
+    }
+
+    function refrClock(dtstr) {
+
+
+        var timespan = new Date(dtstr.split("/").reverse().join("-")).getTime();
+
+        var d=new Date(timespan);
+
+        var s=d.getSeconds();
+
+        var m=d.getMinutes();
+
+        var h=d.getHours();
+
+        var day=d.getDay();
+
+        var date=d.getDate();
+
+        var month=d.getMonth();
+
+        var year=d.getFullYear();
+
+        var days=new Array("8","2","3","4","5","6","7");
+
+        var months=new Array("1","2","3","4","5","6","7","8","9","10","11","12"); var am_pm;
+
+        if (s<10) {s="0" + s}
+
+        if (m<10) {m="0" + m}
+
+        if (h>12)
+
+        {h-=12;AM_PM = "PM"}
+
+        else {AM_PM="AM"}
+
+        if (h<10) {h="0" + h}
+
+        //alert(days[day] + " Ngày " + date + "/" +months[month] + "/" + year + " Bây giờ là "+ " [" + h + ":" + m + ":" + s + "] " + AM_PM);
+        //alert(days[day]);
+        return days[day]; 
+    
+    } 
+
+    function DangKyPhieuBao_ThongTinPhanHoi_Insert(idPhieuBao) {
+        var txtnoidung = document.getElementById("txt_noidungphanhoi");
+        //var idPhieuBao = @Html.Raw(Json.Encode(ViewData["PhieuBaoGuid"]))
+
+        $.ajax({
+            type: 'Post',
+            cache: false,
+            url: '/GiamSatGiangDay/ThongTinPhanHoiCreate',
+            data: {
+                ItemGuid: idPhieuBao,
+                NoiDung: txtnoidung.value
+            },
+            //contentType: 'application/json; charset=utf-8',
+            success: function (msg) {
+                if (msg == 'ok')
+                    $("#GiamSatGiangDay_ThongTinPhanHoi_DS_content").load('/GiamSatGiangDay/DangKyPhieuBao_GetThongTinPhanHoi?ItemGuid=' + idPhieuBao);
+            }
+        }).done(function () {
+
+        });
+    }
+
+
+    //Xóa nhiều hoặc xóa 1
+    function GiamSatGiangDay_PhieuBaoTKBChiTiet_Delete(element) {
+
+        var $button = $(element);
+        if ($button.attr('data-otf-confirm'))
+            if (!confirm($button.attr('data-otf-confirm')))
+                return false;
+
+        var idList = $button.attr('data-otf-target');
+
+        var ismultil = $button.attr('data-otf-mutil');
+
+        if (ismultil == undefined) {
+            var idPhieuBao = @Html.Raw(Json.Encode(ViewData["PhieuBaoGuid"]))
+            //Trường hợp 1 item
+            $.ajax({
+                type: 'Post',
+                cache: false,
+                url: $button.attr('data-otf-action') + '&idPhieuBao=' + idPhieuBao,
+                success: function (data) {
+                    $(idList).load($button.attr('data-otf-action-target') + '?T=0&view=1&idPhieuBao=' + idPhieuBao + '&GiangVienGuid=' + @Html.Raw(Json.Encode(Request["GiangVienGuid"]))  + '');
+                }
+            }).done(function () {
+            });
+            return true;
+        }
+
+        return false;
+    }
+
+        function GiamSatGiangDay_PhieuBaoTKBCanBu_InsertPhieuBaoChiTiet(element) {
+            var $button = $(element);
+            var action = $button.attr('data-otf-action');
+            var PhanCongLichTrucGuid = $button.attr('data-otf-TKB');
+            var idPhieuBao = @Html.Raw(Json.Encode(ViewData["PhieuBaoGuid"]))
+
+            $.ajax({
+                type: 'Post',
+                cache: false,
+                url: action + '?idPhieuBao=' + idPhieuBao + '&idPhanCongLichTruc=' + PhanCongLichTrucGuid + '&GiangVienGuid=' + @Html.Raw(Json.Encode(Request["GiangVienGuid"])),
+                success: function (data) {
+                    $('#GiamSatGiangDay_PhieuBaoTKB_DS_content').load('/GiamSatGiangDay/PhieuBaoBuTKBChiTiet_GetList?T=0&view=1&idPhieuBao=' + idPhieuBao, function myfunction() {
+                        //DialogAlert('', 'Cập nhập dữ liệu thành công', 'info');
+                        if ($('#modalGiamSatGiangDay_DangKyPhieuBao_DanhSachTKBCanBu') != 'null')
+                            $('#modalGiamSatGiangDay_DangKyPhieuBao_DanhSachTKBCanBu').modal('hide');
+                    });
+
+
+                    //}
+                }
+            }).error(function () {
+                DialogAlert('Lỗi', 'Bạn đã đăng ký báo nghĩ ca này rồi!', 'info');
+            });
+        }
+
+        
+
+
+    </script>
+}
+
+
+
+
+
+
+
+

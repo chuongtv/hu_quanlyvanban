@@ -1,0 +1,231 @@
+﻿@*
+    Author:   			pdgiai
+    Created: 			2016-2-1
+    Last Modified: 		2016-2-1
+*@
+@{
+    ViewBag.Title = "Danh sách nghỉ bù";
+}
+<div id="page-heading">
+    <ol class="breadcrumb">
+        <li>
+            <a href="@Url.Action("Index", "Home")">
+                <i class="fa fa-lg fa-home text-warning text-size-20">
+                </i> Trang chủ
+            </a>
+        </li>
+        <li class="active">
+            Quản lý danh sách nghỉ bù
+        </li>
+    </ol>
+</div>
+<div class="container">
+    <div class="row">
+        @*các thao tác*@
+        <div class="panel panel-primary">
+            <div class="panel-body">
+                @Html.Action("QuanLyDanhSachNghiBu_LoadSearch", "GiamSatGiangDay")
+
+
+                <div class="row form-group">
+                    <div class="col-sm-12">
+                        <button id="GiamSatGiangDay_QuanLyDanhSachNghiBu_buttonsearch"
+                                type="button"
+                                title="Tìm kiếm"
+                                class="btn btn-primary"
+                                data-otf-target="#GiamSatGiangDay_DS_content"
+                                data-otf-nam="#DDL_NamHoc_Guid"
+                                data-otf-nhanvien="#NhanVienGuid"
+                                data-otf-monhoc="#MonHocID"
+                                data-otf-action="@Url.Action("QuanLyDanhSachNghiBuGet_List", "GiamSatGiangDay", null, Request.Url.Scheme)"
+                                onclick="GiamSatGiangDay_QuanLyDanhSachNghiBu_IsSearch(this)">
+                            Xem thông tin
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row form-group">
+
+            <div class="col-sm-12 text-right">
+                @*<a href="@Url.Action("MuonPhong", "GiamSatGiangDay", null, Request.Url.Scheme)"
+                   class="btn btn-success"
+                   title="Yêu cầu mượn phòng">
+                    Yêu cầu mượn phòng
+                </a>*@
+                @*<button data-otf-mutil="true"
+                        onclick="GiamSatGiangDay_QuanLyNghiBu_DeleteMulti(this)"
+                        data-otf-confirm="Bạn có chắc muốn xóa những dòng đã chọn?"
+                        data-otf-target="#GiamSatGiangDay_DS_content"
+                        data-otf-action-target="@Url.Action("QuanLyDanhSachNghiBuGet_List", "GiamSatGiangDay")?idnv=@Request["id"]&k="
+                        data-otf-action="@Url.Action("QuanLyDanhSachNghiBu_Delete", "GiamSatGiangDay", null, Request.Url.Scheme)?id="
+                        class="btn btn-danger"
+                        title="Xóa">
+                    <i class="fa fa-trash-o"></i> Xóa
+                </button>*@
+
+                <a href="@Url.Action("BaoBuThuKy", "GiamSatGiangDay", null, Request.Url.Scheme)"
+                   class="btn btn-success"
+                   title="Yêu cầu bù">
+                    Yêu cầu bù
+                </a>
+                <a href="@Url.Action("BaoBuTruocThuKy", "GiamSatGiangDay", null, Request.Url.Scheme)"
+                   class="btn btn-success"
+                   title="Yêu cầu bù trước">
+                    Yêu cầu bù trước
+                </a>
+                <a href="@Url.Action("BaoNghi", "GiamSatGiangDay", null, Request.Url.Scheme)"
+                   class="btn btn-success"
+                   title="Yêu cầu nghỉ">
+                    Yêu cầu báo nghỉ
+                </a>
+
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12" id="GiamSatGiangDay_DS_content">
+                @Html.Action("QuanLyDanhSachNghiBuGet_List", "GiamSatGiangDay", new { NamHocID = @ViewBag.NamHocID, IsPhieuNghi = 1, IsPhieuBu = 1, IsPhieuBuTruoc=1 })
+            </div>
+        </div>
+        <div class="row">
+            <div id="DetailBieuMauPrint"></div>
+        </div>
+    </div>
+</div>
+<!--Chép đoạn này vào page để khai báo popup-->
+@section dialog {
+
+    <!-- GiamSatGiangDay_QuanLyDanhSachNghiBu UNIT MODAL -->
+    <div class="modal inmodal fade" id="modalGiamSatGiangDay_QuanLyDanhSachNghiBu" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg" id="modalGiamSatGiangDay_QuanLyDanhSachNghiBu_c">
+        </div>
+    </div>
+    <!-- GiamSatGiangDay_QuanLyDanhSachNghiBu UNIT END-->
+}
+
+@section Styles {
+    @Styles.Render("~/plugins/chosenStyles")
+    @Styles.Render("~/plugins/dataPickerStyles")
+    <link href="~/Content/plugins/EasyAutocomplete/easy-autocomplete.css" rel="stylesheet" />
+}
+@section Scripts {
+    <script src="~/Content/plugins/metro-ui/docs/js/metro.js"></script>
+    <script src="~/Content/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+    <script src="~/Content/plugins/EasyAutocomplete/jquery.easy-autocomplete.js"></script>
+    @Scripts.Render("~/plugins/dropZone")
+    @Scripts.Render("~/plugins/chosen")
+    @Scripts.Render("~/plugins/dataPicker")
+    @*@Scripts.Render("~/module/GiamSatGiangDay/QLDanhSachNghiBu")*@
+    @Scripts.Render("~/plugins/fancybox")
+
+    <script type="text/javascript">
+        //Su dung cau hinh dropdownlist
+        var config = {
+            '.chosen-select': {},
+            '.chosen-select-deselect': { allow_single_deselect: true },
+            '.chosen-select-no-single': { disable_search_threshold: 10 },
+            '.chosen-select-no-results': { no_results_text: 'Lỗi! Vui lòng chọn ít nhất 1 mục.' },
+            '.chosen-select-width': { width: "95%" }
+        }
+        for (var selector in config) {
+            $(selector).chosen(config[selector]);
+        }
+
+        $('#data_TuNgay_Time .input-group.date').datepicker({
+            format: 'dd/mm/yyyy',
+            todayBtn: "linked",
+            keyboardNavigation: false,
+            forceParse: false,
+            calendarWeeks: true,
+            autoclose: true
+        });
+
+        $('#data_DenNgay_Time .input-group.date').datepicker({
+            format: 'dd/mm/yyyy',
+            todayBtn: "linked",
+            keyboardNavigation: false,
+            forceParse: false,
+            calendarWeeks: true,
+            autoclose: true
+        });
+
+        window.addEventListener('load', function (event) {
+            //LoadDefaultTextNgay();
+        });
+
+
+        //Sự kiện tìm kiếm
+        function GiamSatGiangDay_QuanLyDanhSachNghiBu_IsSearch(element) {
+            //$.removeCookie('pageperQuanLyDanhSachNghiBu', { path: '/' });
+            //var idinput = $(element).attr('data-otf-input');
+            //var idloadTo = $(element).attr('data-otf-target');
+            //var action = $(element).attr('data-otf-action');
+            //$(idloadTo).load(action + $(idinput).val().replace(/ /g, '+'));+
+
+            BeginWaiting();
+            var namhoc = document.getElementById("DDL_NamHoc_Guid");
+            var tungay = document.getElementById("tungay_time");
+            var denngay = document.getElementById("denngay_time");
+            var phieunghi = document.getElementById("checkPhieuNghi").checked;
+            var phieubu = document.getElementById("checkPhieuBu").checked;
+            var phieubutruoc = document.getElementById("checkPhieuBuTruoc").checked;
+            var phieumuonphong = document.getElementById("checkPhieuMuonPhong").checked;
+
+            //var loaiphieu = "";
+            //var rbGrp = document.getElementsByName("rbGrpLoaiPhieu");
+            //for (var i = 0; i < rbGrp.length; i++) {
+            //    if (rbGrp[i].checked == true) {
+            //        loaiphieu = rbGrp[i].value;
+            //    }
+            //}
+            var giangvien = document.getElementById("NhanVienGuid").value;
+            var monhoc = document.getElementById("MonHocID").value;
+
+            var date_regex = /^([1-9]|[1][012])\/|\/([1-9]|[1][0-9]|[2][0-9]|[3][01])\/|\/([1][6-9][0-9][0-9]|[2][0][01][0-9])$/;
+
+            if (tungay.value != "") {
+                if (!(date_regex.test(tungay.value))) {
+                    alert("Từ ngày không đúng định dạng dd/MM/yyyy");
+                    EndWaiting();
+                    return;
+                }
+            }
+            //else {
+            //    EndWaiting();
+            //    alert("Xin vui lòng chọn Từ ngày");
+            //    return;
+            //}
+
+            if (denngay.value != "") {
+                if (!(date_regex.test(denngay.value))) {
+                    alert("Đến ngày không đúng định dạng dd/MM/yyyy");
+                    EndWaiting();
+                    return;
+                }
+            }
+            //else {
+            //    EndWaiting();
+            //    alert("Xin vui lòng chọn Đến ngày");
+            //    return;
+            //}
+
+            var idloadTo = $(element).attr('data-otf-target');
+            var action = $(element).attr('data-otf-action');
+
+            $(idloadTo).load(action + '?NamHocID=' + namhoc.value.replace(/ /g, '+') + '&TuNgay=' + tungay.value.replace(/ /g, '+') + '&DenNgay=' + denngay.value.replace(/ /g, '+') + '&NhanVienGuid=' + giangvien.replace(/ /g, '+') + '&MonHocID=' + monhoc.replace(/ /g, '+') + '&IsPhieuNghi=' + phieunghi + '&IsPhieuBu=' + phieubu + '&IsPhieuBuTruoc=' + phieubutruoc + '&IsPhieuMuonPhong=' + phieumuonphong);
+            EndWaiting();
+
+        }
+
+    </script>
+}
+
+
+
+
+
+
+
+

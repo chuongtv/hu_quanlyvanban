@@ -1,0 +1,154 @@
+﻿@*
+    Author:   			pdgiai
+    Created: 			2016-1-4
+    Last Modified: 		2016-1-4
+*@
+
+@model MvcPaging.IPagedList<nvngoc31122015.giamsatgiangday.library.ThanhTraDiTrucView>
+@using MvcPaging
+
+@{var i = 1;}
+
+<div class="table-responsive">
+    @if (Model.TotalItemCount > 0)
+    {
+        <div class="p-b-10">
+            Dữ liệu ngày @DateTime.Now.ToString("dd/MM/yyyy") có <b>@Model.TotalItemCount</b> phòng cần đi thanh tra
+        </div>
+        <text>
+            <table class="table table-bordered datatables dataTable">
+                <thead>
+                    <tr>
+                        <th class="text-center w-30">
+                            #
+                        </th>
+                        <th class="text-center w-50">
+                            @Html.DisplayNameFor(model => Model[0].Tiet)
+                        </th>
+                        <th class="text-center w-50">
+                            @Html.DisplayNameFor(model => Model[0].PhongID)
+                        </th>
+                        
+                        <th class="text-left ">
+                            @Html.DisplayNameFor(model => Model[0].NhanVienFullName)
+                        </th>
+                        <th class="text-center w-50" >
+                            @Html.DisplayNameFor(model => Model[0].SoLanDaKiemTra)
+                        </th>
+                        <th class="text-center w-50">
+                            @Html.DisplayNameFor(model => Model[0].IsViPham)
+                        </th>
+                        <th class="text-center w-50">
+                            @Html.DisplayNameFor(model => Model[0].LoaiLopHoc)
+                        </th>
+                        
+
+                    </tr>
+                </thead>
+                <tbody id="listcheckall">
+                    @foreach (var item in Model)
+                    {
+                        <tr class="showhim">
+
+                            <td class="text-center">
+                                @Html.Raw((Model.PageNumber - 1) * Model.PageSize + i)
+                                @{i++;}
+                            </td>
+                            <td class="text-left">
+                                @Html.Raw(item.Tiet)
+                            </td>
+                            <td class="text-left">
+                                @Html.Raw(item.PhongID)
+                            </td>
+                            
+                            <td class="text-left">
+                                <a data-toggle="modal" onclick="GiamSatGiangDay_ThanhTraDiTruc_GetView(this)"
+                                   data-target="#modalGiamSatGiangDay_ThanhTraDiTruc"  data-otf-action="@Url.Action("ThanhTraDiTrucView_Info", "GiamSatGiangDay", null, Request.Url.Scheme)?id=@item.ThoiKhoaBieuGuid" href="javascript:void(0)">
+                                    @Html.Raw(item.NhanVienFullName)
+                                </a>
+
+                              
+                            </td>
+                            <td class="text-center">
+                                <a class="btn btn-primary" 
+                                   data-otf-action="@Url.Action("GiamSatGiangDay_ThoiKhoaBieu_UpdateDiThanhTra", "GiamSatGiangDay", null, Request.Url.Scheme)?id=@item.ThoiKhoaBieuGuid" 
+                                   onclick="GiamSatGiangDay_ThanhTraDiTruc_DaKiemTra(this)"> @Html.Raw(item.SoLanDaKiemTra)</a>
+                            </td>
+                            <td class="text-center">
+                                @Html.CheckBoxFor(x => item.IsViPham, new { disabled = "disabled" })
+                            </td>
+                            <td class="text-left">
+                                @project.config.library.Utilities.ConstantVariable.ShowLoaiLopHoc(item.LoaiLopHoc)
+                            </td>
+
+                            
+
+                        </tr>
+                                    }
+                </tbody>
+            </table>
+        </text>
+}
+else
+{
+    <text>
+    <br />
+    <div class="alert alert-dismissable alert-info">
+        <strong>Yêu cầu tìm kiếm lúc @{ var date = DateTime.Now; } @date.ToString("HH:mm:ss dd/MM/yyyy") không có dữ liệu</strong>
+        <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+    </div>
+    </text>
+}
+    <div class="pager">
+        @if (Model.TotalItemCount > Model.PageSize)
+        {
+
+            <text>
+
+                @Html.Raw(Ajax.Pager(
+                       new Options
+                       {
+                           PageSize = Model.PageSize,
+                           TotalItemCount = Model.TotalItemCount,
+                           CurrentPage = Model.PageNumber,
+                           ItemTexts = new ItemTexts() { Next = "Next", Previous = "Previous", Page = "" },
+                           ItemIcon = new ItemIcon() { First = "icon-backward", Previous = "icon-chevron-left", Next = "icon-chevron-right", Last = "icon-forward" },
+                           TooltipTitles = new TooltipTitles() { Next = "Next page", Previous = "Previous page", Page = "Page {0}." },
+                           Size = Size.normal,
+                           Alignment = Alignment.centered,
+                           IsShowControls = true,
+                           IsShowFirstLast = true,
+                           CssClass = ""
+                       },
+                       new AjaxOptions
+                       {
+                           UpdateTargetId = "GiamSatGiangDay_ThanhTraDiTruc_DS_content"
+                       }, new
+                       {
+                           controller = "GiamSatGiangDay",
+                           action = "ThanhTraDiTrucGet_List",
+                           coso = ViewData["coso"],
+                           lau = ViewData["lau"],
+                           chuakt = ViewData["chuakiemtra"],
+                           dakt = ViewData["dakiemtra"],
+                           vipham = ViewData["vipham"],
+                           sl = ViewData["solankiemtra"]
+                       }))
+            </text>
+        }
+    </div>
+</div>
+
+@using (Html.BeginScriptContext())
+{
+    Html.AddScriptBlock(
+        @<script type="text/javascript">
+            //  loadSelect("GiamSatGiangDay_ThoiKhoaBieu", "ThoiKhoaBieu");
+
+            
+        </script>
+, true);
+}
+
+
+

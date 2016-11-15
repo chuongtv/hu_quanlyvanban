@@ -1,0 +1,140 @@
+﻿@*
+    Author:   			httHong
+    Created: 			2015-10-21
+    Last Modified: 		2015-10-21
+*@
+@model nvngoc29082015.permission.library.ManageController.UpdateControllerView
+
+<div class="row">
+    <div class="col-sm-12">
+
+        @using (Ajax.BeginForm(
+                                    "ControllerEdit",
+                                    "ManagePermission",
+                                    new AjaxOptions
+                                {
+                                    InsertionMode = InsertionMode.Replace,//cach thuc update du lieu. Thay the hay them vao
+                                    HttpMethod = "POST",
+                                    UpdateTargetId = "CPManageController",
+                                    LoadingElementId = "loader"
+                                }, new { @class = "form-horizontal", id = "frm_EditController" }))
+        {
+            @Html.HiddenFor(model => Model.ControllerGuid)
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+
+            <div class="form-group">
+                @Html.LabelFor(model => Model.ControllerID, new { @class = "col-sm-2 control-label", @for = "text_ControllerID" })
+                <div class="col-sm-4">
+                    @Html.TextBoxFor(model => Model.ControllerID, new { @class = "form-control", id = "text_ControllerID" })
+                    @Html.ValidationMessageFor(model => Model.ControllerID, null, new { @class = "text-danger" })
+                </div>
+                <div class="col-sm-2">
+
+                </div>
+            </div>
+
+            <div class="form-group ">
+                @Html.LabelFor(model => Model.ControllerName, new { @class = "col-sm-2 control-label", @for = "text_ControllerName" })
+                <div class="col-sm-4">
+                    @Html.TextBoxFor(model => Model.ControllerName, new { @class = "form-control", id = "text_ControllerName" })
+                    @Html.ValidationMessageFor(model => Model.ControllerName, null, new { @class = "text-danger" })
+                </div>
+                <div class="col-sm-2">
+
+                </div>
+            </div>
+
+           <div class="form-group">
+                <div class="col-sm-2">
+
+                </div>
+                <div class="col-sm-4">
+                    @Html.CheckBoxFor(model => Model.IsActive, new { @class = "", @checked = "checked", id = "chek_IsActive" })
+                    @Html.LabelFor(model => Model.IsActive, new { @class = "control-label", @for = "chek_IsActive" })
+                    @Html.ValidationMessageFor(model => Model.IsActive, null, new { @class = "text-danger" })
+                </div>
+
+            </div>
+            
+            <div class="form-group ">
+                @Html.LabelFor(model => Model.Description, new { @class = "col-sm-2 control-label", @for = "text_Description" })
+                <div class="col-sm-6">
+                    @Html.TextAreaFor(model => Model.Description, new { @class = "form-control", id = "text_Description" })
+                    @Html.ValidationMessageFor(model => Model.Description, null, new { @class = "text-danger" })
+                </div>
+            </div>
+
+        }
+        <div class="form-horizontal" style="display:none">
+            <div class="form-group">
+                <label class="col-sm-2 control-label">
+                    File đính kèm
+                </label>
+                <div class="col-sm-8">
+
+                    @*2 hàm ulupload 1 cho xóa và k xóa*@
+                    @*@Html.Action("LoadUploadOne", "FileSystem", new { itemguid = Model.ItemGuid, id = 1, auto = "false", isDelete = "true" })*@
+                    @*@Html.Action("LoadUploadOne", "FileSystem", new { itemguid = Model.ItemGuid, id = 1, auto = "false", isDelete = "false" })*@
+
+
+                    @*s = style hiển thị danh sách file 0:1; 0 dạng block, 1 là dạng list
+                        d ="true" :"fasle" cho phép delete hay k
+                        id quy định nơi upload file, nơi load file lên trong contantvalble*@
+                    @Html.Action("LoadUploadFiles", "FileSystem", new { itemguid = Model.ControllerGuid, id = 1, auto = "false", d = "true", s = 1 })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6 col-sm-offset-3 text-center">
+            <div class="btn-toolbar">
+                <button type="button"
+                        onclick="ManageController_Controller_DeleteView(this)"
+                        data-otf-action="@Url.Action("ControllerDelete", "ManagePermission", null, Request.Url.Scheme)?id=@Model.ControllerGuid"
+                        data-otf-action-exit="@Url.Action("ManageController", "ManagePermission", null, Request.Url.Scheme)"
+                        data-otf-confirm="Bạn muốn xóa dữ liệu này?"
+                        class="btn btn-danger">
+                    <i class="fa fa-trash-o"></i> Xóa
+                </button>
+                <button type="button" onclick="ManageController_Controller_OnSaveExit('#callback', 'true', '#frm_EditController')" class="btn btn-success">Lưu & Thoát</button>
+                <button type="button" onclick="ManageController_Controller_OnSaveExit('#callback', 'false', '#frm_EditController')" class="btn btn-primary"><i class="fa fa-floppy-o"></i> Lưu dữ liệu</button>&nbsp;hoặc&nbsp;
+                <a class="btn btn-link" href="@Url.Action("ManageController", "ManagePermission", null, Request.Url.Scheme)"> Trở lại</a>
+
+                <input type="hidden" id="callback"
+                       data-otf-action-exit="@Url.Action("ManageController", "ManagePermission", null, Request.Url.Scheme)"
+                       data-otf-action="@Url.Action("ControllerEdit", "ManagePermission", null, Request.Url.Scheme)?id=@Model.ControllerGuid" />
+            </div>
+        </div>
+    </div>
+
+</div>
+
+@using (Html.BeginScriptContext())
+{
+    Html.AddScriptBlock(
+        @<script type="text/javascript">
+            //Su dung cau hinh dropdownlist
+            //var config = {
+            //    '.chosen-select': {},
+            //    '.chosen-select-deselect': { allow_single_deselect: true },
+            //    '.chosen-select-no-single': { disable_search_threshold: 10 },
+            //    '.chosen-select-no-results': { no_results_text: 'Lỗi! Vui lòng chọn ít nhất 1 mục.' },
+            //    '.chosen-select-width': { width: "95%" }
+            //}
+            //for (var selector in config) {
+            //    $(selector).chosen(config[selector]);
+            //}
+
+            if (typeof CKEDITOR != 'undefined') {
+                var a = CKEDITOR.replace('text_Description', {
+                    customConfig: '../../../Scripts/ManagePermission/ManageActionGroup/jsCKEditor-custom.js'
+                });
+            }
+        </script>
+, true);
+}
+
+
+
+

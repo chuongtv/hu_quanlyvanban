@@ -1,0 +1,112 @@
+﻿@{
+    ViewBag.Title = " Xác nhận cấp phòng cho phiếu báo bù trước";
+    Layout = "~/Views/Shared/_LayoutAngular.cshtml";
+}
+<div id="page-heading">
+    <ol class="breadcrumb">
+        <li>
+            <a href="@Url.Action("Index", "Home")">
+                <i class="fa fa-lg fa-home text-warning text-size-20">
+                </i> Trang chủ
+            </a>
+        </li>
+        <li class="active">
+           Xác nhận cấp phòng cho phiếu báo bù trước
+        </li>
+    </ol>
+</div>
+<div class="container" ng-controller="BaoBuTruocCtrl">
+    
+    <div class="col-sm-12 form-group">
+        <div >
+            <b>Giảng viên</b>:
+            <span id="lblName">{{phieubaobu.HoTen}}</span>
+        </div>
+    </div>
+    <div class="col-sm-12 form-group">
+        <b>Lý do báo bù hoặc bù trước</b>:
+    </div>
+    <div class="col-sm-12 form-group">
+        
+        <span>{{phieubaobu.NoiDung}}</span>
+    </div>
+    <div class="col-sm-12 form-group">
+        <div class="col-sm-6 nopadding"><b>Danh sách các buổi nghỉ</b></div>
+        <div class="col-sm-6 text-right nopadding">
+          
+        </div>
+
+    </div>
+    <div ng-show="listAdd.length > 0">
+        <div class="col-sm-12 form-group">
+            <table cellpadding="0" cellspacing="0" border="0" class="table table-bordered datatables">
+                <thead>
+                    <tr>
+                        <th class="w-100">Lớp</th>
+                        <th >Môn học</th>
+                        <th class="w-100">Ngày bù</th>
+                        <th class="w-100">Nhóm LT</th>
+                        <th class="w-100">Nhóm TH</th>                       
+                        <th class="w-100">Sỉ số</th>
+                        <th class="w-100">Thứ</th>
+                        <th class="w-100">Tiết bắt đầu</th>
+                        <th class="w-100">Số tiết</th>
+                        <th class="w-100" ng-show="phieubaobu.TrangThai != 1">Phòng mới</th>
+                        <th class="w-100" ng-show="phieubaobu.TrangThai == 1">Phòng</th>
+                        <th class="w-100" ng-show="phieubaobu.TrangThai != 1" >Tác vụ</th>
+                    </tr>
+                </thead>
+
+                <tbody ng-repeat="item in listAdd">
+                    <tr>
+                        <td>{{item.LopThucTeGhep}}</td>
+                        <td>{{item.MonHocName}}</td>
+                        <td>{{item.NgayBu|  date :  "dd/MM/yyyy"}}</td>
+                        <td>{{item.NhomHoc}}</td>
+                        <td>{{item.NhomThucHanh}}</td>                        
+                        <td>{{item.SiSoLopHoc}}</td>
+                        <td>{{item.Thu}}</td>
+                        <td>{{item.TietBatDau}}</td>
+                        <td>{{ item.SoTiet}}</td>
+                        <td ng-show="phieubaobu.TrangThai != 1" style="color:red;font-weight:bold;">{{item.PhongIDMoi}}</td>
+                        <td ng-show="phieubaobu.TrangThai == 1" style="color:red;font-weight:bold;">{{item.PhongID}}</td>
+                         <td class="w-100 text-center" ng-show="phieubaobu.TrangThai != 1" ><a  ng-click="fnPhanPhong(item.LopHocGuid ,item.NgayBu, item.TietBatDau,  item.SoTiet,'')">Bố trí phòng</a> </td>
+                       
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-sm-12 text-right">
+            <button ng-show="phieubaobu.TrangThai != 1" id="btnLuuPhieu"
+                    type="button"
+                    title="Lưu thông tin báo nghỉ"
+                    class="btn btn-primary"
+                    ng-click="XacNhanCapPhong()">
+               Xác nhận cấp phòng
+            </button>
+            <a class="btn btn-default" href="@Url.Action("YeuCauNghiBuMuonPhong", "GiamSatGiangDay")">Trở lại</a>
+        </div>
+    </div>
+    <div class="col-sm-12 " ng-show="listAdd.length == 0">
+        <br />
+        <div class="alert alert-dismissable alert-info">
+            <strong>Yêu cầu tìm kiếm lúc @{ var date = DateTime.Now; } @date.ToString("HH:mm:ss dd/MM/yyyy") không có dữ liệu</strong>
+            <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+        </div>
+    </div>
+
+
+</div>
+
+
+@section dialog {
+}
+
+@section Styles {
+}
+
+
+@section Scripts {
+<script src="~/angularApp/app/GiamSatHoatDongGiangDay/BaoBu/BaoBuTruocCtrl.js"></script>
+
+}

@@ -1,0 +1,211 @@
+﻿@*
+    Author:   			ntdai
+    Created: 			2016-3-18
+    Last Modified: 		2016-3-18
+*@
+
+@model ntdai16032016.maketing.library.QuanLyDotGui.CreateDotGuiView
+<div class="row">
+    <div class="col-sm-12">
+
+        @using (Ajax.BeginForm(
+                                    "DotGuiCreate",
+                                    "QuanLyMaketting",
+                                    new AjaxOptions
+                                {
+                                    InsertionMode = InsertionMode.Replace,
+                                    HttpMethod = "POST",
+                                    UpdateTargetId = "CPQuanLyDotGui",
+                                    LoadingElementId = "loader"
+                                }, new { @class = "form-horizontal", id = "frm_CreateDotGui" }))
+        {
+            @Html.HiddenFor(model => Model.DotGuiGuid)
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+
+
+            <div class="form-group">
+                @Html.LabelFor(model => Model.TieuDe, new { @class = "col-sm-1 control-label", @for = "text_TieuDe" })
+                <div class="col-sm-8">
+                    @Html.TextAreaFor(model => Model.TieuDe, new { @class = "form-control", id = "text_TieuDe" })
+                    @Html.ValidationMessageFor(model => Model.TieuDe, null, new { @class = "text-danger" })
+                </div>
+
+            </div>
+
+            <div class="form-group ">
+                @Html.LabelFor(model => Model.NoiDung, new { @class = "col-sm-1 control-label", @for = "text_NoiDung" })
+                <div class="col-sm-8" id="editernoidung">
+                    @Html.TextAreaFor(model => Model.NoiDung, new { @class = "form-control", id = "text_NoiDung" })
+                    @Html.ValidationMessageFor(model => Model.NoiDung, null, new { @class = "text-danger" })
+                </div>
+                <div class="col-sm-3">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Tag</th>
+                                <th>Mô tả</th>
+                                <th class="w-30"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <label class="control-label" id="input-danhxung" data-key="{danhxung}">{danhxung}</label>
+                                </td>
+                                <td>Danh xưng</td>
+                                <td>
+                                    <button class="btn btn-primary" onclick="Copy(this)" data-clipboard-target="#input-danhxung" title="Coppy" type="button" id="copy-button">
+                                        <i class="fa fa-terminal"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label class="control-label" id="input-tengoi" data-key="{tengoi}">{tengoi}</label>
+                                </td>
+                                <td>Tên gọi</td>
+                                <td>
+                                    <button class="btn btn-primary" onclick="Copy(this)" data-clipboard-target="#input-tengoi" title="Coppy" type="button" id="copy-button">
+                                        <i class="fa fa-terminal"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label class="control-label" id="input-email" data-key="{email}">{email}</label>
+                                </td>
+                                <td>Email</td>
+                                <td>
+                                    <button class="btn btn-primary" onclick="Copy(this)" data-clipboard-target="#input-email" title="Coppy" type="button" id="copy-button">
+                                        <i class="fa fa-terminal"></i>
+                                    </button>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    <label class="control-label" id="input-gioitinh" data-key="{gioitinh}">{gioitinh}</label>
+                                </td>
+                                <td>Giới tính</td>
+                                <td>
+                                    <button class="btn btn-primary" onclick="Copy(this)" data-clipboard-target="#input-gioitinh" title="Coppy" type="button" id="copy-button">
+                                        <i class="fa fa-terminal"></i>
+                                    </button>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    <label class="control-label" id="input-diachi" data-key="{diachi}">{diachi}</label>
+                                </td>
+                                <td>Địa chỉ</td>
+                                <td>
+                                    <button class="btn btn-primary" onclick="Copy(this)" data-clipboard-target="#input-diachi" title="Coppy" type="button" id="copy-button">
+                                        <i class="fa fa-terminal"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label class="control-label" id="input-donvi" data-key="{donvi}">{donvi}</label>
+                                </td>
+                                <td>Đơn vị</td>
+                                <td>
+                                    <button class="btn btn-primary" onclick="Copy(this)" data-clipboard-target="#input-donvi" title="Coppy" type="button" id="copy-button">
+                                        <i class="fa fa-terminal"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label class="control-label" id="input-dienthoai" data-key="{dienthoai}">{dienthoai}</label>
+                                </td>
+                                <td>Điện thoại</td>
+                                <td>
+                                    <button class="btn btn-primary" onclick="Copy(this)" data-clipboard-target="#input-dienthoai" title="Coppy" type="button" id="copy-button">
+                                        <i class="fa fa-terminal"></i>
+                                    </button>
+                                </td>
+                            </tr>
+
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="form-group ">
+                @Html.LabelFor(model => Model.SelectedDoiTuong, new { @class = "col-sm-1 control-label", @for = "text_NoiDung" })
+                <div class="col-sm-8">
+                    @Html.ListBoxFor(m => m.SelectedDoiTuong, Model.ListDoiTuong, new { @class = "chosen form-control", multiple = "multiple", data_placeholder = "Chọn nhóm đối tượng..." })
+                </div>
+
+            </div>
+
+        }
+        <div class="form-horizontal">
+            <div class="form-group">
+                <label class="col-sm-1 control-label">
+                    File đính kèm
+                </label>
+                <div class="col-sm-8">
+
+                    @*2 hàm ulupload 1 cho xóa và k xóa*@
+                    @*@Html.Action("LoadUploadOne", "FileSystem", new { itemguid = Model.DotGuiGuid, id = 1, auto = "false", isDelete = "true", mo = "QuanLyDotGuiDotGui" })*@
+                    @*@Html.Action("LoadUploadOne", "FileSystem", new { itemguid = Model.ItemGuid, id = 1, auto = "false", isDelete = "false", mo = "<%=TenSubModule%> })*@
+
+
+                    @*s = style hiển thị danh sách file 0:1; 0 dạng block, 1 là dạng list
+                        d ="true" :"fasle" cho phép delete hay k
+                        id quy định nơi upload file, nơi load file lên trong contantvalble*@
+                    @Html.Action("LoadUploadFiles", "FileSystem", new { itemguid = Model.DotGuiGuid, id = 1, auto = "false", d = "true", s = 0, mo = "QuanLyDotGuiDotGui" })
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-6 col-sm-offset-2 text-center">
+                <div class="btn-toolbar">
+                    <button type="submit" onclick="QuanLyDotGui_DotGui_OnSaveExit('#callbackQuanLyDotGui_DotGui', 'true', '#frm_CreateDotGui')" class="btn">Lưu & Thoát</button>
+                    <button type="submit" onclick="QuanLyDotGui_DotGui_OnSaveExit('#callbackQuanLyDotGui_DotGui', 'false', '#frm_CreateDotGui')" class="btn btn-primary"><i class="fa fa-floppy-o"></i> Lưu dữ liệu</button>&nbsp;hoặc&nbsp;
+                    <a class="btn btn-link" href="@Url.Action("QuanLyDotGui", "QuanLyMaketting", null, Request.Url.Scheme)">Quay lại</a>
+
+                    <input type="hidden" id="callbackQuanLyDotGui_DotGui"
+                           data-otf-action-exit="@Url.Action("QuanLyDotGui", "QuanLyMaketting", null, Request.Url.Scheme)"
+                           data-otf-action="@Url.Action("DotGuiEdit", "QuanLyMaketting", null, Request.Url.Scheme)?id=@Model.DotGuiGuid" />
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@using (Html.BeginScriptContext())
+{
+    Html.AddScriptBlock(
+        @<script type="text/javascript">
+            //Su dung cau hinh dropdownlist
+            //var config = {
+            //    '.chosen-select': {},
+            //    '.chosen-select-deselect': { allow_single_deselect: true },
+            //    '.chosen-select-no-single': { disable_search_threshold: 10 },
+            //    '.chosen-select-no-results': { no_results_text: 'Lỗi! Vui lòng chọn ít nhất 1 mục.' },
+            //    '.chosen-select-width': { width: "95%" }
+            //}
+            //for (var selector in config) {
+            //    $(selector).chosen(config[selector]);
+            //}
+            if (typeof CKEDITOR != 'undefined') {
+                var a = CKEDITOR.replace('text_NoiDung');
+            }
+            function Copy(element) {
+                var input = $(element).attr("data-clipboard-target");
+                CKEDITOR.instances['text_NoiDung'].insertText($(input).attr("data-key"));
+            }
+        </script>
+, true);
+}
+
+
+

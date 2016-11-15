@@ -1,0 +1,43 @@
+﻿@*
+    Author:   			tvchuong
+    Created: 			2015-12-3
+    Last Modified: 		2015-12-3
+*@
+
+
+@{
+    ViewBag.Title = "Thêm mới";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div id="page-heading">
+    <ol class="breadcrumb">
+        <li>
+            <a href="@Url.Action("Index", "Dashboards")">
+                <i class="fa fa-lg fa-home text-warning text-size-20">
+                </i> Trang chủ
+            </a>
+        </li>
+        <li class="active">
+            Tạo mới RoleForCode
+        </li>
+    </ol>
+</div>
+
+@*content*@
+<div class="container" id="CPManageRoleForCode">
+    @Html.Partial("~/Views/ManagePermission/ManageRoleForCode/_PartialCreate.cshtml")
+</div>
+
+@section Styles {
+    @Styles.Render("~/plugins/chosenStyles")
+}
+
+@section Scripts {
+    @Scripts.Render("~/plugins/chosen")
+    @Scripts.Render("~/module/ManagePermission/ManageRoleForCode")
+    <script src="~/Content/plugins/ckeditor/ckeditor.js"></script>
+}
+
+
+

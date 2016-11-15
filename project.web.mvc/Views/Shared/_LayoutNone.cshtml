@@ -1,0 +1,40 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="CNTT HUTECH, IT HUTECH, ERP SYSTEM, Business management System, Edu management System ">
+    <meta name="keywords" content="HTML, CSS, JS, JavaScript, framework, bootstrap, front-end, frontend, web development">
+    <meta name="author" content="IOIORT Team - Email: nv.ngoc@hutech.edu.vn">
+
+    <title>HUTECH | @ViewBag.Title</title>
+    <!-- Add local styles, mostly for plugins css file -->
+    @if (IsSectionDefined("Styles"))
+    {@RenderSection("Styles", required: false)}
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries. Placeholdr.js enables the placeholder attribute -->
+    <!--[if lt IE 9]>
+        <script type="text/javascript" src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/respond.js/1.1.0/respond.min.js"></script>
+        <script type="text/javascript" src="~/Scripts/plugins/charts-flot/excanvas.min.js"></script>
+    <![endif]-->
+    <!-- Primary Inspinia style -->
+    @Styles.Render("~/bundles/font")
+    @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/cssnhaphoc")
+</head>
+<body>
+
+    @RenderBody()
+    <!-- MODAL DIALOG -->
+    <!-- DIALOG MUST BE PUT IN THIS SECTION -->
+    @RenderSection("dialog", false)
+    <!-- MODAL DIALOG END -->
+    <!-- End wrapper-->
+    <!-- Handler for local scripts -->
+    @RenderSection("scripts", required: false)
+
+</body>
+</html>

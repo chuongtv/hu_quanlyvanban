@@ -1,0 +1,174 @@
+﻿@model nvngoc31122015.giamsatgiangday.library.GiamSatGiangDay.ListThoiKhoaBieuView
+
+<div class="show" id="show">
+    <div class="row form-group">
+        <label class="control-label col-sm-1" style="float:left;">Năm học</label>
+        <div class="col-sm-2">
+            @Html.DropDownListFor(model => Model.NamHocID, new SelectList(Model.ListNamHoc_Guid, "ValueString", "Name", Model.NamHocID), new { @class = "form-control chosen-select", id = "DDL_NamHoc" })
+        </div>
+        <label class="control-label col-sm-1" style="float:left;">Học kỳ</label>
+        <div class="col-sm-2">
+            @Html.DropDownListFor(model => Model.HocKy_Guid, new SelectList(Model.ListHocKy_Guid, "ValueString", "Name"), new { @class = "form-control chosen-select", id = "DDL_HocKy_Guid" })
+        </div>
+        @if (User.IsInRole(project.config.library.Utilities.ConstantVariable.Value_AspNetRoles_GiamSatGiangDay_DaoTao)
+                                || User.IsInRole(project.config.library.Utilities.ConstantVariable.Value_AspNetRoles_Administrator)
+                                || User.IsInRole(project.config.library.Utilities.ConstantVariable.Value_AspNetRoles_System))
+        {
+            <label class="control-label col-sm-1" style="float:left;">Đơn vị</label>
+            <div class="col-sm-2">
+                @Html.DropDownListFor(model => Model.DonVi_Guid, new SelectList(Model.ListDonVi_Guid, "ValueString", "Name"), new { @class = "form-control chosen-select", id = "DDL_DonVi" })
+                @Html.ValidationMessageFor(model => Model.DonVi_Guid, null, new { @class = "text-danger" })
+            </div>
+        }
+        <label class="control-label col-sm-1" style="float:left;">Cơ sở</label>
+        <div class="col-sm-2">
+            @Html.DropDownListFor(model => Model.CoSo_Guid, new SelectList(Model.ListCoSo_Guid, "ValueString", "Name"), new { @class = "form-control chosen-select", id = "DDL_CoSo_Guid", @onchange = "FillLau()" })
+            @Html.ValidationMessageFor(model => Model.CoSo_Guid, null, new { @class = "text-danger" })
+        </div>
+
+    </div>
+
+    <div class="row form-group ">
+        <label class="control-label col-sm-1" style="float:left;">Lầu</label>
+        <div class="col-sm-2">
+            @Html.DropDownListFor(model => Model.Lau_Guid, new SelectList(Model.ListLau_Guid, "ValueString", "Name"), new { @class = "form-control chosen-select", id = "DDL_Lau_Guid" })
+            @Html.ValidationMessageFor(model => Model.Lau_Guid, null, new { @class = "text-danger" })
+        </div>
+        <label class="control-label col-sm-1" style="float:left;">Phòng</label>
+        <div class="col-sm-2">
+            @Html.TextBoxFor(model => Model.PhongID, new { @class = "form-control", id = "txtPhongID", placeholder = "Phòng học", data_otf_action = @Url.Action("ThoiKhoaBieuMoiGiang_FillPhong", "GiamSatGiangDay") })
+            @Html.ValidationMessageFor(model => Model.PhongID, null, new { @class = "text-danger" })
+        </div>
+        <label class="control-label col-sm-1" style="float:left;">Tiết bắt đầu</label>
+        <div class="col-sm-2">
+            @Html.DropDownListFor(model => Model.TietBatDau, new SelectList(Model.ListCa_Guid, "ValueString", "Name"), new { @class = "form-control chosen-select", id = "DDL_Ca_Guid" })
+            @Html.ValidationMessageFor(model => Model.TietBatDau, null, new { @class = "text-danger" })
+        </div>
+        <label class="control-label col-sm-1" style="float:left;">Lớp</label>
+        <div class="col-sm-2">
+            @Html.TextBoxFor(model => Model.LopName, new { @class = "form-control", id = "txtLopID", placeholder = "Mã lớp học" })
+        </div>
+
+    </div>
+    <div class="row form-group ">
+
+        <label class="control-label col-sm-1" style="float:left;">Mã môn học</label>
+        <div class="col-sm-2">
+            <input id="MonHocID"
+                   placeholder="Mã môn học"
+                   onkeypress=""
+                   class="form-control"
+                   data-otf-action="@Url.Action("LoadAutoCompateMonHoc", "GiamSatGiangDay")" />
+        </div>
+
+        <label class="control-label col-sm-1" style="float:left;">Giảng viên</label>
+        <div class="col-sm-2">
+            <input id="GiangVienID"
+                   placeholder="Mã giảng viên"
+                   onkeypress=""
+                   class="form-control "
+                   data-otf-action="@Url.Action("LoadAutoCompateGiangVien", "GiamSatGiangDay")" />
+        </div>
+
+        <label class="control-label col-sm-1" style="float:left;">Từ ngày</label>
+        <div id="data_TuNgay_Time" class="col-sm-2">
+            <div class="input-group date">
+                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                <input type="datetime" value="" name="TuNgay_Time" id="tungay_time" class="text-box single-line" />
+            </div>
+        </div>
+        <label class="control-label col-sm-1" style="float:left;">Đến ngày</label>
+        <div id="data_DenNgay_Time" class="col-sm-2">
+            <div class=" input-group date">
+                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                <input type="datetime" value="" name="DenNgay_Time" id="denngay_time" class="text-box single-line" />
+            </div>
+        </div>
+    </div>
+    @*}*@
+</div>
+
+@using (Html.BeginScriptContext())
+{
+    Html.AddScriptBlock(
+        @<script type="text/javascript">
+            AutoCompletePhong('#txtPhongID', '#hiden_phongguid', '#DDL_Lau_Guid');
+            AutoCompleteSearchMon('#text_TimNhanVien', '#text_TimNhanVien');
+            AutoCompleteSearchGiangVien('#GiangVienID', '#GiangVienID');
+
+            $(window).load(function (e) {
+                if (typeof $.cookie('searchthoikhoabieumoigiang') !== 'undefined') {
+                    // $("#multiselect_toDonVi").html($.cookie("searchthoikhoabieumoigiang"));
+                    var TableOfContents = JSON.parse($.cookie("searchthoikhoabieumoigiang"));
+                    // nam hoc
+                    $("#DDL_NamHoc").val(TableOfContents["nam"]);
+                    $('#DDL_NamHoc').trigger("chosen:updated");
+                    // hoc ky
+                    $("#DDL_HocKy_Guid").val(TableOfContents["hocky"]);
+                    $('#DDL_HocKy_Guid').trigger("chosen:updated");
+                    // don vi
+                    $("#DDL_DonVi").val(TableOfContents["donvi"]);
+                    $('#DDL_DonVi').trigger("chosen:updated");
+                    // co so gui
+                    $("#DDL_CoSo_Guid").val(TableOfContents["coso"]);
+                    $('#DDL_CoSo_Guid').trigger("chosen:updated");
+                    // lau
+                    $("#DDL_Lau_Guid").val(TableOfContents["lau"]);
+                    $('#DDL_Lau_Guid').trigger("chosen:updated");
+                    // tiet bat dau
+                    $("#DDL_Ca_Guid").val(TableOfContents["tietbatdau"]);
+                    $('#DDL_Ca_Guid').trigger("chosen:updated");
+                    // phong
+                    $("#txtPhongID").val(TableOfContents["phong"]);
+                    // ma lop
+                    $("#txtLopID").val(TableOfContents["malop"]);
+                    // mon hoc
+                    $("#MonHocID").val(TableOfContents["monhoc"]);
+                    // giang vien
+                    $("#GiangVienID").val(TableOfContents["giangvien"]);
+                    // tu ngay
+                    $("#tungay_time").val(TableOfContents["tungay"]);
+                    // den ngay
+                    $("#denngay_time").val(TableOfContents["tungay"]);
+
+                    $("#GiamSatGiangDay_ThoiKhoaBieu_buttonsearch").click();
+                }
+            });
+
+            $.fn.enterKey = function (fnc) {
+                return this.each(function () {
+                    $(this).keypress(function (ev) {
+                        var keycode = (ev.keyCode ? ev.keyCode : ev.which);
+                        if (keycode == '13') {
+                            fnc.call(this, ev);
+                        }
+                    })
+                })
+            }
+
+
+                $("#txtPhongID").enterKey(function () {
+                    $("#GiamSatGiangDay_ThoiKhoaBieu_buttonsearch").click();
+                })
+                $("#txtLopID").enterKey(function () {
+                    $("#GiamSatGiangDay_ThoiKhoaBieu_buttonsearch").click();
+                })
+                $("#MonHocID").enterKey(function () {
+                    $("#GiamSatGiangDay_ThoiKhoaBieu_buttonsearch").click();
+                })
+                $("#GiangVienID").enterKey(function () {
+                    $("#GiamSatGiangDay_ThoiKhoaBieu_buttonsearch").click();
+                })
+                $("#tungay_time").enterKey(function () {
+                    $("#GiamSatGiangDay_ThoiKhoaBieu_buttonsearch").click();
+                })
+                $("#denngay_time").enterKey(function () {
+                    $("#GiamSatGiangDay_ThoiKhoaBieu_buttonsearch").click();
+                })
+        </script>
+
+, true);
+}
+
+
+

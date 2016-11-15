@@ -1,0 +1,102 @@
+﻿@*
+    Author:   			httHong
+    Created: 			2015-10-22
+    Last Modified: 		2015-10-22
+*@
+@model nvngoc29082015.permission.library.ManageAspNetUsers.UpdateAspNetUsersView
+
+
+<div class="container" id="demo">
+    <div class="row">
+
+        <div class="col-md-2">
+
+            @Html.Partial("~/Views/ManagePermission/ManageAspNetUsers/_PartialDanhMuc.cshtml")
+        </div>
+        <h4>Thông tin chi tiết người dùng</h4>
+        <div class="col-md-7">
+
+            <div class="row">
+                <img height="100" src="~/Data/HRM/@Model.Id/@Model.LinkAvatar" class="list-avatar custom-polaroid-5 polaroid" alt="image">
+            </div>
+            <div class="form-group">
+
+                <div class="row">
+
+                    <div class="col-lg-3 text-right">
+                        @Html.DisplayNameFor(model => model.UserName):
+                    </div>
+                    <div class="col-lg-9">
+                        @Html.DisplayFor(model => model.UserName)
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-lg-3 text-right">
+                        @Html.DisplayNameFor(model => model.Email):
+                    </div>
+                    <div class="col-lg-9">
+                        @Html.DisplayFor(model => model.Email)
+                    </div>
+                </div>
+            </div>
+
+            @*<div class="form-group">
+                <div class="row">
+                    <div class="col-lg-3 text-right">
+                        @Html.DisplayNameFor(model => model.DonViName):
+                    </div>
+                    <div class="col-lg-9">
+                        @Html.DisplayFor(model => model.DonViName)
+                    </div>
+                </div>
+            </div>*@
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-lg-3 text-right">
+                        @Html.DisplayNameFor(model => model.PhoneNumber):
+                    </div>
+                    <div class="col-lg-9">
+                        @Html.DisplayFor(model => model.PhoneNumber)
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-lg-3 text-right">
+                        @Html.DisplayNameFor(model => model.NguoiDungName):
+                    </div>
+                    <div class="col-lg-9">
+                        @Html.DisplayFor(model => model.NguoiDungName)
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+@using (Html.BeginScriptContext())
+{
+    Html.AddScriptBlock(
+        @<script type="text/javascript">
+            //Su dung cau hinh dropdownlist
+            //var config = {
+            //    '.chosen-select': {},
+            //    '.chosen-select-deselect': { allow_single_deselect: true },
+            //    '.chosen-select-no-single': { disable_search_threshold: 10 },
+            //    '.chosen-select-no-results': { no_results_text: 'Lỗi! Vui lòng chọn ít nhất 1 mục.' },
+            //    '.chosen-select-width': { width: "95%" }
+            //}
+            //for (var selector in config) {
+            //    $(selector).chosen(config[selector]);
+            //}
+        </script>
+, true);
+}
+
+
+
+

@@ -1,0 +1,139 @@
+﻿@*
+    Author:   			hoadm
+    Created: 			2016-8-25
+    Last Modified: 		2016-8-25
+*@
+@model nvngoc31122015.giamsatgiangday.library.GiamSatGiangDay.ThongTinGhiNhanThanhTraThuKy
+
+
+<div class="modal-content">
+    <div class="modal-header">
+        <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+        <h4 class="modal-title">Thông tin ghi nhận từ Thanh tra</h4>
+    </div>
+    <div class="modal-body">
+        <div class="form-horizontal">
+            @*Thông tin thời khóa biểu*@
+            <div class="form-group ">
+                <div class="col-sm-6">Năm học: &nbsp;@Html.Raw(Model.NamHocName)</div>
+                <div class="col-sm-6">Học kỳ:&nbsp;@Html.Raw(Model.HocKyID)</div>
+            </div>
+            <div class="form-group ">
+                <div class="col-sm-6">Giảng viên: &nbsp;@Html.Raw(Model.NhanVienFullName)</div>
+                <div class="col-sm-6">Mã giảng viên:&nbsp;@Html.Raw(Model.NhanVienID)</div>
+            </div>
+            <div class="form-group ">
+                @*<div class="col-sm-6">
+                        Loại hình giảng dạy: &nbsp;@if (Model.NhomThucHanh != -1 || Model.NhomThucHanh != null)
+                        {
+                            <text>Lý thuyết</text>
+                        }
+                        else
+                        {
+                            <text>Thực hành</text>
+                        }
+                    </div>*@
+                <div class="col-sm-6">Lớp:&nbsp;@Html.Raw(Model.LopThucTeGhep)</div>
+            </div>
+            <div class="form-group ">
+                <div class="col-sm-6">Tên môn học: &nbsp;@Html.Raw(Model.MonHocName)</div>
+                <div class="col-sm-6">Mã môn học:&nbsp;@Html.Raw(Model.MonHocID)</div>
+            </div>
+            <div class="form-group ">
+                <div class="col-sm-6">Nhóm học: &nbsp;@Html.Raw(Model.NhomHoc)</div>
+                <div class="col-sm-6">Nhóm thực hành:&nbsp;@Html.Raw(Model.NhomThucHanh)</div>
+            </div>
+            <div class="form-group ">
+                <div class="col-sm-12">Thời gian dạy:&nbsp;Thứ&nbsp;@Html.Raw(Model.Thu)&nbsp;-&nbsp;Từ&nbsp;@Html.Raw(Model.ThoiGianBatDau.ToString("dd/MM/yyyy"))&nbsp;đến&nbsp;@Html.Raw(Model.ThoiGianKetThuc.ToString("dd/MM/yyyy"))</div>
+            </div>
+            @*Thông tin log*@
+            @*<br />
+                <fieldset class="scheduler-border">
+                    <legend class="scheduler-border">Lịch sử thanh tra</legend>
+                    <div class="form-group ">
+                        <div class="col-sm-12">@Html.Raw(Model.LogSoLanDaKiemTra)</div>
+                    </div>
+                </fieldset>*@
+            @*Thông tin ghi nhận vi phạm*@
+            <fieldset class="scheduler-border">
+                <legend class="scheduler-border">Thông tin ghi nhận vi phạm</legend>
+                <div class="form-group ">
+                    <div class="col-sm-12">Loại vi phạm:&nbsp;@Html.Raw(Model.LoaiViPhamName)</div>
+                </div>
+                <div class="form-group ">
+                    <div class="col-sm-12">Thời gian ghi nhận:&nbsp;@Html.Raw(Model.NgayLap.Value.ToString("hh:mm"))&nbsp;ngày&nbsp;@Html.Raw(Model.NgayLap.Value.ToString("dd/MM/yyyy"))</div>
+                </div>
+                <div class="form-group ">
+                    <div class="col-sm-12">Ghi chú:</div>
+                </div>
+                <div class="form-group ">
+                    <div class="col-sm-12 text-italic">@Html.Raw(Model.NoiDung)</div>
+                </div>
+            </fieldset>
+            @*Khoa phản hồi*@
+            <br />
+            <div class="form-group ">
+                <div class="col-sm-12"><b><u>Phản hồi từ Khoa/Viện/Trung tâm</u></b></div>
+            </div>
+            <div class="form-group ">
+                <div class="col-sm-12">
+                    @if (Model.IsLock == false
+        //&& Model.IsActive == true
+        && (Model.YKienThanhTra == null || Model.YKienThanhTra == "")
+        && (@User as project.web.mvc.Common.IOIORTPrincipal).HasPermission("TinhHinhThanhTra_ThongTinGhiNhan_PhanHoi_GiamSatGiangDay"))
+                    {
+                        @Html.TextAreaFor(model => Model.YKienKhoa, new { @class = "form-control", id = "text_YKienKhoa" })
+                    }
+                    else
+                    {
+                        @Html.Raw(Model.YKienKhoa)
+                    }
+                </div>
+            </div>
+            @*Thanh tra phản hồi*@
+            @if (Model.IsLock == true)
+
+            {
+                <br />
+                <div class="form-group ">
+                    <div class="col-sm-12"><b><u>Phản hồi từ Thanh tra</u></b></div>
+                </div>
+                <div class="form-group ">
+                    <div class="col-sm-12">
+
+                        @Html.Raw(Model.YKienThanhTra)
+
+                    </div>
+
+
+                    <br />
+                    <div class="col-sm-12">
+                        @*@if (Model.IsLock == false && Model.IsDuyet == int.Parse(ioiort.settingdata.library.ContentSettingData.GetDataSettingValue(project.config.library.ConfigurationCache.Cache_GhiNhanThanhTra_TinhTrangDuyet_ChuaPhanHoi).Trim())
+                            && (@User as project.web.mvc.Common.IOIORTPrincipal).HasPermission("TinhHinhThanhTra_ThongTinGhiNhan_XacNhanKhongKyLuat_GiamSatGiangDay"))
+                                                {*@
+                        @Html.Action("LoadUploadOne", "FileSystem", new { itemguid = Model.PhieuGhiNhanGuid, id = 8, auto = "true", isDelete = false, liststyle = 1, mo = "ThongTinGhiNhan" })
+                        @*}*@
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+    <div class="modal-footer">
+        <div class="col-sm-12 text-right">
+            @if (Model.IsLock == false
+                &&
+                (Model.IsDuyet == project.config.library.Utilities.ConstantVariable.GSGD_GhiNhanThanhTra_TinhTrangDuyet_ChuaPhanHoi
+            ||
+            Model.IsDuyet == project.config.library.Utilities.ConstantVariable.GSGD_GhiNhanThanhTra_TinhTrangDuyet_DangCho
+            )
+                )
+            {
+                if ((@User as project.web.mvc.Common.IOIORTPrincipal).HasPermission("TinhHinhThanhTra_ThongTinGhiNhan_PhanHoi_GiamSatGiangDay"))
+                {
+                    <a class="btn btn-primary" data-otf-target="#modalGiamSatGiangDay_PhieuBaoTKB" href="javascript:void(0)" data-otf-action="@Url.Action("TinhHinhThanhTra_ThongTinGhiNhan_PhanHoi", "GiamSatGiangDay", null, Request.Url.Scheme)?id=@Model.PhieuGhiNhanGuid" data-otf-text="#text_YKienKhoa" onclick="XemThongTinViPham_ThongTinGhiNhan_PhanHoi(this)">Gởi phản hồi</a>
+                }
+            }
+            <a class="btn btn-link" data-otf-action="@Url.Action("XemThongTinViPhamGet_List", "GiamSatGiangDay", null, Request.Url.Scheme) " data-target="#GiamSatGiangDay_DS_content" aria-hidden="true" data-dismiss="modal" onclick="GiamSatGiangDay_XemThongTinViPham_BakList(this)"> Quay lại</a>
+        </div>
+    </div>
+</div>

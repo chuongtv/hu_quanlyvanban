@@ -1,0 +1,101 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="CNTT HUTECH, IT HUTECH, ERP SYSTEM, Business management System, Edu management System ">
+    <meta name="keywords" content="HTML, CSS, JS, JavaScript, framework, bootstrap, front-end, frontend, web development">
+    <meta name="author" content="IOIORT Team - Email: nv.ngoc@hutech.edu.vn">
+
+    <title>HUTECH | @ViewBag.Title</title>
+    @Scripts.Render("~/bundles/angularjs")
+
+    <!-- Add local styles, mostly for plugins css file -->
+    @if (IsSectionDefined("Styles"))
+    {@RenderSection("Styles", required: false)}
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries. Placeholdr.js enables the placeholder attribute -->
+    <!--[if lt IE 9]>
+        <script type="text/javascript" src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/respond.js/1.1.0/respond.min.js"></script>
+        <script type="text/javascript" src="~/Scripts/plugins/charts-flot/excanvas.min.js"></script>
+    <![endif]-->
+    <!-- Primary Inspinia style -->
+    @Styles.Render("~/bundles/font")            @*style font*@
+    @Styles.Render("~/Content/css")             @*style ca nhan*@
+    @Styles.Render("~/bundles/jqueryuiStyles")  @*style jquery ui*@
+    @Styles.Render("~/error/css")               @*mau sac cac validation*@
+    @Styles.Render("~/plugins/toastrStyles")    @*thong bao*@
+
+</head>
+<body class="horizontal-nav ">
+
+    <!-- Admin tool -->
+    @Html.Partial("_AdminTool")
+    <!-- All header links, including sidebar triggers and drop downs-->
+    <!-- Top Navbar -->
+    @Html.Partial("_TopNavbar")
+
+    @Html.Partial("_Navigation")
+
+
+    <!-- Wrapper-->
+    <!-- PageClass give you ability to specify custom style for specific view based on action -->
+
+    <div id="page-container">
+
+        @Html.Partial("_PartialLeftBar")
+
+        <div id="page-content" class="animated fadeInRight">
+            <!-- BEGIN RIGHTBAR -->
+            <!-- END RIGHTBAR -->
+            <!-- Page wraper -->
+            <div id="wrap">
+                <!-- Main view  -->
+                @RenderBody()
+            </div> <!-- #wrap -->
+        </div> <!-- page-content -->
+        <!-- Footer -->
+        @Html.Partial("_Footer")
+
+    </div> <!-- page-container -->
+    <!-- MODAL DIALOG -->
+    <!-- DIALOG MUST BE PUT IN THIS SECTION -->
+    @RenderSection("dialog", false)
+    <!-- MODAL DIALOG END -->
+    <!-- End wrapper-->
+    <!-- Section for main scripts render -->
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryui")
+    <script src="~/Content/plugins/jQueryBlockUI/jquery.blockUI.js"></script>
+
+    @Scripts.Render("~/plugins/error")
+    @Scripts.Render("~/plugins/toastr")
+    @Scripts.Render("~/plugins/validate")
+
+
+    <!-- Handler for local scripts -->
+    @RenderSection("scripts", required: false)
+    @Html.RenderScripts()
+
+    <div id="Error" class="freeow freeow-bottom-right">
+    </div>
+
+   
+    <div id="loader" style="display:none; position: fixed;z-index:100;left:0;top:0;right:0;bottom:0;background: black;opacity: 0.3;">
+        <table width=100% height=100%>
+           
+            <tr>
+                <td align=center valign=middle>
+                
+                    <img src="~/Images/ajax-loader.gif" />
+                </td>
+            </tr>
+        </table>
+    </div>
+
+</body>
+</html>

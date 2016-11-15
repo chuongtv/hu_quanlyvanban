@@ -1,0 +1,113 @@
+﻿@*
+    Author:   			hanhat
+    Created: 			2015-11-6
+    Last Modified: 		2015-11-6
+*@
+
+@model nvngoc29082015.permission.library.ManageAspNetRoles.CreateAspNetRolesView
+<div class="row">
+    <div class="col-sm-12">
+
+        @using (Ajax.BeginForm(
+                                    "AspNetRolesCreate",
+                                    "ManagePermission",
+                                    new AjaxOptions
+                                {
+                                    InsertionMode = InsertionMode.Replace,
+                                    HttpMethod = "POST",
+                                    UpdateTargetId = "CPManageAspNetRoles",
+                                    LoadingElementId = "loader"
+                                }, new { @class = "form-horizontal", id = "frm_CreateAspNetRoles" }))
+        {
+            @Html.HiddenFor(model => Model.Id)
+
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+
+  
+
+            <div class="form-group">
+                @Html.LabelFor(model => Model.Name, new { @class = "col-sm-2 control-label", @for = "text_AspNetRolesID" })
+                <div class="col-sm-4">
+                    @Html.TextBoxFor(model => Model.Name, new { @class = "form-control", id = "text_AspNetRolesID" })
+                    @Html.ValidationMessageFor(model => Model.Name, null, new { @class = "text-danger" })
+                </div>
+                <div class="col-sm-2">
+
+                </div>
+            </div>
+
+            <div class="form-group ">
+                @Html.LabelFor(model => Model.FullName, new { @class = "col-sm-2 control-label", @for = "text_AspNetRolesName" })
+                <div class="col-sm-4">
+                    @Html.TextBoxFor(model => Model.FullName, new { @class = "form-control", id = "text_AspNetRolesName" })
+                    @Html.ValidationMessageFor(model => Model.FullName, null, new { @class = "text-danger" })
+                </div>
+                <div class="col-sm-2">
+
+                </div>
+            </div>
+
+
+
+            if (User.IsInRole(project.config.library.Utilities.ConstantVariable.Value_AspNetRoles_System))
+            {
+                <div class="form-group">
+                    @Html.LabelFor(model => Model.IsDelete, new { @class = "col-sm-2 control-label", @for = "chek_IsActive" })
+                    <div class="col-sm-4">
+                        @Html.CheckBoxFor(model => Model.IsDelete, new { @class = "checkbox", @checked = "checked", id = "chek_IsActive" })
+                        @Html.ValidationMessageFor(model => Model.IsDelete, null, new { @class = "text-danger" })
+                    </div>
+                    <div class="col-sm-2">
+
+                    </div>
+                </div>
+            }
+
+        }
+        <div class="row">
+
+            <div class="col-sm-12 col-sm-offset-2 ">
+                Lưu ý: ID role sử dụng cho mục đích phân quyền get dữ liệu trong database.<br /> Vui lòng liên hệ quản trị hệ thống khi có nhu cầu chỉnh sửa.
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6 col-sm-offset-3 text-center">
+                <div class="btn-toolbar">
+                    <button type="submit" onclick="ManageAspNetRoles_AspNetRoles_OnSaveExit('#callbackManageAspNetRoles_AspNetRoles', 'true', '#frm_CreateAspNetRoles')" class="btn">Lưu & Thoát</button>
+                    <button type="submit" onclick="ManageAspNetRoles_AspNetRoles_OnSaveExit('#callbackManageAspNetRoles_AspNetRoles', 'false', '#frm_CreateAspNetRoles')" class="btn btn-primary"><i class="fa fa-floppy-o"></i> Lưu dữ liệu</button>&nbsp;hoặc&nbsp;
+                    <a class="btn btn-link" href="@Url.Action("ManageAspNetRoles", "ManagePermission", null, Request.Url.Scheme)">Quay lại</a>
+
+                    <input type="hidden" id="callbackManageAspNetRoles_AspNetRoles"
+                           data-otf-action-exit="@Url.Action("ManageAspNetRoles", "ManagePermission", null, Request.Url.Scheme)"
+                           data-otf-action="@Url.Action("AspNetRolesEdit", "ManagePermission", null, Request.Url.Scheme)?id=@Model.Id" />
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@using (Html.BeginScriptContext())
+{
+    Html.AddScriptBlock(
+        @<script type="text/javascript">
+            //Su dung cau hinh dropdownlist
+            var config = {
+                '.chosen-select': {},
+                '.chosen-select-deselect': { allow_single_deselect: true },
+                '.chosen-select-no-single': { disable_search_threshold: 10 },
+                '.chosen-select-no-results': { no_results_text: 'Lỗi! Vui lòng chọn ít nhất 1 mục.' },
+                '.chosen-select-width': { width: "95%" }
+            }
+            for (var selector in config) {
+                $(selector).chosen(config[selector]);
+            }
+
+
+        </script>
+, true);
+}
+
+
+

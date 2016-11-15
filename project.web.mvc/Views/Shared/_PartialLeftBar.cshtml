@@ -1,0 +1,27 @@
+﻿<nav role="navigation" id="page-leftbar" class="ioiort-mobile">
+    <!-- BEGIN SIDEBAR MENU -->
+    <ul id="sidebar" class="acc-menu" style="overflow-y: hidden; overflow-x: visible;" tabindex="5007">
+        
+        <li class="@Html.IsSelected(controller: "Dashboards")">
+            <a href="@Url.Action("Index", "Dashboards")"><i class="fa fa-dashboard"></i> <span>Bảng thông tin</span></a>
+        </li>
+
+        <li class="hasChild @Html.IsSelected(controller: "QuanLyNhanSu")">
+            <a href="javascript:;"><i class="fa fa-cubes"></i><span>Quản lý nhân sự </span></a>
+            <ul class="acc-menu" style="">
+                <li class="@Html.IsSelected(action: "QLTTNhanSu", controller: "QuanLyNhanSu")">
+                    <a href="@Url.Action("QLTTNhanSu", "QuanLyNhanSu")"><span>Danh sách nhân sự</span> </a>
+                </li>
+                <li class="@Html.IsSelected(action: "CauHinh", controller: "QuanLyNhanSu")">
+                    <a href="@Url.Action("CauHinh", "QuanLyNhanSu")"><span>Cấu hình nhân sự</span> </a>
+                </li>
+                <li class="@Html.IsSelected(action: "QuanLyBaoCaoThongKe", controller: "QuanLyNhanSu")">
+                    <a href="@Url.Action("QuanLyBaoCaoThongKe", "QuanLyNhanSu")"><span>Báo cáo Thống kê</span> </a>
+                </li>
+            </ul>
+
+        </li>
+        
+    </ul>
+    <!-- END SIDEBAR MENU -->
+</nav>

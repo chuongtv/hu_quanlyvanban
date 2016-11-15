@@ -1,0 +1,144 @@
+﻿@*
+    Author:   			pdgiai
+    Created: 			2016-1-7
+    Last Modified: 		2016-1-7
+*@
+
+@model MvcPaging.IPagedList<nvngoc31122015.giamsatgiangday.library.GiamSatGiangDay.ListCauHinhCoSoView>
+@using MvcPaging
+
+@{var i = 1;}
+
+<div class="table-responsive">
+    @if (Model.TotalItemCount > 0)
+    {
+        <div class="p-b-10">
+            Kết quả tìm kiếm: <b>@Model.TotalItemCount</b> cơ sở
+        </div>
+        <text>
+            <table class="table table-bordered datatables dataTable">
+                <thead>
+                    <tr>
+                        <th class="text-center w-30">
+                            <input id="CheckBoxAll" onclick="javascript: checkAlllist('#listcheckall',this);" type="checkbox" />
+                        </th>
+                        <th class="text-center w-30">
+                            #
+                        </th>
+                        <th class="text-center">
+                            @Html.DisplayNameFor(model => Model[0].CoSoID)
+                        </th>
+                        <th class="text-center">
+                            @Html.DisplayNameFor(model => Model[0].CoSoName)
+                        </th>
+                        <th class="text-center">
+                            @Html.DisplayNameFor(model => Model[0].DiaChi)
+                        </th>
+                        <th class="text-center">
+                            @Html.DisplayNameFor(model => Model[0].SoPhongHoc)
+                        </th>
+                        <th class="text-right w-100"></th>
+
+                    </tr>
+                </thead>
+                <tbody id="listcheckall">
+                    @foreach (var item in Model)
+                    {
+                    <tr dataCauHinhCoSo="@item.CoSoGuid" class="showhim">
+                        <td class="text-center">
+                            <input type="checkbox" class="checkbox-item" value="@item.CoSoGuid" />
+                        </td>
+                        <td class="text-center">
+                            @Html.Raw((Model.PageNumber - 1) * Model.PageSize + i)
+                            @{i++;}
+                        </td>
+                        <td class="text-center">
+                            @Html.Raw(item.CoSoID)
+                        </td>
+                        <td class="text-left">
+                            @Html.Raw(item.CoSoName)
+                        </td>
+                        <td class="text-left">
+                            @Html.Raw(item.DiaChi)
+                        </td>
+                        <td class="text-center">
+                            @Html.Raw(item.SoPhongHoc)
+                        </td>
+                      
+                        <td class="text-right w-100">
+
+                           <a data-otf-confirm="Bạn có chắc muôn xóa?"
+                                   title="Xóa dữ liệu này" href="javascript:void(0)"
+                                   onclick="GiamSatGiangDay_CauHinhCoSo_DeleteMulti(this)"
+                                   data-otf-target="#GiamSatGiangDay_CauHinhCoSo_DS_content"
+                                   data-otf-input="#GiamSatGiangDay_CauHinhCoSo_SearchInput"
+                                   data-otf-action-target="@Url.Action("CauHinhCoSoGet_List", "GiamSatGiangDay")?k="
+                                   data-otf-action="@Url.Action("CauHinhCoSoDelete", "GiamSatGiangDay", null, Request.Url.Scheme)?id=@item.CoSoGuid">
+                                    <i class="fa fa-lg fa-trash-o text-danger"></i>
+                                </a>
+                                &nbsp
+                                <a data-otf-action="@Url.Action("CauHinhCoSoEdit", "GiamSatGiangDay", null, Request.Url.Scheme)?id=@item.CoSoGuid"
+                                   data-toggle="modal" onclick="GiamSatGiangDay_CauHinhCoSo_GetView(this)"
+                                   data-target="#modalGiamSatGiangDay_CauHinhCoSo" title="Chỉnh sửa">
+                                    <i class="fa fa-lg fa-pencil-square-o text-info"></i>
+                                </a>
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </text>
+    }
+    else
+    {
+        <text>
+    <br />
+    <div class="alert alert-dismissable alert-info">
+        <strong>Yêu cầu tìm kiếm lúc @{ var date = DateTime.Now; } @date.ToString("HH:mm:ss dd/MM/yyyy") không có dữ liệu</strong>
+        <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+    </div>
+        </text>
+    }
+    <div class="pager">
+        @if (Model.TotalItemCount > Model.PageSize)
+        {
+
+            <text>
+
+                @Html.Raw(Ajax.Pager(
+                       new Options
+                       {
+                           PageSize = Model.PageSize,
+                           TotalItemCount = Model.TotalItemCount,
+                           CurrentPage = Model.PageNumber,
+                           ItemTexts = new ItemTexts() { Next = "Next", Previous = "Previous", Page = "" },
+                           ItemIcon = new ItemIcon() { First = "icon-backward", Previous = "icon-chevron-left", Next = "icon-chevron-right", Last = "icon-forward" },
+                           TooltipTitles = new TooltipTitles() { Next = "Next page", Previous = "Previous page", Page = "Page {0}." },
+                           Size = Size.normal,
+                           Alignment = Alignment.centered,
+                           IsShowControls = true,
+                           IsShowFirstLast = true,
+                           CssClass = ""
+                       },
+                       new AjaxOptions
+                       {
+                           UpdateTargetId = "GiamSatGiangDay_CauHinhCoSo_DS_content"
+                       }, new { controller = "GiamSatGiangDay", action = "CauHinhCoSoGet_List", k = @ViewData["keysearch"] 
+                       , idnv = @ViewData["idnv"] 
+                       }))
+            </text>
+        }
+    </div>
+</div>
+
+@using (Html.BeginScriptContext())
+{
+    Html.AddScriptBlock(
+        @<script type="text/javascript">
+            loadSelect("GiamSatGiangDay_CauHinhCoSo","CauHinhCoSo");
+        </script>
+, true);
+}
+
+
+

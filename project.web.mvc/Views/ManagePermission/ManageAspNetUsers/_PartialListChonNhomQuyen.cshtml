@@ -1,0 +1,144 @@
+﻿@*
+    Author:   			httHong
+    Created: 			2015-10-22
+    Last Modified: 		2015-10-22
+*@
+
+@model MvcPaging.IPagedList<nvngoc29082015.permission.library.ManageAspNetUsers.ListAspNetUsersView>
+@using MvcPaging
+
+@{var i = 1;}
+<div class="modal-content">
+    <div class="modal-header">
+        <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+        <h4 class="modal-title">Chọn nhóm quyền</h4>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="pull-right">
+
+                    <a href="javascript:void(0)" data-otf-list="#listpopupcheckall" onclick="PhanQuyenUser_ChonNhomQuyen(this)" class=" btn btn btn-primary" data-otf-action="@Url.Action("AddGroupRoleToUser", "ManagePermission")?u=@Request["u"]&g=">
+                        <i class="fa fa-check"></i> Áp dụng
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="table-responsive">
+
+
+            @if (Model.TotalItemCount > 0)
+            {
+                <div class="p-b-10">
+                    Kết quả tìm kiếm: <b>@Model.TotalItemCount</b> nhóm quyền
+                </div>
+                <text>
+                    <table class="table table-bordered datatables dataTable">
+                        <thead>
+                            <tr>
+                                <th class="text-center w-30">
+                                    <input id="CheckBoxAll" onclick="javascript: checkAlllist('#listpopupcheckall', this);" type="checkbox" />
+                                </th>
+                                <th class="text-center">
+                                    #
+                                </th>
+                                <th class="text-left w-150">
+                                    @Html.DisplayNameFor(model => Model[0].AspNetRoleGroupID)
+                                </th>
+                                <th class="text-left w-150">
+                                    @Html.DisplayNameFor(model => Model[0].GroupAspNetRoleName)
+                                </th>
+                                <th class="text-left w-150">
+                                    @Html.DisplayNameFor(model => Model[0].SoLuongRole)
+                                </th>
+
+
+
+
+                            </tr>
+                        </thead>
+                        <tbody id="listpopupcheckall">
+                            @foreach (var item in Model)
+                            {
+                                <tr data="@item.Id" class="showhim">
+                                    <td class="text-center">
+                                        <input type="checkbox" class="checkbox-item" value="@item.AspNetRoleGuid" />
+                                    </td>
+                                    <td class="text-center w-50">
+                                        @Html.Raw((Model.PageNumber - 1) * Model.PageSize + i)
+                                        @{i++;}
+                                    </td>
+                                    <td class="text-left w-150">
+                                        @Html.DisplayFor(model => item.AspNetRoleGroupID)
+                                    </td>
+                                    <td class="text-left w-150">
+                                        @Html.DisplayFor(model => item.GroupAspNetRoleName)
+                                    </td>
+
+
+                                    <td class="text-center w-150">
+                                        @item.SoLuongRole
+
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </text>
+            }
+            else
+            {
+                <text><br />
+            <div class="alert alert-dismissable alert-info">
+                <strong>Yêu cầu tìm kiếm lúc @{ var date = DateTime.Now; } @date.ToString("HH:mm:ss dd/MM/yyyy") không có dữ liệu</strong>
+                <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+            </div>
+                </text>
+            }
+            <div class="pager">
+                @if (Model.TotalItemCount > Model.PageSize)
+                {
+
+                    <text>
+
+                        @Html.Raw(Ajax.Pager(
+                       new Options
+                       {
+                           PageSize = Model.PageSize,
+                           TotalItemCount = Model.TotalItemCount,
+                           CurrentPage = Model.PageNumber,
+                           ItemTexts = new ItemTexts() { Next = "Next", Previous = "Previous", Page = "" },
+                           ItemIcon = new ItemIcon() { First = "icon-backward", Previous = "icon-chevron-left", Next = "icon-chevron-right", Last = "icon-forward" },
+                           TooltipTitles = new TooltipTitles() { Next = "Next page", Previous = "Previous page", Page = "Page {0}." },
+                           Size = Size.normal,
+                           Alignment = Alignment.centered,
+                           IsShowControls = true,
+                           IsShowFirstLast = true,
+                           CssClass = ""
+                       },
+                       new AjaxOptions
+                       {
+                           UpdateTargetId = "modalPopupChonNhomQuyen_c"
+                       }, new
+                       {
+                           controller = "ManagePermission",
+                           action = "PhanQuyenUser_SelectAllGroupRoles"
+                       }))
+                    </text>
+                }
+            </div>
+        </div>
+
+        @using (Html.BeginScriptContext())
+        {
+            Html.AddScriptBlock(
+                @<script type="text/javascript">
+                    loadSelect("ManageAspNetUsers");
+                </script>
+, true);
+        }
+
+
+    </div>
+</div>

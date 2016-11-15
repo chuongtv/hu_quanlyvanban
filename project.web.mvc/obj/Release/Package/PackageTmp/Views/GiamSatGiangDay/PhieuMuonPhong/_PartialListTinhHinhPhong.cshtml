@@ -1,0 +1,230 @@
+﻿@model MvcPaging.IPagedList<nvngoc31122015.giamsatgiangday.library.Models.GiamSatGiangDay_PhieuMuonPhong_ntdai_GetTinhTrangPhong_Result>
+@using MvcPaging
+@{var i = 1;
+}
+<div class="table-responsive">
+    @if (Model.TotalItemCount > 0)
+    {
+        <div style="margin-bottom:25px;">
+            <div class="col-sm-6">
+                Kết quả tìm kiếm: <b>@Model.TotalItemCount</b> Phòng phù hợp
+            </div>
+            <div class="col-sm-6 text-right">
+                <span style="background-color:red;">&nbsp;&nbsp;&nbsp;&nbsp;</span> : Phòng đang bận <span style="background-color:chartreuse;">&nbsp;&nbsp;&nbsp;&nbsp;</span> : Phòng có thể cấp
+            </div>
+        </div>
+        <text>
+            <div class="">
+                <div class="tab-container tab-danger" id="TabPageQLPhong">
+                    <ul class="nav nav-tabs">
+                        <li class="savetab" id="QLTTPhong_t1"><a data-toggle="tab" href="#QLTTPhong_t1_p" title="Hiển thị dạng danh sách">Danh sách</a></li>
+                        <li class="savetab" id="QLTTPhong_t2"><a data-toggle="tab" href="#QLTTPhong_t2_p" title="Hiển thị dạng block">Sơ đồ</a></li>
+                    </ul>
+                    <div class="tab-content">
+                        <div id="QLTTPhong_t1_p" class="tab-pane ">
+                            <table class="table table-bordered datatables dataTable">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">
+                                            #
+                                        </th>
+                                        <th class="text-center ">
+                                            Mã phòng
+                                        </th>
+                                        <th class="text-center w-100">
+                                            Sức chứa
+                                        </th>
+                                        <th class="text-center w-100">
+                                            Tình trạng
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody id="listcheckall">
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr class="showhim">
+
+                                            <td class="text-center w-50">
+                                                @Html.Raw((Model.PageNumber - 1) * Model.PageSize + i)
+                                                @{i++;}
+                                            </td>
+                                            <td class="text-center">
+                                                <span style="margin-bottom:0px;"
+                                                      class="info-tiles"
+                                                      data-tooltip="@if(item.LopHocID!=null){<text>
+                                                    <i class=' fa fa-credit-card'></i>&nbsp;<b>Lớp</b>: @Html.Raw(item.LopHocID)</text>}@if (item.LopHocID != null)
+                                                    {<text> <br /><i class='fa fa-calendar'></i>&nbsp;&nbsp;<b>Môn học</b>: @Html.Raw(item.MonHocName)</text>}@if (item.LopHocID != null)
+                                                    {<text> <br /><i class='fa fa-building-o'></i>&nbsp;&nbsp;<b>Đơn vị</b>: @Html.Raw(item.Ho + " " + item.Tenlot + " " + item.Ten)</text>}">@item.PhongID
+                                                </span>
+                                            </td>
+
+                                            <td class="text-center">
+                                                @item.SucChua
+                                            </td>
+                                            <td class="text-center">
+                                                @*@Html.CheckBox("checkban", item.IsPhongBan.Value == 1 ? true : false, new { disabled = "disabled" })*@
+                                                @if (item.IsPhongBan.Value == 1)
+                                                {
+                                                    <text>
+                                                        <span style="background-color:red;" title="Phòng đang bận">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                                    </text>
+                                                }
+                                                else
+                                                {
+                                                    <text>
+                                                        <span style="background-color:chartreuse;" title="Phòng có thể cấp">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                                    </text>
+}
+                                            </td>
+
+
+                                        </tr>
+                                                    }
+                                </tbody>
+                            </table>
+
+
+                        </div>
+                        <div id="QLTTPhong_t2_p" class="tab-pane">
+                            <div class="row">
+                                @foreach (var item in Model)
+                                {
+                                    string sty = "tiles-success";
+                                    if (item.IsPhongBan.Value != 0)
+                                    { sty = "tiles-alizarin"; }
+                                    <text>
+                                        <div class="col-xs-12 col-md-2 col-sm-4 col-lg-2">
+                                            <span href="javascript:void(0)"
+                                                  class="info-tiles @sty"
+                                                  data-tooltip="@if(item.LopHocID!=null){<text>
+                                                <i class=' fa fa-credit-card'></i>&nbsp;<b>Lớp</b>: @Html.Raw(item.LopHocID)</text>}@if (item.LopHocID != null)
+                                                {<text> <br /><i class='fa fa-calendar'></i>&nbsp;&nbsp;<b>Môn học</b>: @Html.Raw(item.MonHocName)</text>}@if (item.LopHocID != null)
+                                                {<text> <br /><i class='fa fa-building-o'></i>&nbsp;&nbsp;<b>Đơn vị</b>: @Html.Raw(item.Ho + " " + item.Tenlot + " " + item.Ten)</text>}">
+                                                <div class="tiles-heading">
+                                                    <div class="pull-left">Sức chứa</div>
+                                                    <div class="pull-right">@item.SucChua</div>
+                                                </div>
+                                                <div class="tiles-body" style=" font-size: 25px;">
+                                                    <div class="pull-right">@item.PhongID<span class="text-smallcaps"></span></div>
+                                                </div>
+                                            </span>
+                                        </div>
+                                    </text>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+            </div>
+
+        </text>
+                                                    }
+                                                    else
+                                                    {
+                                                        <text><br />
+    <div class="alert alert-dismissable alert-info">
+        <strong>Yêu cầu tìm kiếm lúc @{ var date = DateTime.Now; } @date.ToString("HH:mm:ss dd/MM/yyyy") không có dữ liệu</strong>
+        <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+    </div>
+                                                        </text>
+                                                    }
+    <div class="pager">
+        @if (Model.TotalItemCount > Model.PageSize)
+        {
+
+            <text>
+
+                @Html.Raw(Ajax.Pager(
+                       new Options
+                       {
+                           PageSize = Model.PageSize,
+                           TotalItemCount = Model.TotalItemCount,
+                           CurrentPage = Model.PageNumber,
+                           ItemTexts = new ItemTexts() { Next = "Next", Previous = "Previous", Page = "" },
+                           ItemIcon = new ItemIcon() { First = "icon-backward", Previous = "icon-chevron-left", Next = "icon-chevron-right", Last = "icon-forward" },
+                           TooltipTitles = new TooltipTitles() { Next = "Next page", Previous = "Previous page", Page = "Page {0}." },
+                           Size = Size.normal,
+                           Alignment = Alignment.centered,
+                           IsShowControls = true,
+                           IsShowFirstLast = true,
+                           CssClass = ""
+                       },
+                       new AjaxOptions
+                       {
+                           UpdateTargetId = "DanhSachPhong_Content"
+                       }, new
+                       {
+                           controller = "GiamSatGiangDay",
+                           action = "TinhHinhQuyPhong_DanhSachListTinhHinhPhong",
+                           n = ViewData["n"],
+                           ca = ViewData["ca"],
+                           tt = ViewData["tt"],
+                           p = ViewData["p"],
+                           l = ViewData["l"],
+                           k = @ViewData["keysearch"]
+                       }))
+            </text>
+        }
+    </div>
+</div>
+
+@using (Html.BeginScriptContext())
+{
+    Html.AddScriptBlock(
+        @<script type="text/javascript">
+            $('[data-tooltip!=""]').qtip({ // Grab all elements with a non-blank data-tooltip attr.
+                content: {
+                    attr: 'data-tooltip' // Tell qTip2 to look inside this attr for its content
+                },
+                position: {
+                    target: 'mouse'//, // Position it where the click was...
+                    // adjust: { mouse: false } // ...but don't follow the mouse
+                }
+            })
+
+
+
+            function loadSelectTab(block, tabdefault) {
+
+                //ghi cookies
+                $('.savetab').click(function () {
+                    //ghi vi tri chon
+                    var bb = $(this).attr("id");
+                    $.cookie("select_tab" + block, bb, { path: window.location, expires: 7 });
+
+                    //xoa active tat ca
+                    $("#" + block + " div[class^=tab-pane]").each(function (index) {
+                        $(this).removeClass('active');
+                    });
+                    $("#" + block + ">ul>li[class^=savetab]").each(function (index) {
+                        $(this).removeClass('active');
+                    });
+
+                });
+
+                //active vi tri chon
+                var thisLink = $.cookie("select_tab" + block);
+                if (thisLink) {
+                    $("#" + block + ">ul>li[id='" + thisLink + "']").addClass('active');
+                    $("#" + block + " div[id='" + thisLink + "_p']").addClass('active');
+                    //lay action de load content
+                    // $("#" + thisLink + "_p").load($("#" + thisLink).attr("data-otf-action"));
+                }
+                else {
+                    $("#" + block + ">ul>li[id='" + tabdefault + "']").addClass('active');
+                    $("#" + block + " div[id='" + tabdefault + "_p']").addClass('active');
+                    //lay action de load content
+                    //  $("#" + tabdefault + "_p").load($("#" + tabdefault).attr("data-otf-action"));
+                }
+            }
+
+            loadSelectTab("TabPageQLPhong", "QLTTPhong_t2");
+        </script>
+, true);
+
+}

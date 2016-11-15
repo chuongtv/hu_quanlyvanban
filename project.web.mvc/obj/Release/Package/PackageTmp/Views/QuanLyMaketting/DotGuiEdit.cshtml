@@ -1,0 +1,94 @@
+﻿@*
+    Author:   			ntdai
+    Created: 			2016-3-18
+    Last Modified: 		2016-3-18
+*@
+
+
+@{
+    ViewBag.Title = "Chỉnh sửa";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div id="page-heading">
+    <ol class="breadcrumb">
+        <li>
+            <a href="@Url.Action("Index", "Dashboards")">
+                <i class="fa fa-lg fa-home text-warning text-size-20">
+                </i> Trang chủ
+            </a>
+        </li>
+        <li class="active">
+            Chỉnh sửa Đợt gửi
+        </li>
+    </ol>
+</div>
+
+
+
+
+
+
+<div class="container">
+
+    <div class="tab-container tab-danger">
+        <ul class="nav nav-tabs">
+            <li class="active"><a data-toggle="tab" href="#tab1">B1. Soạn email</a></li>
+            <li class=""><a data-toggle="tab" href="#tab2">B2. Xem trước nội dung</a></li>
+            <li class=""><a data-toggle="tab" href="#tab3">B3. Xem danh sách gửi</a></li>
+            <li class=""><a data-toggle="tab" href="#tab4">B4. Gửi email</a></li>
+            <li style="float:right;"><a  href="@Url.Action("QuanLyDotGui", "QuanLyMaketting", null, Request.Url.Scheme)" class="btn btn-default-alt"><i class="fa fa-lg fa-reply"></i> Quay lại</a></li>
+        </ul>
+        
+        <div class="tab-content">
+            <div id="tab1" class="tab-pane active">
+                <div id="CPQuanLyDotGui">
+                    @Html.Partial("~/Views/QuanLyMaketting/QuanLyDotGui/_PartialEdit.cshtml")
+                </div>
+
+            </div>
+            <div id="tab2" class="tab-pane">
+                <div id="DotGuiPriview">
+                    @Html.Action("DotGuiPriview", "QuanLyMaketting", new { id = Request["id"] })
+                </div>
+            </div>
+            <div id="tab3" class="tab-pane">
+               
+                <div id="DotGuiGet_ListEmailPage">
+                    @Html.Action("DotGuiGet_ListEmailPage", "QuanLyMaketting", new { id = Request["id"] })
+                </div>
+            </div>
+            <div id="tab4" class="tab-pane">
+                <div id="DotGuiGet_ListEmail">
+                    @Html.Action("DotGuiGet_ListEmail", "QuanLyMaketting", new { id = Request["id"] })
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+@section Scripts {
+    @Scripts.Render("~/plugins/chosen")
+    @Scripts.Render("~/plugins/dropZone")
+    @Scripts.Render("~/plugins/fancybox")
+    <script type="text/javascript">
+        //$(".chosen").chosen({ max_selected_options: 2 });
+        $(".chosen-deselect").chosen({ allow_single_deselect: true });
+        $(".chosen").chosen().change();
+        $(".chosen").trigger('liszt:updated');
+    </script>
+
+    @Scripts.Render("~/module/QuanLyMaketting/QuanLyDotGui")
+    <script src="~/Content/plugins/ckeditor/ckeditor.js"></script>
+}
+
+
+@section Styles {
+    @Styles.Render("~/plugins/chosenStyles")
+}
+
+

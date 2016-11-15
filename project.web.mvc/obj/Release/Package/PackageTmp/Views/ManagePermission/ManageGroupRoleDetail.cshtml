@@ -1,0 +1,69 @@
+﻿@*
+    Author:   			ntdai
+    Created: 			2015-11-25
+    Last Modified: 		2015-11-25
+*@
+
+
+@{
+    ViewBag.Title = "Chi tiết nhóm quyền";
+}
+<div id="page-heading">
+    <ol class="breadcrumb">
+        <li>
+            <a href="@Url.Action("Index", "Dashboards")">
+                <i class="fa fa-lg fa-home text-warning text-size-20">
+                </i> Trang chủ
+            </a>
+        </li>
+        <li>
+            <a href="@Url.Action("ManagePermission", "ManagePermission")">
+                Quản lý phân quyền
+            </a>
+        </li>
+        <li>
+            <a href="@Url.Action("ManageAspNetRoles", "ManagePermission")">
+                Quản lý quyền
+            </a>
+        </li>
+        <li>
+            <a href="@Url.Action("ManageGroupRole", "ManagePermission")">
+                Cấu hình nhóm quyền
+            </a>
+        </li>
+        <li class="active">
+            Chi tiết nhóm quyền
+        </li>
+    </ol>
+</div>
+
+@*content*@
+<div class="container">
+
+    <div class="row">
+        <div class="col-md-8"><h4>@ViewBag.NhomQuyenName</h4></div>
+        <div class="col-md-4">
+            <div class="pull-right">
+                <a class=" btn btn btn-primary" href="@Url.Action("ManageGroupRole", "ManagePermission")">
+                    Trở lại
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6 ">
+            @Html.Action("GroupRoleGetDetailDaChon_DanhSach", "ManagePermission")
+        </div>
+        <div class="col-lg-6 ">
+            @Html.Action("GroupRoleGetDetailChuaChon_DanhSach", "ManagePermission")
+        </div>
+
+    </div>
+</div>
+@section Scripts {
+    @Scripts.Render("~/module/ManagePermission/ManageGroupRoleDetail")
+}
+
+
+
+

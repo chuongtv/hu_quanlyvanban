@@ -1,0 +1,98 @@
+﻿@*
+    Author:   			ntdai
+    Created: 			2015-11-25
+    Last Modified: 		2015-11-25
+*@
+
+
+@{
+    ViewBag.Title = "ManageGroupRole";
+}
+<div id="page-heading">
+    <ol class="breadcrumb">
+        <li>
+            <a href="@Url.Action("Index", "Dashboards")">
+                <i class="fa fa-lg fa-home text-warning text-size-20">
+                </i> Trang chủ
+            </a>
+        </li>
+        <li>
+            <a href="@Url.Action("ManagePermission", "ManagePermission")">
+                Quản lý phân quyền
+            </a>
+        </li>
+        <li>
+            <a href="@Url.Action("ManageAspNetRoles", "ManagePermission")">
+                Quản lý quyền
+            </a>
+        </li>
+        
+        <li class="active">
+            Quản lý nhóm quyền
+        </li>
+    </ol>
+</div>
+
+@*content*@
+<div class="container">
+    <div class="row">
+        @*các thao tác*@
+        <div class="show">
+            <div class="col-sm-4 col-sm-push-8" style="text-align:right;">
+                   <div class="form-group ">
+                       <button data-otf-mutil="true"
+                               onclick="ManageGroupRole_GroupRole_DeleteMulti(this)"
+                               data-otf-confirm="Bạn có chắc muốn xóa những dòng đã chọn?"
+                               data-otf-target="#CPManageGroupRole"
+                               data-otf-input="#SearchGroupRole"
+                               data-otf-action-target="@Url.Action("GroupRoleGet_List", "ManagePermission")?k="
+                               data-otf-action="@Url.Action("GroupRoleDelete", "ManagePermission", null, Request.Url.Scheme)?id="
+                               class=" btn btn-danger"
+                               title="Xóa">
+                           <i class="fa fa-trash-o"></i> Xóa
+                       </button>
+                       <a class=" btn btn-success" href="@Url.Action("GroupRoleCreate", "ManagePermission", null, Request.Url.Scheme)"> 
+                            <i class="fa fa-plus" title="Tạo mới"></i> Thêm mới
+                       </a>
+                   </div>
+            </div>
+            <div class="col-sm-8  col-sm-pull-4">
+                <div class="form-group">
+                    <div class="input-group">
+                        <input id="SearchGroupRole" 
+                               placeholder="Thông tin cần tìm" 
+                               onkeypress="return ManageGroupRole_GroupRole_EnterEvent(event, '#buttonsearch')" 
+                               class="form-control " />
+                        <span class="input-group-btn">
+                            <button id="buttonsearch"
+                                    type="button"
+                                    title="Tìm kiếm"
+                                    class="btn btn-primary"
+                                    data-otf-target="#CPManageGroupRole"
+                                    data-otf-input="#SearchGroupRole"
+                                    data-otf-action="@Url.Action("GroupRoleGet_List", "ManagePermission", null, Request.Url.Scheme)?k="
+                                    onclick="ManageGroupRole_GroupRole_IsSearch(this)">
+                                Tìm kiếm
+                            </button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div id="CPManageGroupRole">
+                @Html.Action("GroupRoleGet_List", "ManagePermission")
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/module/ManagePermission/ManageGroupRole")
+}
+
+
+
+

@@ -1,0 +1,249 @@
+﻿@{
+    ViewBag.Title = "Báo nghỉ";
+    Layout = "~/Views/Shared/_LayoutAngular.cshtml";
+}
+
+<div id="page-heading">
+    <ol class="breadcrumb">
+        <li>
+            <a href="@Url.Action("Index", "Home")">
+                <i class="fa fa-lg fa-home text-warning text-size-20">
+                </i> Trang chủ
+            </a>
+        </li>
+        <li class="active">
+            <a href="@Url.Action("QuanLyDanhSachNghiBu", "GiamSatGiangDay")">
+                Quản lý phiếu báo
+            </a>
+        </li>
+        <li class="active">
+            Báo nghỉ
+        </li>
+    </ol>
+</div>
+<div class="container" ng-controller="BaoNghiCtrl">
+    <div ng-show="ThongTinPhieuView.length == 0">
+        <div class="col-sm-12 form-group">
+            <b>Tìm giảng viên:</b>
+            <br />
+            <input type="text" id="hidden_giangvienguid" ng-model="NhanVienGuid" style="display:none;" />
+            <input type="text" class="col-sm-3" id="text_GiangVienID" placeholder="Tìm và chọn giảng viên cần báo nghỉ" />
+        </div>
+        <hr />
+
+        <div class="col-sm-12 form-group">
+            <div ng-show="NhanVienGuid.length > 0">
+                <b>Giảng viên</b>:
+                <span id="lblName"></span>
+            </div>
+            <div id="lblName" ng-show="NhanVienGuid.length == 0">
+                Xin vui lòng nhập Họ tên Giảng viên
+            </div>
+        </div>
+
+        <div class="col-sm-12 form-group">
+            <b>Lý do</b>:
+        </div>
+        <div class="col-sm-12 form-group">
+            <textarea ng-model="LyDo" style="width:100%;border:1px solid #ccc;" rows="2"></textarea>
+        </div>
+    </div>
+    <div ng-show="idParameter != ''">
+        <div class="col-sm-12 form-group">
+            <b>Giảng viên</b>: {{ThongTinPhieuView.HoTen}} - {{ThongTinPhieuView.NhanVienID}} - {{ThongTinPhieuView.DonViName}}
+        </div>
+        <div class="col-sm-12 form-group">
+            <b>Lý do báo nghỉ</b>: {{ThongTinPhieuView.NoiDung}}
+        </div>
+    </div>
+        <div class="col-sm-12 ">
+            <div class="col-sm-6 nopadding"><b>Danh sách buổi báo nghỉ</b></div>
+            <div class="col-sm-6 text-right nopadding">
+                <button id="btnThemBuoiNghi"
+                        type="button"
+                        title="Thêm buổi nghỉ"
+                        class="btn btn-primary"
+                        onclick="openNav()"
+                        ng-show="TrangThai == 0"
+                        ng-disabled="NhanVienGuid.length == 0"
+                        ng-click="openPopup()"
+                        >
+                    Chọn buổi nghỉ
+                </button>
+            </div>
+
+        </div>
+        <div ng-show="listAdd.length > 0">
+            <div class="col-sm-12 form-group">
+               
+                <table cellpadding="0" cellspacing="0" border="0" class="table table-bordered datatables">
+                    <thead>
+                        <tr>
+                            <th class="w-30">#</th>
+                            <th class="w-200">Lớp</th>
+                            <th class="w-200">Môn học</th>
+                            <th class="w-100">Nhóm LT</th>
+                            <th class="w-100">Nhóm TH</th>
+                            <th class="w-50">Sỉ số</th>
+                            <th class="w-50">Thứ</th>
+                            <th class="w-50">Số tiết</th>
+                            <th class="w-100">Tiết bắt đầu</th>
+                            <th class="w-100">Ngày học</th>
+                            <th class="w-30 text-center" ng-show="TrangThai == 0">Xóa</th>
+                        </tr>
+                    </thead>
+
+                    <tbody ng-repeat="item in listAdd">
+                        <tr>
+                            <td>[{{$index + 1}}]</td>
+                            <td>{{item.LopThucTeGhep}}</td>
+                            <td>{{item.MonHocName}}</td>
+                            <td>{{item.NhomHoc}}</td>
+                            <td>{{item.NhomThucHanh}}</td>
+                            <td>{{item.SiSoLopHoc}}</td>
+                            <td>{{item.Thu}}</td>
+                            <td>{{item.SoTiet}}</td>
+                            <td>{{item.TietBatDau}}</td>
+                            <td>{{item.NgayHoc |  date :  "dd/MM/yyyy"}}</td>
+                            <td class="text-center" ng-show="TrangThai == 0">
+                                <a ng-click="addBuoi(item.LopHocGuid)">
+                                    <i class="fa fa-lg fa-trash-o text-danger"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>            
+        </div>
+        
+
+        <div class="col-sm-12 " ng-show="listAdd.length == 0" style="margin:5px 0 0 0;">
+            <div class="alert alert-dismissable alert-info">
+                <strong>Không có dữ liệu</strong>
+            </div>
+        </div>
+        <div class="col-sm-12 text-center">
+           
+            <button id="btnLuuPhieu"
+                    type="button"
+                    title="Lưu thông tin báo nghỉ"
+                    class="btn btn-success"
+                    data-otf-id="@ViewBag.UserGuid"
+                    ng-click="savePhieu()"
+                    ng-show="listAdd.length > 0 && ThongTinPhieuView.length == 0"
+                    ng-disabled="checkOpen == 1"
+                    confirm-click="Bạn có chắc chắn gửi phiếu báo nghỉ này?"
+                    >
+                Gửi yêu cầu báo nghỉ
+            </button>
+            <button id="btnQuayLai"
+                    type="button"
+                    title="Quay lại"
+                    class="btn btn-default"
+                    ng-click="BackPage()"
+                    ng-show="idParameter == ''">
+                Hủy và quay lại
+            </button>
+            <button id="btnQuayLai"
+                    type="button"
+                    title="Quay lại"
+                    class="btn btn-default"
+                    ng-click="BackPage()"
+                    ng-show="idParameter != ''">
+                Quay lại
+            </button>
+        </div>
+        <div class="col-sm-12">
+            <div id="mySidenav" class="sidenav">
+                <div class="row col-sm-12 form-group">
+                    <h4>Chọn buổi báo nghỉ</h4>
+                </div>
+                <div class="row form-group">
+                    <div class="col-sm-8">
+                        <label>Chọn ngày</label>
+                        <md-datepicker name="GiaTriNgayThang" ng-model="GiaTriNgayThang" md-min-date="minDate" md-max-date="maxDate" ng-change="searhTheoNgay()" md-placeholder="Enter date" required></md-datepicker>
+                        <i class="fa fa-exclamation-triangle text-danger" ng-show="GiaTriNgayThang.$invalid && !GiaTriNgayThang.$pristine">
+                            Không được để trống
+                        </i>
+                    </div>
+                    <div class="col-sm-4 text-right">
+                        <button id="btnThoat"
+                                type="button"
+                                title="Thoát"
+                                class="btn btn-default"
+                                onclick="closeNav()"
+                                ng-click="closePopup()">
+                            Thoát
+                        </button>
+                    </div>
+
+
+                </div>
+                <div class="row col-sm-12 form-group" ng-show="listShow.length > 0">
+                    <table cellpadding="0" cellspacing="0" border="0" class="table table-bordered datatables">
+                        <thead>
+                            <tr>
+                                <th>Lớp</th>
+                                <th>Môn học</th>
+                                <th>Nhóm LT</th>
+                                <th>Nhóm TH</th>
+                                <th>Sỉ số</th>
+                                <th>Thứ</th>
+                                <th>Số tiết</th>
+                                <th>Tiết bắt đầu</th>
+                                <th>Chọn</th>
+                            </tr>
+                        </thead>
+
+                        <tbody ng-repeat="item in listShow">
+                            <tr>
+                                <td>{{item.LopThucTeGhep}}</td>
+                                <td>{{item.MonHocName}}</td>
+                                <td>{{item.NhomHoc}}</td>
+                                <td>{{item.NhomThucHanh}}</td>
+                                <td>{{item.SiSoLopHoc}}</td>
+                                <td>{{item.Thu}}</td>
+                                <td>{{item.SoTiet}}</td>
+                                <td>{{item.TietBatDau}}</td>
+                                <td>
+                                    <input type="checkbox" ng-click="addBuoi(item.ThoiKhoaBieuGuid)" ng-checked="VailCheckBox(item.ThoiKhoaBieuGuid)" />
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-sm-12" ng-show="listShow.length == 0">
+                    <br />
+                    <div class="text-center">
+                        <b>Dữ liệu ngày {{GiaTriNgayThang |  date :  "dd/MM/yyyy"}} không tìm thấy</b>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+@section Styles {
+    <link href="~/Content/plugins/EasyAutocomplete/easy-autocomplete.css" rel="stylesheet" />
+}
+
+
+@section Scripts {
+    <script src="~/Content/plugins/EasyAutocomplete/jquery.easy-autocomplete.js"></script>
+    <script src="~/angularApp/app/GiamSatHoatDongGiangDay/BaoNghi/BaoNghiCtrl.js"></script>
+    <script type="text/javascript">
+        function openNav() {
+            document.getElementById("mySidenav").style.width = "68%";
+            document.getElementById("mySidenav").style.border = "1px solid #ccc";
+            document.getElementById("mySidenav").style.paddingLeft = "2%";
+            document.getElementById("mySidenav").style.paddingRight = "2%";
+        }
+
+        function closeNav() {
+            document.getElementById("mySidenav").style.width = "0";
+            document.getElementById("mySidenav").style.border = "0px";
+            document.getElementById("mySidenav").style.paddingLeft = "0";
+            document.getElementById("mySidenav").style.paddingRight = "0";
+        }
+    </script>>
+}

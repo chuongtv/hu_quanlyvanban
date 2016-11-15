@@ -1,0 +1,87 @@
+﻿@model nvngoc29082015.permission.library.ManageRoleForCode.DanhSachRoleForCodeViewModel
+@{
+    ViewBag.Title = "DanhSachRoleForCode";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div id="page-heading">
+    <ol class="breadcrumb">
+        <li>
+            <a href="@Url.Action("Index", "Dashboards")">
+                <i class="fa fa-home text-warning text-size-20">
+                </i> Trang chủ
+            </a>
+        </li>
+        <li>
+            <a href="@Url.Action("ManagePermission", "ManagePermission")">
+                <i class="text-warning text-size-20">
+                </i> Quản Lý Phân Quyền
+            </a>
+        </li>
+        <li >
+            Danh sách role for code
+        </li>
+    </ol>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+
+            @foreach (var app in Model.Apps)
+            {
+
+                <h3>App @app.AppName</h3>
+                <i>@app.Desctiption</i>
+                <br />
+
+                foreach (var temp in app.Modules)
+                {
+                    <ul>
+                        <li >
+                            <h4>@temp.ModuleName</h4>
+                            <i>@temp.Desctiption</i>
+
+                            <div class="btn-group">
+                                <a href="@Url.Action("SaveRoleForCode","ManagePermission",
+                                   new { @ida = app.AppGuid, @idm = temp.ModuleGuid }, null)"
+                                   class="btn btn-default">
+                                    <i class="fa fa-plus"></i> <span> Thêm quyền</span>
+                                </a>
+
+                            </div>
+                            <br /><br />
+
+                            <table class="table table-striped table-bordered datatables dataTable">
+                                <tr>
+                                    <td>Quyền</td>
+                                    <td>Mô tả</td>
+                                    <td>Tác vụ</td>
+                                </tr>
+                                @foreach (var item in temp.RoleForCodes)
+                                {
+                                    <tr>
+                                        <td>@item.RoleForCodeName</td>
+                                        <td>@item.Description <small>@Html.DisplayFor(m => item.CreatedTime)</small></td>
+
+
+                                        <td>
+                                            @Html.ActionLink(" Sửa", "SaveRoleForCode", "ManagePermission", new { @ida = app.AppGuid, @idm = temp.ModuleGuid, @idr = item.RoleForCodeGuid }, null)
+                                            <text> - </text>
+                                            @Html.ActionLink(" Xóa", "DeleteRoleForCode", "ManagePermission",
+                                                new { @id = item.RoleForCodeGuid },
+                                                new { onclick = "return confirm('Bạn xóa quyền này?');" })
+                                            <text> - </text>
+                                            @Html.ActionLink(" Cấu hình action", "ConfigActionRoleForCode", "ManagePermission", new { @idr = item.RoleForCodeGuid }, null)
+                                        </td>
+                                    </tr>
+                                }
+                            </table>
+                        </li>
+                    </ul>
+                }
+            }
+        </div>
+    </div>
+</div>
+
+

@@ -1,0 +1,56 @@
+﻿@*
+    Author:   			ntdai
+    Created: 			2016-3-18
+    Last Modified: 		2016-3-18
+*@
+
+
+@{
+    ViewBag.Title = "Thêm mới";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div id="page-heading">
+    <ol class="breadcrumb">
+        <li>
+            <a href="@Url.Action("Index", "Dashboards")">
+                <i class="fa fa-lg fa-home text-warning text-size-20">
+                </i> Trang chủ
+            </a>
+        </li>
+        <li class="active">
+            Tạo mới DotGui
+        </li>
+    </ol>
+</div>
+
+@*content*@
+<div class="container" id="CPQuanLyDotGui">
+    @Html.Partial("~/Views/QuanLyMaketting/QuanLyDotGui/_PartialCreate.cshtml")
+</div>
+@section Styles {
+    @Styles.Render("~/plugins/chosenStyles")
+}
+
+
+
+
+@section Scripts {
+    @Scripts.Render("~/plugins/chosen")
+    @Scripts.Render("~/plugins/dropZone")
+    @Scripts.Render("~/plugins/fancybox")
+    <script type="text/javascript">
+        //$(".chosen").chosen({ max_selected_options: 2 });
+        $(".chosen-deselect").chosen({ allow_single_deselect: true });
+        $(".chosen").chosen().change();
+        $(".chosen").trigger('liszt:updated');
+    </script>
+
+
+
+    @Scripts.Render("~/module/QuanLyMaketting/QuanLyDotGui")
+    <script src="~/Content/plugins/ckeditor/ckeditor.js"></script>
+}
+
+
+

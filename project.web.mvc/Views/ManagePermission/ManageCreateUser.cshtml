@@ -1,0 +1,26 @@
+﻿@{
+    ViewBag.Title = "ManagePermission";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div id="page-heading">
+    <ol class="breadcrumb">
+        <li>
+            <a href="@Url.Action("Index", "Dashboards")">
+                <i class="fa fa-lg fa-home text-warning text-size-20">
+                </i>Trang Chủ
+            </a>
+        </li>
+        <li class="active">
+            Quản Lý tạo tài khoản
+        </li>
+    </ol>
+</div>
+<div class="container" >
+    <div class="row">
+        @Html.Action("ManageCreateUser_DanhSach", "ManagePermission")
+    </div>
+</div>
+@section Scripts {
+@Scripts.Render("~/module/ManagePermission/ManageTaiKhoan/TaoTaiKhoan")
+
+    }

@@ -1,0 +1,161 @@
+﻿@*
+    Author:   			ntdai
+    Created: 			2015-11-25
+    Last Modified: 		2015-11-25
+*@
+
+@model MvcPaging.IPagedList<nvngoc29082015.permission.library.ManageGroupRoleDetail.ListGroupRoleDetailView>
+@using MvcPaging
+
+@{var i = 1;}
+
+<div class="table-responsive">
+    @if (Model.TotalItemCount > 0)
+    {
+        <div class="p-b-10">
+            Kết quả tìm kiếm: <b>@Model.TotalItemCount</b> Quyền đã chọn
+        </div>
+        <text>
+            <table class="table table-bordered datatables dataTable">
+                <thead>
+                    <tr>
+                        <th class="text-center w-30">
+                            <input id="CheckBoxAll" onclick="javascript: checkAlllist('#listcheckall2', this);" type="checkbox" />
+                        </th>
+                        <th class="text-center">
+                            #
+                        </th>
+                        <th class="text-left w-150">
+                            @Html.DisplayNameFor(model => Model[0].FullName)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => Model[0].Name)
+                        </th>
+
+                        <th class="text-right w-100"></th>
+
+                    </tr>
+                </thead>
+                <tbody id="listcheckall2">
+                    @foreach (var item in Model)
+                    {
+                        <tr data="@item.GroupRoleDetailGuid" class="showhim">
+                            <td class="text-center">
+
+                                @if (item.Name == project.config.library.Utilities.ConstantVariable.Value_AspNetRoles_System)
+                                {//nếu là quyền system thì được xóa
+                                    if (User.IsInRole(project.config.library.Utilities.ConstantVariable.Value_AspNetRoles_System))
+                                    {
+                                        <text>
+                                            <input type="checkbox" class="checkbox-item" value="@item.GroupRoleDetailGuid" />
+                                        </text>
+                                    }
+                                }
+                                else
+                                {   <text>
+                                    <input type="checkbox" class="checkbox-item" value="@item.GroupRoleDetailGuid" />
+                                </text>
+                                }
+
+
+                            </td>
+                            <td class="text-center w-50">
+                                @Html.Raw((Model.PageNumber - 1) * Model.PageSize + i)
+                                @{i++;}
+                            </td>
+                            <td class="text-left w-100">
+                                @Html.Raw(item.FullName)
+                            </td>
+                            <td>
+                                @Html.Raw(item.Name)
+                            </td>
+
+                            <td class="text-right w-100">
+                                @*//nếu mà quyền là system*@
+                                @if (item.Name == project.config.library.Utilities.ConstantVariable.Value_AspNetRoles_System)
+                                {//nếu là quyền system thì được xóa
+                                    if (User.IsInRole(project.config.library.Utilities.ConstantVariable.Value_AspNetRoles_System))
+                                    {
+                                        <text>
+                                            <a data-otf-confirm="Bạn có chắc muôn bỏ quyền @item.FullName khỏi nhóm?"
+                                               title="Bỏ quyền khỏi nhóm" href="javascript:void(0)"
+                                               onclick="ManageGroupRoleDetail_GroupRoleDetail_DeleteMulti(this)"
+                                               data-otf-target="#CPGroupRoleDetailDaChon"
+                                               data-otf-input="#SearchGroupRoleDaChon"
+                                               data-otf-action-target="@Url.Action("GroupRoleGetDetailDaChon_List", "ManagePermission")?idnv=@item.AspNetRoleGroupGuid&k="
+                                               data-otf-action="@Url.Action("GroupRoleDetailDelete", "ManagePermission", null, Request.Url.Scheme)?id=@item.GroupRoleDetailGuid">
+                                                <i class="fa fa-lg fa-trash-o text-danger"></i>
+                                            </a>
+                                        </text>
+                                    }
+                                }
+                                else
+                                {   <text>
+                                    <a data-otf-confirm="Bạn có chắc muôn bỏ quyền @item.FullName khỏi nhóm?"
+                                       title="Bỏ quyền khỏi nhóm" href="javascript:void(0)"
+                                       onclick="ManageGroupRoleDetail_GroupRoleDetail_DeleteMulti(this)"
+                                       data-otf-target="#CPGroupRoleDetailDaChon"
+                                       data-otf-input="#SearchGroupRoleDaChon"
+                                       data-otf-action-target="@Url.Action("GroupRoleGetDetailDaChon_List", "ManagePermission")?idnv=@item.AspNetRoleGroupGuid&k="
+                                       data-otf-action="@Url.Action("GroupRoleDetailDelete", "ManagePermission", null, Request.Url.Scheme)?id=@item.GroupRoleDetailGuid">
+                                        <i class="fa fa-lg fa-trash-o text-danger"></i>
+                                    </a>
+                                </text>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </text>
+    }
+    else
+    {
+        <text><br />
+    <div class="alert alert-dismissable alert-info">
+        <strong>Yêu cầu tìm kiếm lúc @{ var date = DateTime.Now; } @date.ToString("HH:mm:ss dd/MM/yyyy") không có dữ liệu</strong>
+        <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+    </div>
+        </text>
+    }
+    <div class="pager">
+        @if (Model.TotalItemCount > Model.PageSize)
+        {
+
+            <text>
+
+                @Html.Raw(Ajax.Pager(
+                       new Options
+                       {
+                           PageSize = Model.PageSize,
+                           TotalItemCount = Model.TotalItemCount,
+                           CurrentPage = Model.PageNumber,
+                           ItemTexts = new ItemTexts() { Next = "Next", Previous = "Previous", Page = "" },
+                           ItemIcon = new ItemIcon() { First = "icon-backward", Previous = "icon-chevron-left", Next = "icon-chevron-right", Last = "icon-forward" },
+                           TooltipTitles = new TooltipTitles() { Next = "Next page", Previous = "Previous page", Page = "Page {0}." },
+                           Size = Size.normal,
+                           Alignment = Alignment.centered,
+                           IsShowControls = true,
+                           IsShowFirstLast = true,
+                           CssClass = ""
+                       },
+                       new AjaxOptions
+                       {
+                           UpdateTargetId = "CPManageGroupRoleDetail"
+                       }, new { controller = "ManagePermission", action = "GroupRoleGetDetailDaChon_List", k = @ViewData["keysearchdachon"], idnv = @ViewData["idnvdachon"] }))
+            </text>
+        }
+    </div>
+</div>
+
+@using (Html.BeginScriptContext())
+{
+    Html.AddScriptBlock(
+        @<script type="text/javascript">
+            loadSelect("ManageGroupRoleDetail");
+        </script>
+, true);
+}
+
+
+

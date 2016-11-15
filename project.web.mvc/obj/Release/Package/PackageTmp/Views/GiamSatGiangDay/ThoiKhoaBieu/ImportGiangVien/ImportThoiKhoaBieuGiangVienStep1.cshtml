@@ -1,0 +1,87 @@
+﻿@*
+    Author:   			pdgiai
+    Created: 			2016-3-3
+    Last Modified: 		2016-3-3
+*@
+@{
+    ViewBag.Title = "Import danh sách ThoiKhoaBieu";
+}
+@model nvngoc31122015.giamsatgiangday.library.GiamSatGiangDay.ImportThoiKhoaBieuGiangVienStep1View
+@*breadcrumb*@
+<div id="page-heading">
+    <ol class="breadcrumb">
+        <li>
+            <a href="@Url.Action("Index", "Home")">
+                <i class="fa fa-lg fa-home text-warning text-size-20">
+                </i> Trang chủ
+            </a>
+        </li>
+        <li>
+            <a href="@Url.Action("DSThoiKhoaBieuMoiGiang", "GiamSatGiangDay")">Thời khóa biểu</a>
+        </li>
+        <li class="active">
+            Import danh sách giảng viên
+        </li>
+    </ol>
+</div>
+
+<div class="container">
+
+    <div class="row">
+        <div class="col-sm-12" id="contentImport">
+            <h2>Bước 1: Chọn file dữ liệu import</h2>
+            <br />
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="ibox">
+                        <div class="ibox-content">
+                            <div class="mail-box">
+                                @using (Html.BeginForm("ImportThoiKhoaBieuGiangVienStep1", "GiamSatGiangDay", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    <div class="panel panel-primary">
+                                        <div class="panel-body">
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    @Html.Raw(ViewBag.Error)
+                                                    @Html.ValidationMessageFor(m => m.File, null, new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                            <br />
+                                            <div class="row">
+                                                @Html.LabelFor(model => model.File, new { @class = "col-sm-2 control-label" })
+                                                <div class="col-sm-10">
+                                                    @Html.TextBoxFor(m => m.File, new { type = "file" })
+                                                </div>
+                                            </div>
+                                            <br />
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    @*File excel mẫu: <a href="~/Data/Template/Import_ThoiKhoaBieu.xlsx"><i class="fa fa-cloud-download"></i> Import danh sách ThoiKhoaBieu</a>*@
+                                                    <span>File excel dùng import được xuất từ danh sách thời khóa biểu mời giảng</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="panel-footer">
+                                            <div class="pull-right">
+                                                <a class="btn btn-default" href='@Url.Action("DSThoiKhoaBieuMoiGiang", "GiamSatGiangDay")' title="Quay lại">Quay lại bước 1</a>
+                                                <button id="btnSearch" type="submit" title="Tải lên" class="btn btn-primary">
+                                                    Tiếp tục bước 2
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+

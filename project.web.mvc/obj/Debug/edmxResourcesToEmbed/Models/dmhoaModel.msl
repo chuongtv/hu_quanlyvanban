@@ -1,0 +1,285 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="dmhoaModelStoreContainer" CdmEntityContainer="dmhoaEntities">
+    <FunctionImportMapping FunctionImportName="ioiort_Controller_Delete" FunctionName="dmhoaModel.Store.ioiort_Controller_Delete" />
+    <FunctionImportMapping FunctionImportName="ioiort_Controller_GetCount" FunctionName="dmhoaModel.Store.ioiort_Controller_GetCount" />
+    <FunctionImportMapping FunctionImportName="ioiort_Controller_Insert" FunctionName="dmhoaModel.Store.ioiort_Controller_Insert" />
+    <FunctionImportMapping FunctionImportName="ioiort_Controller_SelectAll" FunctionName="dmhoaModel.Store.ioiort_Controller_SelectAll">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="dmhoaModel.ioiort_Controller_SelectAll_Result">
+          <ScalarProperty Name="ControllerGuid" ColumnName="ControllerGuid" />
+          <ScalarProperty Name="ControllerName" ColumnName="ControllerName" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="ioiort_Controller_SelectOne" FunctionName="dmhoaModel.Store.ioiort_Controller_SelectOne">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="dmhoaModel.ioiort_Controller_SelectOne_Result">
+          <ScalarProperty Name="ControllerGuid" ColumnName="ControllerGuid" />
+          <ScalarProperty Name="ControllerName" ColumnName="ControllerName" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="ioiort_Controller_SelectPage" FunctionName="dmhoaModel.Store.ioiort_Controller_SelectPage" />
+    <FunctionImportMapping FunctionImportName="ioiort_Controller_Update" FunctionName="dmhoaModel.Store.ioiort_Controller_Update" />
+    <EntitySetMapping Name="AspNetRoles">
+      <EntityTypeMapping TypeName="dmhoaModel.AspNetRoles">
+        <MappingFragment StoreEntitySet="AspNetRoles">
+          <ScalarProperty Name="FullName" ColumnName="FullName" />
+          <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AspNetUserClaims">
+      <EntityTypeMapping TypeName="dmhoaModel.AspNetUserClaims">
+        <MappingFragment StoreEntitySet="AspNetUserClaims">
+          <ScalarProperty Name="ClaimValue" ColumnName="ClaimValue" />
+          <ScalarProperty Name="ClaimType" ColumnName="ClaimType" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AspNetUserLogins">
+      <EntityTypeMapping TypeName="dmhoaModel.AspNetUserLogins">
+        <MappingFragment StoreEntitySet="AspNetUserLogins">
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="ProviderKey" ColumnName="ProviderKey" />
+          <ScalarProperty Name="LoginProvider" ColumnName="LoginProvider" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AspNetUsers">
+      <EntityTypeMapping TypeName="dmhoaModel.AspNetUsers">
+        <MappingFragment StoreEntitySet="AspNetUsers">
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
+          <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
+          <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
+          <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
+          <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
+          <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+          <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
+          <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+          <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AspNetUsers_Sub">
+      <EntityTypeMapping TypeName="dmhoaModel.AspNetUsers_Sub">
+        <MappingFragment StoreEntitySet="AspNetUsers_Sub">
+          <ScalarProperty Name="Position" ColumnName="Position" />
+          <ScalarProperty Name="NguoiDungNameKhongDau" ColumnName="NguoiDungNameKhongDau" />
+          <ScalarProperty Name="Level" ColumnName="Level" />
+          <ScalarProperty Name="ListPlacementName" ColumnName="ListPlacementName" />
+          <ScalarProperty Name="ListPlacementID" ColumnName="ListPlacementID" />
+          <ScalarProperty Name="ListPlacementGuid" ColumnName="ListPlacementGuid" />
+          <ScalarProperty Name="ListStringToSort" ColumnName="ListStringToSort" />
+          <ScalarProperty Name="ParentName" ColumnName="ParentName" />
+          <ScalarProperty Name="ParentGuid" ColumnName="ParentGuid" />
+          <ScalarProperty Name="NguoiDungName" ColumnName="NguoiDungName" />
+          <ScalarProperty Name="NguoiDungID" ColumnName="NguoiDungID" />
+          <ScalarProperty Name="DonViGuid" ColumnName="DonViGuid" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ioiort_Action">
+      <EntityTypeMapping TypeName="dmhoaModel.ioiort_Action">
+        <MappingFragment StoreEntitySet="ioiort_Action">
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="ActionName" ColumnName="ActionName" />
+          <ScalarProperty Name="GroupActionGuid" ColumnName="GroupActionGuid" />
+          <ScalarProperty Name="ActionGuid" ColumnName="ActionGuid" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ioiort_ActionGroup">
+      <EntityTypeMapping TypeName="dmhoaModel.ioiort_ActionGroup">
+        <MappingFragment StoreEntitySet="ioiort_ActionGroup">
+          <ScalarProperty Name="ControllerGuid" ColumnName="ControllerGuid" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="ActionGroupName" ColumnName="ActionGroupName" />
+          <ScalarProperty Name="ActionGroupGuid" ColumnName="ActionGroupGuid" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ioiort_App">
+      <EntityTypeMapping TypeName="dmhoaModel.ioiort_App">
+        <MappingFragment StoreEntitySet="ioiort_App">
+          <ScalarProperty Name="Desctiption" ColumnName="Desctiption" />
+          <ScalarProperty Name="AppName" ColumnName="AppName" />
+          <ScalarProperty Name="AppGuid" ColumnName="AppGuid" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ioiort_Controller">
+      <EntityTypeMapping TypeName="dmhoaModel.ioiort_Controller">
+        <MappingFragment StoreEntitySet="ioiort_Controller">
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="ControllerName" ColumnName="ControllerName" />
+          <ScalarProperty Name="ControllerGuid" ColumnName="ControllerGuid" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ioiort_Module">
+      <EntityTypeMapping TypeName="dmhoaModel.ioiort_Module">
+        <MappingFragment StoreEntitySet="ioiort_Module">
+          <ScalarProperty Name="AppGuid" ColumnName="AppGuid" />
+          <ScalarProperty Name="Desctiption" ColumnName="Desctiption" />
+          <ScalarProperty Name="ModuleName" ColumnName="ModuleName" />
+          <ScalarProperty Name="ModuleGuid" ColumnName="ModuleGuid" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ioiort_RoleForCode">
+      <EntityTypeMapping TypeName="dmhoaModel.ioiort_RoleForCode">
+        <MappingFragment StoreEntitySet="ioiort_RoleForCode">
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="UpdatedTime" ColumnName="UpdatedTime" />
+          <ScalarProperty Name="CreatedTime" ColumnName="CreatedTime" />
+          <ScalarProperty Name="RoleForCodeName" ColumnName="RoleForCodeName" />
+          <ScalarProperty Name="AppGuid" ColumnName="AppGuid" />
+          <ScalarProperty Name="ModuleGuid" ColumnName="ModuleGuid" />
+          <ScalarProperty Name="RoleForCodeGuid" ColumnName="RoleForCodeGuid" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="AspNetUserRoles" TypeName="dmhoaModel.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
+      <EndProperty Name="AspNetUsers">
+        <ScalarProperty Name="Id" ColumnName="UserId" />
+      </EndProperty>
+      <EndProperty Name="AspNetRoles">
+        <ScalarProperty Name="Id" ColumnName="RoleId" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="ioiort_RoleDetail" TypeName="dmhoaModel.ioiort_RoleDetail" StoreEntitySet="ioiort_RoleDetail">
+      <EndProperty Name="AspNetRoles">
+        <ScalarProperty Name="Id" ColumnName="RoleId" />
+      </EndProperty>
+      <EndProperty Name="ioiort_RoleForCode">
+        <ScalarProperty Name="RoleForCodeGuid" ColumnName="RoleForCodeGuid" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="ioiort_RoleDetailForCode" TypeName="dmhoaModel.ioiort_RoleDetailForCode" StoreEntitySet="ioiort_RoleDetailForCode">
+      <EndProperty Name="ioiort_RoleForCode">
+        <ScalarProperty Name="RoleForCodeGuid" ColumnName="RoleForCodeGuid" />
+      </EndProperty>
+      <EndProperty Name="ioiort_Action">
+        <ScalarProperty Name="ActionGuid" ColumnName="ActionGuid" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="ioiort_UserRoleDenied" TypeName="dmhoaModel.ioiort_UserRoleDenied" StoreEntitySet="ioiort_UserRoleDenied">
+      <EndProperty Name="AspNetUsers">
+        <ScalarProperty Name="Id" ColumnName="UserId" />
+      </EndProperty>
+      <EndProperty Name="ioiort_RoleForCode">
+        <ScalarProperty Name="RoleForCodeGuid" ColumnName="RoleForCodeGuid" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="ioiort_UserRoleDetail" TypeName="dmhoaModel.ioiort_UserRoleDetail" StoreEntitySet="ioiort_UserRoleDetail">
+      <EndProperty Name="AspNetUsers">
+        <ScalarProperty Name="Id" ColumnName="UserId" />
+      </EndProperty>
+      <EndProperty Name="ioiort_RoleForCode">
+        <ScalarProperty Name="RoleForCodeGuid" ColumnName="RoleForCodeGuid" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <FunctionImportMapping FunctionImportName="ioiort_RoleDetailForCode_GetAllByRoleForCodeGuid" FunctionName="dmhoaModel.Store.ioiort_RoleDetailForCode_GetAllByRoleForCodeGuid">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="dmhoaModel.ioiort_RoleDetailForCode_GetAllByRoleForCodeGuid_Result">
+          <ScalarProperty Name="ActionGuid" ColumnName="ActionGuid" />
+          <ScalarProperty Name="RoleForCodeGuid" ColumnName="RoleForCodeGuid" />
+          <ScalarProperty Name="RoleForCodeName" ColumnName="RoleForCodeName" />
+          <ScalarProperty Name="ActionName" ColumnName="ActionName" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="ActionGroupName" ColumnName="ActionGroupName" />
+          <ScalarProperty Name="ActionGroupGuid" ColumnName="ActionGroupGuid" />
+          <ScalarProperty Name="ControllerGuid" ColumnName="ControllerGuid" />
+          <ScalarProperty Name="ControllerName" ColumnName="ControllerName" />
+          <ScalarProperty Name="ModuleName" ColumnName="ModuleName" />
+          <ScalarProperty Name="AppName" ColumnName="AppName" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="ioiort_ActionGroup_GetAllByControllerGuid" FunctionName="dmhoaModel.Store.ioiort_ActionGroup_GetAllByControllerGuid">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="dmhoaModel.ioiort_ActionGroup_GetAllByControllerGuid_Result">
+          <ScalarProperty Name="ActionGroupGuid" ColumnName="ActionGroupGuid" />
+          <ScalarProperty Name="ActionGroupName" ColumnName="ActionGroupName" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="ControllerGuid" ColumnName="ControllerGuid" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="ioiort_RoleDetailForCode_AddActionIntoRoleForCode" FunctionName="dmhoaModel.Store.ioiort_RoleDetailForCode_AddActionIntoRoleForCode" />
+    <FunctionImportMapping FunctionImportName="ioiort_RoleDetailForCode_DeleteActionIntoRoleForCode" FunctionName="dmhoaModel.Store.ioiort_RoleDetailForCode_DeleteActionIntoRoleForCode" />
+    <FunctionImportMapping FunctionImportName="ioiort_Action_GetAllByActionGroupGuidAndExsitInRoleDetailForCode" FunctionName="dmhoaModel.Store.ioiort_Action_GetAllByActionGroupGuidAndExsitInRoleDetailForCode">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="dmhoaModel.ioiort_Action_GetAllByActionGroupGuidAndExsitInRoleDetailForCode_Result">
+          <ScalarProperty Name="ActionGuid" ColumnName="ActionGuid" />
+          <ScalarProperty Name="GroupActionGuid" ColumnName="GroupActionGuid" />
+          <ScalarProperty Name="ActionName" ColumnName="ActionName" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="danhdau1" ColumnName="danhdau1" />
+          <ScalarProperty Name="danhdau2" ColumnName="danhdau2" />
+          <ScalarProperty Name="danhdau3" ColumnName="danhdau3" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="ioiort_RoleForCode_Delete" FunctionName="dmhoaModel.Store.ioiort_RoleForCode_Delete" />
+    <FunctionImportMapping FunctionImportName="AspNetRoles_SelectAll" FunctionName="dmhoaModel.Store.AspNetRoles_SelectAll">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="dmhoaModel.AspNetRoles_SelectAll_Result">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+          <ScalarProperty Name="FullName" ColumnName="FullName" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="AspNetRoles_GetRoleForCodeVaDanhDauTheoQuyenTheoRoleGuidVaModule" FunctionName="dmhoaModel.Store.AspNetRoles_GetRoleForCodeVaDanhDauTheoQuyenTheoRoleGuidVaModule">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="dmhoaModel.AspNetRoles_GetRoleForCodeVaDanhDauTheoQuyenTheoRoleGuidVaModule_Result">
+          <ScalarProperty Name="RoleForCodeGuid" ColumnName="RoleForCodeGuid" />
+          <ScalarProperty Name="ModuleGuid" ColumnName="ModuleGuid" />
+          <ScalarProperty Name="AppGuid" ColumnName="AppGuid" />
+          <ScalarProperty Name="RoleForCodeName" ColumnName="RoleForCodeName" />
+          <ScalarProperty Name="CreatedTime" ColumnName="CreatedTime" />
+          <ScalarProperty Name="UpdatedTime" ColumnName="UpdatedTime" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="ModuleName" ColumnName="ModuleName" />
+          <ScalarProperty Name="AppName" ColumnName="AppName" />
+          <ScalarProperty Name="danhdau1" ColumnName="danhdau1" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="AspNetRoles_AddRoleDetail" FunctionName="dmhoaModel.Store.AspNetRoles_AddRoleDetail" />
+    <FunctionImportMapping FunctionImportName="AspNetRoles_DeleteRoleDetail" FunctionName="dmhoaModel.Store.AspNetRoles_DeleteRoleDetail" />
+    <EntitySetMapping Name="contact_Email">
+      <EntityTypeMapping TypeName="dmhoaModel.contact_Email">
+        <MappingFragment StoreEntitySet="contact_Email">
+          <ScalarProperty Name="SendedDate" ColumnName="SendedDate" />
+          <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="IsSended" ColumnName="IsSended" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="DanhXung" ColumnName="DanhXung" />
+          <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+          <ScalarProperty Name="DonViName" ColumnName="DonViName" />
+          <ScalarProperty Name="DonViID" ColumnName="DonViID" />
+          <ScalarProperty Name="NhanVienID" ColumnName="NhanVienID" />
+          <ScalarProperty Name="NhanVienName" ColumnName="NhanVienName" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="DoanhNghiep_EmailManagement_ntdai_AspNetUsers_Insert" FunctionName="dmhoaModel.Store.DoanhNghiep_EmailManagement_ntdai_AspNetUsers_Insert" />
+  </EntityContainerMapping>
+</Mapping>

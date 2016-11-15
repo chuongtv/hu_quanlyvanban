@@ -1,0 +1,89 @@
+﻿@model MvcPaging.IPagedList<nvngoc29082015.permission.library.ManageAspNetUsers.ListAspNetUsersView>
+@using MvcPaging
+
+
+@if (Model.TotalItemCount > 0)
+{ <text>
+        <div class="col-md-12">
+            <div class="panel panel-indigo">
+                <div class="panel-heading">
+                    <h4>
+                        Yêu cầu cấp tài khoản
+                    </h4>
+
+                </div>
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table class="table" style="margin-bottom: 0px;">
+                            <thead>
+                                <tr>
+                                    <th class="col-xs-9 col-sm-3">Mã nhân viên</th>
+                                    <th class="col-sm-6 hidden-xs">Tên nhân viên</th>
+                                    <th class="col-sm-6 hidden-xs">Đơn vị</th>
+                                    <th class="col-xs-2 col-sm-2">Tác vụ</th>
+                                </tr>
+                            </thead>
+                            <tbody class="selects">
+
+                                @foreach (nvngoc29082015.permission.library.ManageAspNetUsers.ListAspNetUsersView item in (List<nvngoc29082015.permission.library.ManageAspNetUsers.ListAspNetUsersView>)Model)
+                                {
+                                    <text>
+                                        <tr>
+                                            <td>
+                                                @item.UserName
+                                            </td>
+                                            <td>
+                                                @item.NguoiDungName
+                                            </td>
+                                            <td>
+                                                @item.DonViName
+                                            </td>
+                                            <td class="text-left">
+
+                                                <button class="btn btn-success-alt btn-sm" data-otf-action="@Url.Action("CreateUser_YeuCauTuHRM", "ManagePermission")?id=@item.Id&ma=@item.UserName" data-otf-action-target="@Url.Action("Dashboards_YeuCauCapTaiKhoan", "ManagePermission", null, Request.Url.Scheme)" data-otf-target="#idPanelYeuCauCapTaiKhoan"
+                                                        onclick="ManageUserRoleDetail_InfoUserRoleDetail_CreateAcount(this)" title="Chưa có tài khoản, nhấn để tạo tài khoản!">
+                                                    <i title="Yêu cầu cấp tài khoản chưa xử lý." class="fa fa-flag text-warning"></i> Tạo mới
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </text>
+                                }
+
+
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="pager">
+                        @if (Model.TotalItemCount > Model.PageSize)
+                        {
+                            <text>
+                                @Html.Raw(Ajax.Pager(
+                       new Options
+                       {
+                           PageSize = Model.PageSize,
+                           TotalItemCount = Model.TotalItemCount,
+                           CurrentPage = Model.PageNumber,
+                           ItemTexts = new ItemTexts() { Next = "Next", Previous = "Previous", Page = "" },
+                           ItemIcon = new ItemIcon() { First = "icon-backward", Previous = "icon-chevron-left", Next = "icon-chevron-right", Last = "icon-forward" },
+                           TooltipTitles = new TooltipTitles() { Next = "Next page", Previous = "Previous page", Page = "Page {0}." },
+                           Size = Size.normal,
+                           Alignment = Alignment.centered,
+                           IsShowControls = true,
+                           IsShowFirstLast = true,
+                           CssClass = ""
+                       },
+                       new AjaxOptions
+                       {
+                           UpdateTargetId = "idPanelYeuCauCapTaiKhoan"
+                       },
+                            new { controller = "Dashboards", action = "Dashboards_YeuCauCapTaiKhoan" }
+                       ))
+                            </text>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+</text>
+}

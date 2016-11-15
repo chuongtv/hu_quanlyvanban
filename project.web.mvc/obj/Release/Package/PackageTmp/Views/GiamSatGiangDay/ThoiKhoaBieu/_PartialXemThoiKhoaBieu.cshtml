@@ -1,0 +1,21 @@
+﻿
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12">
+            <div id='calendar'>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div>
+    <input id="hiddenaction" type="hidden" data-otf-action="@Url.Action("LoadThoiKhoaBieuTheoNhanVien","GiamSatGiangDay")" />
+</div> <!-- container -->
+@using (Html.BeginScriptContext())
+{
+    Html.AddScriptBlock(
+        @<script type="text/javascript">
+            GiamSatGiangDay_ThoiKhoaBieu_XemThoiKhoaBieuTheoCaNhan("#hiddenaction");
+        </script>
+, true);
+}

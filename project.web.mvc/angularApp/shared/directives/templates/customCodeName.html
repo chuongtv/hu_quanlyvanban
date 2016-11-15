@@ -1,0 +1,42 @@
+﻿<div class="table-responsive" style="height: 32px; overflow: visible; {{style}}">
+    <table class="table no-border">
+        <tbody>
+            <tr>
+                <td style="padding: 0px; width:{{codewidth}}px;">
+
+                    <div id="{{idboundCtrl}}" class="dropdown" style="padding: 0px;">
+                        <input type="text" class="form-control" style="padding: 3px 3px; text-transform: uppercase;" autocomplete="off"
+                            id="{{idCode}}" name="name" ng-keydown="idCode_onKeyPress($event)"
+                            ng-blur="eventLostFocus()" ng-model="codeFilter" />
+
+                        <ul class="dropdown-menu" id="{{idControl + '_dropdown'}}" style="margin: 0px; padding: 0px; background-color: white;z-index: 999999999;">
+                            <div id="{{idContainer}}" style="border: 1px solid gray; height: 211px; width: 350px; overflow-y: scroll; font-size:12px;">
+                                <table class="table table-bordered" id="{{idControl + '_table'}}" style="cursor: pointer;">
+                                    <tbody>
+                                        <tr ng-repeat="item in dataFilter" ng-class="{'selected':$index == selectedRow,'dropdown-row-backcolor': $index % 2 == 1}"
+                                            ng-click="setClickedRow($index)" style="height: 32px!important;" id="{{idControl + '_' + $index}}">
+                                            <td width="{{codewidth}}px">{{item.Code}}</td>
+                                            <td width="{{codenameOptions.namewidth}}px"   ng-show="codenameOptions.showname == true">{{item.Name}}</td>
+                                            <td width="{{codenameOptions.field3width}}px" ng-show="codenameOptions.showfield3 == true">{{item.Field3}}</td>
+                                            <td width="{{codenameOptions.field4width}}px" ng-show="codenameOptions.showfield4 == true">{{item.Field4}}</td>
+                                            <td width="{{codenameOptions.field5width}}px" ng-show="codenameOptions.showfield5 == true">{{item.Field5}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </ul>
+                    </div>
+                    <input type="text" class="form-control" style="padding: 3px 3px; display: none;" id="{{idModel}}" ng-model="ngModel" />
+                </td>
+                <td style="padding: 0px;">
+                    <input type="text" class="form-control" style="padding: 3px 3px; background-color: white;" ng-readonly="true" tabindex="-1" id="{{idName}}" />
+                </td>
+                <td style="padding: 0px; width: 20px;">
+                    <button type="button" class="btn btn-default btndatepicker" ng-click="ShowPopup()" tabindex="-1" id="{{idButton}}">
+                        <i class="glyphicon glyphicon-chevron-down"></i>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

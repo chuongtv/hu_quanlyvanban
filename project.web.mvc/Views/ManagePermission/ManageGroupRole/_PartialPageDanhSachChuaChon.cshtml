@@ -1,0 +1,52 @@
+﻿
+<div class="row">
+    @*các thao tác*@
+    <div class="show">
+        <div class="col-sm-4 col-sm-push-8" style="text-align:right;">
+            <div class="form-group ">
+                <button data-otf-mutil="true"
+                        onclick="ManageGroupRoleDetail_GroupRoleDetail_AddMulti(this)"
+                        data-otf-target2="#CPGroupRoleDetailChuaChon"
+                        data-otf-target1="#CPGroupRoleDetailDaChon"
+                        data-otf-input="#SearchGroupRoleChuaChon"
+                        data-otf-action-target1="@Url.Action("GroupRoleGetDetailDaChon_List", "ManagePermission")?idnv=@Request["id"]&k="
+                        data-otf-action-target2="@Url.Action("GroupRoleGetDetailChuaChon_List", "ManagePermission")?idnv=@Request["id"]&k="
+                        data-otf-action="@Url.Action("GroupRoleDetailAdd", "ManagePermission", null, Request.Url.Scheme)?gr=@Request["id"]&id="
+                        class=" btn btn-success"
+                        title="Thêm quyền">
+                    <i class="fa fa-trash-o"></i> Thêm quyền
+                </button>
+                
+            </div>
+        </div>
+        <div class="col-sm-8  col-sm-pull-4">
+            <div class="form-group">
+                <div class="input-group">
+                    <input id="SearchGroupRoleChuaChon"
+                           placeholder="Thông tin cần tìm"
+                           onkeypress="return ManageGroupRoleDetail_GroupRoleDetail_EnterEvent(event, '#buttonsearchChuaChon')"
+                           class="form-control " />
+                    <span class="input-group-btn">
+                        <button id="buttonsearchChuaChon"
+                                type="button"
+                                title="Tìm kiếm"
+                                class="btn btn-primary"
+                                data-otf-target="#CPGroupRoleDetailChuaChon"
+                                data-otf-input="#SearchGroupRoleChuaChon"
+                                data-otf-action="@Url.Action("GroupRoleGetDetailChuaChon_List", "ManagePermission", null, Request.Url.Scheme)?idnv=@Request["id"]&k="
+                                onclick="ManageGroupRoleDetail_GroupRoleDetail_IsSearch(this)">
+                            Tìm kiếm
+                        </button>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-12">
+        <div id="CPGroupRoleDetailChuaChon">
+            @Html.Action("GroupRoleGetDetailChuaChon_List", "ManagePermission", new { idnv = Request["id"] })
+        </div>
+    </div>
+</div>

@@ -1,0 +1,147 @@
+﻿@*
+    Author:   			ntdai
+    Created: 			2016-3-18
+    Last Modified: 		2016-3-18
+*@
+
+@model MvcPaging.IPagedList<ntdai16032016.maketing.library.QuanLyDotGui.ListDotGuiView>
+@using MvcPaging
+
+@{var i = 1;}
+
+<div class="table-responsive">
+    @if (Model.TotalItemCount > 0)
+    {
+        <div class="p-b-10">
+            Kết quả tìm kiếm: <b>@Model.TotalItemCount</b> Đợt gửi
+        </div>
+        <text>
+            <table class="table table-bordered datatables dataTable">
+                <thead>
+                    <tr>
+                        <th class="text-center w-30">
+                            <input id="CheckBoxAll" onclick="javascript: checkAlllist('#listcheckall',this);" type="checkbox" />
+                        </th>
+                        <th class="text-center w-30">
+                            #
+                        </th>
+                        <th class="text-left ">
+                            @Html.DisplayNameFor(model => Model[0].TieuDe)
+                        </th>
+                        <th class="text-left w-100">
+                            @Html.DisplayNameFor(model => Model[0].ChuaGui)
+                        </th>
+                        <th class="text-left w-100">
+                            @Html.DisplayNameFor(model => Model[0].GuiLoi)
+                        </th>
+                        <th class="text-left w-100">
+                            @Html.DisplayNameFor(model => Model[0].DaGui)
+                        </th>
+
+                        <th class="text-center w-100">
+                            @Html.DisplayNameFor(model => Model[0].CreatedDate)
+                        </th>
+                        <th class="text-right w-100">Tác vụ</th>
+
+                    </tr>
+                </thead>
+                <tbody id="listcheckall">
+                    @foreach (var item in Model)
+                    {
+                        <tr data="@item.DotGuiGuid" class="showhim">
+                            <td class="text-center">
+                                <input type="checkbox" class="checkbox-item" value="@item.DotGuiGuid" />
+                            </td>
+                            <td class="text-center w-50">
+                                @Html.Raw((Model.PageNumber - 1) * Model.PageSize + i)
+                                @{i++;}
+                            </td>
+                            <td>
+                                @Html.Raw(item.TieuDe)
+                            </td>
+                            <td class="text-center">
+                                @Html.Raw(item.ChuaGui)
+                            </td>
+                            <td class="text-center">
+                                <label class="label-danger"> @Html.Raw(item.GuiLoi)</label>
+                            </td>
+                            <td class="text-center">
+                                <label class="label-success"> @Html.Raw(item.DaGui)</label>
+                            </td>
+
+                            <td class="text-center">
+                                @Html.Raw(item.CreatedDate.Value.ToString("dd/MM/yyyy"))
+                            </td>
+                            <td class="text-right ">
+
+                                <a data-otf-confirm="Bạn có chắc muôn xóa?"
+                                   title="Xóa dữ liệu này" href="javascript:void(0)"
+                                   onclick="QuanLyDotGui_DotGui_DeleteMulti(this)"
+                                   data-otf-target="#CPQuanLyDotGui"
+                                   data-otf-input="#SearchDotGui"
+                                   data-otf-action-target="@Url.Action("DotGuiGet_List", "QuanLyMaketting")?k="
+                                   data-otf-action="@Url.Action("DotGuiDelete", "QuanLyMaketting", null, Request.Url.Scheme)?id=@item.DotGuiGuid">
+                                    <i class="fa fa-lg fa-trash-o text-danger"></i>
+                                </a>
+                                &nbsp
+                                <a href="@Url.Action("DotGuiEdit", "QuanLyMaketting", null, Request.Url.Scheme)?id=@item.DotGuiGuid"
+                                   title="Chỉnh sửa">
+                                    <i class="fa fa-lg fa-pencil-square-o text-info"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </text>
+    }
+    else
+    {
+        <text><br />
+    <div class="alert alert-dismissable alert-info">
+        <strong>Yêu cầu tìm kiếm lúc @{ var date = DateTime.Now; } @date.ToString("HH:mm:ss dd/MM/yyyy") không có dữ liệu</strong>
+        <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+    </div>
+        </text>
+    }
+    <div class="pager">
+        @if (Model.TotalItemCount > Model.PageSize)
+        {
+
+            <text>
+
+                @Html.Raw(Ajax.Pager(
+                       new Options
+                       {
+                           PageSize = Model.PageSize,
+                           TotalItemCount = Model.TotalItemCount,
+                           CurrentPage = Model.PageNumber,
+                           ItemTexts = new ItemTexts() { Next = "Next", Previous = "Previous", Page = "" },
+                           ItemIcon = new ItemIcon() { First = "icon-backward", Previous = "icon-chevron-left", Next = "icon-chevron-right", Last = "icon-forward" },
+                           TooltipTitles = new TooltipTitles() { Next = "Next page", Previous = "Previous page", Page = "Page {0}." },
+                           Size = Size.normal,
+                           Alignment = Alignment.centered,
+                           IsShowControls = true,
+                           IsShowFirstLast = true,
+                           CssClass = ""
+                       },
+                       new AjaxOptions
+                       {
+                           UpdateTargetId = "CPQuanLyDotGui"
+                       }, new { controller = "QuanLyMaketting", action = "DotGuiGet_List", k = @ViewData["keysearch"] }))
+            </text>
+        }
+    </div>
+</div>
+
+@using (Html.BeginScriptContext())
+{
+    Html.AddScriptBlock(
+    @<script type="text/javascript">
+        loadSelect("QuanLyDotGui");
+    </script>
+, true);
+}
+
+
+

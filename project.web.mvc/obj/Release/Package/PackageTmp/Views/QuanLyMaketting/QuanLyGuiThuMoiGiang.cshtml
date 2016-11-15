@@ -1,0 +1,116 @@
+﻿@*
+    Author:   			ntdai
+    Created: 			2016-3-18
+    Last Modified: 		2016-3-18
+*@
+
+
+@{
+    ViewBag.Title = "Gửi thư mời giảng";
+}
+<div id="page-heading">
+    <ol class="breadcrumb">
+        <li>
+            <a href="@Url.Action("Index", "Dashboards")">
+                <i class="fa fa-lg fa-home text-warning text-size-20">
+                </i> Trang chủ
+            </a>
+        </li>
+        <li class="active">
+            Gửi thư mời giảng
+        </li>
+    </ol>
+</div>
+
+@*content*@
+<div class="container" id="CPXemDuLieuGiangDayGiagnVien">
+    <div class="row">
+        @*các thao tác*@
+        <div class="show">
+            <div class="col-sm-4 col-sm-push-8" style="text-align:right;">
+                <div class="form-group ">
+
+                    <button data-otf-mutil="true"
+                            onclick="QuanLyGuiMailMoiGiang_MailMoiGiang_ThemVaoDanhSachMoiGiang(this)"
+                            data-otf-confirm="Bạn có chắc muốn gửi email mời giảng những giảng viên đã chọn?"
+                            data-otf-target="#CPXemDuLieuGiangDayGiagnVien"
+                            data-otf-action-target="@Url.Action("Get_DanhSachLichGiangGiangVien", "QuanLyMaketting")"
+                            data-otf-action="@Url.Action("AddGiangVienVaoDanhSachGuiEmail", "QuanLyMaketting", null, Request.Url.Scheme)?id="
+                            class=" btn btn-primary"
+                            title="Bước kế tiếp">
+                        <i class="fa fa-angle-right" aria-hidden="true"></i> Bước kế tiếp
+                    </button>
+
+                </div>
+            </div>
+            <div class="col-sm-8  col-sm-pull-4">
+
+                <div class="col-sm-3">
+                    @Html.DropDownList("DDL_DonViGuid", new SelectList(ViewBag.ListDonViGuid, "ValueString", "Name"),
+                          new { @class = "chosen-select form-control", id = "DDL_DonViGuid" })
+                </div>
+                <div class="col-sm-3">
+                    @Html.DropDownList("DDL_NamID", new SelectList(ViewBag.ListNamID, "ValueString", "Name"),
+                         new { @class = "chosen-select form-control", id = "DDL_NamID" })
+                </div>
+                <div class="col-sm-3">
+
+
+                    <select id="DDL_HocKyID" class="chosen-select form-control">
+                        @for (int i = 1; i <= 3; i++)
+                        {
+                        <text>
+                            <option value="@i">@i</option>
+                        </text>
+                        }
+                    </select>
+                </div>
+
+
+                <div class="col-sm-3">
+                    <div class="form-group">
+
+                        <button id="buttonsearch"
+                                type="button"
+                                title="Tìm kiếm"
+                                class="btn btn-primary"
+                                data-otf-target="#CPQuanLyGuiMailMoiGiang"
+                                data-otf-input1="#DDL_DonViGuid"
+                                data-otf-input2="#DDL_NamID"
+                                data-otf-input3="#DDL_HocKyID"
+                                data-otf-action="@Url.Action("Get_DanhSachGiangVienTheoKhoa", "QuanLyMaketting", null, Request.Url.Scheme)"
+                                onclick="QuanLyGuiMailMoiGiang_DotGui_IsSearch(this)">
+                            Tìm kiếm
+                        </button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div id="CPQuanLyGuiMailMoiGiang">
+
+            </div>
+        </div>
+    </div>
+
+
+
+</div>
+
+@section Scripts {
+<script src="~/Content/plugins/ckeditor/ckeditor.js"></script>
+    @Scripts.Render("~/module/QuanLyMaketting/QuanLyGuiMailMoiGiang")
+<script>
+    function LoadLanDau() {
+        $("#buttonsearch").click();
+    }
+    LoadLanDau();
+    </script>
+}
+
+
+
+

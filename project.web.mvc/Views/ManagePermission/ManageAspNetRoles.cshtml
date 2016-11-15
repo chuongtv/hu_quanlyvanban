@@ -1,0 +1,108 @@
+﻿@*
+    Author:   			hanhat
+    Created: 			2015-11-6
+    Last Modified: 		2015-11-6
+*@
+
+
+@{
+    ViewBag.Title = "ManageAspNetRoles";
+}
+
+
+
+<div id="page-heading">
+
+
+
+    <ol class="breadcrumb">
+        <li class="active">
+            <a href="@Url.Action("Index", "Dashboards")">
+                <i class="fa fa-lg fa-home text-warning text-size-20">
+                </i> Trang Chủ
+            </a>
+        </li>
+        <li>
+            <a href="@Url.Action("ManagePermission", "ManagePermission")">
+                <i>
+                </i>Quản Lý Phân Quyền
+            </a>
+        </li>
+
+
+
+        <li class="active">
+            <a href="@Url.Action("ManageAspNetRoles", "ManagePermission")">
+
+            </a>
+            Quản Lý Roles
+        </li>
+
+    </ol>
+</div>
+
+@*content*@
+<div class="container">
+    <div class="row">
+        @*các thao tác*@
+        <div class="show">
+            <div class="col-sm-6 col-sm-push-6" style="text-align:right;">
+                <div class="form-group ">
+                    <a href="@Url.Action("ManageGroupRole", "ManagePermission")" class=" btn btn-primary">Quản lý nhóm quyền</a>
+
+                    <button data-otf-mutil="true"
+                            onclick="ManageAspNetRoles_AspNetRoles_DeleteMulti(this)"
+                            data-otf-confirm="Bạn có chắc muốn xóa những dòng đã chọn?"
+                            data-otf-target="#CPManageAspNetRoles"
+                            data-otf-input="#SearchAspNetRoles"
+                            data-otf-action-target="@Url.Action("AspNetRolesGet_List", "ManagePermission")?k="
+                            data-otf-action="@Url.Action("AspNetRolesDelete", "ManagePermission", null, Request.Url.Scheme)?id="
+                            class=" btn btn-danger"
+                            title="Xóa">
+                        <i class="fa fa-trash-o"></i> Xóa
+                    </button>
+                    <a class=" btn btn-success" href="@Url.Action("AspNetRolesCreate", "ManagePermission", null, Request.Url.Scheme)">
+                        <i class="fa fa-plus" title="Tạo mới"></i> Thêm mới
+                    </a>
+                </div>
+            </div>
+            <div class="col-sm-6  col-sm-pull-6">
+                <div class="form-group">
+                    <div class="input-group">
+                        <input id="SearchAspNetRoles"
+                               placeholder="Thông tin cần tìm"
+                               onkeypress="return ManageAspNetRoles_AspNetRoles_EnterEvent(event, '#buttonsearch')"
+                               class="form-control " />
+                        <span class="input-group-btn">
+                            <button id="buttonsearch"
+                                    type="button"
+                                    title="Tìm kiếm"
+                                    class="btn btn-primary"
+                                    data-otf-target="#CPManageAspNetRoles"
+                                    data-otf-input="#SearchAspNetRoles"
+                                    data-otf-action="@Url.Action("AspNetRolesGet_List", "ManagePermission", null, Request.Url.Scheme)?k="
+                                    onclick="ManageAspNetRoles_AspNetRoles_IsSearch(this)">
+                                Tìm kiếm
+                            </button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div id="CPManageAspNetRoles">
+                @Html.Action("AspNetRolesGet_List", "ManagePermission")
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/module/ManagePermission/ManageAspNetRoles")
+}
+
+
+
+

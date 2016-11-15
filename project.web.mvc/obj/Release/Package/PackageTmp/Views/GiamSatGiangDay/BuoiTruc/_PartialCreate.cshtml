@@ -1,0 +1,149 @@
+﻿@*
+    Author:   			tvchuong
+    Created: 			2016-8-19
+    Last Modified: 		2016-8-19
+*@
+@model nvngoc31122015.giamsatgiangday.library.GiamSatGiangDay.CreateBuoiTrucView
+
+<div class="modal-content">
+    <div class="modal-header">
+        <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+        <h4 class="modal-title">Thêm mới sản phẩm</h4>
+    </div>
+    <div class="modal-body">
+        @using (Ajax.BeginForm(
+                                    "BuoiTrucCreate",
+                                    "GiamSatGiangDay",
+                                    new AjaxOptions
+                                {
+                                    InsertionMode = InsertionMode.Replace,//cach thuc update du lieu. Thay the hay them vao
+                                    HttpMethod = "POST",
+                                    UpdateTargetId ="modalGiamSatGiangDay_BuoiTruc_c",
+                                    LoadingElementId = "loader"
+                                }, new { @class = "form-horizontal", id = "frm_CreateBuoiTruc" }))
+        {
+            
+            
+            @Html.HiddenFor(model => Model.BuoiTrucGuid)
+            
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+
+
+           
+
+            
+             <div class="form-group ">
+                @Html.LabelFor(model => Model.BuoiTrucID, new { @class = "col-sm-2 control-label", @for = "text_BuoiTrucID" })
+                <div class="col-sm-4">
+                    @Html.TextBoxFor(model => Model.BuoiTrucID, new { @class = "form-control", id = "text_BuoiTrucID" })
+                    @Html.ValidationMessageFor(model => Model.BuoiTrucID, null, new { @class = "text-danger" })
+                </div>
+                <div class="col-sm-2">
+
+                </div>
+            </div>
+            
+             <div class="form-group ">
+                @Html.LabelFor(model => Model.BuoiTrucName, new { @class = "col-sm-2 control-label", @for = "text_BuoiTrucName" })
+                <div class="col-sm-4">
+                    @Html.TextBoxFor(model => Model.BuoiTrucName, new { @class = "form-control", id = "text_BuoiTrucName" })
+                    @Html.ValidationMessageFor(model => Model.BuoiTrucName, null, new { @class = "text-danger" })
+                </div>
+                <div class="col-sm-2">
+
+                </div>
+            </div>
+            
+             <div class="form-group ">
+                @Html.LabelFor(model => Model.TietTu, new { @class = "col-sm-2 control-label", @for = "text_TietTu" })
+                <div class="col-sm-4">
+                    @Html.TextBoxFor(model => Model.TietTu, new { @class = "form-control", id = "text_TietTu" })
+                    @Html.ValidationMessageFor(model => Model.TietTu, null, new { @class = "text-danger" })
+                </div>
+                <div class="col-sm-2">
+
+                </div>
+            </div>
+            
+             <div class="form-group ">
+                @Html.LabelFor(model => Model.TietDen, new { @class = "col-sm-2 control-label", @for = "text_TietDen" })
+                <div class="col-sm-4">
+                    @Html.TextBoxFor(model => Model.TietDen, new { @class = "form-control", id = "text_TietDen" })
+                    @Html.ValidationMessageFor(model => Model.TietDen, null, new { @class = "text-danger" })
+                </div>
+                <div class="col-sm-2">
+
+                </div>
+            </div>
+        }
+      <div class="form-horizontal">
+            <div class="form-group">
+                <label class="col-sm-2 control-label">
+                    File đính kèm
+                </label>
+                <div class="col-sm-10">
+
+                    @*2 hàm ulupload 1 cho xóa và k xóa*@
+                    @Html.Action("LoadUploadOne", "FileSystem", new { itemguid = Model.BuoiTrucGuid, id = 1, auto = "false", isDelete = "true", mo = "BuoiTruc" })
+                    @*@Html.Action("LoadUploadOne", "FileSystem", new { itemguid = Model.ItemGuid, id = 1, auto = "false", isDelete = "false", mo = "BuoiTruc })*@
+
+
+                    @*s = style hiển thị danh sách file 0:1; 0 dạng block, 1 là dạng list
+                    d ="true" :"fasle" cho phép delete hay k
+                    id quy định nơi upload file, nơi load file lên trong contantvalble*@
+                    @*@Html.Action("LoadUploadFiles", "FileSystem", new { itemguid = Model.BuoiTrucGuid, id = 1, auto = "false", d = "true", s = 1, mo = "BuoiTruc" })*@
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+
+        
+           <div class="col-sm-12  text-center">
+               
+                   
+                    <button type="button" onclick="GiamSatGiangDay_BuoiTruc_OnSaveExit('#callbackGiamSatGiangDay_BuoiTruc', 'true', '#frm_CreateBuoiTruc')" class="btn btn-success">Lưu & Thoát</button>
+                    <button type="button" onclick="GiamSatGiangDay_BuoiTruc_OnSaveExit('#callbackGiamSatGiangDay_BuoiTruc', 'false', '#frm_CreateBuoiTruc')" class="btn btn-primary"><i class="fa fa-floppy-o"></i> Lưu dữ liệu</button>
+                    &nbsp;hoặc&nbsp;
+                    
+                    <a class="btn btn-link" data-otf-action="@Url.Action("BuoiTrucGet_List", "GiamSatGiangDay", null, Request.Url.Scheme)?idnv=@Model.NhanVienGuid " data-target="#GiamSatGiangDay_BuoiTruc_DS_content" aria-hidden="true" data-dismiss="modal" onclick="GiamSatGiangDay_BuoiTruc_BakList(this)"> Trở lại</a>
+
+                    <input type="hidden" id="callbackGiamSatGiangDay_BuoiTruc"
+                           data-otf-target="#modalGiamSatGiangDay_BuoiTruc"
+                           data-otf-target-exit="#GiamSatGiangDay_BuoiTruc_DS_content"
+                           data-otf-action-exit="@Url.Action("BuoiTrucGet_List", "GiamSatGiangDay", null, Request.Url.Scheme)?idnv=@Model.NhanVienGuid"
+                           data-otf-action="@Url.Action("BuoiTrucEdit", "GiamSatGiangDay", null, Request.Url.Scheme)?id=@Model.BuoiTrucGuid" />
+
+
+
+               
+            </div>
+    </div>
+
+</div>
+
+@using (Html.BeginScriptContext())
+{
+    Html.AddScriptBlock(
+        @<script type="text/javascript">
+             //Su dung cau hinh dropdownlist
+            var config = {
+                '.chosen-select': {},
+                '.chosen-select-deselect': { allow_single_deselect: true },
+                '.chosen-select-no-single': { disable_search_threshold: 10 },
+                '.chosen-select-no-results': { no_results_text: 'Lỗi! Vui lòng chọn ít nhất 1 mục.' },
+                '.chosen-select-width': { width: "95%" }
+            }
+            for (var selector in config) {
+                $(selector).chosen(config[selector]);
+            }
+            
+
+        </script>
+, true);
+}
+
+
+
+

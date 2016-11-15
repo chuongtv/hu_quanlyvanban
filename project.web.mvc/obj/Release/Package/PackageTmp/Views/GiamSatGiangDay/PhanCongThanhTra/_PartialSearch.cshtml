@@ -1,0 +1,72 @@
+﻿@model nvngoc31122015.giamsatgiangday.library.GiamSatGiangDay.ListPhanCongThanhTraView
+@Html.HiddenFor(model => Model.Phong_Guid, new { id = "hiden_nhanvienguid" })
+
+
+<div class="show" id="show">
+    <div class="row form-group ">
+        <div class="col-sm-3 form-group ">
+            @Html.DropDownListFor(model => Model.NamHocID, new SelectList(Model.ListNamHoc_Guid, "ValueString", "Name"), new
+       {
+           @class = "form-control chosen-select",
+           id = "DDL_NamHoc_Guid"
+       })
+            @Html.ValidationMessageFor(model => Model.NamHocID, null, new { @class = "text-danger" })
+        </div>
+        <div id="data_TuNgay_Time" class="col-sm-3">
+            <div class="input-group date">
+                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                <input type="datetime" value="" name="TuNgay_Time" id="tungay_time" placeholder="Từ ngày" class="text-box single-line" title="Từ ngày" />
+            </div>
+        </div>
+        <div id="data_DenNgay_Time" class="col-sm-3">
+            <div class="input-group date">
+                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                <input type="datetime" value="" name="DenNgay_Time" id="denngay_time" placeholder="Đến ngày" class="text-box single-line" title="Đến ngày" />
+            </div>
+        </div>
+    </div>
+    <div class="row form-group">
+        <div class="col-sm-3">
+            @Html.TextBoxFor(model => Model.ThanhTraID, new
+       {
+           @class = "form-control",
+           id = "text_GiangVienID",
+           data_otf_action = @Url.Action("LoadAutoCompateNhanVienGioiHan", "GiamSatGiangDay"),
+           placeholder = "Tìm kiếm thanh tra",
+
+       })
+            @Html.ValidationMessageFor(model => Model.ThanhTra_Guid, null, new { @class = "text-danger" })
+        </div>
+    </div>
+</div>
+
+@using (Html.BeginScriptContext())
+{
+    Html.AddScriptBlock(
+        @<script type="text/javascript">
+            $(window).load(function (e) {
+                if (typeof $.cookie('searchPhanCongThanTra') !== 'undefined') {
+                    $("#multiselect_toDonVi").html($.cookie("searchPhanCongThanTra"));
+                    var TableOfContents = JSON.parse($.cookie("searchPhanCongThanTra"));
+                    $("#DDL_NamHoc_Guid").val(TableOfContents["nam"]);
+                    $('#DDL_NamHoc_Guid').trigger("chosen:updated");
+                    $("#text_GiangVienID").val(TableOfContents["thanhtra"]);
+                    $("#tungay_time").val(TableOfContents["tungay"]);
+                    $("#denngay_time").val(TableOfContents["denngay"]);
+                }
+            });
+            AutoCompalteNhanvien('#text_GiangVienID', '#hiden_nhanvienguid', '#text_HoVaTen', '#text_DonViName');
+
+            //onchange = "Onpresskeyfuntion(this)"
+            function Onpresskeyfuntion(e) {
+                var text = $(e).val();
+                if (text == null || text == '' || text == 'undefine')
+                    $("#hiden_nhanvienguid").val('');
+            }
+        </script>
+, true);
+}
+
+
+
+

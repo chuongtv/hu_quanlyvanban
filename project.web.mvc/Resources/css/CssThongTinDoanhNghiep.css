@@ -1,0 +1,111 @@
+﻿body {
+}
+
+.feed-activity-list .feed-element {
+    border-bottom: 1px solid #e7eaec;
+}
+
+.feed-element:first-child {
+    margin-top: 0;
+}
+
+.feed-element {
+    padding-bottom: 15px;
+}
+
+    .feed-element, .feed-element .media {
+        margin-top: 15px;
+    }
+
+.feed-element, .media-body {
+    overflow: hidden;
+}
+
+    .feed-element > .pull-left {
+        margin-right: 10px;
+    }
+
+    .feed-element img.img-circle, .dropdown-messages-box img.img-circle {
+        height: 38px;
+        width: 38px;
+    }
+
+    .feed-element .well {
+        border: 1px solid #e7eaec;
+        box-shadow: none;
+        font-size: 11px;
+        line-height: 16px;
+        margin-bottom: 5px;
+        margin-top: 10px;
+        padding: 10px 20px;
+    }
+
+    .feed-element .actions {
+        margin-top: 10px;
+    }
+
+    .feed-element .photos {
+        margin: 10px 0;
+    }
+
+.feed-photo {
+    border-radius: 4px;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    max-height: 100px;
+    overflow: hidden;
+}
+
+.box-title {
+    border-bottom: 2px solid #1eacae;
+    margin-bottom: 15px;
+}
+
+.chuongpading {
+    padding: 5px 0 0;
+}
+
+.cbox {
+    position: relative;
+    font-family: sans-serif;
+    display: block;
+    /*width: 244px;*/
+    height: 7em;
+    overflow: hidden;
+}
+
+.tieude_thongtinhoptac{
+    color: #555 !important;
+    font-size: 18px;
+}
+.tieudephu_thongtinhoptac{
+     color: #555  !important;
+    font-size: 16px;
+}
+.li-style-none li{
+    list-style: outside none none;
+}
+
+.media-body ul{
+    padding-left: 0;
+}
+
+.media-body ul li{
+   padding-bottom: 5px;
+}
+
+.li-tieude{
+    padding-bottom:8px;
+}
+
+
+.panel-threads li {
+    padding:10px !important;
+    margin:0 !important;
+}
+
+.chat-users li a:after {
+  content: "" !important ;
+  float: none !important;
+  padding-right: 0px !important;
+}

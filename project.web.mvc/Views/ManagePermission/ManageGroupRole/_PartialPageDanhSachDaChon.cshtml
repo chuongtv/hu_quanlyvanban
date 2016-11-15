@@ -1,0 +1,51 @@
+﻿
+<div class="row">
+    @*các thao tác*@
+    <div class="show">
+        <div class="col-sm-4 col-sm-push-8" style="text-align:right;">
+            <div class="form-group ">
+                <button data-otf-mutil="true"
+                        onclick="ManageGroupRoleDetail_GroupRoleDetail_DeleteMulti(this)"
+                        data-otf-confirm="Bạn có chắc muốn xóa những dòng đã chọn?"
+                        data-otf-target="#CPGroupRoleDetailDaChon"
+                        data-otf-input="#SearchGroupRoleDaChon"
+                        data-otf-action-target="@Url.Action("GroupRoleGetDetailDaChon_List", "ManagePermission")?idnv=@Request["id"]&k="
+                        data-otf-action="@Url.Action("GroupRoleDetailDelete", "ManagePermission", null, Request.Url.Scheme)?id="
+                        class=" btn btn-danger"
+                        title="Xóa">
+                    <i class="fa fa-trash-o"></i> Bỏ quyền
+                </button>
+
+            </div>
+        </div>
+        <div class="col-sm-8  col-sm-pull-4">
+            <div class="form-group">
+                <div class="input-group">
+                    <input id="SearchGroupRoleDaChon"
+                           placeholder="Thông tin cần tìm"
+                           onkeypress="return ManageGroupRoleDetail_GroupRoleDetail_EnterEvent(event, '#buttonsearchDaChon')"
+                           class="form-control " />
+                    <span class="input-group-btn">
+                        <button id="buttonsearchDaChon"
+                                type="button"
+                                title="Tìm kiếm"
+                                class="btn btn-primary"
+                                data-otf-target="#CPGroupRoleDetailDaChon"
+                                data-otf-input="#SearchGroupRoleDaChon"
+                                data-otf-action="@Url.Action("GroupRoleGetDetailDaChon_List", "ManagePermission", null, Request.Url.Scheme)?idnv=@Request["id"]&k="
+                                onclick="ManageGroupRoleDetail_GroupRoleDetail_IsSearch(this)">
+                            Tìm kiếm
+                        </button>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-12">
+        <div id="CPGroupRoleDetailDaChon">
+            @Html.Action("GroupRoleGetDetailDaChon_List", "ManagePermission", new { idnv = Request["id"] })
+        </div>
+    </div>
+</div>

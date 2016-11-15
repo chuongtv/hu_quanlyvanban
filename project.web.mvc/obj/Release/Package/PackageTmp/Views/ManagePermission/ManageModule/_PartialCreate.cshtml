@@ -1,0 +1,112 @@
+﻿@*
+    Author:   			hanhat
+    Created: 			2015-11-4
+
+    Last Modifier: tvchuong
+    Last Modified: 2015-11-30
+*@
+
+@model nvngoc29082015.permission.library.ManageModule.CreateModuleView
+<div class="row">
+    <div class="col-sm-12">
+
+        @using (Ajax.BeginForm(
+                                    "ModuleCreate",
+                                    "ManagePermission",
+                                    new AjaxOptions
+                                {
+                                    InsertionMode = InsertionMode.Replace,
+                                    HttpMethod = "POST",
+                                    UpdateTargetId = "CPManageModule",
+                                    LoadingElementId = "loader"
+                                }, new { @class = "form-horizontal", id = "frm_CreateModule" }))
+        {
+            @Html.HiddenFor(model => Model.ModuleGuid)
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+
+            <div class="form-group">
+                @Html.LabelFor(model => Model.ModuleID, new { @class = "col-sm-2 control-label", @for = "text_ModuleID" })
+                <div class="col-sm-4">
+                    @Html.TextBoxFor(model => Model.ModuleID, new { @class = "form-control", id = "text_ModuleID" })
+                    @Html.ValidationMessageFor(model => Model.ModuleID, null, new { @class = "text-danger" })
+                </div>
+                <div class="col-sm-2">
+
+                </div>
+            </div>
+            <div class="form-group ">
+                @Html.LabelFor(model => Model.ModuleName, new { @class = "col-sm-2 control-label", @for = "text_ModuleName" })
+                <div class="col-sm-4">
+                    @Html.TextBoxFor(model => Model.ModuleName, new { @class = "form-control", id = "text_ModuleName" })
+                    @Html.ValidationMessageFor(model => Model.ModuleName, null, new { @class = "text-danger" })
+                </div>
+                <div class="col-sm-2">
+
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => Model.AppGuid, new { @class = "col-sm-2 control-label", @for = "DDL_App_Guid" })
+                <div class="col-sm-4">
+                    @Html.DropDownListFor(model => Model.AppGuid, new SelectList(Model.ListAppGuid, "ValueString", "Name"), new { @class = "form-control chosen-select", id = "DDL_App_Guid" })
+                    @Html.ValidationMessageFor(model => Model.AppGuid, null, new { @class = "text-danger" })
+                </div>
+                <div class="col-sm-2">
+
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-2">
+
+                </div>
+                <div class="col-sm-10">
+                    @Html.CheckBoxFor(model => Model.IsActive, new { @class = "", @checked = "checked", id = "chek_IsActive" })
+                    @Html.LabelFor(model => Model.IsActive, new { @class = "", @for = "chek_IsActive" })
+                    @Html.ValidationMessageFor(model => Model.IsActive, null, new { @class = "text-danger" })
+                </div>
+            </div>
+
+
+
+        }
+
+
+        <div class="row">
+            <div class="col-sm-6 col-sm-offset-3 text-center">
+                <div class="btn-toolbar">
+                    <button type="submit" onclick="ManageModule_Module_OnSaveExit('#callbackManageModule_Module', 'true', '#frm_CreateModule')" class="btn btn-success">Lưu & Thoát</button>
+                    <button type="submit" onclick="ManageModule_Module_OnSaveExit('#callbackManageModule_Module', 'false', '#frm_CreateModule')" class="btn btn-primary"><i class="fa fa-floppy-o"></i> Lưu dữ liệu</button>&nbsp;hoặc&nbsp;
+                    <a class="btn btn-link" href="@Url.Action("ManageModule", "ManagePermission", null, Request.Url.Scheme)">Quay lại</a>
+
+                    <input type="hidden" id="callbackManageModule_Module"
+                           data-otf-action-exit="@Url.Action("ManageModule", "ManagePermission", null, Request.Url.Scheme)"
+                           data-otf-action="@Url.Action("ModuleEdit", "ManagePermission", null, Request.Url.Scheme)?id=@Model.ModuleGuid" />
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@using (Html.BeginScriptContext())
+{
+
+    Html.AddScriptBlock(
+        @<script type="text/javascript">
+            //Su dung cau hinh dropdownlist
+            var config = {
+                '.chosen-select': {},
+                '.chosen-select-deselect': { allow_single_deselect: true },
+                '.chosen-select-no-single': { disable_search_threshold: 10 },
+                '.chosen-select-no-results': { no_results_text: 'Lỗi! Vui lòng chọn ít nhất 1 mục.' },
+                '.chosen-select-width': { width: "95%" }
+            }
+            for (var selector in config) {
+                $(selector).chosen(config[selector]);
+            }
+        </script>
+, true);
+}
+
+
+

@@ -1,0 +1,124 @@
+﻿@*
+    Author:   			ntdai
+    Created: 			2016-2-22
+    Last Modified: 		2016-2-22
+*@
+@model nvngoc31122015.giamsatgiangday.library.PhieuMuonPhong.UpdatePhieuMuonPhongView
+
+<div class="row">
+    <div class="col-sm-12">
+
+        @using (Ajax.BeginForm(
+                                            "PhieuMuonPhongEdit",
+                                            "GiamSatGiangDay",
+                                            new AjaxOptions
+                                            {
+                                                InsertionMode = InsertionMode.Replace,//cach thuc update du lieu. Thay the hay them vao
+                                                HttpMethod = "POST",
+                                                UpdateTargetId = "CPPhieuMuonPhong",
+                                                LoadingElementId = "loader"
+                                            }, new { @class = "form-horizontal", id = "frm_EditPhieuMuonPhong" }))
+        {
+            @Html.HiddenFor(model => Model.PhieuMuonPhongGuid)
+            @Html.HiddenFor(model => Model.NguoiDeNghi_Guid, new { id = "hiden_nguoidenghiguid" })
+            @Html.HiddenFor(model => Model.TinhTrangPhieuGuid, new { id = "hiden_tinhtrangphieu" })
+            @Html.HiddenFor(model => Model.CreatedDate)
+            @Html.HiddenFor(model => Model.CreatedUser)
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+
+            <div class="form-group text-center"> <h3>PHIẾU ĐĂNG KÝ MƯỢN PHÒNG</h3></div>
+            <div class="form-group ">
+                <div class="col-sm-3 col-sm-offset-3">
+                    <label class=" control-label" id="lblDonVi">Mã giảng viên</label>
+                    @Html.TextBoxFor(model => Model.NhanVienID, new { @class = "form-control", id = "text_NhanVienID", data_otf_action = @Url.Action("LoadAutoCompateNhanVien", "GiamSatGiangDay"), placeholder = "Nhập mã giảng viên" })
+                    @Html.ValidationMessageFor(model => Model.NguoiDeNghi_Guid, null, new { @class = "text-danger" })
+                </div>
+                <div class="col-sm-3">
+                    <label class=" control-label" id="lblDonVi">Tên giảng viên</label>
+                    @Html.TextBoxFor(model => Model.HoVaTen, new { @class = "form-control", id = "text_HoVaTen", disabled = "disable" })
+                </div>
+            </div>
+            <div class="form-group ">
+                <div class="col-sm-6 col-sm-offset-3">
+                    <label class=" control-label">Đơn vị</label>
+                    @Html.TextBoxFor(model => Model.DonViName, new { @class = "form-control", id = "text_DonViName", disabled = "disable" })
+                </div>
+            </div>
+
+            <div class="form-group ">
+                <div class="col-sm-6 col-sm-offset-3">
+                    @Html.LabelFor(model => Model.NoiDung, new { @class = " control-label", @for = "text_PhieuMuonPhongName", placeholder = "Nhập thông tin phòng, ca, thời gian xin cấp phòng" })
+
+                    @Html.TextAreaFor(model => Model.NoiDung, new { @class = "form-control", id = "text_PhieuMuonPhongName" })
+                    @Html.ValidationMessageFor(model => Model.NoiDung, null, new { @class = "text-danger" })
+                </div>
+
+            </div>
+
+
+
+        }
+
+    </div>
+    <div class="row">
+        <div class="col-sm-6 col-sm-offset-3 text-center">
+            <div class="btn-toolbar">
+                <a class="btn btn-default" href="@Url.Action("PhieuMuonPhong", "GiamSatGiangDay", null, Request.Url.Scheme)"> Quay lại</a>
+                @if (Model.TinhTrangPhieuGuid != ioiort.settingdata.library.ContentSettingData.GetDataSettingValue(project.config.library.ConfigurationCache.Cache_PhieuMuonPhong_TinhTrangDaGui).Trim() &&
+            Model.TinhTrangPhieuGuid != ioiort.settingdata.library.ContentSettingData.GetDataSettingValue(project.config.library.ConfigurationCache.Cache_PhieuMuonPhong_TinhTrangHoanThanh).Trim() &&
+            Model.TinhTrangPhieuGuid != ioiort.settingdata.library.ContentSettingData.GetDataSettingValue(project.config.library.ConfigurationCache.Cache_PhieuMuonPhong_TinhTrangDaCapPhong).Trim()
+            )
+                {
+
+                    <text>
+                        <button type="button"
+                                onclick="PhieuMuonPhong_PhieuMuonPhong_DeleteView(this)"
+                                data-otf-action="@Url.Action("PhieuMuonPhongDelete", "GiamSatGiangDay", null, Request.Url.Scheme)?id=@Model.PhieuMuonPhongGuid"
+                                data-otf-action-exit="@Url.Action("PhieuMuonPhong", "GiamSatGiangDay", null, Request.Url.Scheme)"
+                                data-otf-confirm="Bạn muốn xóa dữ liệu này?"
+                                class="btn btn-danger">
+                            Xóa
+                        </button>
+                        <button type="submit" onclick="PhieuMuonPhong_PhieuMuonPhong_OnSaveExit('#callbackPhieuMuonPhong_PhieuMuonPhong', 'true', '#frm_EditPhieuMuonPhong','@ioiort.settingdata.library.ContentSettingData.GetDataSettingValue(project.config.library.ConfigurationCache.Cache_PhieuMuonPhong_TinhTrangLuuNhap).Trim()','#hiden_tinhtrangphieu')" class="btn btn-primary">Lưu & Thoát</button>
+                        <button type="submit" onclick="PhieuMuonPhong_PhieuMuonPhong_OnSaveExit('#callbackPhieuMuonPhong_PhieuMuonPhong', 'false', '#frm_EditPhieuMuonPhong','@ioiort.settingdata.library.ContentSettingData.GetDataSettingValue(project.config.library.ConfigurationCache.Cache_PhieuMuonPhong_TinhTrangLuuNhap).Trim()','#hiden_tinhtrangphieu')" class="btn btn-success">Lưu dữ liệu</button>
+                        <button type="submit" onclick="PhieuMuonPhong_PhieuMuonPhong_OnSaveExit('#callbackPhieuMuonPhong_PhieuMuonPhong', 'false', '#frm_EditPhieuMuonPhong', '@ioiort.settingdata.library.ContentSettingData.GetDataSettingValue(project.config.library.ConfigurationCache.Cache_PhieuMuonPhong_TinhTrangDaGui).Trim()','#hiden_tinhtrangphieu')" class="btn btn-success"> Gửi </button>
+                    </text>
+                }
+
+
+                <input type="hidden" id="callbackPhieuMuonPhong_PhieuMuonPhong"
+                       data-otf-action-exit="@Url.Action("PhieuMuonPhong", "GiamSatGiangDay", null, Request.Url.Scheme)"
+                       data-otf-action="@Url.Action("PhieuMuonPhongEdit", "GiamSatGiangDay", null, Request.Url.Scheme)?id=@Model.PhieuMuonPhongGuid" />
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+@using (Html.BeginScriptContext())
+{
+    Html.AddScriptBlock(
+        @<script type="text/javascript">
+            //Su dung cau hinh dropdownlist
+            var config = {
+                '.chosen-select': {},
+                '.chosen-select-deselect': { allow_single_deselect: true },
+                '.chosen-select-no-single': { disable_search_threshold: 10 },
+                '.chosen-select-no-results': { no_results_text: 'Lỗi! Vui lòng chọn ít nhất 1 mục.' },
+                '.chosen-select-width': { width: "95%" }
+            }
+            for (var selector in config) {
+                $(selector).chosen(config[selector]);
+            }
+            AutoCompalteNhanvien('#text_NhanVienID', '#hiden_nguoidenghiguid', '#text_HoVaTen', '#text_DonViName');
+
+        </script>
+, true);
+}
+
+
+
+

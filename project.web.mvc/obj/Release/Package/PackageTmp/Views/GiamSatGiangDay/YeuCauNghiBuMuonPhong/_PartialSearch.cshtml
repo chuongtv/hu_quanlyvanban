@@ -1,0 +1,148 @@
+﻿@model nvngoc31122015.giamsatgiangday.library.GiamSatGiangDay.QuanLyYeuCauNghiBuMuon
+@Html.HiddenFor(model => Model.NhanVienGuid, new { id = "NhanVienGuid" })
+<div class="show" id="show">
+    <div class="row form-group">
+        <div class="col-sm-3">
+            @Html.DropDownListFor(model => Model.DonVi_Guid, new SelectList(Model.ListDonVi_Guid, "ValueString", "Name"), new { @class = "form-control chosen-select", id = "DDL_DonVi_Guid" })
+        </div>
+        <div class="col-sm-3">
+            @Html.DropDownListFor(model => Model.LoaiPhieu_Guid, new SelectList(Model.ListLoaiPhieu_Guid, "ValueString", "Name"), new { @class = "form-control chosen-select", id = "DDL_LoaiViPham_Guid" })
+        </div>
+        <div class="col-sm-2">
+            <input id="NhanVienID"
+                   placeholder="Giảng viên"
+                   onkeypress=""
+                   class="form-control"
+                   data-otf-action="@Url.Action("LoadAutoCompateGiangVien", "GiamSatGiangDay")" />
+        </div>
+    </div>
+    <div class="row form-group">
+        <div id="data_TuNgay_Time" class="col-sm-2">
+            <div class="input-group date">
+                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                <input type="datetime" value="" name="TuNgay_Time" id="tungay_time" class="text-box single-line" placeholder="Từ ngày" />
+            </div>
+        </div>
+        <div id="data_DenNgay_Time" class="col-sm-2">
+            <div class="input-group date">
+                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                <input type="datetime" value="" name="DenNgay_Time" id="denngay_time" class="text-box single-line" placeholder="Đến ngày" />
+            </div>
+        </div>
+        
+        <div class="col-sm-2">
+            <label class="checkbox-inline"> <input type="checkbox" id="chkChuaXuLy" value="0" checked>Chưa xử lý</label>
+            <label class="checkbox-inline"><input type="checkbox" id="chkDaXuLy" value="1">Đã xử lý</label>
+        </div>
+    </div>
+</div>
+
+@using (Html.BeginScriptContext())
+{
+    Html.AddScriptBlock(
+        @<script type="text/javascript">
+            AutocompleteNhanVienHinh('#NhanVienID', '#NhanVienGuid');
+            //AutoCompleteSearchNhanVien('#NhanVienID', '#NhanVienGuid');
+            $(document).ready(function () {
+                $('#NhanVienID').on('input', function () {
+                    if ($('#NhanVienID').val() == "")
+                        $('#NhanVienGuid').val("");
+                });
+            });
+
+            //Su dung cau hinh dropdownlist
+            var config = {
+                '.chosen-select': {},
+                '.chosen-select-deselect': { allow_single_deselect: true },
+                '.chosen-select-no-single': { disable_search_threshold: 10 },
+                '.chosen-select-no-results': { no_results_text: 'Lỗi! Vui lòng chọn ít nhất 1 mục.' },
+                '.chosen-select-width': { width: "95%" }
+            }
+            for (var selector in config) {
+                $(selector).chosen(config[selector]);
+            }
+            function AutoCompleteSearchNhanVien(element, valueset) {
+
+                var $input = $(element);
+                function CreateAutoCompleteSearchNhanVien() {
+                    var options = {
+                        columns: ["value", "label", "valuequery"],
+                        delay: 700,
+                        source: $input.attr("action"),
+                        select: function (event, ui) {
+                            this.value = (ui.item ? ui.item.hovaten : '');
+                            $(valueset).val(ui.item.value);
+                            //alert($(valueset).val());
+                            return false;
+                        },
+                        focus: function (event, ui) {
+                            $(this).val(ui.item.hovaten);
+                            return false;
+                        },
+                    };
+                    $input.autocomplete(options);
+
+                }
+                CreateAutoCompleteSearchNhanVien();
+            }
+
+            function AutocompleteNhanVienHinh(element, valueset) {
+                var $input = $(element);
+                var options = {
+                    requestDelay: 500,
+                    url: function (keyWord) {
+                        return $input.attr("data-otf-action") + "?term=" + keyWord;
+                    },
+                    getValue: "label",
+                    list: {
+                        onShowListEvent: function () {
+                            //$(element).val("").trigger("change");
+                            $(valueset).val("").trigger("change");
+                            //$(Name).html("");
+                        },
+                        onSelectItemEvent: function () {
+                            // gan lai gia tri khi chon
+                            var valuename = $(element).getSelectedItemData().hovaten;
+                            var valueguid = $(element).getSelectedItemData().value;
+
+                            $(element).val(valuename).trigger("change");
+                            $(valueset).val(valueguid).trigger("change");
+                        },
+                        onHideListEvent: function () {
+                            //console.log($(valueset).val());
+                        },
+                        match: {
+                            enabled: false,
+                        },
+                    },
+                    template: {
+                        type: "custom",
+                        method: function (value, item) {
+                            return "<img src='" + item.LinkHinhAnh + "' style='width:40px; height:40px; float:left;' /><strong style='float:left; margin-left:10px;'>" + value + "</strong><br/><span style='margin-left:10px;'>" + item.hovaten + " - " + item.valuequery + "</span><div style='clear:both;'></div>";
+                        }
+                    }
+                };
+                $input.easyAutocomplete(options);
+            }
+
+            function ObjecttoParams(obj) {
+                var p = [];
+                for (var key in obj) {
+                    p.push(key + '=' + encodeURIComponent(obj[key]));
+                }
+                return p.join('&');
+            };
+
+
+        </script>
+, true);
+}
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,43 @@
+﻿@{
+    ViewBag.Title = "Index";
+
+}
+<div class="container" id="Content_LoadFormKhaoSatYKienPost">
+    @if ((@User as project.web.mvc.Common.IOIORTPrincipal).HasPermission("PhieuBaoTKB_ThongKeTinhHinhGiangDay_Dashboard_GiamSatGiangDay"))
+    {
+        <div class="col-xs-3" id="TinhHinhGiangDay_content"></div>
+    }
+
+    @if ((@User as project.web.mvc.Common.IOIORTPrincipal).HasPermission("PhieuMuonPhong_Dashboard_GiamSatGiangDay"))
+    {
+        <div class="col-xs-9" id="PhieuMuonPhong_content"></div>
+    }
+
+
+    @*@Html.Action("LoadFormKhaoSatYKien","HoTroTuyenSinh")*@
+
+</div>
+@section Styles {
+    @Styles.Render("~/plugins/qtipstyles")
+}
+
+
+
+@section Scripts {
+    @Scripts.Render("~/plugins/qtip")
+    <script type="text/javascript">
+
+        $(window).load(function () {
+            if (document.getElementById("PhieuMuonPhong_content") !== null) {
+                $("#PhieuMuonPhong_content").load('@Url.Action("PhieuMuonPhong_Dashboard", "GiamSatGiangDay", null, Request.Url.Scheme)')
+            }
+
+            if (document.getElementById("TinhHinhGiangDay_content") !== null) {
+                $("#TinhHinhGiangDay_content").load('@Url.Action("PhieuBaoTKB_ThongKeTinhHinhGiangDay_Dashboard", "GiamSatGiangDay", null, Request.Url.Scheme)')
+            }
+        });
+
+
+    </script>
+
+}

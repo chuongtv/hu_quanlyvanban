@@ -1,0 +1,90 @@
+﻿/* ------------add by tsandtm Pager 20/3/2014------------ */
+div.modulepager {
+    clear: left;
+}
+
+.modulepager {
+    vertical-align: top;
+    padding: 4px;
+    font-size: 12px;
+    overflow: hidden;
+}
+
+.SelectedPage {
+    margin: 0 2px 10px 0;
+}
+
+.SelectedPage, a.ModulePager, .PageInfo {
+    float: left;
+    padding: 4px 8px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}
+
+.SelectedPage, .modulepager a.ModulePager:hover {
+    background: #1ab394 none;
+    border: 1px solid #1ab394;
+    color: white;
+    -moz-box-shadow: 0 0 3px #1ab394;
+    -webkit-box-shadow: 0 0 3px #1ab394;
+    box-shadow: 0 0 3px #1ab394;
+    text-decoration: none;
+}
+
+.modulepager a.ModulePager:hover {
+    color: #1ab394;
+    background: none;
+}
+
+a.ModulePager, .PageInfo {
+    margin: 0 3px;
+    border: 1px solid #ace;
+    color: #1ab394;
+    text-decoration: none;
+    filter: progid:DXImageTransform.Microsoft.Gradient(startColorStr=white,endColorStr=#EFEFEF);
+    background: -moz-linear-gradient(center top,white,#EFEFEF) repeat scroll 0 0 #F6F6F6;
+    background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0.35,white),color-stop(0.68,#EFEFEF));
+}
+
+    a.ModulePager:hover {
+        border-color: #1ab394;
+        filter: progid:DXImageTransform.Microsoft.Gradient(startColorStr=white,endColorStr=#C7DFFF);
+        background: -moz-linear-gradient(center top,white,#C7DFFF) repeat scroll 0 0 #F6F6F6;
+        background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0.35,white),color-stop(0.68,#C7DFFF));
+    }
+
+.PageInfo {
+    border: 0;
+    background: none;
+    color: #333;
+}
+
+/* ------------end Pager------------ */
+
+
+.pager1 {
+}
+
+.pagination {
+}
+
+.pagination-normal ul li {
+    background: #f6f6f6 -moz-linear-gradient(center top, white, #efefef) repeat scroll 0 0;
+    border: 1px solid #ace;
+    color: #1ab394;
+    margin: 0 3px;
+    text-decoration: none;
+}
+
+.pagination-centered {
+}
+
+li.active {
+}
+
+li.first {
+}
+
+li.previous {
+}

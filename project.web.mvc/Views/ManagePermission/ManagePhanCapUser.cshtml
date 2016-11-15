@@ -1,0 +1,63 @@
+﻿@{
+    ViewBag.Title = "ManagePermission";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div id="page-heading">
+    <ol class="breadcrumb">
+        <li>
+            <a href="@Url.Action("Index", "Dashboards")">
+                <i class="fa fa-lg fa-home text-warning text-size-20">
+                </i> Trang chủ
+            </a>
+        </li>
+        <li>
+            <a href="@Url.Action("ManagePermission", "ManagePermission")">
+                <i>
+                </i>Quản Lý Phân Quyền
+            </a>
+        </li>
+        <li>
+            <a href="@Url.Action("ManageAspNetRoles", "ManagePermission")">
+                <i>
+                </i>Quản Lý Roles
+            </a>
+        </li>
+        <li class="active">
+            Quản lý phân cấp người dùng
+        </li>
+    </ol>
+</div>
+<div class="container" id="demo">
+    <div class="row">
+        <div class="col-md-8"><h4>@ViewBag.UserDangPhanCap</h4></div>
+        <div class="col-md-4">
+            <div class="pull-right">
+                <a class=" btn btn btn-primary" href="@Url.Action("ManageAspNetUsers", "ManagePermission")">
+                    Trở lại
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-2">
+        @Html.Partial("~/Views/ManagePermission/ManageAspNetUsers/_PartialDanhMuc.cshtml")
+    </div>
+    <div class="col-sm-10">
+        <div class="row">
+            <div class="col-md-8">
+                @Html.Action("ManagePhanCapUserGet_DanhSach", "ManagePermission", new { id = Request["id"] })
+
+            </div>
+            <div class="col-md-4">
+                @Html.Action("ManagePhanCapUserGet_DanhSach_UserChuaPhanQuyen", "ManagePermission", new { id = Request["id"] })
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/module/ManagePermission/ManageAspNetUsers/PhanCapUser")
+
+}

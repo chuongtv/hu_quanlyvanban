@@ -1,0 +1,193 @@
+﻿@*
+    Author:   			pdgiai
+    Created: 			2016-1-12
+    Last Modified: 		2016-1-12
+*@
+@{
+    ViewBag.Title = "Import danh sách phiếu ghi nhận thanh tra";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@*breadcrumb*@
+<div id="page-heading">
+    <ol class="breadcrumb">
+        <li>
+            <a href="@Url.Action("Index", "Home")">
+                <i class="fa fa-lg fa-home text-warning text-size-20">
+                </i> Trang chủ
+            </a>
+        </li>
+        <li>
+            <a href="@Url.Action("TinhHinhThanhTra", "GiamSatGiangDay")">Thông tin thanh tra giảng dạy</a>
+        </li>
+        <li class="active">
+            Import báo cáo
+        </li>
+    </ol>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12" id="contentImport">
+            <div class="row">
+                <div class="col-sm-4">
+                    <a class="btn btn-default-alt" href='@Url.Action("ImportPhieuGhiNhanThanhTraStep1", "GiamSatGiangDay")' title="Quay lại"><i class="fa fa-lg fa-reply"></i> Quay lại</a>
+                </div>
+                
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12">
+                   <b>@Html.Raw(ViewBag.Error)</b>
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="ibox">
+                        <div class="ibox-content">
+                            <div class="table-responsive">
+                                @if (Model != null)
+                                {
+                                    <table class="table table-bordered datatables dataTable table-hover">
+                                    <tr>
+                                        <th class="text-center w-50">#</th>
+                                        <th class="text-left">
+                                            Nhóm
+                                        </th>
+                                        <th class="text-left">
+                                            Tổ TH
+                                        </th>
+                                        <th class="text-center">
+                                            Mã MH
+                                        </th>
+                                        <th class="text-center">
+                                            Tên môn học
+                                        </th>
+                                        <th class="text-center">
+                                            TC
+                                        </th>
+                                        <th class="text-center">
+                                            Sĩ số
+                                        </th>
+                                        <th class="text-center">
+                                            Mã GV
+                                        </th>
+                                        <th class="text-left">
+                                            GV giảng dạy
+                                        </th>
+                                        <th class="text-left">
+                                            Thứ
+                                        </th>
+                                        <th class="text-left">
+                                            Tiết bắt đầu
+                                        </th>
+                                        <th class="text-left">
+                                            Số tiết
+                                        </th>
+                                        <th class="text-left">
+                                            Phòng
+                                        </th>
+                                        <th class="text-left">
+                                            Tên lớp
+                                        </th>
+                                        <th class="text-left">
+                                            Ngày học
+                                        </th>
+                                        <th class="text-center">
+                                            ID vi phạm
+                                        </th>
+                                        <th class="text-center">
+                                            Tên vi phạm
+                                        </th>
+                                        <th class="text-left">
+                                            Nội dung
+                                        </th>
+                                        <th class="text-center">
+                                            Ngày lập
+                                        </th>
+                                        <th class="text-left">
+                                            Nội dung lỗi
+                                        </th>
+
+                                    </tr>
+                                    @foreach (System.Data.DataRow row in Model.Rows)
+                                    {
+                                        <tr class="row-error-@(row["IsDongLoi"].ToString())">
+                                            <td class="text-center">
+                                                @(row["#"].ToString())
+                                            </td>
+                                            <td class="text-center">
+                                                @(row["Nhóm"].ToString())
+                                            </td>
+                                            <td class="text-left">
+                                                @(row["Tổ TH/Tổ hợp MH"].ToString())
+                                            </td>
+                                            <td class="text-center">
+                                                @(row["Mã MH"].ToString())
+                                            </td>
+
+                                            <td class="text-center">
+                                                @(row["Tên môn học"].ToString())
+                                            </td>
+                                            <td class="text-center">
+                                                @(row["TC"].ToString())
+                                            </td>
+                                            <td class="text-center">
+                                                @(row["Sĩ số"].ToString())
+                                            </td>
+                                            <td class="text-center">
+                                                @(row["Mã GV"].ToString())
+                                            </td>
+                                            <td class="text-left">
+                                                @(row["GV giảng dạy"].ToString())
+                                            </td>
+                                            <td class="text-left">
+                                                @(row["Thứ"].ToString())
+                                            </td>
+                                            <td class="text-left">
+                                                @(row["Tiết bắt đầu"].ToString())
+                                            </td>
+                                            <td class="text-left">
+                                                @(row["Số tiết"].ToString())
+                                            </td>
+                                            <td class="text-left">
+                                                @(row["Phòng"].ToString())
+                                            </td>
+                                            <td class="text-left">
+                                                @(row["Tên lớp"].ToString())
+                                            </td>
+                                            <td class="text-left">
+                                                @(row["ngày học"].ToString())
+                                            </td>
+                                            <td class="text-center">
+                                                @(row["vi phạm"].ToString())
+                                            </td>
+                                            <td class="text-center">
+                                                @(row["TenViPham"].ToString())
+                                            </td>
+                                            <td class="text-left">
+                                                @(row["Nội dung"].ToString())
+                                            </td>
+                                            <td class="text-center">
+                                                @(DateTime.Parse(row["Ngày lập"].ToString()).ToString("dd/MM/yyyy HH:mm"))
+                                            </td>
+                                            <td class="text-left" style="color:red;">
+                                                @Html.Raw(row["ErrorContent"].ToString())
+                                            </td>
+                                        </tr>
+                                    }
+                                    </table>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+

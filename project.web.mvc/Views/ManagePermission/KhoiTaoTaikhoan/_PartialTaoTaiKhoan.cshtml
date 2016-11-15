@@ -1,0 +1,50 @@
+﻿@*
+    Author:   			hanhat
+    Created: 			2015-11-18
+    Last Modified: 		2015-11-18
+*@
+
+
+    <div class="row">
+        <div class="col-sm-4 col-sm-push-8" style="text-align:right;">
+            <div class="form-group ">
+                <a class=" btn btn-primary" href="@Url.Action("ManageAspNetUsers", "ManagePermission", null, Request.Url.Scheme)">
+                    <i class="fa fa-arrow-left"></i> Trở lại
+                </a>
+            </div>
+        </div>
+
+        <div class="col-sm-8  col-sm-pull-4">
+            <div class="input-group">
+                <input type="text" class="form-control" id="Account_KhoiTaoTaikhoan_SearchInput" placeholder="Thông tin cần tìm" onkeypress="return Account_TimKiemUser_EnterEvent(event, '#Account_KhoiTaoTaikhoan_buttonsearch')">
+
+
+                <span class="input-group-btn">
+                    <input id="Account_KhoiTaoTaikhoan_buttonsearch"
+                           data-otf-target="#Account_KhoiTaoTaikhoan_DS_content"
+                           data-otf-action="@Url.Action("Account_TimKiemUser", "ManagePermission")?key="
+                           title="Tìm kiếm"
+                           type="submit"
+                           value="Tìm kiếm"
+                           class="btn btn-primary "
+                           data-otf-input="#Account_KhoiTaoTaikhoan_SearchInput"
+                           onclick="ManageUserRoleDetail_InfoUserRoleDetail_IsSearch(this)" />
+                </span>
+            </div>
+        </div>
+
+
+
+
+    </div>
+
+
+<div class="row">
+
+    <div class="col-sm-12" id="Account_KhoiTaoTaikhoan_DS_content">
+       @Html.Action("Account_TimKiemUser", "ManagePermission")
+    </div>
+</div>
+
+
+

@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="PermissionDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="PermissionDBEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="ioiort_Controller" EntityType="PermissionDBModel.ioiort_Controller" />
+    <FunctionImport Name="ioiort_Controller_SelectAll" ReturnType="Collection(PermissionDBModel.ioiort_Controller_SelectAll_Result)" />
+  </EntityContainer>
+  <EntityType Name="ioiort_Controller">
+    <Key>
+      <PropertyRef Name="ControllerGuid" />
+    </Key>
+    <Property Name="ControllerGuid" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="ControllerName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <ComplexType Name="ioiort_Controller_SelectAll_Result">
+    <Property Type="String" Name="ControllerGuid" Nullable="false" MaxLength="128" />
+    <Property Type="String" Name="ControllerName" Nullable="true" MaxLength="256" />
+    <Property Type="String" Name="Description" Nullable="true" />
+  </ComplexType>
+</Schema>

@@ -1,0 +1,194 @@
+﻿@*
+    Author:   			httHong
+    Created: 			2015-10-22
+    Last Modified: 		2015-10-22
+*@
+
+@model MvcPaging.IPagedList<nvngoc29082015.permission.library.ManageAspNetUsers.ListAspNetUsersView>
+@using MvcPaging
+
+@{var i = 1;}
+
+<div class="table-responsive">
+    @if (Model.TotalItemCount > 0)
+    {
+        <div class="p-b-10">
+            Kết quả tìm kiếm: <b>@Model.TotalItemCount</b> Người dùng
+        </div>
+        <text>
+            <table class="table table-bordered datatables dataTable">
+                <thead>
+                    <tr>
+                        <th class="text-center w-30">
+                            <input id="CheckBoxAll" onclick="javascript: checkAlllist('#listcheckall',this);" type="checkbox" />
+                        </th>
+                        <th class="text-center">
+                            #
+                        </th>
+                        <th class="text-left w-150">
+                            @Html.DisplayNameFor(model => Model[0].UserName)
+                        </th>
+                        <th class="text-left w-150">
+                            @Html.DisplayNameFor(model => Model[0].NguoiDungName)
+                        </th>
+                        @*<th class="text-left w-150">
+                            @Html.DisplayNameFor(model => Model[0].DonViName)
+                        </th>*@
+                        @*<th>
+                                @Html.DisplayNameFor(model => Model[0].AccessFailedCount)
+                            </th>
+                            <th class="text-center w-100">
+                                @Html.DisplayNameFor(model => Model[0].LockoutEnabled)
+                            </th>
+                            <th class="text-center w-100">
+                                @Html.DisplayNameFor(model => Model[0].LockoutEndDateUtc)
+                            </th>
+                            <th class="text-center w-100">
+                                @Html.DisplayNameFor(model => Model[0].TwoFactorEnabled)
+                            </th>*@
+                        @*<th class="text-center w-100">
+                                @Html.DisplayNameFor(model => Model[0].PhoneNumberConfirmed)
+                            </th>*@
+                        <th class="text-left w-100">
+                            @Html.DisplayNameFor(model => Model[0].PhoneNumber)
+                        </th>
+                        @*<th class="text-center w-100">
+                                @Html.DisplayNameFor(model => Model[0].SecurityStamp)
+                            </th>
+                            <th class="text-center w-100">
+                                @Html.DisplayNameFor(model => Model[0].PasswordHash)
+                            </th>
+                            <th class="text-center w-100">
+                                @Html.DisplayNameFor(model => Model[0].EmailConfirmed)
+                            </th>*@
+                        <th class="text-left w-100">
+                            @Html.DisplayNameFor(model => Model[0].Email)
+                        </th>
+                        <th class="text-right w-100"></th>
+
+                    </tr>
+                </thead>
+                <tbody id="listcheckall">
+                    @foreach (var item in Model)
+                    {
+                        <tr data="@item.Id" class="showhim">
+                            <td class="text-center">
+                                <input type="checkbox" class="checkbox-item" value="@item.Id" />
+                            </td>
+                            <td class="text-center w-50">
+                                @Html.Raw((Model.PageNumber - 1) * Model.PageSize + i)
+                                @{i++;}
+                            </td>
+                            <td class="text-left w-100">
+                                @Html.Raw(item.UserName)
+                            </td>
+                            <td class="text-left w-100">
+                                @Html.Raw(item.NguoiDungName)
+                            </td>
+                            @*<td class="text-left w-100">
+                                @Html.Raw(item.DonViName)
+                            </td>*@
+                            @*<td>
+                                    @Html.Raw(item.AccessFailedCount)
+                                </td>
+                                <td>
+                                   @Html.CheckBoxFor(x => item.LockoutEnabled, new { disabled = "disabled" })
+                                </td>
+                                <td>
+                                    @Html.Raw(item.LockoutEndDateUtc)
+                                </td>
+                                <td>
+                                    @Html.CheckBoxFor(x => item.TwoFactorEnabled, new { disabled = "disabled" })
+                                </td>
+                                <td>
+                                    @Html.CheckBoxFor(x => item.PhoneNumberConfirmed, new { disabled = "disabled" })
+                                </td>*@
+                            <td>
+                                @Html.Raw(item.PhoneNumber)
+                            </td>
+                            @*<td>
+                                    @Html.Raw(item.SecurityStamp)
+                                </td>
+                                <td>
+                                    @Html.Raw(item.PasswordHash)
+                                </td>
+                                <td class="text-center w-100">
+                                    @Html.CheckBoxFor(x => item.EmailConfirmed, new { disabled = "disabled" })
+                                </td>*@
+                            <td>
+                                @Html.Raw(item.Email)
+                            </td>
+                            <td class="text-right w-100">
+
+                                <a data-otf-confirm="Bạn có chắc muôn xóa?"
+                                   title="Xóa dữ liệu này" href="javascript:void(0)"
+                                   onclick="ManageAspNetUsers_AspNetUsers_DeleteMulti(this)"
+                                   data-otf-target="#CPManageAspNetUsers"
+                                   data-otf-input="#SearchAspNetUsers"
+                                   data-otf-action-target="@Url.Action("AspNetUsersGet_List", "ManagePermission")?k="
+                                   data-otf-action="@Url.Action("AspNetUsersDelete", "ManagePermission", null, Request.Url.Scheme)?id=@item.Id">
+                                    <i class="fa fa-lg fa-trash-o text-danger"></i>
+                                </a>
+                                &nbsp;
+
+                                <a href="@Url.Action("AspNetUsersDetail", "ManagePermission", null, Request.Url.Scheme)?id=@item.Id"
+                                   title="Chỉnh sửa">
+                                    <i class="fa fa-lg fa-pencil-square-o text-info"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </text>
+    }
+    else
+    {
+        <text><br />
+    <div class="alert alert-dismissable alert-info">
+        <strong>Yêu cầu tìm kiếm lúc @{ var date = DateTime.Now; } @date.ToString("HH:mm:ss dd/MM/yyyy") không có dữ liệu</strong>
+        <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+    </div>
+        </text>
+    }
+    <div class="pager">
+        @if (Model.TotalItemCount > Model.PageSize)
+        {
+
+            <text>
+
+                @Html.Raw(Ajax.Pager(
+                       new Options
+                       {
+                           PageSize = Model.PageSize,
+                           TotalItemCount = Model.TotalItemCount,
+                           CurrentPage = Model.PageNumber,
+                           ItemTexts = new ItemTexts() { Next = "Next", Previous = "Previous", Page = "" },
+                           ItemIcon = new ItemIcon() { First = "icon-backward", Previous = "icon-chevron-left", Next = "icon-chevron-right", Last = "icon-forward" },
+                           TooltipTitles = new TooltipTitles() { Next = "Next page", Previous = "Previous page", Page = "Page {0}." },
+                           Size = Size.normal,
+                           Alignment = Alignment.centered,
+                           IsShowControls = true,
+                           IsShowFirstLast = true,
+                           CssClass = ""
+                       },
+                       new AjaxOptions
+                       {
+                           UpdateTargetId = "CPManageAspNetUsers"
+                       }, new { controller = "ManagePermission", action = "AspNetUsersGet_List", k = @ViewData["keysearch"] }))
+            </text>
+        }
+    </div>
+</div>
+
+@using (Html.BeginScriptContext())
+{
+    Html.AddScriptBlock(
+        @<script type="text/javascript">
+            loadSelect("ManageAspNetUsers");
+        </script>
+, true);
+}
+
+
+

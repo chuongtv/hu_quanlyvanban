@@ -1,0 +1,199 @@
+﻿@*
+    Author:   			pdgiai
+    Created: 			2016-1-4
+    Last Modified: 		2016-1-4
+*@
+@{
+    ViewBag.Title = "Phân công thanh tra";
+}
+<div id="page-heading">
+    <ol class="breadcrumb">
+        <li>
+            <a href="@Url.Action("Index", "Home")">
+                <i class="fa fa-lg fa-home text-warning text-size-20">
+                </i> Trang chủ
+            </a>
+        </li>
+        <li class="active">
+            Phân công lịch trực
+        </li>
+    </ol>
+</div>
+<div class="container">
+    @*<div class="row"><h4>PHÂN CÔNG LỊCH TRỰC THANH TRA</h4></div>*@
+    <div class="row">
+
+        <div class="panel panel-primary">
+            <div class="panel-body">
+                @*<h4>Tra cứu thông tin phân công</h4>*@
+                @Html.Action("DSPhanCongThanhTra_LoadSearch", "GiamSatGiangDay")
+                <div class="row form-group">
+
+                    <div class="col-sm-6">
+                        <button id="GiamSatGiangDay_ThoiKhoaBieu_buttonsearch"
+                                type="button"
+                                title="Tìm kiếm"
+                                class="btn btn-primary"
+                                data-otf-target="#GiamSatGiangDay_PhanCongThanhTra_DS_content"
+                                data-otf-action="@Url.Action("PhanCongThanhTraGet_List", "GiamSatGiangDay", null, Request.Url.Scheme)?"
+                                onclick="GiamSatGiangDay_PhanCongThanhTra_IsSearch(this)">
+                            Tìm kiếm
+                        </button>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="show">
+            <div class="row form-group ">
+                <div class="col-sm-12 text-right">
+                    <a data-toggle="modal" href="#myModal" title="lưu ý chức năng">
+                        <i class="fa fa-question-circle fa-lg" aria-hidden="true"></i> Hướng dẫn
+                    </a>
+                    &nbsp;&nbsp;
+                    <a href="@Url.Action("PhanCongLichTrucCreate","GiamSatGiangDay")"
+                       class="btn btn-success"
+                       title="Thêm phân công trực">
+                        Thêm phân công trực
+                    </a>
+
+                    <button data-otf-mutil="true"
+                            onclick="GiamSatGiangDay_PhanCongThanhTra_DeleteMulti(this)"
+                            data-otf-confirm="Bạn có chắc muốn xóa những dòng đã chọn?"
+                            data-otf-target="#GiamSatGiangDay_PhanCongThanhTra_DS_content"
+                            data-otf-action-target="@Url.Action("ThoiKhoaBieuMoiGiangGet_List", "GiamSatGiangDay")?"
+                            data-otf-action="@Url.Action("PhanCongThanhTraDelete", "GiamSatGiangDay", null, Request.Url.Scheme)?id="
+                            class="btn btn-danger"
+                            title="Xóa">
+                        Xóa phân công
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" style="min-height:200px;">
+        <div id="GiamSatGiangDay_PhanCongThanhTra_DS_content">
+            <div class="alert alert-dismissable alert-info">
+                <strong>Vui lòng thao tác với bộ lọc để hiển thị thông tin!</strong>
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            </div>
+        </div>
+    </div>
+
+  
+
+</div>
+
+<!--Chép đoạn này vào page để khai báo popup-->
+@section dialog {
+
+    <!-- GiamSatGiangDay_ThoiKhoaBieu UNIT MODAL -->
+    <div class="modal inmodal fade" id="modalGiamSatGiangDay_Detail" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog " id="modalGiamSatGiangDay_Detail_c">
+        </div>
+    </div>
+    <!-- GiamSatGiangDay_ThoiKhoaBieu UNIT END-->
+    <!-- Modal huong dan -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Lưu ý chức năng</h4>
+                </div>
+                <div class="modal-body">
+                    <h4>Một số lưu ý khi sử dụng và kiểm soát chức năng phân công thanh tra</h4>
+                    <p>1. Những dòng dữ liệu phân công thanh tra của năm học cũ sẽ không được phép xóa</p>
+                    <p>2. Thêm mới hoặc chỉnh sửa lịch phân công thanh tra ở năm học cũ cũng sẽ không được thực hiện</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+}
+
+@section Styles {
+    @Styles.Render("~/plugins/chosenStyles")
+    @Styles.Render("~/plugins/dataPickerStyles")
+}
+
+@section Scripts {
+    <script src="~/Content/plugins/metro-ui/docs/js/metro.js"></script>
+    <script src="~/Content/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+    @Scripts.Render("~/plugins/dropZone")
+    @Scripts.Render("~/plugins/chosen")
+    @Scripts.Render("~/plugins/dataPicker")
+    @Scripts.Render("~/module/GiamSatGiangDay/PhanCongThanhTra")
+    @Scripts.Render("~/plugins/fancybox")
+
+
+    <script type="text/javascript">
+        //Su dung cau hinh dropdownlist
+        var config = {
+            '.chosen-select': {},
+            '.chosen-select-deselect': { allow_single_deselect: true },
+            '.chosen-select-no-single': { disable_search_threshold: 10 },
+            '.chosen-select-no-results': { no_results_text: 'Lỗi! Vui lòng chọn ít nhất 1 mục.' },
+            '.chosen-select-width': { width: "95%" }
+        }
+        for (var selector in config) {
+            $(selector).chosen(config[selector]);
+        }
+
+        $('#data_TuNgay_Time .input-group.date').datepicker({
+            format: 'dd/mm/yyyy',
+            todayBtn: "linked",
+            keyboardNavigation: false,
+            forceParse: false,
+            calendarWeeks: true,
+            autoclose: true
+        });
+
+        $('#data_DenNgay_Time .input-group.date').datepicker({
+            format: 'dd/mm/yyyy',
+            todayBtn: "linked",
+            keyboardNavigation: false,
+            forceParse: false,
+            calendarWeeks: true,
+            autoclose: true
+        });
+
+        function LoadDefaultTextNgay() {
+            var txttungay = document.getElementById("tungay_time");
+            var txtdenngay = document.getElementById("denngay_time");
+            var split = GetDateForQuery('namnay').split('_');
+
+            txttungay.value = split[1];
+            txtdenngay.value = split[2];
+        }
+
+        function GetDateForQuery(index) {
+            var chuoisearch = "";
+            var fd = " ", td = " ";
+            var today = new Date();
+            switch (index) {
+                case "namnay":
+                    var firstDay = new Date(today.getFullYear(), today.getMonth() - today.getMonth(), 1);
+                    var lastDay = new Date(today.getFullYear(), today.getMonth() + (12 - today.getMonth()), 0);
+                    fd = (firstDay.getDate() + '/' + (firstDay.getMonth() + 1) + '/' + firstDay.getFullYear());
+                    td = (lastDay.getDate() + '/' + (lastDay.getMonth() + 1) + '/' + lastDay.getFullYear());
+                    chuoisearch = "_" + fd + "_" + td;
+                    return chuoisearch;
+                default:
+                    chuoisearch = "_" + fd + "_" + td;
+                    return chuoisearch;
+            }
+        }
+    </script>
+
+}
+
+
+
+

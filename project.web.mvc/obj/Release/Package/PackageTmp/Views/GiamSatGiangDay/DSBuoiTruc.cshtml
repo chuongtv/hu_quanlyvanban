@@ -1,0 +1,96 @@
+﻿@*
+    Author:   			tvchuong
+    Created: 			2016-8-19
+    Last Modified: 		2016-8-19
+*@
+@{
+    ViewBag.Title = "Phân công thanh tra";
+}
+<div id="page-heading">
+    <ol class="breadcrumb">
+        <li>
+            <a href="@Url.Action("Index", "Home")">
+                <i class="fa fa-lg fa-home text-warning text-size-20">
+                </i> Trang chủ
+            </a>
+        </li>
+        <li class="active">
+            Cấu hình buổi trực
+        </li>
+    </ol>
+</div>
+
+
+<div class="container">
+    <div class="row">
+        @*các thao tác*@
+        <div class="show">
+            <div class="col-sm-4 col-sm-push-8" style="text-align:right;">
+                <div class="form-group ">
+                    <button data-otf-mutil="true"
+                            onclick="GiamSatGiangDay_BuoiTruc_DeleteMulti(this)"
+                            data-otf-confirm="Bạn có chắc muốn xóa những dòng đã chọn?"
+                            data-otf-target="#GiamSatGiangDay_BuoiTruc_DS_content"
+                            data-otf-input="#GiamSatGiangDay_BuoiTruc_SearchInput"
+                            data-otf-action-target="@Url.Action("BuoiTrucGet_List", "GiamSatGiangDay")?idnv=@Request["id"]&k="
+                            data-otf-action="@Url.Action("BuoiTrucDelete", "GiamSatGiangDay", null, Request.Url.Scheme)?id="
+                            class=" btn btn-danger"
+                            title="Xóa">
+                        <i class="fa fa-trash-o"></i> Xóa
+                    </button>
+                    <a data-toggle="modal" onclick="GiamSatGiangDay_BuoiTruc_GetView(this)"
+                       data-target="#modalGiamSatGiangDay_BuoiTruc" class=" btn btn-success" 
+                       data-otf-action="@Url.Action("BuoiTrucCreate", "GiamSatGiangDay", null, Request.Url.Scheme)?id=@Request["id"]" href="javascript:void(0)">
+                        <i class="fa fa-plus" title="Tạo mới"></i> Thêm mới
+                    </a>
+
+
+                </div>
+            </div>
+            <div class="col-sm-8  col-sm-pull-4">
+                <div class="form-group">
+                    <div class="input-group">
+                        <input id="GiamSatGiangDay_BuoiTruc_SearchInput"
+                               placeholder="Thông tin cần tìm"
+                               onkeypress="return GiamSatGiangDay_BuoiTruc_EnterEvent(event, '#GiamSatGiangDay_BuoiTruc_buttonsearch')"
+                               class="form-control " />
+                        <span class="input-group-btn">
+                            <button id="GiamSatGiangDay_BuoiTruc_buttonsearch"
+                                    type="button"
+                                    title="Tìm kiếm"
+                                    class="btn btn-primary"
+                                    data-otf-target="#GiamSatGiangDay_BuoiTruc_DS_content"
+                                    data-otf-input="#GiamSatGiangDay_BuoiTruc_SearchInput"
+                                    data-otf-action="@Url.Action("BuoiTrucGet_List", "GiamSatGiangDay", null, Request.Url.Scheme)?idnv=@Request["id"]&k="
+                                    onclick="GiamSatGiangDay_BuoiTruc_IsSearch(this)">
+                                Tìm kiếm
+                            </button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12" id="GiamSatGiangDay_BuoiTruc_DS_content">
+            @Html.Action("BuoiTrucGet_List", "GiamSatGiangDay")
+        </div>
+    </div>
+</div>
+<!--Chép đoạn này vào page để khai báo popup-->
+@section dialog {
+
+    <!-- GiamSatGiangDay_BuoiTruc UNIT MODAL -->
+    <div class="modal inmodal fade" id="modalGiamSatGiangDay_BuoiTruc" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog " id="modalGiamSatGiangDay_BuoiTruc_c">
+        </div>
+    </div>
+    <!-- GiamSatGiangDay_BuoiTruc UNIT END-->
+}
+
+
+
+@section Scripts {
+
+    @Scripts.Render("~/module/GiamSatGiangDay/BuoiTruc");
+}

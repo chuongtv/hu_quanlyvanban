@@ -1,0 +1,76 @@
+﻿@model nvngoc31122015.giamsatgiangday.library.GiamSatGiangDay.ListPhanCongThanhTraView
+
+<div class="show" id="show">
+
+
+    <div class="row form-group ">
+        <label class="control-label validate-inside-label col-sm-1" style="float:left;">Nhân viên</label>
+        <div class="col-sm-2">
+            @Html.DropDownListFor(model => Model.ThanhTra_Guid, new SelectList(Model.ListThanhTra_Guid, "ValueString", "Name"), new { @class = "form-control chosen-select", id = "DDL_ThanhTraPhanCong_Guid" })
+            @Html.ValidationMessageFor(model => Model.ThanhTra_Guid, null, new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3">
+                @*<a data-toggle="modal" onclick="GiamSatGiangDay_ThoiKhoaBieu_GetView(this)"
+                   data-target="#modalGiamSatGiangDay_ThoiKhoaBieu" class=" btn btn-success" data-otf-action="@Url.Action("ThoiKhoaBieuCreate", "GiamSatGiangDay", null, Request.Url.Scheme)?id=0" href="javascript:void(0)">
+                    <i class="fa fa-plus" title="Phân công"></i> Phân công
+                </a>*@
+            <button data-otf-mutil="true"
+                    onclick="GiamSatGiangDay_PhanCongThanhTra_InsertMulti(this)"
+                    data-otf-confirm="Bạn có chắc muốn phân công những dòng đã chọn?"
+                    data-otf-target="#GiamSatGiangDay_PhanCongThanhTra_DS_content"
+                    data-otf-input="#DDL_ThanhTraPhanCong_Guid"
+                    data-otf-action-target="@Url.Action("PhanCongThanhTraGet_List", "GiamSatGiangDay")"
+                    data-otf-action="@Url.Action("PhanCongThanhTraCreate", "GiamSatGiangDay", null, Request.Url.Scheme)"
+                    class=" btn btn-success"
+                    title="Phân công">
+                    Phân công
+            </button>
+                
+                <button data-otf-mutil="true"
+                        onclick="GiamSatGiangDay_PhanCongThanhTra_DeleteMulti(this)"
+                        data-otf-confirm="Bạn có chắc muốn xóa phân công những dòng đã chọn?"
+                        data-otf-target="#GiamSatGiangDay_PhanCongThanhTra_DS_content"
+                        data-otf-input=""
+                        data-otf-action-target="@Url.Action("PhanCongThanhTraGet_List", "GiamSatGiangDay")"
+                        data-otf-action="@Url.Action("PhanCongThanhTraDelete", "GiamSatGiangDay", null, Request.Url.Scheme)"
+                        class=" btn btn-danger"
+                        title="Xóa">
+                        Xóa Phân công
+                </button>
+        </div>
+        <div class="col-sm-6  text-right">
+            <div class="btn-group">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                    Tác vụ khác <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                    <li>
+                        <a id="buttonExport"
+                           title="Xuất dữ liệu"
+                           data-otf-target="#GiamSatGiangDay_PhanCongThanhTra_DS_content"
+                           data-otf-input="#DDLThang"
+                           data-otf-action="@Url.Action("PhanCongThanhTraExportExcel", "GiamSatGiangDay", null, Request.Url.Scheme)"
+                           onclick="ReportPhanCongThanhTra_Export(this)">
+                            Xuất dữ liệu
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+@section Scripts {
+
+
+    <script type="text/javascript">
+        //Su dung cau hinh dropdownlist
+
+    </script>
+
+}
+
+
+
+

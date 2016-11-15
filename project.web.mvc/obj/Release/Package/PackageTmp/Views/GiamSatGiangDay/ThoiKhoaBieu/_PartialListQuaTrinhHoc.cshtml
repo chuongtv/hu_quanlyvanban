@@ -1,0 +1,113 @@
+﻿@*
+    Author:   			pdgiai
+    Created: 			2016-1-4
+    Last Modified: 		2016-1-4
+*@
+
+@model List<nvngoc31122015.giamsatgiangday.library.GiamSatGiangDay.LichTrinhHocView>
+@{ int i = 0;}
+
+<div class="modal-content">
+    <div class="modal-header">
+        <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+        <h4 class="modal-title">Lịch trình giảng dạy</h4>
+    </div>
+    <div class="modal-body">
+        <div class="table-responsive">
+            @if (Model.Count > 0)
+            {
+                <div class="p-b-10">
+                    <b>@Model.Count</b> Buổi học
+                </div>
+                <text>
+                    <table class="table table-bordered datatables dataTable">
+                        <thead>
+                            <tr>
+                                <th class="text-center w-30">
+                                    #
+                                </th>
+                                <th class="text-center w-100">
+                                    @Html.DisplayNameFor(model => Model[0].NgayHoc)
+                                </th>
+                                <th class="text-center w-100">
+                                    @Html.DisplayNameFor(model => Model[0].PhongID)
+                                </th>
+
+                                <th class="text-center w-50">
+                                    @Html.DisplayNameFor(model => Model[0].TietBatDau)
+                                </th>
+                                <th class="text-center w-50">
+                                    @Html.DisplayNameFor(model => Model[0].SoTiet)
+                                </th>
+                                <th class="text-center ">
+                                    @Html.DisplayNameFor(model => Model[0].ThanhTraThanhTra)
+                                </th>
+                                <th class="text-center ">
+                                    @Html.DisplayNameFor(model => Model[0].GhiChu)
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody id="listcheckall">
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td class="text-center">
+
+                                        @{i++;}@i
+                                    </td>
+                                    <td class="text-center">
+                                        @if (item.NgayHoc != null)
+                                        {
+                                            @Html.Raw(item.NgayHoc.Value.ToString("dd/MM/yyyy"))
+                                        }
+
+                                    </td>
+                                    <td class="text-center">
+                                        @Html.Raw(item.PhongID)
+                                    </td>
+                                    <td class="text-center">
+                                        @Html.Raw(item.TietBatDau)
+                                    </td>
+                                    <td class="text-center">
+                                        @Html.Raw(item.SoTiet)
+                                    </td>
+                                    <td class="text-left">
+                                        @Html.Raw(item.ThanhTraThanhTra)
+                                    </td>
+                                    <td class="text-left">
+                                        @Html.Raw(item.GhiChu)
+                                    </td>
+                                    
+
+                                </tr>
+                                            }
+                        </tbody>
+                    </table>
+                </text>
+                                            }
+                                            else
+                                            {
+                                                <text><br />
+            <div class="alert alert-dismissable alert-info">
+                <strong>Yêu cầu tìm kiếm lúc @{ var date = DateTime.Now; } @date.ToString("HH:mm:ss dd/MM/yyyy") không có dữ liệu</strong>
+                <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+            </div>
+                                                </text>
+                                            }
+
+        </div>
+    </div>
+</div>
+
+
+@using (Html.BeginScriptContext())
+{
+    Html.AddScriptBlock(
+        @<script type="text/javascript">
+
+        </script>
+, true);
+}
+
+
+

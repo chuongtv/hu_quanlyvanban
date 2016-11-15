@@ -1,0 +1,135 @@
+﻿@*
+    Author:   			httHong
+    Created: 			2015-10-22
+    Last Modified: 		2015-10-22
+*@
+
+
+@{
+    ViewBag.Title = "ManageAspNetUsers";
+}
+<div id="page-heading">
+    <ol class="breadcrumb">
+        <li class="active">
+            <a href="@Url.Action("Index", "Dashboards")">
+                <i class="fa fa-lg fa-home text-warning text-size-20">
+                </i> Trang Chủ
+            </a>
+        </li>
+        <li>
+            <a href="@Url.Action("ManagePermission", "ManagePermission")">
+                <i>
+                </i>Quản Lý Phân Quyền
+            </a>
+        </li>
+        <li class="active">
+            Quản lý người dùng
+        </li>
+    </ol>
+</div>
+
+@*content*@
+<div class="container">
+    <div class="row">
+        @*các thao tác*@
+        <div class="show">
+            <div class="col-sm-6 col-sm-push-6" style="text-align:right;">
+                <div class="form-group ">
+                    <button data-otf-mutil="true"
+                            onclick="ManageAspNetUsers_AspNetUsers_DeleteMulti(this)"
+                            data-otf-confirm="Bạn có chắc muốn xóa những dòng đã chọn?"
+                            data-otf-target="#CPManageAspNetUsers"
+                            data-otf-input="#SearchAspNetUsers"
+                            data-otf-action-target="@Url.Action("AspNetUsersGet_List", "ManagePermission")?k="
+                            data-otf-action="@Url.Action("AspNetUsersDelete", "ManagePermission", null, Request.Url.Scheme)?id="
+                            class=" btn btn-danger"
+                            title="Xóa">
+                        <i class="fa fa-trash-o"></i> Xóa
+                    </button>
+                    <a title="Tạo tài khoản không có dữ liệu trong HRM" class=" btn btn-success" href="@Url.Action("AspNetUsersCreate", "ManagePermission", null, Request.Url.Scheme)">
+                        <i class="fa fa-plus" title="Tạo mới"></i> Thêm mới
+                    </a>
+
+                    @*<a title="Tạo tài khoản đã có trong HRM" class=" btn btn-info" href="@Url.Action("ManageCreateUser", "ManagePermission", null, Request.Url.Scheme)">
+                        <i class="fa fa-user" title="Yêu cầu cấp"></i> Cấp tài khoản
+                    </a>*@
+                </div>
+            </div>
+            <div class="col-sm-6 col-sm-pull-6">
+                <div class="form-group">
+                    <div class="input-group">
+                        <input id="SearchAspNetUsers"
+                               placeholder="Thông tin cần tìm"
+                               onkeypress="return ManageAspNetUsers_AspNetUsers_EnterEvent(event, '#buttonsearch')"
+                               class="form-control showtooltip" />
+                        <ul id="elementToHide" class="li-style-none">
+                            <li><b><u>Tìm kiếm theo</u></b></li>
+                            <li>- <strong class="text-danger">Địa chỉ email</strong> ví dụ: honghtt@i-data.vn</li>
+                            <li>- <strong class="text-danger">Tên không dấu</strong> ví dụ: Huynh Thi Thu Hong</li>
+                            <li>- <strong class="text-danger">Tên có dấu</strong> ví dụ: Huỳnh Thị Thu Hồng</li>
+                            @*<li>- <strong class="text-danger">SBH</strong>: số bảo hiểm</li>
+                            <li>- <strong class="text-danger">CMND</strong>: chứng minh nhân dân</li>*@
+                            @*<li><b><u>Sử dụng</u></b></li>
+                            <li class="text-danger">[từ khóa]:[cụm từ cần tìm]</li>
+                            <li><i><u>Ví dụ:</u> PHONE:093</i></li>
+                            <li class="text-success">* Mặc định không sử dụng từ khóa thì tìm kiếm theo tên hoặc mã nhân viên</li>
+                            <li class="text-success">* Đối với tên có thể tìm không dấu</li>*@
+                        </ul>
+                        <span class="input-group-btn">
+                            <button id="buttonsearch"
+                                    type="button"
+                                    title="Tìm kiếm"
+                                    class="btn btn-primary"
+                                    data-otf-target="#CPManageAspNetUsers"
+                                    data-otf-input="#SearchAspNetUsers"
+                                    data-otf-action="@Url.Action("AspNetUsersGet_List", "ManagePermission", null, Request.Url.Scheme)?k="
+                                    onclick="ManageAspNetUsers_AspNetUsers_IsSearch(this)">
+                                Tìm kiếm
+                            </button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div id="CPManageAspNetUsers">
+                @Html.Action("AspNetUsersGet_List", "ManagePermission")
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Styles{
+    <style>
+        /*GOI Y TIM KIEM*/
+        #elementToHide {
+            display: none;
+        }
+
+        .showtooltip:focus + #elementToHide {
+            display: block;
+            position: absolute;
+            width: 300px;
+            background: #fff;
+            padding: 5px;
+            z-index: 15;
+            top: 33px;
+            border: 1px solid #808080;
+        }
+
+        /* BO DAU CHAM TRUOC LI */
+        .li-style-none li {
+            list-style: outside none none;
+        }
+    </style>
+}
+
+@section Scripts {
+    @Scripts.Render("~/module/ManagePermission/ManageAspNetUsers")
+}
+
+
+
+

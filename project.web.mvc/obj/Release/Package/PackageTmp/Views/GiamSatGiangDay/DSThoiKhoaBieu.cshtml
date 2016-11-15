@@ -1,0 +1,263 @@
+﻿@*
+    Author:   			pdgiai
+    Created: 			2016-1-4
+    Last Modified: 		2016-1-4
+*@
+@{
+    ViewBag.Title = "Danh sách thời khóa biểu";
+}
+<div class="container">
+    <div class="row"><h4>THỜI KHÓA BIỂU</h4></div>
+    <div class="row">
+
+        @*các thao tác*@
+        @Html.Action("DSThoiKhoaBieu_LoadSearch", "GiamSatGiangDay")
+        <div class="row form-group">
+            <label class="control-label col-sm-1" style="float:left;">Từ ngày</label>
+            <div id="data_TuNgay_Time" class="col-sm-2">
+                <div class=" input-group date">
+                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    <input type="datetime" value="" name="TuNgay_Time" id="tungay_time" class="text-box single-line" />
+                </div>
+            </div>
+            <label class="control-label col-sm-1" style="float:left;">Đến ngày</label>
+            <div id="data_DenNgay_Time" class="col-sm-2">
+                <div class=" input-group date">
+                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    <input type="datetime" value="" name="DenNgay_Time" id="denngay_time" class="text-box single-line" />
+                </div>
+            </div>
+            <div class="col-sm-5">
+                <button id="GiamSatGiangDay_ThoiKhoaBieu_buttonsearch"
+                        type="button"
+                        title="Tìm kiếm"
+                        class="btn btn-primary"
+                        data-otf-target="#GiamSatGiangDay_ThoiKhoaBieu_DS_content"
+                        data-otf-input="#GiamSatGiangDay_ThoiKhoaBieu_SearchInput"
+                        data-otf-action="@Url.Action("ThoiKhoaBieuGet_List", "GiamSatGiangDay", null, Request.Url.Scheme)?"
+                        onclick="GiamSatGiangDay_ThoiKhoaBieu_IsSearch(this)">
+                    Tìm kiếm
+                </button>
+                <a class=" btn btn-info "
+                   id="buttonExport"
+                   title="Xuất dữ liệu"
+                   data-otf-target="#GiamSatGiangDay_ThoiKhoaBieu_DS_content"
+                   data-otf-input="#DDLThang"
+                   data-otf-action="@Url.Action("ThoiKhoaBieuExportExcel", "GiamSatGiangDay", null, Request.Url.Scheme)"
+                   onclick="ReportDanhSachThoiKhoaBieu_Export(this)">
+                    <i class="fa fa-plus" title="Xuất dữ liệu"></i> Xuất dữ liệu
+                </a>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div id="GiamSatGiangDay_ThoiKhoaBieu_DS_content">
+        </div>
+    </div>
+
+    <!--Chép đoạn này vào page để khai báo popup-->
+    @section dialog {
+
+        <!-- GiamSatGiangDay_ThoiKhoaBieu UNIT MODAL -->
+        <div class="modal inmodal fade" id="modalGiamSatGiangDay_ThoiKhoaBieu" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog " id="modalGiamSatGiangDay_ThoiKhoaBieu_c">
+            </div>
+        </div>
+        <!-- GiamSatGiangDay_ThoiKhoaBieu UNIT END-->
+    }
+</div>
+
+@section Styles {
+    @Styles.Render("~/plugins/chosenStyles")
+    @Styles.Render("~/plugins/dataPickerStyles")
+}
+
+@section Scripts {
+    <script src="~/Content/plugins/metro-ui/docs/js/metro.js"></script>
+    <script src="~/Content/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+    @Scripts.Render("~/plugins/dropZone")
+    @Scripts.Render("~/plugins/chosen")
+    @Scripts.Render("~/plugins/dataPicker")
+    @Scripts.Render("~/module/GiamSatGiangDay/ThoiKhoaBieu")
+    @Scripts.Render("~/plugins/fancybox")
+
+    <script type="text/javascript">
+        //Su dung cau hinh dropdownlist
+        var config = {
+            '.chosen-select': {},
+            '.chosen-select-deselect': { allow_single_deselect: true },
+            '.chosen-select-no-single': { disable_search_threshold: 10 },
+            '.chosen-select-no-results': { no_results_text: 'Lỗi! Vui lòng chọn ít nhất 1 mục.' },
+            '.chosen-select-width': { width: "95%" }
+        }
+        for (var selector in config) {
+            $(selector).chosen(config[selector]);
+        }
+
+        $('#data_TuNgay_Time .input-group.date').datepicker({
+            format: 'dd/mm/yyyy',
+            todayBtn: "linked",
+            keyboardNavigation: false,
+            forceParse: false,
+            calendarWeeks: true,
+            autoclose: true
+        });
+
+        $('#data_DenNgay_Time .input-group.date').datepicker({
+            format: 'dd/mm/yyyy',
+            todayBtn: "linked",
+            keyboardNavigation: false,
+            forceParse: false,
+            calendarWeeks: true,
+            autoclose: true
+        });
+
+        window.addEventListener('load', function (event) {
+            LoadDefaultTextNgay();
+        });
+
+        function LoadDefaultTextNgay() {
+            if (document.getElementById("tungay_time") != null) {
+                var txttungay = document.getElementById("tungay_time");
+                var txtdenngay = document.getElementById("denngay_time");
+                var split = GetDateForQuery('namnay').split('_');
+
+                txttungay.value = split[1];
+                txtdenngay.value = split[2];
+            }
+        }
+
+        function GetDateForQuery(index) {
+            var chuoisearch = "";
+            var fd = " ", td = " ";
+            var today = new Date();
+            switch (index) {
+                case "namnay":
+                    var firstDay = new Date(today.getFullYear(), today.getMonth(), 1);
+                    var lastDay = new Date(today.getFullYear(), today.getMonth() + (12 - today.getMonth()), 0);
+                    //fd = (firstDay.getDate() + '/' + (firstDay.getMonth() + 1) + '/' + firstDay.getFullYear());
+                    fd = ('01/' + '01/' + firstDay.getFullYear());
+                    td = (lastDay.getDate() + '/' + (lastDay.getMonth() + 1) + '/' + lastDay.getFullYear());
+                    chuoisearch = "_" + fd + "_" + td;
+                    return chuoisearch;
+                default:
+                    chuoisearch = "_" + fd + "_" + td;
+                    return chuoisearch;
+            }
+        }
+
+
+
+        function FillLau() {
+            var abbr = $("#DDL_CoSo_Guid").val();
+            getLau(abbr);
+            getPhong("00000000-0000-0000-0000-000000000000");
+        }
+
+        function FillPhong() {
+
+            var abbr = $("#DDL_Lau_Guid").val();
+            getPhong(abbr);
+
+        }
+
+        function getLau(abbr) {
+            $.ajax({
+                url: "@Url.Action("FillLau", "GiamSatGiangDay")",
+                data: { CoSoGuid: abbr },
+                dataType: "json",
+                type: "POST",
+                error: function () {
+                    alert("An error occurred.");
+                },
+                success: function (data) {
+                    var items = "";
+                    $("#DDL_Lau_Guid").empty().append('<option value="00000000-0000-0000-0000-000000000000">---Chọn lầu---</option>');
+                    $.each(data, function (i, item) {
+                        items += "<option value=\"" + item.ValueString + "\">" + item.Name + "</option>";
+                    });
+                    $("#DDL_Lau_Guid").html(items);
+                    $('#DDL_Lau_Guid').trigger('chosen:updated');
+                }
+            });
+
+        }
+        function getPhong(abbr) {
+            $.ajax({
+                url: "@Url.Action("FillPhong", "GiamSatGiangDay")",
+                data: { LauGuid: abbr },
+                dataType: "json",
+                type: "POST",
+                error: function () {
+                    alert("An error occurred.");
+                },
+                success: function (data) {
+                    var items = "";
+                    $("#DDL_Phong_Guid").empty().append('<option value="00000000-0000-0000-0000-000000000000">---Chọn phòng---</option>');
+                    $.each(data, function (i, item) {
+                        items += "<option value=\"" + item.ValueString + "\">" + item.Name + "</option>";
+                    });
+                    $("#DDL_Phong_Guid").html(items);
+                    $('#DDL_Phong_Guid').trigger('chosen:updated');
+
+                }
+            });
+        }
+
+        function ReportDanhSachThoiKhoaBieu_Export(element) {
+
+            var txttungay = '';
+            if (document.getElementById("tungay_time") != null) txttungay = document.getElementById("tungay_time").value;
+            var txtdenngay = '';
+            if (document.getElementById("denngay_time") != null) txtdenngay = document.getElementById("denngay_time").value;
+            var namhoc = '';
+            if (document.getElementById("DDL_NamHoc") != null) namhoc = document.getElementById("DDL_NamHoc").value;
+            var monhoc = '';
+            if (document.getElementById("MonHocID") != null) monhoc = document.getElementById("MonHocID").value;
+            var coso = '';
+            if (document.getElementById("DDL_CoSo_Guid") != null) coso = document.getElementById("DDL_CoSo_Guid").value;
+            var lau = '';
+            if (document.getElementById("DDL_Lau_Guid") != null) lau = document.getElementById("DDL_Lau_Guid").value;
+            var phong = '';
+            if (document.getElementById("DDL_Phong_Guid") != null) phong = document.getElementById("DDL_Phong_Guid").value;
+            var ca = '';
+            if (document.getElementById("DDL_Ca_Guid") != null) ca = document.getElementById("DDL_Ca_Guid").value;
+            var lop = '';
+            if (document.getElementById("DDL_Lop_Guid") != null) lop = document.getElementById("DDL_Lop_Guid").value;
+            var giangvien = '';
+            if (document.getElementById("GiangVienID") != null) giangvien = document.getElementById("GiangVienID").value;
+
+
+            var idloadTo = $(element).attr('data-otf-target');
+            var action = $(element).attr('data-otf-action');
+
+            var date_regex = /^([1-9]|[1][012])\/|\/([1-9]|[1][0-9]|[2][0-9]|[3][01])\/|\/([1][6-9][0-9][0-9]|[2][0][01][0-9])$/;
+
+            if (txttungay != "") {
+                if (!(date_regex.test(txttungay))) {
+                    EndWaiting();
+                    alert("Từ ngày không đúng định dạng dd/MM/yyyy");
+                    return;
+                }
+            }
+
+            if (txtdenngay != "") {
+                if (!(date_regex.test(txtdenngay))) {
+                    EndWaiting();
+                    alert("Đến ngày không đúng định dạng dd/MM/yyyy");
+                    return;
+                }
+            }
+
+            window.open((action + '?NamHocGuid=' + namhoc.replace(/ /g, '+') + '&MaMonHoc=' + monhoc.replace(/ /g, '+') + '&MaGiangVien=' + giangvien.replace(/ /g, '+') + '&CoSoGuid=' + coso.replace(/ /g, '+') + '&LauGuid=' + lau.replace(/ /g, '+') + '&PhongGuid=' + phong.replace(/ /g, '+') + '&CaGuid=' + ca.replace(/ /g, '+') + '&LopGuid=' + lop.replace(/ /g, '+') + '&TuNgay=' + txttungay.replace(/ /g, '+') + '&DenNgay=' + txtdenngay.replace(/ /g, '+')), '_parent');
+            //alert(action + '?NamHocGuid=' + namhoc.value.replace(/ /g, '+') + '&MaMonHoc=' + monhoc.value.replace(/ /g, '+') + '&MaGiangVien=' + giangvien.value.replace(/ /g, '+') + '&CoSoGuid=' + coso.value.replace(/ /g, '+') + '&LauGuid=' + lau.value.replace(/ /g, '+') + '&PhongGuid=' + phong.value.replace(/ /g, '+') + '&CaGuid=' + ca.value.replace(/ /g, '+') + '&LopGuid=' + lop.value.replace(/ /g, '+') + '&TuNgay=' + txttungay.value.replace(/ /g, '+') + '&DenNgay=' + txtdenngay.value.replace(/ /g, '+'));
+        }
+
+    </script>
+}
+
+
+
+

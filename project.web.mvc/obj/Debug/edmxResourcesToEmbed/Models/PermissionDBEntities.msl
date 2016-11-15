@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="PermissionDBModelStoreContainer" CdmEntityContainer="PermissionDBEntities">
+    <EntitySetMapping Name="ioiort_Controller">
+      <EntityTypeMapping TypeName="PermissionDBModel.ioiort_Controller">
+        <MappingFragment StoreEntitySet="ioiort_Controller">
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="ControllerName" ColumnName="ControllerName" />
+          <ScalarProperty Name="ControllerGuid" ColumnName="ControllerGuid" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="ioiort_Controller_SelectAll" FunctionName="PermissionDBModel.Store.ioiort_Controller_SelectAll">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="PermissionDBModel.ioiort_Controller_SelectAll_Result">
+          <ScalarProperty Name="ControllerGuid" ColumnName="ControllerGuid" />
+          <ScalarProperty Name="ControllerName" ColumnName="ControllerName" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+  </EntityContainerMapping>
+</Mapping>

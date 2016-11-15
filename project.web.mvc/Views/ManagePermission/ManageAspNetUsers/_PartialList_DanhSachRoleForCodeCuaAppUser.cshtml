@@ -1,0 +1,77 @@
+﻿@model List<nvngoc29082015.permission.library.ManageAspNetUsers.DanhSachQuyenCuaUser>
+@using MvcPaging
+
+@{var i = 1;}
+
+<div class="">
+    @if (Model.Count > 0)
+    {
+        <div class="p-b-10">
+            Kết quả tìm kiếm: <b>@Model.Count</b> Dòng.
+        </div>
+        <text>
+            <table class="table table-bordered datatables dataTable">
+                <thead>
+                    <tr>
+
+                        <th class="text-center">
+                            #
+                        </th>
+                        <th class="text-left w-150">
+                            @Html.DisplayNameFor(model => Model[0].RoleForCodeName)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => Model[0].ModuleName)
+                        </th>
+
+
+                        <th class="text-center w-100">Trạng thái</th>
+
+                    </tr>
+                </thead>
+                <tbody id="listcheckall">
+                    @foreach (var item in Model)
+                    {
+                        <tr data="@item.ModuleGuid" class="showhim">
+
+                            <td class="text-center w-50">
+                           
+                                @{i++;}
+                            </td>
+                            <td class="text-left w-100">
+                                @Html.Raw(item.RoleForCodeName)
+                            </td>
+                            <td>
+                                @Html.Raw(item.ModuleName)
+                            </td>
+
+
+                            <td class="text-center w-100">
+                                @Html.LabelFor(x => item.TrangThaiDenied, new { disabled = "disabled" })
+
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </text>
+    }
+    else
+    {
+        <text><br />
+    <div class="alert alert-dismissable alert-info">
+        <strong>Yêu cầu tìm kiếm lúc @{ var date = DateTime.Now; } @date.ToString("HH:mm:ss dd/MM/yyyy") không có dữ liệu</strong>
+        <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+    </div>
+        </text>
+    }
+
+</div>
+@using (Html.BeginScriptContext())
+{
+    Html.AddScriptBlock(
+        @<script type="text/javascript">
+            loadSelect("QLTTNhanSu");
+        </script>
+, true);
+}

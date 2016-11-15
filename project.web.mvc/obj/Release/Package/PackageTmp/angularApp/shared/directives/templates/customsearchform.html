@@ -1,0 +1,32 @@
+﻿
+<div class="table-responsive" style="height:32px;overflow:visible;{{style}}" >
+    <table class="table no-border">
+        <tbody>
+            <tr>
+                <td style="padding:0px;width:{{searchformOptions.codewidth }};" ng-show="searchformOptions.displayname == true">
+                    <input type="text" class="form-control" style="padding: 3px 3px;text-transform:uppercase;" ng-class="{{ngClass}}"
+                           id="{{searchformOptions.idCode}}" focus="{{focus}}" formname="{{formname}}" name="{{name}}"
+                           ng-keydown="ShowFormSearchEnter($event)"
+                           ng-blur="eventLostFocus()" />
+                    <input type="text" class="form-control" style="padding: 3px 3px; display:none;" id="{{searchformOptions.idModel}}" ng-model="ngModel" />
+                </td>
+
+                <td style="padding:0px;" ng-show="searchformOptions.displayname == false">
+                    <input type="text" class="form-control" style="padding: 3px 3px;text-transform:uppercase;" ng-class="{{ngClass}}"
+                           id="{{searchformOptions.idCode}}" focus="{{focus}}" formname="{{formname}}" name="{{name}}"
+                           ng-keydown="ShowFormSearchEnter($event)"
+                           ng-blur="eventLostFocus()" />
+                    <input type="text" class="form-control" style="padding: 3px 3px; display:none;" id="{{searchformOptions.idModel}}" ng-model="ngModel" />
+                </td>
+
+                <td style="padding:0px;" ng-show="searchformOptions.displayname == true">
+                    <input type="text" class="form-control" style="padding: 3px 3px;background-color:white;" ng-readonly="true" tabindex="-1" id="{{searchformOptions.idName}}" />
+                </td>
+                <td style="padding:0px;width:20px;">
+                    <button type="button" class="btn btn-default btndatepicker" ng-click="ShowFormSearchBtn()" tabindex="-1"><i class="glyphicon glyphicon-search"></i></button>
+                </td>
+                
+            </tr>
+        </tbody>
+    </table>
+</div>

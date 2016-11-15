@@ -1,0 +1,209 @@
+﻿@{
+    ViewBag.Title = "DanhSachPhanCapAppModuleAppRoleForCode";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    @model   nvngoc29082015.permission.library.ManageAspNetUsers.DanhSachQuyenCuaUser
+}
+
+<div id="page-heading">
+    <ol class="breadcrumb">
+        <li class="active">
+            <a href="@Url.Action("Index", "Dashboards")">
+                <i class="fa fa-lg fa-home text-warning text-size-20">
+                </i> Trang Chủ
+            </a>
+        </li>
+        <li>
+            <a href="@Url.Action("ManagePermission", "ManagePermission")">
+                <i>
+                </i>Quản Lý Phân Quyền
+            </a>
+        </li>
+        <li>
+            <a href="@Url.Action("ManageAspNetUsers", "ManagePermission")">
+                <i>
+                </i> Quản lý người dùng
+            </a>
+        </li>
+        <li class="active">
+            Danh sách quyền người dùng
+        </li>
+    </ol>
+</div>
+<div class="container">
+    <div class="col-md-2">
+        @Html.HiddenFor(model => Model.Id)
+        @Html.Partial("~/Views/ManagePermission/ManageAspNetUsers/_PartialDanhMuc.cshtml")
+    </div>
+
+    <div class="col-md-10">
+        <div class="row">
+
+            <div class="col-xs-4"><h4>@ViewBag.UserDuocCapQuyen</h4></div>
+            <div class="col-xs-8">
+                <div class="pull-right">
+                    <div class="form-group ">
+                        <div class="btn-group-vertical">
+                            <button data-toggle="dropdown" class="btn btn-default-alt dropdown-toggle" type="button">
+                                Tác vụ khác
+                                <i class="fa fa-caret-down"></i>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a data-otf-list="#div_LoadDanhSach" title="Thêm các quyền ngoại lệ cho người dùng"
+                                       data-otf-btnsearch="#PhanQuyenUser_buttonsearch"
+                                       onclick="PhanQuyenUser_AddUserRoleDetail(this)"
+                                       data-otf-action="@Url.Action("PhanQuyenUser_AddUserRoleDetail", "ManagePermission", null, Request.Url.Scheme)?u=@Request["id"]&r=">
+                                        <i class="fa fa-plus" title="Thêm quyền"></i> Thêm quyền
+                                    </a>
+                                </li>
+                                <li>
+                                    <a data-otf-btnsearch="#PhanQuyenUser_buttonsearch"
+                                       data-otf-list="#div_LoadDanhSach"
+                                       onclick="PhanQuyenUser_AddUserRoleDenied(this)"
+                                       data-otf-action="@Url.Action("PhanQuyenUser_AddUserRoleDenied", "ManagePermission", null, Request.Url.Scheme)?u=@Request["id"]&r="
+                                       title="Khóa">
+                                        <i class="fa fa-lock"></i> Hạn chế quyền người dùng
+                                    </a>
+                                </li>
+                                <li>
+                                    <a data-otf-list="#div_LoadDanhSach"
+                                       onclick="PhanQuyenUser_DeleteOneUserRoleDetail(this)"
+                                       data-otf-confirm="Hệ thống sẽ xóa trắng quyền thêm và cấm những dòng đã chọn!"
+                                       data-otf-btnsearch="#PhanQuyenUser_buttonsearch"
+                                       data-otf-action="@Url.Action("PhanQuyenUser_DeleteOneUserRoleDetail", "ManagePermission", null, Request.Url.Scheme)?u=@Request["id"]&r="
+                                       title="Xoá các quyền cá nhân và các quyền bị hạn chế">
+                                        <i class="fa fa-times"></i> Xóa
+                                    </a>
+                                </li>
+                                <li>
+                                    <a onclick="PhanQuyenUser_DeleteAllUserRoleDetail(this)"
+                                       data-otf-confirm="Hệ thống sẽ xóa tất cả quyền được cấp thêm của người dùng theo bộ lọc app, module"
+                                       data-otf-btnsearch="#PhanQuyenUser_buttonsearch"
+                                       data-otf-action="@Url.Action("PhanQuyenUser_DeleteAllUserRoleDetail", "ManagePermission", null, Request.Url.Scheme)?u=@Request["id"]&k="
+                                       data-otf-input="#PhanQuyenUser_input"
+                                       data-otf-app="#ddlapp"
+                                       data-otf-module="#ddlmodule"
+                                       title="Xóa toàn bộ">
+                                        <i class="fa fa-trash-o"></i> Xóa toàn bộ
+                                    </a>
+                                </li>
+                                <li>
+                                    <a data-otf-action="@Url.Action("PhanQuyenUser_SelectAllGroupRoles", "ManagePermission", null, Request.Url.Scheme)?u=@Request["id"]"
+                                       data-toggle="modal" onclick="PhanQuyenUser_SelectAllGroupRoles(this)"
+                                       data-target="#modalPopupChonNhomQuyen"
+                                       title="Áp dụng một nhóm quyền cho người dùng">
+                                        <i class="fa fa-users"></i> Chọn nhóm quyền
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+
+
+                        <a class=" btn btn btn-primary" href="@Url.Action("ManageAspNetUsers", "ManagePermission")">
+                            <i class="fa fa-reply"></i>Trở lại
+                        </a>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+        <div class="row">
+
+            <div class="col-lg-3 col-md-6">
+                <label class=" control-label" for="ddlapp">App</label>
+
+                @Html.DropDownList("App", new SelectList(ViewBag.ListApp, "ValueString", "Name"),
+                    new
+                    {
+                        @class = "form-control chosen-select",
+                        id = "ddlapp",
+                        data_otf_target = "#ddlmodule",
+                        data_otf_action = @Url.Action("PhanQuyenUserDropdownListChange", "ManagePermission"),
+                        onchange = "PhanQuyenUserLoadModule(this)"
+                    })
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <label class=" control-label" for="ddlmodule">Module</label>
+                @Html.DropDownList("Module", new SelectList(ViewBag.ListModule, "ValueString", "Name"),
+         new { @class = "form-control chosen-select", id = "ddlmodule" })
+
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <label class="control-label">&nbsp;</label>
+                <div class="input-group">
+                    <label class=" control-label" for="ddltrangthai">Quyền riêng</label>
+                    @Html.CheckBox("checkActived", false, new { id = "checkActived" })
+
+                    <label class=" control-label" for="ddltrangthai">Bị hạn chế</label>
+                    @Html.CheckBox("checkIsDenine", false, new { id = "checkIsDenine" })
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <label class="control-label">&nbsp;</label>
+                <div class=" ">
+
+                    <div class="input-group">
+
+                        <input placeholder="Thông tin cần tìm" id="PhanQuyenUser_input" class="form-control" onkeypress="return PhanQuyenUser_EnterEven(event, '#PhanQuyenUser_buttonsearch')" />
+                        <span class="input-group-btn">
+                            <input id="PhanQuyenUser_buttonsearch"
+                                   title="Tìm kiếm"
+                                   type="button"
+                                   value="Tìm kiếm"
+                                   data-otf-action="@Url.Action("PhanQuyenUser_SearchAllRole", "ManagePermission")?u=@Request["id"]&k="
+                                   data-otf-target="#div_LoadDanhSach"
+                                   data-otf-input="#PhanQuyenUser_input"
+                                   data-otf-app="#ddlapp"
+                                   data-otf-module="#ddlmodule"
+                                   data-otf-active="#checkActived"
+                                   data-otf-denine="#checkIsDenine"
+                                   class="btn btn-primary "
+                                   onclick="PhanQuyenUser_SearchClick(this)" />
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+        <div class="row">
+            <div id="div_LoadDanhSach">
+                @*Load danh sach o day*@
+
+            </div>
+        </div>
+
+    </div>
+
+
+
+
+
+</div>
+@section dialog {
+
+    <!-- PopupChonNhomQuyen UNIT MODAL -->
+    <div class="modal inmodal fade" id="modalPopupChonNhomQuyen" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog " id="modalPopupChonNhomQuyen_c">
+        </div>
+    </div>
+    <!-- PopupChonNhomQuyen UNIT END-->
+}
+
+@section Styles {
+    @Styles.Render("~/plugins/chosenStyles")
+
+}
+
+@section Scripts {
+    @Scripts.Render("~/plugins/chosen")
+    @Scripts.Render("~/module/ManagePermission/ManageAspNetUsers")
+
+}

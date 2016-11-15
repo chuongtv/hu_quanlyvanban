@@ -1,0 +1,259 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+		Microsoft ResX Schema
+
+		Version 1.3
+
+		The primary goals of this format is to allow a simple XML format 
+		that is mostly human readable. The generation and parsing of the 
+		various data types are done through the TypeConverter classes 
+		associated with the data types.
+
+		Example:
+
+		... ado.net/XML headers & schema ...
+		<resheader name="resmimetype">text/microsoft-resx</resheader>
+		<resheader name="version">1.3</resheader>
+		<resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+		<resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+		<data name="Name1">this is my long string</data>
+		<data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+		<data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+			[base64 mime encoded serialized .NET Framework object]
+		</data>
+		<data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+			[base64 mime encoded string representing a byte array form of the .NET Framework object]
+		</data>
+
+		There are any number of "resheader" rows that contain simple 
+		name/value pairs.
+
+		Each data row contains a name, and value. The row also contains a 
+		type or mimetype. Type corresponds to a .NET class that support 
+		text/value conversion through the TypeConverter architecture. 
+		Classes that don't support this are serialized and stored with the 
+		mimetype set.
+
+		The mimetype is used for serialized objects, and tells the 
+		ResXResourceReader how to depersist the object. This is currently not 
+		extensible. For a given mimetype the value must be set accordingly:
+
+		Note - application/x-microsoft.net.object.binary.base64 is the format 
+		that the ResXResourceWriter will generate, however the reader can 
+		read any of the formats listed below.
+
+		mimetype: application/x-microsoft.net.object.binary.base64
+		value   : The object must be serialized with 
+			: System.Serialization.Formatters.Binary.BinaryFormatter
+			: and then encoded with base64 encoding.
+
+		mimetype: application/x-microsoft.net.object.soap.base64
+		value   : The object must be serialized with 
+			: System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+			: and then encoded with base64 encoding.
+
+		mimetype: application/x-microsoft.net.object.bytearray.base64
+		value   : The object must be serialized into a byte array 
+			: using a System.ComponentModel.TypeConverter
+			: and then encoded with base64 encoding.
+	-->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>1.3</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="BUTTON_LayLaiMatKhau" xml:space="preserve">
+    <value>Lấy lại mất </value>
+  </data>
+  <data name="BUTTON_LogIn" xml:space="preserve">
+    <value>Đăng nhập112</value>
+  </data>
+  <data name="BUTTON_LogOut" xml:space="preserve">
+    <value>Đăng xuất124</value>
+  </data>
+  <data name="BUTTON_ThanhToan" xml:space="preserve">
+    <value>Thanh toán</value>
+  </data>
+  <data name="BUTTON_ThemVaoGioHang" xml:space="preserve">
+    <value>Thêm vào giỏ hàng</value>
+  </data>
+  <data name="BUTTON_TiepTucMuaHang" xml:space="preserve">
+    <value>Tiếp tục mua hàng</value>
+  </data>
+  <data name="BUTTON_XoaSanPham" xml:space="preserve">
+    <value>Xóa sản phẩm</value>
+  </data>
+  <data name="HTML_Logo_Footter" xml:space="preserve">
+    <value>&lt;p&gt;sdfsdf&lt;/p&gt;</value>
+  </data>
+  <data name="HTML_Logo_Header" xml:space="preserve">
+    <value>&lt;p&gt;&lt;a href="napopet.vn" data-cke-saved-href="napopet.vn"&gt;&lt;img src="/UserFiles/images/logo3.png" data-cke-saved-src="/UserFiles/images/logo3.png" style="width: 264px; height: 60px;" alt="logo cty"&gt;&lt;/a&gt;&lt;br&gt;&lt;/p&gt;</value>
+  </data>
+  <data name="INFO_DiaChiCty" xml:space="preserve">
+    <value>69 BÀ HUYỆN THANH QUAN, P6, QUẬN 3, HỒ CHÍ MINH</value>
+  </data>
+  <data name="INFO_DienThoai" xml:space="preserve">
+    <value>0935523169 - 0986899332</value>
+  </data>
+  <data name="INFO_EmailCty" xml:space="preserve">
+    <value>info@napopet.com</value>
+  </data>
+  <data name="INFO_HotLine" xml:space="preserve">
+    <value>Gọi ngay: 0986 899 332</value>
+  </data>
+  <data name="Title_BanCoTheQuanTam" xml:space="preserve">
+    <value>Bạn có thể quan tâm</value>
+  </data>
+  <data name="Title_BanDaQuyenMatKhau" xml:space="preserve">
+    <value>Bạn đã quyên mật khẩu</value>
+  </data>
+  <data name="Title_BanHayNhapEmailDeLaylai" xml:space="preserve">
+    <value>Bạn hãy nhập email để lấy lại mật khẩu</value>
+  </data>
+  <data name="Title_DangKyTaiKhoan" xml:space="preserve">
+    <value>Đăng ký tài khoản</value>
+  </data>
+  <data name="Title_DangLuoi" xml:space="preserve">
+    <value>Dạng lưới</value>
+  </data>
+  <data name="Title_DanhMucSanPham" xml:space="preserve">
+    <value>Danh mục sản phẩm</value>
+  </data>
+  <data name="Title_DanhSach" xml:space="preserve">
+    <value>Danh sách</value>
+  </data>
+  <data name="Title_DonViTinh" xml:space="preserve">
+    <value>Đơn vị tính</value>
+  </data>
+  <data name="Title_Email" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="Title_GiaTien" xml:space="preserve">
+    <value>Giá tiền</value>
+  </data>
+  <data name="Title_GioHang" xml:space="preserve">
+    <value>Giỏ hàng</value>
+  </data>
+  <data name="Title_GioHangBanCo" xml:space="preserve">
+    <value>Giỏ hàng bạn có</value>
+  </data>
+  <data name="Title_GioHang_ChuyenKhoan" xml:space="preserve">
+    <value>Chuyển khoản</value>
+  </data>
+  <data name="Title_GioHang_DatHang" xml:space="preserve">
+    <value>Đặt hàng</value>
+  </data>
+  <data name="Title_GioHang_DatHangThanhCong" xml:space="preserve">
+    <value>Đặt hàng thành công</value>
+  </data>
+  <data name="Title_GioHang_DiaChiGiaoHang" xml:space="preserve">
+    <value>Địa chỉ giao hàng</value>
+  </data>
+  <data name="Title_GioHang_Email" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="Title_GioHang_GhiChu" xml:space="preserve">
+    <value>Ghi chú</value>
+  </data>
+  <data name="Title_GioHang_GiaTriDonHang" xml:space="preserve">
+    <value>Giá trị đơn hàng</value>
+  </data>
+  <data name="Title_GioHang_HinhThucThanhToan" xml:space="preserve">
+    <value>Hình thức thanh toán</value>
+  </data>
+  <data name="Title_GioHang_HoanTat" xml:space="preserve">
+    <value>Hoàn tất</value>
+  </data>
+  <data name="Title_GioHang_NgayGiao" xml:space="preserve">
+    <value>Ngày giao</value>
+  </data>
+  <data name="Title_GioHang_NguoiNhan" xml:space="preserve">
+    <value>Người nhận</value>
+  </data>
+  <data name="Title_GioHang_NhanTienKhiGiao" xml:space="preserve">
+    <value>Nhận tiền khi giao</value>
+  </data>
+  <data name="Title_GioHang_SoDienThoai" xml:space="preserve">
+    <value>Số điện thoại giao</value>
+  </data>
+  <data name="Title_GioHang_VeTrangChu" xml:space="preserve">
+    <value>Về trang chủ</value>
+  </data>
+  <data name="Title_HinhAnh" xml:space="preserve">
+    <value>Hình ảnh</value>
+  </data>
+  <data name="Title_HoDem" xml:space="preserve">
+    <value>Họ đệm</value>
+  </data>
+  <data name="Title_HomeDefault" xml:space="preserve">
+    <value>NAPO 'S PET SHOP</value>
+  </data>
+  <data name="Title_HoTen" xml:space="preserve">
+    <value>Họ tên</value>
+  </data>
+  <data name="Title_KhongCoSanPhamNao" xml:space="preserve">
+    <value>Không có sản phẩm nào</value>
+  </data>
+  <data name="Title_LienLac" xml:space="preserve">
+    <value>Liên lạc</value>
+  </data>
+  <data name="Title_MaHangTrongGio" xml:space="preserve">
+    <value>Mặt hàng trong giỏ</value>
+  </data>
+  <data name="Title_MaSanPham" xml:space="preserve">
+    <value>Mã sản phẩm</value>
+  </data>
+  <data name="Title_MatKhau" xml:space="preserve">
+    <value>Mật khẩu</value>
+  </data>
+  <data name="Title_Mau" xml:space="preserve">
+    <value>Màu</value>
+  </data>
+  <data name="Title_NgaySinh" xml:space="preserve">
+    <value>Ngày sinh</value>
+  </data>
+  <data name="Title_NhapLaiMatKhau" xml:space="preserve">
+    <value>Nhập lại mật khẩu</value>
+  </data>
+  <data name="Title_NhapTuKhoaTimKiem" xml:space="preserve">
+    <value>Nhập từ khóa tìm kiếm</value>
+  </data>
+  <data name="Title_SanPham" xml:space="preserve">
+    <value>Sản phẩm</value>
+  </data>
+</root>

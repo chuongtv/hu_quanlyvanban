@@ -1,0 +1,53 @@
+﻿<div class="masterpage-table">
+    <table>
+        <thead>
+            <tr>
+                <th class="width40 text-align-center" ng-if="gridOptions.showCheckall == true">
+                    <input type="checkbox" ng-click="selectAll()" ng-checked="checkIsSelectAll()" id="{{gridOptions.id + '_SelectAll'}}" />
+                </th>
+                <th class="width40 text-align-center">#</th>
+
+                <th ng-repeat="col in gridOptions.columnDefs" class="{{col.headerclass}}" translate="{{col.display}}">{{col.display}}</th>
+
+                <th class="width40 text-align-center" ng-if="gridOptions.showEdit == true"></th>
+                <th class="width40 text-align-center" ng-if="gridOptions.showDelete == true"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="row in gridOptions.data" ng-click="setClickedRow($index)">
+
+
+                <td class="width40 text-align-center" ng-if="gridOptions.showCheckall == true">
+                    <input type="checkbox" id="{{gridOptions.id + '_' + $index }} " ng-checked="checkboxevent(row)" />
+                </td>
+                <td class="text-align-center">{{$index + 1}} </td>
+
+                <td ng-repeat="(colindex,col) in gridOptions.columnDefs" class="{{gridOptions.columnDefs[colindex].detailclass}} paddingleft padingright">{{col.formatnumber != '' ? (row[col.field] | number : col.formatnumber) : col.formatdatetime != '' ? (row[col.field] | date : col.formatdatetime) : row[col.field] }}
+                </td>
+
+                <td class="width40 text-align-center " ng-if="gridOptions.showEdit == true">
+                    <div class="boxbtngrid">
+                        <img src="../../../../assets/img/edit-icon.png" ng-click="buttonevent('Edit',row)">
+                    </div>
+                </td>
+
+                <td class="width40 text-align-center" ng-if="gridOptions.showDelete == true">
+                    <div class="boxbtngrid">
+                        <img src="../../../../assets/img/Trash-icon.png" style="width: 16px; height: 16px;" ng-click="buttonevent('Del',row)">
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+        <tfoot ng-if="gridOptions.showpaging == true">
+            <tr>
+                <td colspan="{{gridOptions.columnDefs.length + 4}}">
+                    <div style="height: 45px; margin-top: 5px;">
+                        <custom-paging options="pagingOptions"></custom-paging>
+                    </div>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+
+

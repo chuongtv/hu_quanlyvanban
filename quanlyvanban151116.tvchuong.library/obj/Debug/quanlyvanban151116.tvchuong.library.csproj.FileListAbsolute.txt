@@ -1,0 +1,10 @@
+C:\Users\CTV0010291\Documents\GitHub\hu_quanlyvanban\quanlyvanban151116.tvchuong.library\bin\Debug\quanlyvanban151116.tvchuong.library.dll.config
+C:\Users\CTV0010291\Documents\GitHub\hu_quanlyvanban\quanlyvanban151116.tvchuong.library\bin\Debug\quanlyvanban151116.tvchuong.library.dll
+C:\Users\CTV0010291\Documents\GitHub\hu_quanlyvanban\quanlyvanban151116.tvchuong.library\bin\Debug\quanlyvanban151116.tvchuong.library.pdb
+C:\Users\CTV0010291\Documents\GitHub\hu_quanlyvanban\quanlyvanban151116.tvchuong.library\bin\Debug\EntityFramework.dll
+C:\Users\CTV0010291\Documents\GitHub\hu_quanlyvanban\quanlyvanban151116.tvchuong.library\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\CTV0010291\Documents\GitHub\hu_quanlyvanban\quanlyvanban151116.tvchuong.library\bin\Debug\EntityFramework.xml
+C:\Users\CTV0010291\Documents\GitHub\hu_quanlyvanban\quanlyvanban151116.tvchuong.library\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\CTV0010291\Documents\GitHub\hu_quanlyvanban\quanlyvanban151116.tvchuong.library\obj\Debug\quanlyvanban151116.tvchuong.library.csprojResolveAssemblyReference.cache
+C:\Users\CTV0010291\Documents\GitHub\hu_quanlyvanban\quanlyvanban151116.tvchuong.library\obj\Debug\quanlyvanban151116.tvchuong.library.dll
+C:\Users\CTV0010291\Documents\GitHub\hu_quanlyvanban\quanlyvanban151116.tvchuong.library\obj\Debug\quanlyvanban151116.tvchuong.library.pdb

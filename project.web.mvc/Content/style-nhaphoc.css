@@ -1,0 +1,222 @@
+body{
+    padding-top: 0;
+    background-color:#fff;
+}
+header{
+    padding: 1% 0;
+    border-bottom: 2px solid #0063cb;
+}
+.row{
+    margin: 0;
+}
+.footer{
+    background-color: #1f76d3;
+    padding: 1% 0;
+    color: #fff;
+}
+.footer a{
+    color: #fff;
+}
+.footer .box-footer-2 {
+    border-left: 1px dotted #fff;
+    border-right: 1px dotted #fff;
+
+}
+.textinput {
+    margin-bottom: 2%;
+}
+.block{
+    margin: 3% 0;
+}
+.blockContent{
+    padding: 0;
+}
+.blockContent .content{
+    padding-bottom: 4%;
+}
+.blockContent label{
+    margin-bottom: 0;
+    /*background-color: #edeef0;*/
+    
+}
+.syllView{
+    /*border: 1px solid #c9c9c9;*/
+    /*padding: 4% 5% 3%;*/
+    width: 100%;
+    display: inline-block;
+}
+.syllView .label {
+    background-color: #edeef0;
+    border: 1px solid #d2d3d6;
+    border-radius: 1px;
+    color: #333;
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 1;
+    padding: 7px 5px;
+    text-align: center;
+}
+.syllView .titleChid {
+    margin-bottom: 2%;
+}
+.syllViewEdit{
+    padding: 5%;
+}
+.syllView .titlesyll{
+    color: red;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 28px;
+    padding: 3% 0 0 0;
+}
+.syllView .header-form{
+    margin: 0 0 4% 0;
+}
+.blockBanner{
+    width: 100%;
+    margin: 0 0 0 0;
+    text-align: center;
+}
+.blockTitle{
+    width: 100%;
+    margin: 0;
+    text-align: center;
+}
+.blockBanner img,.blockTitle img{
+    display: inline;
+}
+.content{
+    width: 1000px;
+    margin: 0px auto;
+}
+.nopadding{
+    padding: 0;
+}
+.logan{
+    font-size: 20px;
+    color: #fe0001;
+    padding: 5% 0 0;
+}
+.blockBegin{
+    background: #fff url("/Resources/img/nhaphoc/back_batdau.png") no-repeat scroll center 0;
+    background-size: 100% auto;
+    padding: 36% 0 9%;
+}
+.blockClose{
+    background: #fff url("/Resources/img/nhaphoc/back_buoc3.png") no-repeat scroll center 0;
+    background-size: 100% auto;
+    padding: 24% 0 17%;
+}
+.blockLogin{
+    background: #fff url("/Resources/img/nhaphoc/back_login.jpg") no-repeat scroll center 0;
+    background-size: 100% auto;
+    padding: 10% 0 20%;
+}
+.loginnhaphoc .lable{
+    font-size: 120%;
+    color: #000;
+    text-transform:uppercase;
+}
+.note{
+     font-style: italic;
+    margin: 2% 0 0 0;
+}
+.loginnhaphoc input{
+    border: 0;
+    background-color: transparent;
+    padding: 5px 0;
+    border-bottom: 1px solid #000;
+    margin: 0 0 5%;
+}
+.form-control::-moz-placeholder{
+    color: #575757;
+    font-style: italic;
+}
+.blockLogin .title{
+    font-size: 180%;
+    color: red;
+    text-align: center;
+    margin: 0 0 3% 0;
+    font-weight: bold;
+}
+.icon_fb_small {
+    background: #fff url("http://hutech.edu.vn/images/icon-hutech.jpg") no-repeat scroll left -112px;
+    border-radius: 3px;
+    height: 16px;
+    width: 16px;
+}
+.icon_yt_small {
+    background: #fff url("http://hutech.edu.vn/images/icon-hutech.jpg") no-repeat scroll -22px -112px;
+    border-radius: 3px;
+    height: 16px;
+    width: 16px;
+}
+.icon_gg_small {
+    background: #fff url("http://hutech.edu.vn/images/icon-hutech.jpg") no-repeat scroll -43px -112px;
+    border-radius: 3px;
+    height: 16px;
+    width: 16px;
+}
+.validate-inputgroup > .input-group-addon:after {
+    content: " (*)";
+    color: red;
+}
+.lable:after{
+    content: ":";
+}
+.text-danger{
+    color: red;
+}
+.text-primary:hover,
+.text-warning:hover,
+.text-danger:hover,
+.text-success:hover,
+.text-info:hover {
+    color: red;
+}
+.blockCenter{
+    margin: 0px auto; 
+    display: table;
+}
+.w-70{
+    width: 70px;
+}
+.w-110{
+    width: 110px;
+}
+@media (max-width: 1000px) {
+   .content{
+     width: 100% !important;
+} 
+}
+@media (max-width: 775px) {
+    .container {
+        padding: 0 10px;
+    }
+    .login{
+        padding: 0 !important;
+    }
+   #logo{
+     text-align: center;
+       width: 100%;
+    } 
+    #logo2{
+         display:none;
+    } 
+    .footer {
+        padding: 10px 0;
+        margin: 3% 0 0 0;
+    }
+    .footer .box-footer-2 {
+        border-left: 0px;
+        border-right: 0px;
+    }
+    .box-footer-3{
+        text-align: left;
+        display: none;
+    }
+    .blockLogin {
+    background: #f7f622 none no-repeat scroll center 0 / 100% auto;
+    padding: 10% 0 20%;
+    }
+}

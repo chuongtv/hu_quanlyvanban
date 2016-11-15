@@ -1,0 +1,41 @@
+﻿@*
+    Author:   			ntdai
+    Created: 			2015-11-27
+    Last Modified: 		2015-11-27
+*@
+
+
+@{
+    ViewBag.Title = "Thêm mới";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div id="page-heading">
+    <ol class="breadcrumb">
+        <li>
+            <a href="@Url.Action("Index", "Home")">
+                <i class="fa fa-lg fa-home text-warning text-size-20">
+                </i> Trang chủ
+            </a>
+        </li>
+        <li class="active">
+            Tạo mới SettingData
+        </li>
+    </ol>
+</div>
+
+@*content*@
+<div class="container" id="CPQLSettingData">
+        @Html.Partial("~/Views/Config/QLSettingData/_PartialCreate.cshtml")
+</div>
+
+@section Styles {
+}
+
+@section Scripts {
+    @Scripts.Render("~/module/Config/QLSettingData")
+    <script src="~/Content/plugins/ckeditor/ckeditor.js"></script>
+}
+
+
+

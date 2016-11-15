@@ -1,0 +1,129 @@
+﻿<div class="modal-content">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" ng-click="fnCancel()">&times;</button>        
+        <h4 class="modal-title" translate="BRANCH_DETAIL_TITLE">Chi tiết chi nhánh</h4>
+    </div>
+
+    <form id="form" name="form" novalidate>
+
+        <div class="modal-body">
+
+            <table class="masterpage-input-form">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-show="submitted && form.$invalid">
+                        <td></td>
+                        <td>
+                            <ul class="masterpage-validation text-success text-danger">
+                                <li ng-if="submitted && form.code.$error.required">
+                                    <i class="fa fa-times text-danger"></i> <span translate="BRANCH_CODE_INVALID"> Mã chi nhánh không được bỏ trống</span>
+                                </li>
+                                <li ng-if="submitted && form.name.$error.required">
+                                    <i class="fa fa-times text-danger"></i> <span translate="BRANCH_NAME_INVALID"> Tên chi nhánh không được bỏ trống</span>
+                                </li>
+                                <li ng-show="success==true" class="text-success" >{{messageupdate}}</li>
+                                <li ng-show="success==true" class="text-danger" >{{messageupdate}}</li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="hidden" id="ID" value="{{detail.ID}}" />
+
+                            <label for="code" class="required" translate="BRANCH_LABEL_CODE">Mã chi nhánh</label>
+                        </td>
+                        <td>
+                            <input id="code" name="code"
+                                   ng-model="detail.Code" type="text" class="form-control" style="width: 92%; display: inline;" 
+                                   placeholder="Code" 
+                                   autocomplete="off" ng-required="true" 
+                                   ng-disabled="disablecode"
+                                   ng-class="{'input-has-error': submitted && form.code.$error.required}"
+                                   >
+                            <i class="fa fa-check text-success" ng-show="(form.code.$dirty && form.code.$valid)  "></i>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="name" class="required" translate="BRANCH_LABEL_NAME">Tên chi nhánh</label>
+                        </td>
+                        <td>
+                            <input id="name" name="name" ng-model="detail.Name" type="text" class="form-control" 
+                                   style="width: 92%; display: inline" placeholder="name" 
+                                   autocomplete="off" ng-required="true"
+                                   ng-class="{'input-has-error': submitted && form.name.$error.required}"
+                                >
+                            <i class="fa fa-check text-success" ng-show="form.name.$dirty && form.name.$valid"></i>
+                        </td>
+                    </tr>
+                    <tr>
+                         <td>
+                            <label for="address" class="required" translate="BRANCH_LABEL_PHONE">Phone</label>
+                        </td>
+                        <td>
+                            <input id="phone" name="phone" type="text" ng-model="detail.PhoneNo" placeholder="{{ 'BRANCH_LABEL_PHONE' | translate }}" class="form-control" style="width: 92%; display: inline" autocomplete="off" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="address" class="required" translate="BRANCH_LABEL_FAX">Fax</label>
+                        </td>
+                        <td>
+                            <input id="fax" name="fax" type="text" ng-model="detail.FaxNo" placeholder="{{ 'BRANCH_LABEL_FAX' | translate }}" class="form-control" style="width: 92%; display: inline" autocomplete="off" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="address" class="required" translate="BRANCH_LABEL_TAX">Tax</label>
+                        </td>
+                        <td>
+                            <input id="tax" name="tax" type="text" ng-model="detail.TaxCode" placeholder="{{ 'BRANCH_LABEL_TAX' | translate }}" class="form-control" style="width: 92%; display: inline" autocomplete="off" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="address" class="required" translate="BRANCH_LABEL_WEBSITE">Website</label>
+                        </td>
+                        <td>
+                            <input id="website" name="website" type="text" ng-model="detail.WebSite" placeholder="{{ 'BRANCH_LABEL_WEBSITE' | translate }}" class="form-control" style="width: 92%; display: inline" autocomplete="off" />
+                        </td>
+                    </tr>
+                     <tr>
+                        <td>
+                            <label for="address" class="required" translate="BRANCH_LABEL_ADDRESS">Địa chỉ</label>
+                        </td>
+                        <td>
+                            <textarea name="address" rows="3" ng-model="detail.Address" type="" class="form-control" style="width: 92%; display: inline" placeholder="{{ 'BRANCH_LABEL_ADDRESS' | translate }}" ng-maxlength="200" maxlength="200" autocomplete="off" ></textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                         <td>
+                            <label for="address" class="required" translate="BRANCH_LABEL_EMAIL">Email</label>
+                        </td>
+                        <td>
+                            <input id="email" name="email" type="text" ng-model="detail.Email" placeholder="{{ 'BRANCH_LABEL_EMAIL' | translate }}" class="form-control" style="width: 92%; display: inline" autocomplete="off" />
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div style="clear: both"></div>
+        </div>
+
+        <div class="modal-footer">   
+            <button type="button" ng-click="fnSave(1)" class="btn btn-default" translate="CMN_BTN_SAVE_AND_NEW">Lưu & Thêm </button>
+            <button type="button" ng-click="fnSave(0)" class="btn btn-primary" ng-disabled="disablebtnsave" translate="CMN_BTN_SAVE_AND_CLOSE">Lưu & Đóng</button>
+            <button type="button" ng-click="fnAddnew(1)" class="btn btn-default" ng-disabled="disablebtnnew" translate="CMN_BTN_ADD_COPY">Sao chép</button>  
+            <button type="button" ng-click="reset()" class="btn btn-default" translate="CMN_BTN_RESET" >Làm mới</button>            
+            
+        </div>
+    </form>
+
+
+</div>

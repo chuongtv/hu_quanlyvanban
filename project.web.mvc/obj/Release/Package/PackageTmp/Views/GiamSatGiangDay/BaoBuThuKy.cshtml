@@ -1,0 +1,298 @@
+﻿@{
+    ViewBag.Title = "Báo bù";
+    Layout = "~/Views/Shared/_LayoutAngular.cshtml";
+}
+
+<div id="page-heading">
+    <ol class="breadcrumb">
+        <li>
+            <a href="@Url.Action("Index", "Home")">
+                <i class="fa fa-lg fa-home text-warning text-size-20">
+                </i> Trang chủ
+            </a>
+        </li>
+        <li class="active">
+            <a href="@Url.Action("QuanLyDanhSachNghiBu", "GiamSatGiangDay")">
+                Quản lý phiếu báo
+            </a>
+        </li>
+        <li class="active">
+            Báo bù
+        </li>
+    </ol>
+</div>
+
+<div class="container" ng-controller="BaoBuThuKyCtrl">
+    <div ng-show="ThongTinPhieuView.length == 0">
+        <div class="col-sm-12 form-group">
+            <b>Tìm giảng viên:</b>
+            <br />
+            <input type="text" id="hidden_giangvienguid" ng-model="NhanVienGuid" style="display:none;" />
+            <input type="text" class="col-sm-3" id="text_GiangVienID" placeholder="Tìm và chọn giảng viên cần báo bù" />
+        </div>
+        <hr />
+
+        <div class="col-sm-12 form-group">
+            <div ng-show="NhanVienGuid.length > 0">
+                <b>Giảng viên</b>:
+                <span id="lblName"></span>
+            </div>
+            <div id="lblName" ng-show="NhanVienGuid.length == 0">
+                Xin vui lòng nhập Họ tên Giảng viên
+            </div>
+        </div>
+        <div class="col-sm-12 form-group">
+            <b>Lý do báo bù</b>:
+        </div>
+        <div class="col-sm-12 form-group">
+            <textarea ng-model="LyDo" style="width:100%;border:1px solid #ccc;" rows="2"></textarea>
+        </div>
+
+    </div>
+    <div ng-show="idParameter != ''">
+        <div class="col-sm-12 form-group">
+            <b>Giảng viên</b>: {{ThongTinPhieuView.HoTen}} - {{ThongTinPhieuView.NhanVienID}} - {{ThongTinPhieuView.DonViName}}
+        </div>
+        <div class="col-sm-12 form-group">
+            <b>Lý do báo bù</b>:<span ng-show="TrangThai == 1">{{LyDo}}</span>
+        </div>
+        <div class="col-sm-12 form-group" ng-show="TrangThai == 0">
+            <textarea ng-model="LyDo" style="width:100%;border:1px solid #ccc;" rows="2"></textarea>
+        </div>
+
+    </div>
+
+    <div class="col-sm-12">
+        <div class="col-sm-6 nopadding"><b>Danh sách các lớp bù</b></div>
+        <div class="col-sm-6 text-right nopadding">
+            <button id="btnThemBuoiNghi"
+                    type="button"
+                    title="Thêm buổi nghỉ"
+                    class="btn btn-primary"
+                    onclick="openNav()"
+                    ng-click="loadListMon()"
+                    @*ng-show="(NhanVienGuid.length > 0 || idParameter != '') && TrangThai == 0"*@
+                    ng-show="TrangThai == 0"
+                    ng-disabled="NhanVienGuid.length == 0 ">
+                Chọn lớp bù
+            </button>
+        </div>
+
+    </div>
+    <div ng-show="listAdd.length > 0">
+        <div class="col-sm-12 form-group">
+
+            <table cellpadding="0" cellspacing="0" border="0" class="table table-bordered datatables">
+                <thead>
+                    <tr>
+                        <th class="w-30 back_td_phieubao">#</th>
+                        <th width="250px" class="back_td_phieubao">Lớp</th>
+                        <th class="w-150 back_td_phieubao">Môn học</th>
+                        <th class="w-100 back_td_phieubao">Nhóm LT</th>
+                        <th class="w-100 back_td_phieubao">Nhóm TH</th>
+                        <th class="w-50 back_td_phieubao">Sỉ số</th>
+                        <th class="w-50 back_td_phieubao">Thứ</th>
+                        <th class="w-50 back_td_phieubao">Số tiết</th>
+                        <th width="250px">Ngày bù</th>
+                        <th class="w-100">Tiết bắt đầu</th>
+                        <th class="w-100" ng-show="TrangThai > 0">Phòng bù</th>
+                        <th class="w-30" ng-show="TrangThai == 0">Xóa</th>
+                    </tr>
+                </thead>
+
+                <tbody ng-repeat="item in listAdd" ng-init="GiaTriNgayThang=checkChonNgay(item.NgayBu)">
+
+                    <tr>
+                        <td class="back_td_phieubao">[{{$index + 1}}]</td>
+                        <td class="back_td_phieubao">{{item.LopThucTeGhep}}</td>
+                        <td class="back_td_phieubao">{{item.MonHocName}}</td>
+                        <td class="back_td_phieubao">{{item.NhomHoc}}</td>
+                        <td class="back_td_phieubao">{{item.NhomThucHanh}}</td>
+                        <td class="back_td_phieubao">{{item.SiSoLopHoc}}</td>
+                        <td class="back_td_phieubao">{{item.Thu}}</td>
+                        <td class="back_td_phieubao">{{item.SoTiet}}</td>
+                        <td ng-show="TrangThai == 0">
+                            <md-datepicker name="GiaTriNgayThangBu" md-min-date="minDate" md-max-date="maxDate" ng-model="GiaTriNgayThang" ng-change="chonNgayBu(item.LopHocGuid,GiaTriNgayThang)" md-placeholder="Enter date" required></md-datepicker>
+                        </td>
+                        <td ng-show="TrangThai > 0">
+                            {{item.NgayBu |  date :  "dd/MM/yyyy"}}
+                        </td>
+                        <td ng-show="TrangThai == 0">
+                            <select class="form-control"
+                                    ng-model="TietBatDau"
+                                    ng-options="itemValue.value as itemValue.name for itemValue in listTiet"
+                                    ng-init="TietBatDau=checkChonTietBatDau(item.TietBatDau)"
+                                    ng-change="chonTietBatDau(item.LopHocGuid,TietBatDau)"></select>
+                        </td>
+                        <td ng-show="TrangThai > 0">
+                            {{item.TietBatDau}}
+                        </td>
+                        <td ng-show="TrangThai > 0">
+                            {{item.PhongID}}
+                        </td>
+                        <td class="text-center" ng-show="TrangThai == 0">
+                            <a ng-click="deleteBuoi(item.LopHocGuid)">
+                                <i class="fa fa-lg fa-trash-o text-danger"></i>
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+    <div class="col-sm-12 " ng-show="listAdd.length == 0" style="margin:5px 0 0 0;">
+
+        <div class="alert alert-dismissable alert-info">
+            <strong>Không có dữ liệu</strong>
+        </div>
+    </div>
+    <div class="col-sm-12 text-center">
+
+        <button id="btnLuuPhieu"
+                type="button"
+                title="Gửi yêu cầu bù"
+                class="btn btn-success"
+                data-otf-id="@ViewBag.UserGuid"
+                ng-click="savePhieu()"
+                ng-show="listAdd.length > 0 && TrangThai == 0"
+                ng-disabled="checkOpen == 1"
+                >
+            Gửi yêu cầu bù
+        </button>
+        <button id="btnXoaPhieu"
+                type="button"
+                title="Xóa phiếu"
+                class="btn btn-danger"
+                ng-click="deletePhieu(ThongTinPhieuView.PhieuBaoGuid)"
+                ng-show="TrangThai == 0 && idParameter != ''"
+                confirm-click="Bạn có chắc chắn xóa phiếu này?">
+            Xóa phiếu
+        </button>
+        <button id="btnQuayLai"
+                type="button"
+                title="Quay lại"
+                class="btn btn-default"
+                ng-click="BackPage()"
+                ng-show="idParameter == ''">
+            Hủy và quay lại
+        </button>
+        <button id="btnQuayLai"
+                type="button"
+                title="Quay lại"
+                class="btn btn-default"
+                ng-click="BackPage()"
+                ng-show="idParameter != ''">
+            Quay lại
+        </button>
+        
+    </div>
+    <div class="col-sm-12">
+        <div id="mySidenav" class="sidenav">
+
+            <div class="row col-sm-12 form-group">
+                <h4>Chọn lớp bù</h4>
+            </div>
+            <div class="row form-group">
+                <div class="col-sm-8">
+                    <div class="col-sm-5">
+                        <select class="form-control"
+                                ng-model="NamID"
+                                ng-options="itemValue.NamHocID as itemValue.NamHocName for itemValue in listNamHoc"
+                                ng-init="NamID=checkChonNamHoc(NamID)"
+                                ng-change="loadListMon()"></select>
+
+                    </div>
+                    <div class="col-sm-7">
+                        <input style="width:100%" ng-model="SearchMaMon" class="form-control" placeholder="Tìm theo lớp học" />
+                    </div>
+                   
+                    
+
+
+                </div>
+                <div class="col-sm-4 text-right">
+                    <button id="btnThoat"
+                            type="button"
+                            title="Thoát"
+                            class="btn btn-default"
+                            onclick="closeNav()"
+                            ng-click="closeAddBuoi()">
+                        Thoát
+                    </button>
+                </div>
+
+
+            </div>
+            <div class="row col-sm-12 form-group" ng-show="listShow.length > 0">
+                <table cellpadding="0" cellspacing="0" border="0" class="table table-bordered datatables">
+                    <thead>
+                        <tr>
+                            <th>Lớp</th>
+                            <th>Môn học</th>
+                            <th>LT</th>
+                            <th>TH</th>
+                            <th>Sỉ số</th>
+                            <th>Thứ</th>
+                            <th>Số tiết</th>
+                            <th>TBĐ</th>                            
+                            <th class="text-center">Chọn</th>
+                        </tr>
+                    </thead>
+
+                    <tbody ng-repeat="item in listShow  | filter:SearchMaMon">
+                        <tr>
+                            <td>{{item.LopThucTeGhep}}</td>
+                            <td>{{item.MonHocName}}</td>
+                            <td>{{item.NhomHoc}}</td>
+                            <td>{{item.NhomThucHanh}}</td>
+                            <td>{{item.SiSoLopHoc}}</td>
+                            <td>{{item.Thu}}</td>
+                            <td>{{item.SoTiet}}</td>
+                            <td>{{item.TietBatDau}}</td>                            
+                            <td class="text-center">
+                                <input type="checkbox" ng-click="addBuoi(item.LopHocGuid)" ng-checked="VailCheckBox(item.LopHocGuid)" />
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-sm-12" ng-show="listShow.length == 0">
+                <br />
+                <div class="text-center">
+                    <b>Năm học {{NamID}}-{{(NamID * 1) + (1 * 1)}} Không có dữ liệu</b>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+@section dialog {
+}
+
+@section Styles {
+<link href="~/Content/plugins/EasyAutocomplete/easy-autocomplete.css" rel="stylesheet" />
+}
+
+
+@section Scripts {
+<script src="~/Content/plugins/EasyAutocomplete/jquery.easy-autocomplete.js"></script>
+<script src="~/angularApp/app/GiamSatHoatDongGiangDay/BaoBu/BaoBuThuKyCtrl.js"></script>
+<script type="text/javascript">
+    function openNav() {
+        document.getElementById("mySidenav").style.width = "68%";
+        document.getElementById("mySidenav").style.border = "1px solid #ccc";
+        document.getElementById("mySidenav").style.paddingLeft = "2%";
+        document.getElementById("mySidenav").style.paddingRight = "2%";
+    }
+
+    function closeNav() {
+        document.getElementById("mySidenav").style.width = "0";
+        document.getElementById("mySidenav").style.border = "0px";
+        document.getElementById("mySidenav").style.paddingLeft = "0";
+        document.getElementById("mySidenav").style.paddingRight = "0";
+    }
+</script>
+}

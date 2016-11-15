@@ -1,0 +1,162 @@
+﻿@*
+    Author:   			pdgiai
+    Created: 			2016-1-4
+    Last Modified: 		2016-1-4
+*@
+@model nvngoc31122015.giamsatgiangday.library.GiamSatGiangDay.ThongTinLopHocView
+
+<div class="modal-content">
+    <div class="modal-header">
+        <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+        <h4 class="modal-title">Thông tin lớp học</h4>
+    </div>
+    <div class="modal-body">
+
+        <div class="form-horizontal">
+           <div class="col-sm-2 text-center">
+               <img height="100" width="75" src="/Data/HRM/@Model.NhanVienGuid/@Model.HinhAnhCaNhan_Link?nocat=@Guid.NewGuid().ToString()" />
+           </div>
+            <div class="col-sm-10">
+                <div class="form-group ">
+                    <div class="col-sm-12">
+                        <label class="control-label">@Html.DisplayNameFor(model => Model.NhanVienID): @Html.DisplayFor(model => Model.NhanVienID) </label>
+                    </div>
+                </div>
+                <div class="form-group ">
+                    <div class="col-sm-12">
+                        <label class="control-label">@Html.DisplayNameFor(model => Model.NhanVienFullName):  @Html.DisplayFor(model => Model.NhanVienFullName)</label>
+                    </div>
+                </div>
+                <div class="form-group ">
+                    <div class="col-sm-12">
+                        <label class="control-label">@Html.DisplayNameFor(model => Model.DonViName):   @Html.DisplayFor(model => Model.DonViName)</label>
+                    </div>
+                </div>
+                <div class="form-group ">
+                    <div class="col-sm-12">
+                        <label class="control-label">@Html.DisplayNameFor(model => Model.SoDienThoaiDiDong): @Html.DisplayFor(model => Model.SoDienThoaiDiDong)</label>
+                    </div>
+                </div>
+            </div>
+             
+          <h4><u>Thống tin lớp dạy</u></h4>
+            <div class="form-group ">
+                <div class="col-sm-6">
+                    <label class="control-label">@Html.DisplayNameFor(model => Model.NamHocName):  @Html.DisplayFor(model => Model.NamHocName)</label>
+                </div>
+         
+                <div class="col-sm-6">
+                    <label class="control-label">@Html.DisplayNameFor(model => Model.HocKyID):  @Html.DisplayFor(model => Model.NamHocName)</label>
+                </div>
+            </div>
+           
+            <div class="form-group ">
+                <div class="col-sm-6">
+                    <label class="control-label"> @Html.DisplayNameFor(model => Model.LoaiHinhGiangDay): @Html.DisplayFor(model => Model.LoaiHinhGiangDay)</label>
+                </div>
+                <div class="col-sm-6">
+                    <label class="control-label"> @Html.DisplayNameFor(model => Model.LopThucTeGhep): @Html.DisplayFor(model => Model.LopThucTeGhep)</label>
+                </div>
+            </div>
+
+            <div class="form-group ">
+                <div class="col-sm-6">
+                    <label class="control-label"> @Html.DisplayNameFor(model => Model.MonHocName): @Html.DisplayFor(model => Model.MonHocName)</label>
+                </div>
+      
+                <div class="col-sm-6">
+                    <label class="control-label">@Html.DisplayNameFor(model => Model.MonHocID):  @Html.DisplayFor(model => Model.MonHocID)</label>
+                </div>
+            </div>
+            <div class="form-group ">
+                <div class="col-sm-6">
+                    <label class="control-label">@Html.DisplayNameFor(model => Model.NhomHoc):  @Html.DisplayFor(model => Model.NhomHoc)</label>
+                </div>
+               
+                <div class="col-sm-6">
+                    <label class="control-label">@Html.DisplayNameFor(model => Model.NhomThucHanh):   @Html.DisplayFor(model => Model.NhomThucHanh)</label>
+                </div>
+            </div>
+            <div class="form-group ">
+                <div class="col-sm-6">
+                    <label class="control-label"> @Html.DisplayNameFor(model => Model.SiSoLopHoc):  @Html.DisplayFor(model => Model.SiSoLopHoc)</label>
+                </div>
+                <div class="col-sm-6">
+                    @{ string mondb = "<i class='fa fa-times' aria-hidden='true'></i>";
+                        if (Model.MonHocDocHai != null)
+                        {
+                            if (Model.MonHocDocHai.Value)
+                            {
+                                mondb = "<i class='fa fa-chevron-down' aria-hidden='true'></i>";
+                            }
+                        }
+                    }
+                    <label class="control-label">@Html.DisplayNameFor(model => Model.MonHocDocHai): @Html.Raw(mondb)</label>
+                </div>
+            </div>
+
+            <div class="form-group ">
+                <div class="col-sm-12">
+                    <label class="control-label">@Html.DisplayNameFor(model => Model.LoaiGiangDayDacBiet): @Html.DisplayFor(model => Model.LoaiGiangDayDacBiet)</label>
+                </div>
+            </div>
+            <div class="form-group ">
+                <div class="col-sm-12">
+                    @{ string thu = "";
+                        switch (Model.Thu)
+                        {
+                            case 2:
+                                thu = "Thứ 2";break;
+                            case 3:
+                                thu = "Thứ 3"; break;
+                            case 4:
+                                thu = "Thứ 4"; break;
+                            case 5:
+                                thu = "Thứ 5"; break;
+                            case 6:
+                                thu = "Thứ 6"; break;
+                            case 7:
+                                thu = "Thứ 7"; break;
+                            case 8:
+                                thu = "Chủ nhật"; break;
+
+                            default:
+                                break;
+                        }
+                        }
+
+                    <label class="control-label">Thời gian dạy: @thu Từ @Html.DisplayFor(model => Model.ThoiGianBatDau) Đến @Html.DisplayFor(model => Model.ThoiGianKetThuc) </label>
+                </div>
+            </div>
+            
+            <h4><u>Thông tin thanh tra</u></h4>
+            <div class="form-group ">
+                <div class="col-sm-12">
+                    <label class="control-label"> @Html.Raw( Model.LogSoLanDaKiemTra == null?"(Chưa có thanh tra)": Model.LogSoLanDaKiemTra)</label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+
+        <div class="col-sm-12  text-center">
+            <a class="btn btn-link" aria-hidden="true" data-dismiss="modal"> Quay lại</a>
+
+        </div>
+    </div>
+
+</div>
+
+@using (Html.BeginScriptContext())
+{
+    Html.AddScriptBlock(
+        @<script type="text/javascript">
+            //Su dung cau hinh dropdownlist
+
+
+
+        </script>
+, true);
+}
+
+

@@ -1,0 +1,153 @@
+﻿@*
+    Author:   			ntdai
+    Created: 			2016-3-24
+    Last Modified: 		2016-3-24
+*@
+@model ntdai16032016.maketing.library.QuanLySendEmails.UpdateMyEmailConfigView
+
+<div class="modal-content">
+    <div class="modal-header">
+        <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+        <h4 class="modal-title">Cập nhật MyEmailConfig</h4>
+    </div>
+    <div class="modal-body">
+
+        @using (Ajax.BeginForm(
+                                    "MyEmailConfigEdit",
+                                    "QuanLyMaketting",
+                                    new AjaxOptions
+                                {
+                                    InsertionMode = InsertionMode.Replace,//cach thuc update du lieu. Thay the hay them vao
+                                    HttpMethod = "POST",
+                                    UpdateTargetId = "modalQuanLySendEmails_MyEmailConfig_c",
+                                    LoadingElementId = "loader"
+                                }, new { @class = "form-horizontal", id = "frm_EditMyEmailConfig" }))
+        {
+            
+            
+            @Html.HiddenFor(model => Model.MyEmailGuid)
+            
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+
+
+           
+
+            
+             <div class="form-group ">
+                @Html.LabelFor(model => Model.MyEmail, new { @class = "col-sm-3 control-label", @for = "text_MyEmail" })
+                <div class="col-sm-9">
+                    @Html.TextBoxFor(model => Model.MyEmail, new { @class = "form-control", id = "text_MyEmail" })
+                    @Html.ValidationMessageFor(model => Model.MyEmail, null, new { @class = "text-danger" })
+                </div>
+               
+            </div>
+            <div class="form-group ">
+                @Html.LabelFor(model => Model.UserName, new { @class = "col-sm-3 control-label", @for = "text_UserName" })
+                <div class="col-sm-9">
+                    @Html.TextBoxFor(model => Model.UserName, new { @class = "form-control", id = "text_UserName" })
+                    @Html.ValidationMessageFor(model => Model.UserName, null, new { @class = "text-danger" })
+                </div>
+
+            </div>
+             <div class="form-group ">
+                @Html.LabelFor(model => Model.Password, new { @class = "col-sm-3 control-label", @for = "text_PassWord" })
+                <div class="col-sm-9">
+                    @Html.TextBoxFor(model => Model.Password, new { @class = "form-control", id = "text_PassWord" })
+                    @Html.ValidationMessageFor(model => Model.Password, null, new { @class = "text-danger" })
+                </div>
+             
+            </div>
+            
+             <div class="form-group ">
+                @Html.LabelFor(model => Model.MailServer, new { @class = "col-sm-3 control-label", @for = "text_MailServer" })
+                <div class="col-sm-9">
+                    @Html.TextBoxFor(model => Model.MailServer, new { @class = "form-control", id = "text_MailServer" })
+                    @Html.ValidationMessageFor(model => Model.MailServer, null, new { @class = "text-danger" })
+                </div>
+               
+            </div>
+            
+             <div class="form-group ">
+                @Html.LabelFor(model => Model.SmtpPort, new { @class = "col-sm-3 control-label", @for = "text_SmtpPort" })
+                <div class="col-sm-9">
+                    @Html.TextBoxFor(model => Model.SmtpPort, new { @class = "form-control", id = "text_SmtpPort" })
+                    @Html.ValidationMessageFor(model => Model.SmtpPort, null, new { @class = "text-danger" })
+                </div>
+          
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => Model.SSL, new { @class = "col-sm-3 control-label", @for = "chek_SSL" })
+                <div class="col-sm-9">
+                    @Html.CheckBoxFor(model => Model.SSL, new { @checked = "checked", id = "chek_SSL" })
+                    @Html.ValidationMessageFor(model => Model.SSL, null, new { @class = "text-danger" })
+                </div>
+              
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => Model.BodyHTML, new { @class = "col-sm-3 control-label", @for = "chek_BodyHTML" })
+                <div class="col-sm-9">
+                    @Html.CheckBoxFor(model => Model.BodyHTML, new { @checked = "checked", id = "chek_BodyHTML" })
+                    @Html.ValidationMessageFor(model => Model.BodyHTML, null, new { @class = "text-danger" })
+                </div>
+              
+            </div>
+                   
+            
+            <div class="form-group">
+                @Html.LabelFor(model => Model.IsActive, new { @class = "col-sm-3 control-label", @for = "chek_IsActive" })
+                <div class="col-sm-9">
+                    @Html.CheckBoxFor(model => Model.IsActive, new { @checked = "checked", id = "chek_IsActive" })
+                    @Html.ValidationMessageFor(model => Model.IsActive, null, new { @class = "text-danger" })
+                </div>
+               
+            </div>
+        }
+     
+    </div>
+ 
+    <div class="modal-footer">
+
+        <div class="col-sm-12  text-center">
+      
+            <button type="button" aria-hidden="true" data-dismiss="modal"
+                            onclick="QuanLySendEmails_MyEmailConfig_DeleteView(this)"
+                            data-otf-action="@Url.Action("MyEmailConfigDelete", "QuanLyMaketting", null, Request.Url.Scheme)?id=@Model.MyEmailGuid"
+                            data-otf-action-exit="@Url.Action("MyEmailConfigGet_List", "QuanLyMaketting", null, Request.Url.Scheme)"
+                            data-otf-confirm="Bạn muốn xóa dữ liệu này?"
+                            data-otf-target-exit="#QuanLySendEmails_MyEmailConfig_DS_content"
+                            data-target="#modalQuanLySendEmails_MyEmailConfig"
+                            class="btn btn-danger">
+                        <i class="fa fa-trash-o"></i> Xóa
+                    </button>
+                    <button type="button" onclick="QuanLySendEmails_MyEmailConfig_OnSaveExit('#callbackQuanLySendEmails_MyEmailConfig', 'true', '#frm_EditMyEmailConfig')" class="btn btn-success">Lưu & Thoát</button>
+                    <button type="button" onclick="QuanLySendEmails_MyEmailConfig_OnSaveExit('#callbackQuanLySendEmails_MyEmailConfig', 'false', '#frm_EditMyEmailConfig')" class="btn btn-primary"><i class="fa fa-floppy-o"></i> Lưu dữ liệu</button>
+                    &nbsp;hoặc&nbsp;
+                    
+                    <a class="btn btn-link" data-otf-action="@Url.Action("MyEmailConfigGet_List", "QuanLyMaketting", null, Request.Url.Scheme) " data-target="#QuanLySendEmails_MyEmailConfig_DS_content" aria-hidden="true" data-dismiss="modal" onclick="QuanLySendEmails_MyEmailConfig_BakList(this)"> Trở lại</a>
+
+                    <input type="hidden" id="callbackQuanLySendEmails_MyEmailConfig"
+                           data-otf-target="#modalQuanLySendEmails_MyEmailConfig"
+                           data-otf-target-exit="#QuanLySendEmails_MyEmailConfig_DS_content"
+                           data-otf-action-exit="@Url.Action("MyEmailConfigGet_List", "QuanLyMaketting", null, Request.Url.Scheme)"
+                           data-otf-action="@Url.Action("MyEmailConfigEdit", "QuanLyMaketting", null, Request.Url.Scheme)?id=@Model.MyEmailGuid" />
+            
+         
+        </div>
+    </div>
+
+</div>
+
+@using (Html.BeginScriptContext())
+{
+    Html.AddScriptBlock(
+        @<script type="text/javascript">
+             //Su dung cau hinh dropdownlist
+          
+        </script>
+, true);
+}
+
+
+
+

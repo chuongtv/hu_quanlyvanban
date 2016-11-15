@@ -1,0 +1,199 @@
+﻿@*
+    Author:   			httHong
+    Created: 			2015-10-22
+    Last Modified: 		2015-10-22
+*@
+@model nvngoc29082015.permission.library.ManageAspNetUsers.UpdateAspNetUsersView
+
+<div class="row">
+    <div class="col-sm-2">
+        @Html.Partial("~/Views/ManagePermission/ManageAspNetUsers/_PartialDanhMuc.cshtml")
+    </div>
+    <div class="col-sm-10">
+        <h4>Chỉnh sửa thông tin tài khoản người dùng</h4>
+        <div class="row">
+            @using (Ajax.BeginForm(
+                                    "AspNetUsersEdit",
+                                    "ManagePermission",
+                                    new AjaxOptions
+                                {
+                                    InsertionMode = InsertionMode.Replace,//cach thuc update du lieu. Thay the hay them vao
+                                    HttpMethod = "POST",
+                                    UpdateTargetId = "CPManageAspNetUsers",
+                                    LoadingElementId = "loader"
+                                }, new { @class = "form-horizontal", id = "frm_EditAspNetUsers" }))
+            {
+                @Html.HiddenFor(model => Model.Id)
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true)
+                <div class="form-group" style="display:none;">
+                    @Html.LabelFor(model => Model.DonViName, new { @class = "col-sm-2 control-label", @for = "text_DonViName" })
+                    <div class="col-sm-4">
+                        @Html.DropDownListFor(model => Model.DonViGuid,
+               new SelectList(Model.ListDonVi, "ValueString", "Name"),
+                                          new
+                                          {
+                                              @class = "form-control chosen-select",
+                                              id = "DDL_DonViGuid",
+                                          })
+
+                        @Html.ValidationMessageFor(model => Model.ListDonVi, null, new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => Model.UserName, new { @class = "col-sm-2 control-label", @for = "text_UserName" })
+                    <div class="col-sm-4">
+                        @Html.TextBoxFor(model => Model.UserName, new { @ReadOnly = "ReadOnly", @class = "form-control", id = "text_UserName" })
+                        @Html.ValidationMessageFor(model => Model.UserName, null, new { @class = "text-danger" })
+                    </div>
+                    <div class="col-sm-2">
+
+                    </div>
+                </div>
+
+                <div class="form-group ">
+                    @Html.LabelFor(model => Model.PhoneNumber, new { @class = "col-sm-2 control-label", @for = "text_PhoneNumber" })
+                    <div class="col-sm-4">
+                        @Html.TextBoxFor(model => Model.PhoneNumber, new { @class = "form-control", id = "text_PhoneNumber" })
+                        @Html.ValidationMessageFor(model => Model.PhoneNumber, null, new { @class = "text-danger" })
+                    </div>
+                    <div class="col-sm-2">
+
+                    </div>
+                </div>
+
+                <div class="form-group ">
+                    @Html.LabelFor(model => Model.Email, new { @class = "col-sm-2 control-label", @for = "text_Email" })
+                    <div class="col-sm-4">
+                        @Html.TextBoxFor(model => Model.Email, new { @class = "form-control", id = "text_Email" })
+                        @Html.ValidationMessageFor(model => Model.Email, null, new { @class = "text-danger" })
+                    </div>
+                    <div class="col-sm-2">
+
+                    </div>
+                </div>
+
+                @*<div class="form-group">
+                        @Html.LabelFor(model => Model.EmailConfirmed, new { @class = "col-sm-2 control-label", @for = "chek_EmailConfirmed" })
+                        <div class="col-sm-4">
+                            @Html.CheckBoxFor(model => Model.EmailConfirmed, new { @checked = "checked", id = "chek_EmailConfirmed" })
+                            @Html.ValidationMessageFor(model => Model.EmailConfirmed, null, new { @class = "text-danger" })
+                        </div>
+                        <div class="col-sm-2">
+
+                        </div>
+                    </div>*@
+
+                <div class="form-group ">
+                    @Html.LabelFor(model => Model.NguoiDungName, new { @class = "col-sm-2 control-label", @for = "text_NguoiDungName" })
+                    <div class="col-sm-4">
+                        @Html.TextBoxFor(model => Model.NguoiDungName, new { @class = "form-control", id = "text_NguoiDungName" })
+                        @Html.ValidationMessageFor(model => Model.NguoiDungName, null, new { @class = "text-danger" })
+                    </div>
+                    <div class="col-sm-2">
+
+                    </div>
+                </div>
+
+                @*<div class="form-group ">
+                        @Html.LabelFor(model => Model.NguoiDungNameKhongDau, new { @class = "col-sm-2 control-label", @for = "text_NguoiDungNameKhongDau" })
+                        <div class="col-sm-4">
+                            @Html.TextBoxFor(model => Model.NguoiDungNameKhongDau, new { @class = "form-control", id = "text_NguoiDungNameKhongDau" })
+                            @Html.ValidationMessageFor(model => Model.NguoiDungNameKhongDau, null, new { @class = "text-danger" })
+                        </div>
+                        <div class="col-sm-2">
+
+                        </div>
+                    </div>*@
+
+                @*<div class="form-group ">
+                        @Html.LabelFor(model => Model.SecurityStamp, new { @class = "col-sm-2 control-label", @for = "text_SecurityStamp" })
+                        <div class="col-sm-4">
+                            @Html.TextBoxFor(model => Model.SecurityStamp, new { @class = "form-control", id = "text_SecurityStamp" })
+                            @Html.ValidationMessageFor(model => Model.SecurityStamp, null, new { @class = "text-danger" })
+                        </div>
+                        <div class="col-sm-2">
+
+                        </div>
+                    </div>*@
+
+                @*<div class="form-group ">
+                        @Html.LabelFor(model => Model.LockoutEndDateUtc, new { @class = "col-sm-2 control-label", @for = "text_LockoutEndDateUtc" })
+                        <div class="col-sm-4">
+                            @Html.TextBoxFor(model => Model.LockoutEndDateUtc, new { @class = "form-control", id = "text_LockoutEndDateUtc" })
+                            @Html.ValidationMessageFor(model => Model.LockoutEndDateUtc, null, new { @class = "text-danger" })
+                        </div>
+                        <div class="col-sm-2">
+
+                        </div>
+                    </div>*@
+
+            }
+            <div class="form-horizontal" style="display:none">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">
+                        File đính kèm
+                    </label>
+                    <div class="col-sm-8">
+
+                        @*2 hàm ulupload 1 cho xóa và k xóa*@
+                        @*@Html.Action("LoadUploadOne", "FileSystem", new { itemguid = Model.ItemGuid, id = 1, auto = "false", isDelete = "true" })*@
+                        @*@Html.Action("LoadUploadOne", "FileSystem", new { itemguid = Model.ItemGuid, id = 1, auto = "false", isDelete = "false" })*@
+
+
+                        @*s = style hiển thị danh sách file 0:1; 0 dạng block, 1 là dạng list
+                            d ="true" :"fasle" cho phép delete hay k
+                            id quy định nơi upload file, nơi load file lên trong contantvalble*@
+                        @Html.Action("LoadUploadFiles", "FileSystem", new { itemguid = Model.Id, id = 1, auto = "false", d = "true", s = 1 })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6 col-sm-offset-3 text-center">
+            <div class="btn-toolbar">
+                <button type="button"
+                        onclick="ManageAspNetUsers_AspNetUsers_DeleteView(this)"
+                        data-otf-action="@Url.Action("AspNetUsersDelete", "ManagePermission", null, Request.Url.Scheme)?id=@Model.Id"
+                        data-otf-action-exit="@Url.Action("ManageAspNetUsers", "ManagePermission", null, Request.Url.Scheme)"
+                        data-otf-confirm="Bạn muốn xóa dữ liệu này?"
+                        class="btn btn-danger">
+                    <i class="fa fa-trash-o"></i> Xóa
+                </button>
+                <button type="button" onclick="ManageAspNetUsers_AspNetUsers_OnSaveExit('#callback', 'true', '#frm_EditAspNetUsers')" class="btn btn-success">Lưu & Thoát</button>
+                <button type="button" onclick="ManageAspNetUsers_AspNetUsers_OnSaveExit('#callback', 'false', '#frm_EditAspNetUsers')" class="btn btn-primary"><i class="fa fa-floppy-o"></i> Lưu dữ liệu</button>&nbsp;hoặc&nbsp;
+                <a class="btn btn-link" href="@Url.Action("AspNetUsersDetail", "ManagePermission", null, Request.Url.Scheme)?id=@Model.Id"> Trở lại</a>
+
+                <input type="hidden" id="callback"
+                       data-otf-action-exit="@Url.Action("ManageAspNetUsers", "ManagePermission", null, Request.Url.Scheme)"
+                       data-otf-action="@Url.Action("AspNetUsersEdit", "ManagePermission", null, Request.Url.Scheme)?id=@Model.Id" />
+            </div>
+        </div>
+    </div>
+
+</div>
+
+@using (Html.BeginScriptContext())
+{
+    Html.AddScriptBlock(
+        @<script type="text/javascript">
+            //Su dung cau hinh dropdownlist
+            var config = {
+                '.chosen-select': {},
+                '.chosen-select-deselect': { allow_single_deselect: true },
+                '.chosen-select-no-single': { disable_search_threshold: 10 },
+                '.chosen-select-no-results': { no_results_text: 'Lỗi! Vui lòng chọn ít nhất 1 mục.' },
+                '.chosen-select-width': { width: "95%" }
+            }
+            for (var selector in config) {
+                $(selector).chosen(config[selector]);
+            }
+        </script>
+, true);
+}
+
+
+
+

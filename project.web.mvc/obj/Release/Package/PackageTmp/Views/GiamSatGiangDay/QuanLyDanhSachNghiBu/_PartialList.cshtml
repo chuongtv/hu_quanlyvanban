@@ -1,0 +1,168 @@
+﻿@model MvcPaging.IPagedList<nvngoc31122015.giamsatgiangday.library.GiamSatGiangDay.QuanLyNghiBu>
+@using MvcPaging
+
+@{var i = 1;}
+
+<div class="table-responsive">
+    @if (Model.TotalItemCount > 0)
+    {
+        <div class="p-b-10">
+            Kết quả tìm kiếm: <b>@Model.TotalItemCount</b> thông tin nghỉ - bù
+        </div>
+        <text>
+            <table class="table table-bordered datatables dataTable">
+                <thead>
+                    <tr>
+                        <th class="text-center w-30">
+                            <input id="CheckBoxAll" onclick="javascript: checkAlllist('#listcheckall',this);" type="checkbox" />
+                        </th>
+                        <th class="text-center w-30">
+                            STT
+                        </th>
+                        <th class="text-left">
+                            @Html.DisplayNameFor(model => Model[0].NhanVienFullName)
+                        </th>
+                        <th class="text-left">
+                            @Html.DisplayNameFor(model => Model[0].LopThucTeGhep)
+                        </th>
+                        <th class="text-left">
+                            @Html.DisplayNameFor(model => Model[0].MonHocName)
+                        </th>
+                        <th class="text-left">
+                            @Html.DisplayNameFor(model => Model[0].NgayGui)
+                        </th>
+                        <th class="text-left">
+                            @Html.DisplayNameFor(model => Model[0].LoaiPhieuName)
+                        </th>
+                        <th class="text-center">
+                            #
+                        </th>
+                    </tr>
+                </thead>
+                <tbody id="listcheckall">
+                    @foreach (var item in Model)
+                    {
+                        string styletinhtrang = "";
+                        styletinhtrang = project.config.library.Utilities.ConstantVariable.StyleTinhTrangBuNghi(item.TrangThai);
+
+                        <tr class="showhim">
+                            <td class="text-center">
+                                <input type="checkbox" class="checkbox-item" value="@item.PhieuBaoGuid|@item.LoaiPhieuID" />
+                            </td>
+                            <td class="text-center">
+                                @Html.Raw((Model.PageNumber - 1) * Model.PageSize + i)
+                                @{i++;}
+                            </td>
+                            <td class="text-left">
+                                @if (item.LoaiPhieuID == "phieunghi")
+                                {
+                                    <a href="@Url.Action("BaoNghi", "GiamSatGiangDay", null, Request.Url.Scheme)?id=@item.PhieuBaoGuid"
+                                       title="Chi tiết phiếu báo">
+                                        @Html.DisplayFor(x => item.NhanVienFullName)
+                                    </a>
+                                }
+                                else
+                                    if (item.LoaiPhieuID == "phieubu")
+                                    {
+                                        <a href="@Url.Action("BaoBuThuKy", "GiamSatGiangDay", null, Request.Url.Scheme)?id=@item.PhieuBaoGuid"
+                                           title="Chi tiết phiếu báo">
+                                            @Html.DisplayFor(x => item.NhanVienFullName)
+                                        </a>
+                                    }
+                                    else
+                                        if (item.LoaiPhieuID == "phieubutruoc")
+                                        {
+                                            <a href="@Url.Action("BaoBuTruocThuKy", "GiamSatGiangDay", null, Request.Url.Scheme)?id=@item.PhieuBaoGuid"
+                                               title="Chi tiết phiếu báo">
+                                                @Html.DisplayFor(x => item.NhanVienFullName)
+                                            </a>
+                                        }
+                            </td>
+                            <td class="text-left">
+                                @Html.DisplayFor(x => item.LopThucTeGhep)
+                            </td>
+                            <td class="text-left">
+                                @Html.DisplayFor(x => item.MonHocName)
+                            </td>
+                            <td class="text-left">
+                                @*@Html.DisplayFor(x => item.NgayGui)*@
+                                @(DateTime.Parse(item.NgayGui.ToString()).ToString("dd/MM/yyyy HH:mm"))
+                            </td>
+                            <td class="text-left">
+                                @Html.DisplayFor(x => item.LoaiPhieuName)
+                            </td>
+                            <td class="text-center">
+                               @Html.Raw(styletinhtrang)
+
+                            </td>
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </text>
+    }
+    else
+    {
+        <text><br />
+    <div class="alert alert-dismissable alert-info">
+        <strong>Yêu cầu tìm kiếm lúc @{ var date = DateTime.Now; } @date.ToString("HH:mm:ss dd/MM/yyyy") không có dữ liệu</strong>
+        <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+    </div>
+        </text>
+    }
+    <div class="pager">
+        @if (Model.TotalItemCount > Model.PageSize)
+        {
+
+            <text>
+
+                @Html.Raw(Ajax.Pager(
+                       new Options
+                       {
+                           PageSize = Model.PageSize,
+                           TotalItemCount = Model.TotalItemCount,
+                           CurrentPage = Model.PageNumber,
+                           ItemTexts = new ItemTexts() { Next = "Next", Previous = "Previous", Page = "" },
+                           ItemIcon = new ItemIcon() { First = "icon-backward", Previous = "icon-chevron-left", Next = "icon-chevron-right", Last = "icon-forward" },
+                           TooltipTitles = new TooltipTitles() { Next = "Next page", Previous = "Previous page", Page = "Page {0}." },
+                           Size = Size.normal,
+                           Alignment = Alignment.centered,
+                           IsShowControls = true,
+                           IsShowFirstLast = true,
+                           CssClass = ""
+                       },
+                       new AjaxOptions
+                       {
+                           UpdateTargetId = "GiamSatGiangDay_DS_content"
+                       }, new
+                       {
+                           controller = "GiamSatGiangDay",
+                           action = "QuanLyDanhSachNghiBuGet_List"
+                       ,
+                           NamHocID = @ViewData["NamHocID"]
+                       ,
+                           TuNgay = @ViewData["TuNgay"]
+                       ,
+                           DenNgay = @ViewData["DenNgay"]
+                       ,
+                           LoaiPhieuID = @ViewData["LoaiPhieuID"]
+                       ,
+                           NhanVienGuid = @ViewData["NhanVienGuid"]
+                       ,
+                           MonHocID = @ViewData["MonHocID"]
+
+                       }))
+            </text>
+        }
+    </div>
+</div>
+
+@using (Html.BeginScriptContext())
+{
+    Html.AddScriptBlock(
+        @<script type="text/javascript">
+            //loadSelect("DichVuSinhVien_XacNhanBieuMau", "XacNhanBieuMau");
+        </script>
+, true);
+}

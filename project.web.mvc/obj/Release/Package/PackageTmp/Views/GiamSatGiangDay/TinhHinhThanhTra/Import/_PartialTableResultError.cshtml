@@ -1,0 +1,161 @@
+﻿@model nvngoc31122015.giamsatgiangday.library.GiamSatGiangDay.ImportPhieuGhiNhanThanhTraStep2View
+
+<div class="row" style="overflow-y:auto;">
+    <div class="col-sm-12">
+        <div class="ibox">
+            <div class="ibox-content">
+                <div class="table-responsive">
+                    @if (Model.DataSetGhiNhan.Tables.Count > 0)
+                    {
+                        <table class="table table-bordered datatables dataTable table-hover">
+                            <tr>
+                                <th class="text-center w-50">#</th>
+                                @*<th class="text-left">
+                                    Nhóm
+                                </th>
+                                <th class="text-left">
+                                    Tổ TH
+                                </th>*@
+                                <th class="text-center">
+                                    Mã MH
+                                </th>
+                                <th class="text-center">
+                                    Tên môn học
+                                </th>
+                                @*<th class="text-center">
+                                    TC
+                                </th>
+                                <th class="text-center">
+                                    Sĩ số
+                                </th>*@
+                                <th class="text-center">
+                                    Mã GV
+                                </th>
+                                <th class="text-left">
+                                    GV giảng dạy
+                                </th>
+                                <th class="text-left">
+                                    Thứ
+                                </th>
+                                <th class="text-left">
+                                    TBĐ
+                                </th>
+                                @*<th class="text-left">
+                                    Số tiết
+                                </th>*@
+                                <th class="text-left">
+                                    Phòng
+                                </th>
+                                <th class="text-left">
+                                    Tên lớp
+                                </th>
+                                @*<th class="text-left">
+                                    Ngày học
+                                </th>*@
+                                <th class="text-center">
+                                    ID vi phạm
+                                </th>
+                                <th class="text-center">
+                                    Tên vi phạm
+                                </th>
+                                <th class="text-left">
+                                    Nội dung
+                                </th>
+                                <th class="text-center">
+                                    Ngày lập
+                                </th>
+                                <th class="text-center">
+                                    TKB
+                                </th>
+                                <th class="text-left">
+                                    Nội dung lỗi
+                                </th>
+
+                            </tr>
+                            @foreach (System.Data.DataRow row in Model.DataSetGhiNhan.Tables[0].Rows)
+                            {
+                                <tr class="row-error-true">
+                                    <td class="text-center">
+                                        @(row["Keys"].ToString())
+                                    </td>
+                                    @*<td class="text-center">
+                                        @(row["Nhóm"].ToString())
+                                    </td>
+                                    <td class="text-left">
+                                        @(row["Tổ TH/Tổ hợp MH"].ToString())
+                                    </td>*@
+                                    <td class="text-center">
+                                        @(row["Mã MH"].ToString())
+                                    </td>
+
+                                    <td class="text-center">
+                                        @(row["Tên môn học"].ToString())
+                                    </td>
+                                    @*<td class="text-center">
+                                        @(row["TC"].ToString())
+                                    </td>
+                                    <td class="text-center">
+                                        @(row["Sĩ số"].ToString())
+                                    </td>*@
+                                    <td class="text-center">
+                                        @(row["Mã GV"].ToString())
+                                    </td>
+                                    <td class="text-left">
+                                        @(row["GV giảng dạy"].ToString())
+                                    </td>
+                                    <td class="text-left">
+                                        @(row["Thứ"].ToString())
+                                    </td>
+                                    <td class="text-left">
+                                        @(row["Tiết bắt đầu"].ToString())
+                                    </td>
+                                    @*<td class="text-left">
+                                        @(row["Số tiết"].ToString())
+                                    </td>*@
+                                    <td class="text-left">
+                                        @(row["Phòng"].ToString())
+                                    </td>
+                                    <td class="text-left">
+                                        @(row["Tên lớp"].ToString())
+                                    </td>
+                                    @*<td class="text-left">
+                                        @(row["ngày học"].ToString())
+                                    </td>*@
+                                    <td class="text-center">
+                                        @(row["vi phạm"].ToString())
+                                    </td>
+                                    <td class="text-center">
+                                        @(row["TenViPham"].ToString())
+                                    </td>
+                                    <td class="text-left">
+                                        @(row["Nội dung"].ToString())
+                                    </td>
+                                    <td class="text-left">
+                                        @*@(DateTime.Parse(row["Ngày lập"].ToString()).ToString("dd/MM/yyyy HH:mm"))*@
+                                        @(row["Ngày lập"].ToString())
+                                    </td>
+                                    <td class="text-left">
+                                        @(row["Mã TKB"].ToString())
+                                    </td>
+                                    <td class="text-left" style="color:red;">
+                                        @Html.Raw(row["ErrorContent"].ToString())
+                                    </td>
+                                </tr>
+                            }
+
+                        </table>
+                    }
+                    else
+                    {
+                        <text>
+                            <div class="alert alert-dismissable alert-info">
+                                <strong>Thực hiện import thành công và không có lỗi xãy ra - @{ var date = DateTime.Now; } @date.ToString("dd/MM/yyyy HH:mm:ss")</strong>
+                                <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+                            </div>
+                        </text>
+                                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

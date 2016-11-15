@@ -1,0 +1,43 @@
+﻿@using project.web.mvc.Models;
+@using Microsoft.AspNet.Identity;
+@{
+    ViewBag.Title = "Thay đổi mật mã";
+}
+
+@*breadcrumb*@
+<div id="page-heading">
+    <ol class="breadcrumb">
+        <li>
+            <a href="@Url.Action("Index", "Home")">
+                <i class="fa fa-lg fa-home text-warning text-size-20">
+                </i> Trang chủ
+            </a>
+        </li>
+        <li class="active">
+            @ViewBag.Title
+        </li>
+    </ol>
+</div>
+<p class="text-success">@ViewBag.StatusMessage</p>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            @if (ViewBag.HasLocalPassword)
+            {
+                @Html.Partial("_ChangePasswordPartial")
+            }
+            else
+            {
+                @Html.Partial("_SetPasswordPartial")
+            }
+
+            @*<section id="externalLogins">
+                    @Html.Action("RemoveAccountList")
+                    @Html.Partial("_ExternalLoginsListPartial", new { Action = "LinkLogin", ReturnUrl = ViewBag.ReturnUrl })
+                </section>*@
+        </div>
+    </div>
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

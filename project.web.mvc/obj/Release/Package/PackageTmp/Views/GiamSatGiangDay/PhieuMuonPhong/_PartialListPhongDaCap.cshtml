@@ -1,0 +1,34 @@
+﻿@model List<nvngoc31122015.giamsatgiangday.library.Models.GiamSatGiangDay_PhieuMuonPhong_ntdai_GetPhongDaCapByPhieuMuonPhongGuid_Result>
+<table style="margin-bottom: 0px;" class="table">
+    <thead>
+        <tr>
+            <th class="col-xs-9 col-sm-3">Phòng</th>
+            <th class="col-xs-9 col-sm-3">Ngày</th>
+            <th >Ca</th>
+            <th class="col-xs-2 col-sm-2"></th>
+        </tr>
+    </thead>
+    <tbody class="selects">
+        @foreach (var item in Model)
+        {
+            <text>
+                <tr>
+
+                    <td>@item.PhongID</td>
+                    <td>@item.NgayMuonPhong.Value.ToString("dd/MM/yyyy")</td>
+                    <td >@item.CaID</td>
+                    <td>
+                        <a href="javascript:void(0)" class="label label-danger" onclick="QLPhieuMuonPhong_DeletePhieuMuonPhongChiTiet(this)"
+                              data-otf-btn="#GiamSatGiangDay_PhieuMuonPhong_TimPhong_buttonsearch"
+                              data-otf-actiondachon="@Url.Action("PhieuMuonPhong_GetPhongDaCapByPhieuMuonPhongGuid", "GiamSatGiangDay", null, Request.Url.Scheme)?id=@item.PhieuMuonPhongGuid"
+                              data-otf-targetdachon="#DanhSachPhongDaCap"
+                              data-otf-action="@Url.Action("PhieuMuonPhongDeleteChiTiet", "GiamSatGiangDay", null, Request.Url.Scheme)?id=@item.ChiTietPhieuMuonPhongGuid">Xóa</a>
+                    </td>
+                </tr>
+            </text>
+        }
+
+
+    </tbody>
+
+</table>

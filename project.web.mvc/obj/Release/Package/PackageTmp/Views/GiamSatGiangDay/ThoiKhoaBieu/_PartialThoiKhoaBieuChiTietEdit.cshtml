@@ -1,0 +1,223 @@
+﻿@*
+    Author:   			pdgiai
+    Created: 			2016-1-4
+    Last Modified: 		2016-1-4
+*@
+@model nvngoc31122015.giamsatgiangday.library.GiamSatGiangDay.UpdateThoiKhoaBieuChiTietView
+
+<div class="modal-content">
+    <div class="modal-header">
+        <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+        <h4 class="modal-title">Cập nhật lịch trình giảng dạy</h4>
+    </div>
+    <div class="modal-body">
+
+        @using (Ajax.BeginForm(
+                                                                        "ThoiKhoaBieuChiTietEdit",
+                                                                        "GiamSatGiangDay",
+                                                                        new AjaxOptions
+                                                                        {
+                                                                            InsertionMode = InsertionMode.Replace,//cach thuc update du lieu. Thay the hay them vao
+                                                                            HttpMethod = "POST",
+                                                                            UpdateTargetId = "modalGiamSatGiangDay_ThoiKhoaBieu_c",
+                                                                            LoadingElementId = "loader"
+                                                                        }, new { @class = "form-horizontal", id = "frm_EditThoiKhoaBieu" }))
+        {
+            @Html.HiddenFor(model => Model.Phong_Guid, new { id = "hidden_Phong_Guid" })
+            @Html.HiddenFor(model => Model.ThoiKhoaBieuGuid)
+            @Html.HiddenFor(model => Model.LopHocGuid)
+            @Html.HiddenFor(model => Model.Tungayold, new { id = "hidden_ngaycu" })
+            @Html.HiddenFor(model => Model.IsCheckNgayHoc, new { id = "hidden_checkngayhoc" })
+            @Html.HiddenFor(model => Model.SoTiet, new { id = "hidden_SoTiet" })
+            @Html.HiddenFor(model => Model.NhanVien_Guid, new { id = "hidden_giangvienguid" })
+            @Html.HiddenFor(model => Model.NhanVien_GuidOld)
+            @Html.HiddenFor(model => Model.IsCoQuyenQuanLyMon)
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+
+
+            if (User.IsInRole(project.config.library.Utilities.ConstantVariable.Value_AspNetRoles_GiamSatGiangDay_DaoTao)
+                                              || User.IsInRole(project.config.library.Utilities.ConstantVariable.Value_AspNetRoles_Administrator)
+                                              || User.IsInRole(project.config.library.Utilities.ConstantVariable.Value_AspNetRoles_System))
+            {
+                if (User.IsInRole(project.config.library.Utilities.ConstantVariable.Value_AspNetRoles_GiamSatGiangDay_ThuKy) && Model.IsCoQuyenQuanLyMon == true)
+                {
+                    <div class="form-group ">
+                        <label class="col-sm-2 control-label" id="lblDonVi">Mã giảng viên</label>
+                        <div class="col-sm-4">
+                            @Html.TextBoxFor(model => Model.GiangVienID, new { @class = "form-control", id = "text_GiangVienID", data_otf_action = @Url.Action("LoadAutoCompateGiangVien", "GiamSatGiangDay") })
+                            @Html.ValidationMessageFor(model => Model.NhanVien_Guid, null, new { @class = "text-danger" })
+                            @Html.ValidationMessageFor(model => Model.GiangVienID, null, new { @class = "text-danger" })
+                        </div>
+                        <label class="col-sm-2 control-label" id="lblDonVi">Họ tên</label>
+                        <div class="col-sm-4">
+                            @Html.TextBoxFor(model => Model.TenGiangVien, new { @class = "form-control", id = "text_HoVaTen", disabled = "disable" })
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="form-group ">
+                        <label class="col-sm-2 control-label" id="lblDonVi">Mã giảng viên</label>
+                        <div class="col-sm-4">
+                            @Html.TextBoxFor(model => Model.GiangVienID, new { @class = "form-control isdisable", id = "text_GiangVienID", data_otf_action = @Url.Action("LoadAutoCompateGiangVien", "GiamSatGiangDay") })
+                            @Html.ValidationMessageFor(model => Model.NhanVien_Guid, null, new { @class = "text-danger" })
+                            @Html.ValidationMessageFor(model => Model.GiangVienID, null, new { @class = "text-danger" })
+                        </div>
+                        <label class="col-sm-2 control-label" id="lblDonVi">Họ tên</label>
+                        <div class="col-sm-4">
+                            @Html.TextBoxFor(model => Model.TenGiangVien, new { @class = "form-control", id = "text_HoVaTen", disabled = "disable" })
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="form-group ">
+                    <label class="col-sm-2 control-label" id="lblDonVi">Mã giảng viên</label>
+                    <div class="col-sm-4">
+                        @Html.TextBoxFor(model => Model.GiangVienID, new { @class = "form-control", id = "text_GiangVienID", data_otf_action = @Url.Action("LoadAutoCompateGiangVien", "GiamSatGiangDay") })
+                        @Html.ValidationMessageFor(model => Model.NhanVien_Guid, null, new { @class = "text-danger" })
+                        @Html.ValidationMessageFor(model => Model.GiangVienID, null, new { @class = "text-danger" })
+                    </div>
+                    <label class="col-sm-2 control-label" id="lblDonVi">Họ tên</label>
+                    <div class="col-sm-4">
+                        @Html.TextBoxFor(model => Model.TenGiangVien, new { @class = "form-control", id = "text_HoVaTen", disabled = "disable" })
+                    </div>
+                </div>
+            }
+
+            <div class="form-group">
+
+                @Html.LabelFor(model => model.Tungay, new { @class = "col-sm-2 control-label", @for = "data_Tungay" })
+                <div class="col-sm-4">
+                    <div id="data_ThoiKhoaBieu_Tungay">
+                        <div class="input-group date">
+                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                            @Html.EditorFor(model => model.Tungay, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    @Html.ValidationMessageFor(model => Model.Tungay, null, new { @class = "text-danger" })
+                </div>
+                @Html.LabelFor(model => Model.Phong_Guid, new { @class = "col-sm-2 control-label", @for = "DDL_Phong_Guid" })
+                <div class="col-sm-4">
+                    @Html.TextBoxFor(model => Model.PhongID, new
+               {
+                   @class = "form-control",
+                   id = "text_PhongHocID",
+                   data_otf_action = @Url.Action("LoadAutoCompatePhongHocTrong", "GiamSatGiangDay"),
+                   data_otf_actioncheck = @Url.Action("KiemTraPhongTrong", "GiamSatGiangDay"),
+                   data_otf_target = "#thongbaotinhtrangphong"
+               })
+                    @Html.ValidationMessageFor(model => Model.Phong_Guid, null, new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-6">
+                    <span id="thongbaotinhtrangphong" style="display:none"><i class="fa fa-warning text-danger"> Phòng này đã bận! chọn phòng khác</i> </span>
+                </div>
+            </div>
+            <div class="form-group ">
+                @Html.LabelFor(model => Model.TietBatDau, new { @class = "col-sm-2 control-label", @for = "DDL_ListCa_Guid" })
+                <div class="col-sm-4">
+                    @Html.DropDownListFor(model => Model.TietBatDau, new SelectList(Model.ListCa_Guid, "ValueString", "Name"), new { @class = "form-control", id = "DDL_ListCa_Guid", style = "Width:100%" })
+                    @Html.ValidationMessageFor(model => Model.TietBatDau, null, new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group ">
+                @Html.LabelFor(model => Model.GhiChu, new { @class = "col-sm-2 control-label", @for = "ghichutext" })
+                <div class="col-sm-10">
+                    @Html.TextAreaFor(model => Model.GhiChu, new { @class = "form-control", id = "ghichutext" })
+                    @Html.ValidationMessageFor(model => Model.GhiChu, null, new { @class = "text-danger" })
+                </div>
+            </div>
+        }
+    </div>
+
+    <div class="modal-footer">
+
+        <div class="col-sm-12  text-center">
+            <button type="button" onclick="GiamSatGiangDay_LichTrinhGiangDay_OnSaveExit('#callbackGiamSatGiangDay_ThoiKhoaBieu', 'true', '#frm_EditThoiKhoaBieu')" class="btn btn-primary">Lưu & Thoát</button>
+            <button type="button" onclick="GiamSatGiangDay_LichTrinhGiangDay_OnSaveExit('#callbackGiamSatGiangDay_ThoiKhoaBieu', 'false', '#frm_EditThoiKhoaBieu')" class="btn btn-success">Lưu dữ liệu</button>
+            &nbsp;hoặc&nbsp;
+
+            <a class="btn btn-default" data-otf-action="@Url.Action("ThoiKhoaBieuChiTietGet_List", "GiamSatGiangDay", new { id = Model.LopHocGuid }, Request.Url.Scheme)" data-target="#GiamSatGiangDay_ThoiKhoaBieuChiTiet_DS_content" aria-hidden="true" data-dismiss="modal" onclick="GiamSatGiangDay_ThoiKhoaBieuChiTiet_BackList(this)"> Quay lại</a>
+
+            <input type="hidden" id="callbackGiamSatGiangDay_ThoiKhoaBieu"
+                   data-otf-target="#modalGiamSatGiangDay_ThoiKhoaBieu"
+                   data-otf-target-exit="#GiamSatGiangDay_ThoiKhoaBieuChiTiet_DS_content"
+                   data-otf-action-exit="@Url.Action("ThoiKhoaBieuChiTietGet_List", "GiamSatGiangDay", new { id = Model.LopHocGuid }, Request.Url.Scheme)"
+                   data-otf-action="@Url.Action("ThoiKhoaBieuChiTietEdit", "GiamSatGiangDay", null, Request.Url.Scheme)?id=@Model.ThoiKhoaBieuGuid" />
+        </div>
+    </div>
+
+</div>
+
+<style>
+    .isdisable {
+        pointer-events: none;
+        opacity: 1;
+        background: #edeef0;
+        cursor: not-allowed !important;
+    }
+</style>
+
+@using (Html.BeginScriptContext())
+{
+    Html.AddScriptBlock(
+        @<script type="text/javascript">
+
+
+            //Su dung cau hinh dropdownlist
+            var config = {
+                '.chosen-select': {},
+                '.chosen-select-deselect': { allow_single_deselect: true },
+                '.chosen-select-no-single': { disable_search_threshold: 10 },
+                '.chosen-select-no-results': { no_results_text: 'Lỗi! Vui lòng chọn ít nhất 1 mục.' },
+                '.chosen-select-width': { width: "95%" }
+            }
+            for (var selector in config) {
+                $(selector).chosen(config[selector]);
+            }
+
+            AutoCompletePhonglichtrinh('#text_PhongHocID', '#hidden_Phong_Guid', '')
+            AutocompleteNhanVienHinh('#text_GiangVienID', '#hidden_giangvienguid', '#text_HoVaTen', '#text_DonViName');
+
+            $('#data_ThoiKhoaBieu_Tungay .input-group.date').datepicker({
+                format: 'dd/mm/yyyy',
+                todayBtn: "linked",
+                keyboardNavigation: false,
+                forceParse: false,
+                calendarWeeks: true,
+                autoclose: true
+            });
+            $('#data_ThoiKhoaBieu_Denngay .input-group.date').datepicker({
+                format: 'dd/mm/yyyy',
+                todayBtn: "linked",
+                keyboardNavigation: false,
+                forceParse: false,
+                calendarWeeks: true,
+                autoclose: true
+            });
+
+            // an cac tac vu va doi tuong khong duoc phep chinh sau
+            if ($("#hidden_checkngayhoc").val() == "0") {
+                $("#Tungay").attr("style", "pointer-events:none;opacity: 0.5;background: #CCC;");
+                $("#DDL_ListCa_Guid").attr("disabled", "true");
+                $("#text_PhongHocID").attr("style", "pointer-events:none;opacity: 0.5;background: #CCC;");
+                $("#DDL_ListCa_Guid").attr("disabled", "true");
+
+            }
+            //else
+            //{
+            //    $("#text_GiangVienID").attr("style", "pointer-events:none;opacity: 0.5;background: #CCC;");
+            //}
+
+        </script>
+, true);
+}
+
+
+
+

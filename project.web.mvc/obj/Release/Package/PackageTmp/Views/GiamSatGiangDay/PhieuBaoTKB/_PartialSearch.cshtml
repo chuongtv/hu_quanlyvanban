@@ -1,0 +1,51 @@
+﻿@model nvngoc31122015.giamsatgiangday.library.GiamSatGiangDay.ListPhieuBaoTKBView
+
+<div class="show" id="show">
+
+    <div class="row form-group ">
+        <label class="control-label col-sm-1" style="float:left;">Năm học</label>
+        <div class="col-sm-2">
+            @Html.DropDownListFor(model => Model.NamHoc_Guid, new SelectList(Model.ListNamHoc_Guid, "ValueString", "Name", Model.NamHocID), new { @class = "form-control chosen-select", id = "DDL_NamHoc_Guid" })
+            @Html.ValidationMessageFor(model => Model.NamHoc_Guid, null, new { @class = "text-danger" })
+        </div>
+        <label class="control-label col-sm-1" style="float:left;">Học kỳ</label>
+        <div class="col-sm-2">
+            @Html.DropDownListFor(model => Model.HocKy_Guid, new SelectList(Model.ListHocKy_Guid, "ValueString", "Name"), new { @class = "form-control chosen-select", id = "DDL_HocKy_Guid" })
+            @Html.ValidationMessageFor(model => Model.HocKy_Guid, null, new { @class = "text-danger" })
+        </div>
+
+    </div>
+    <div class="row form-group">
+        @if ((@User as project.web.mvc.Common.IOIORTPrincipal).HasPermission("PhieuGhiNhanThanhTraCreate_GiamSatGiangDay")) // quyền thanh tra
+        {
+            <label class="control-label col-sm-1" style="float:left;">Đơn vị</label>
+            <div class="col-sm-2">
+                @Html.DropDownListFor(model => Model.DonVi_Guid, new SelectList(Model.ListDonVi_Guid, "ValueString", "Name"), new { @class = "form-control chosen-select", id = "DDL_DonVi_Guid", @onchange = "FillListGiangVien()" })
+                @Html.ValidationMessageFor(model => Model.DonVi_Guid, null, new { @class = "text-danger" })
+            </div>
+        }
+        @if ((@User as project.web.mvc.Common.IOIORTPrincipal).HasPermission("PhieuGhiNhanThanhTraCreate_GiamSatGiangDay") // quyền thanh tra
+                        || (@User as project.web.mvc.Common.IOIORTPrincipal).HasPermission("PhieuBaoTKBNghi_ThuKyUpdate_GiamSatGiangDay")) // quyền thư ký
+        {
+            <label class="control-label col-sm-1" style="float:left;">Giảng viên</label>
+            <div class="col-sm-2">
+                @Html.DropDownListFor(model => Model.NhanVien_Guid, new SelectList(Model.ListNhanVien_Guid, "ValueString", "Name"), new { @class = "form-control chosen-select", id = "DDL_NhanVien_Guid" })
+                @Html.ValidationMessageFor(model => Model.NhanVien_Guid, null, new { @class = "text-danger" })
+            </div>
+        }
+    </div>
+</div>
+
+@section Scripts {
+
+
+    <script type="text/javascript">
+        //Su dung cau hinh dropdownlist
+
+    </script>
+
+}
+
+
+
+

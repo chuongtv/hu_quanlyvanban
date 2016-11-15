@@ -1,0 +1,127 @@
+﻿@*
+    Author:   			ntdai
+    Created: 			2015-11-25
+    Last Modified: 		2015-11-25
+*@
+
+@model MvcPaging.IPagedList<nvngoc29082015.permission.library.ManageGroupRoleDetail.ListGroupRoleDetailView>
+@using MvcPaging
+
+@{var i = 1;}
+
+<div class="table-responsive">
+    @if (Model.TotalItemCount > 0)
+    {
+        <div class="p-b-10">
+            Kết quả tìm kiếm: <b>@Model.TotalItemCount</b> Quyền chưa chọn
+        </div>
+        <text>
+            <table class="table table-bordered datatables dataTable">
+                <thead>
+                    <tr>
+                        <th class="text-center w-30">
+                            <input id="CheckBoxAll" onclick="javascript: checkAlllist('#listcheckall',this);" type="checkbox" />
+                        </th>
+                        <th class="text-center">
+                            #
+                        </th>
+                        <th class="text-left w-150">
+                            @Html.DisplayNameFor(model => Model[0].FullName)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => Model[0].Name)
+                        </th>
+       
+                        <th class="text-right w-100"></th>
+
+                    </tr>
+                </thead>
+                <tbody id="listcheckall">
+                    @foreach (var item in Model)
+                    {
+                        <tr data="@item.GroupRoleDetailGuid" class="showhim">
+                            <td class="text-center">
+                                <input type="checkbox" class="checkbox-item" value="@item.id" />
+                            </td>
+                            <td class="text-center w-50">
+                                @Html.Raw((Model.PageNumber - 1) * Model.PageSize + i)
+                                @{i++;}
+                            </td>
+                            <td class="text-left w-100">
+                                @Html.Raw(item.FullName)
+                            </td>
+                            <td>
+                                @Html.Raw(item.Name)
+                            </td>
+              
+                            <td class="text-right w-100">
+
+                                <a title="Thêm vào nhóm quyền" href="javascript:void(0)"
+                                   onclick="ManageGroupRoleDetail_GroupRoleDetail_AddMulti(this)"
+                                   data-otf-target1="#CPGroupRoleDetailChuaChon"
+                                   data-otf-target2="#CPGroupRoleDetailDaChon"
+                                   data-otf-input="#SearchGroupRoleChuaChon"
+                                   data-otf-action-target2="@Url.Action("GroupRoleGetDetailDaChon_List", "ManagePermission")?idnv=@Request["id"]&k="
+                                   data-otf-action-target1="@Url.Action("GroupRoleGetDetailChuaChon_List", "ManagePermission")?idnv=@Request["id"]&k="
+                                   data-otf-action="@Url.Action("GroupRoleDetailAdd", "ManagePermission", null, Request.Url.Scheme)?id=@item.id&gr=@Request["id"]">
+                                    <i class="fa fa-plus-square"></i>
+
+                                </a>
+
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </text>
+    }
+    else
+    {
+        <text><br />
+    <div class="alert alert-dismissable alert-info">
+        <strong>Yêu cầu tìm kiếm lúc @{ var date = DateTime.Now; } @date.ToString("HH:mm:ss dd/MM/yyyy") không có dữ liệu</strong>
+        <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+    </div>
+        </text>
+    }
+    <div class="pager">
+        @if (Model.TotalItemCount > Model.PageSize)
+        {
+
+            <text>
+
+                @Html.Raw(Ajax.Pager(
+                       new Options
+                       {
+                           PageSize = Model.PageSize,
+                           TotalItemCount = Model.TotalItemCount,
+                           CurrentPage = Model.PageNumber,
+                           ItemTexts = new ItemTexts() { Next = "Next", Previous = "Previous", Page = "" },
+                           ItemIcon = new ItemIcon() { First = "icon-backward", Previous = "icon-chevron-left", Next = "icon-chevron-right", Last = "icon-forward" },
+                           TooltipTitles = new TooltipTitles() { Next = "Next page", Previous = "Previous page", Page = "Page {0}." },
+                           Size = Size.normal,
+                           Alignment = Alignment.centered,
+                           IsShowControls = true,
+                           IsShowFirstLast = true,
+                           CssClass = ""
+                       },
+                       new AjaxOptions
+                       {
+                           UpdateTargetId = "CPManageGroupRoleDetail"
+                       }, new { controller = "ManagePermission", action = "GroupRoleGetDetailChuaChon_List", k = @ViewData["keysearchchuachon"], idnv = @ViewData["idnvchuachon"] }))
+            </text>
+        }
+    </div>
+</div>
+
+@using (Html.BeginScriptContext())
+{
+    Html.AddScriptBlock(
+        @<script type="text/javascript">
+            loadSelect("ManageGroupRoleDetail");
+        </script>
+, true);
+}
+
+
+

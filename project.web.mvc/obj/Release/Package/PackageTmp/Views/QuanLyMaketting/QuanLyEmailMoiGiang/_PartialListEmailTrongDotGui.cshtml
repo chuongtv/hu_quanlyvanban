@@ -1,0 +1,145 @@
+﻿@model List<ntdai16032016.maketing.library.Models.QuanLyMaketting_EmailMoiGiang_ntdai_GetListGiangVienMoiGiangByUser_Result>
+
+@*<div class="row">
+
+    </div>*@
+<div class="row">
+    <div class="col-sm-offset-2 col-sm-8">
+        <div class="form-horizontal">
+
+            <div class="form-group">
+                Tiêu đề
+                <input type="text" class="form-control" id="txttitleemail" />
+            </div>
+            <div class="form-group">
+                Nội dung
+                <textarea class="form-control" id="txtnoidung" />
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-12">
+        <div class="text-center">
+
+            <button type="button" onclick="KichHoatGuiEmail(this)" class="btn btn-primary">Gửi email</button>
+
+        </div>
+        <div id="progressbarguiemail" style="display:none;">
+            Đã gửi email <span id="phantram"></span>
+            <div class="progress progress-striped active">
+                <div id="szliderbar" class="progress-bar progress-bar-info"></div>
+            </div>
+        </div>
+        <div class="text-center">
+
+            <div  style="display:none" id="iconok">
+                <i class="fa fa-check-square-o text-info"></i> Đã hoàn tất tiến trình!   <a class="btn btn-info" href="@Url.Action("QuanLyGuiThuMoiGiang", "QuanLyMaketting")">Quay lại</a>
+
+            </div>
+
+        </div>
+        <div style="display:none">
+            <ul id="listemaildotgui">
+                @foreach (var item in Model)
+                {
+                    <text>
+                        <li data="@item.EmailMoiGiangGuid" data-trangthai="@item.IsSended"></li>
+                    </text>
+                }
+
+            </ul>
+
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+
+@using (Html.BeginScriptContext())
+{
+    Html.AddScriptBlock(
+        @<script type="text/javascript">
+            function drawszlider(ossz, meik) {
+
+                var szazalek = Math.round((meik * 100) / ossz);
+                document.getElementById("szliderbar").style.width = szazalek + '%';
+                $("#phantram").html(szazalek + '%');
+                if (ossz <= meik)
+                {
+                    DialogAlert('', 'Hoàn thành đợt gửi', 'info');
+                    $("#iconok").attr("style","font-size: 20px");
+                    return;
+                }
+
+
+                var trangthai = document.getElementById("listemaildotgui").getElementsByTagName("li")[meik ].getAttribute("data-trangthai");
+                var x = document.getElementById("listemaildotgui").getElementsByTagName("li")[meik ].getAttribute("data");
+
+                @*$.ajax({
+                    type: 'Post',
+                    cache: false,
+                    url: '@Url.Action("SendEmailMoiGiang", "QuanLyMaketting")?id=' + (meik + 1) + "&t=@ViewBag.SoLuongEmail" + "&item=" + x +"&tt="+trangthai,
+                    success: function (data) {
+                        setTimeout(5000);
+                    }
+                }).done(function () {
+                });*@
+                $("#txtnoidung").val(CKEDITOR.instances["txtnoidung"].getData());
+                var formData = {id: (meik + 1) ,
+                    t:"@ViewBag.SoLuongEmail",
+                    item:x,
+                    tt:trangthai,
+                    title:$("#txttitleemail").val(),
+                    noidung:$("#txtnoidung").val()};
+
+                $.ajax({
+                    type: 'Post',
+                    cache: false,
+                    data : formData,
+                    url: '@Url.Action("SendEmailMoiGiang", "QuanLyMaketting")',
+                    success: function (data) {
+                        setTimeout(5000);
+                    }
+                }).done(function () {
+                });
+
+            }
+            function KichHoatGuiEmail(element) {
+                if($("#txttitleemail").val()==""||$("#txtnoidung").val())
+                {
+                    alert("Phải nhập đầy đủ thông tin mời giảng");
+                    return;
+                }
+
+
+                $(element).attr("style","display: none")
+
+                $("#progressbarguiemail").attr("style","");
+                $("#szliderbar").attr("style","");
+                drawszlider(@ViewBag.SoLuongEmail , 0);
+            }
+
+            if (typeof CKEDITOR != 'undefined') {
+                var a = CKEDITOR.replace('txtnoidung',{
+                    toolbar: [
+                    { name: 'basicstyles', items : [ 'Bold','Italic','Underline','Strike','Subscript','Superscript','-','RemoveFormat' ] },
+                    { name: 'paragraph',   items : [ 'NumberedList','BulletedList','-','Outdent','Indent','-','Blockquote','CreateDiv','-','JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock','-','Cut','Copy','Paste','PasteText','PasteFromWord','-','Undo','Redo'  ] },
+                    { name: 'links',       items : [ 'Link','Unlink','Anchor' ] },
+                    '/',
+                    { name: 'styles',      items : [ 'Styles','Format','Font','FontSize' ] },
+                    ],
+                });
+
+
+               
+            }
+
+        </script>
+, true);
+}
+

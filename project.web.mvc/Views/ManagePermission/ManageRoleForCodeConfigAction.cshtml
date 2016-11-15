@@ -1,0 +1,119 @@
+﻿@{
+    ViewBag.Title = "Cấu hình action - rolforcode";
+}
+<div id="page-heading">
+    <ol class="breadcrumb">
+        <li>
+            <a href="@Url.Action("Index", "Dashboards")">
+                <i class="fa fa-lg fa-home text-warning text-size-20">
+                </i> Trang chủ
+            </a>
+        </li>
+        <li>
+            <a href="@Url.Action("ManageRoleForCode", "ManagePermission")">
+                Quản lý role for code
+            </a>
+        </li>
+        <li class="active">
+            config role for code
+        </li>
+    </ol>
+</div>
+<div class="container">
+    <div class="row">
+        @*các thao tác*@
+        <div class="show">
+            <div class="col-sm-4 col-sm-push-8" style="text-align:right;">
+                <div class="form-group ">
+                    <button data-otf-mutil="true"
+                            onclick="ManageRoleForCode_RoleForCode_DeleteConfigMulti(this)"
+                            data-otf-confirm="Bạn có chắc muốn bỏ kích hoạt những dòng đã chọn?"
+                            data-otf-target="#CPManageRoleForCode"
+                            data-otf-input="#buttonsearch"
+                            data-otf-action="@Url.Action("RoleForCodeConfigDelete", "ManagePermission", null, Request.Url.Scheme)?id=@Request["id"]&iddelete="
+                            class=" btn btn-danger"
+                            title="Bỏ kích hoạt">
+                        <i class="fa fa-trash-o"></i> Bỏ kích hoạt
+                    </button>
+                    <button data-otf-mutil="true"
+                            onclick="ManageRoleForCode_RoleForCode_InsertConfigMulti(this)"
+                            data-otf-target="#CPManageRoleForCode"
+                            data-otf-input="#buttonsearch"
+                            data-otf-action="@Url.Action("RoleForCodeConfigInsert", "ManagePermission", null, Request.Url.Scheme)?id=@Request["id"]&idinsert="
+                            class=" btn btn-success"
+                            title="Kích hoạt">
+                        <i class="fa"></i> Kích hoạt
+                    </button>
+
+                </div>
+            </div>
+            <div class="col-sm-8  col-sm-pull-4">
+                <div class="form-group">
+                    <div class="col-sm-2">
+                        @Html.DropDownList("ddlListControler",
+                                                   new SelectList(ViewBag.ListControler, "ValueString", "Name"),
+                                          new
+                                          {
+                                              @class = "form-control chosen-select",
+                                              onchange = "DropdownlistChange(this,'#buttonsearch')",
+                                              id = "ddlListControler"
+                                          })
+                    </div>
+                    <div class="col-sm-2">
+                        @Html.DropDownList("ddlListGroup",
+                                          new SelectList(ViewBag.ListGroup, "ValueString", "Name"),
+                                          new
+                                          {
+                                              @class = "form-control chosen-select",
+                                              onchange = "DropdownlistChange(this,'#buttonsearch')",
+                                              id = "ddlListGroup"
+                                          })
+                    </div>
+                    <div class="col-sm-2">
+                        @Html.CheckBox("chondangsudung",
+                                        new
+                                        {
+                                            @id = "CheckBoxDangSuDung",
+                                            onchange = "DropdownlistChange(this,'#buttonsearch')"
+                                        })
+                        Đang sử dụng
+                    </div>
+                    <div class="input-group col-sm-6">
+                        <div class="input-group">
+                            <input id="SearchRoleForCode"
+                                   placeholder="Thông tin cần tìm"
+                                   onkeypress="return ManageRoleForCode_RoleForCode_EnterEvent(event, '#buttonsearch')"
+                                   class="form-control " />
+                            <span class="input-group-btn">
+                                <button id="buttonsearch"
+                                        type="button"
+                                        title="Tìm kiếm"
+                                        class="btn btn-primary"
+                                        data-otf-target="#CPManageRoleForCode"
+                                        data-otf-input="#SearchRoleForCode"
+                                        data-otf-input1="#ddlListControler"
+                                        data-otf-input2="#ddlListGroup"
+                                        data-otf-input3="#CheckBoxDangSuDung"
+                                        data-otf-action="@Url.Action("RoleForCodeConfigAction_List", "ManagePermission", null, Request.Url.Scheme)?id=@Request["id"]&k="
+                                        onclick="ManageRoleForCode_ActionRoleForCode_IsSearch(this)">
+                                    Tìm kiếm
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div id="CPManageRoleForCode">
+                @Html.Action("RoleForCodeConfigAction_List", "ManagePermission")
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/module/ManagePermission/ManageRoleForCode")
+}

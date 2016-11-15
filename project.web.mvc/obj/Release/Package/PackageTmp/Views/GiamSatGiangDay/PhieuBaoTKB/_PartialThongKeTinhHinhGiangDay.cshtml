@@ -1,0 +1,38 @@
+﻿@*
+    Author:   			pdgiai
+    Created: 			2016-2-1
+    Last Modified: 		2016-2-1
+*@
+
+@model nvngoc31122015.giamsatgiangday.library.Models.GiamSatGiangDay_Dashboard_pdgiai_TinhHinhGiangDay_Result
+
+<h3>Tình hình giảng dạy</h3>
+<table class="table table-bordered ">
+    <thead>
+        <tr>
+            <td colspan="2" class="text-left">
+                <b>Năm học @Html.Raw(Model.NamHoc)</b>
+            </td>
+        </tr>
+    </thead>
+    <tbody id="listcheckall">
+        <tr>
+            <td class="text-left col-sm-4">Nghỉ có báo</td>
+            <td class="text-left col-sm-1">@Html.Raw(Model.NghiCoBao)</td>
+        </tr>
+        <tr>
+            <td class="text-left ">Nghỉ không báo</td>
+            <td class="text-left ">@Html.Raw(Model.NghiKhongBao)</td>
+        </tr>
+        <tr>
+            <td class="text-left ">Số lần trễ</td>
+            <td class="text-left ">@Html.Raw(Model.SoLanTre)</td>
+        </tr>
+        <tr>
+            <td class="text-left ">Số lần bù</td>
+            <td class="text-left ">@Html.Raw(Model.SoPhieuBu)</td>
+        </tr>
+    </tbody>
+   
+</table>
+

@@ -1,0 +1,88 @@
+﻿@model nvngoc31122015.giamsatgiangday.library.GiamSatGiangDay.QuanLyKhoaPhong
+
+@*@Html.HiddenFor(model => Model.NguoiDeNghi_Guid, new { id = "NhanVienGuid" })*@
+<div class="show" id="show">
+    <div class="row form-group">
+        <div id="data_TuNgay_Time" class="col-sm-2">
+            <div class="input-group date">
+                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                <input type="datetime" value="" name="TuNgay_Time" id="tungay_time" class="text-box single-line" placeholder="Từ ngày" />
+            </div>
+        </div>
+        <div id="data_DenNgay_Time" class="col-sm-2">
+            <div class="input-group date">
+                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                <input type="datetime" value="" name="DenNgay_Time" id="denngay_time" class="text-box single-line" placeholder="Đến ngày" />
+            </div>
+        </div>
+        <div class="col-sm-2">
+            <input id="PhongID"
+                   placeholder="Phòng học"
+                   onkeypress=""
+                   class="form-control"
+                   data-otf-action="@Url.Action("QuanLyPhieuKhoaPhong_AutoCompatePhongHoc", "GiamSatGiangDay")" />
+        </div>
+    </div>
+</div>
+
+@using (Html.BeginScriptContext())
+{
+    Html.AddScriptBlock(
+        @<script type="text/javascript">
+            AutoCompleteSearchPhong('#PhongID', '#PhongID');
+
+            //$(document).ready(function () {
+            //    $('#NhanVienID').on('input', function () {
+            //        if ($('#NhanVienID').val() == "")
+            //            $('#NhanVienGuid').val("");
+            //    });
+            //});
+
+            //Su dung cau hinh dropdownlist
+            //var config = {
+            //    '.chosen-select': {},
+            //    '.chosen-select-deselect': { allow_single_deselect: true },
+            //    '.chosen-select-no-single': { disable_search_threshold: 10 },
+            //    '.chosen-select-no-results': { no_results_text: 'Lỗi! Vui lòng chọn ít nhất 1 mục.' },
+            //    '.chosen-select-width': { width: "95%" }
+            //}
+            //for (var selector in config) {
+            //    $(selector).chosen(config[selector]);
+            //}
+
+            function AutoCompleteSearchPhong(element, valueset) {
+
+                var $input = $(element);
+                function CreateAutoCompleteSearchPhong() {
+                    var options = {
+                        columns: ["value", "label", "valuequery"],
+                        delay: 700,
+                        source: $input.attr("data-otf-action"),
+                        select: function (event, ui) {
+                            this.value = (ui.item ? ui.item.manv : '');
+                            //$(valueset).val(ui.item.value);
+                            //alert($(valueset).val());
+                            return false;
+                        },
+                        focus: function (event, ui) {
+                            $(this).val(ui.item.manv);
+                            return false;
+                        },
+                    };
+                    $input.autocomplete(options);
+
+                }
+                CreateAutoCompleteSearchPhong();
+            }
+
+
+        </script>
+, true);
+}
+
+
+
+
+
+
+

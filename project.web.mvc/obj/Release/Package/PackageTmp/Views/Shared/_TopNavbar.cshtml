@@ -1,0 +1,367 @@
+﻿@using Microsoft.AspNet.Identity;
+
+<header class="navbar navbar-inverse navbar-fixed-top" role="banner">
+    <a title="" data-placement="right" data-toggle="tooltip" class="tooltips ioiort-mobile" id="leftmenu-trigger" data-original-title="Toggle Sidebar"></a>
+
+    @*su dung cho chatting sau nay*@
+    @*<a id="rightmenu-trigger" class="tooltips" data-toggle="tooltip" data-placement="left" title="Toggle Infobar"></a>*@
+
+
+    <div class="navbar-header pull-left">
+        <a class="navbar-brand" href="~/home">GIÁM SÁT TÌNH HÌNH GIẢNG DẠY</a>
+    </div>
+
+    <ul class="nav navbar-nav pull-right toolbar">
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle username" data-toggle="dropdown">
+                <span class="hidden-xs">
+                    Tài khoản
+                    <i class="fa fa-caret-down"></i>
+                </span><img src="~/demo/avatar/dangerfield.png" alt="Dangerfield" />
+            </a>
+            <ul class="dropdown-menu userinfo arrow">
+                <li class="username">
+                    <a href="#">
+                        <div class="pull-left"><img class="userimg" src="/demo/avatar/dangerfield.png" alt="Jeff Dangerfield" /></div>
+                        <div class="pull-right"><h5>Chào, @User.Identity.Name</h5><small>Đã truy cập bằng <span>@User.Identity.Name</span></small></div>
+
+                    </a>
+                </li>
+                <li class="userlinks">
+                    <ul class="dropdown-menu">
+                        <li style="display:none;"><a href="#">Edit Profile <i class="pull-right fa fa-pencil"></i></a></li>
+                        <li style="display:none;"><a href="#">Account <i class="pull-right fa fa-cog"></i></a></li>
+                        <li style="display:none;"><a href="#">Help <i class="pull-right fa fa-question-circle"></i></a></li>
+                        <li @Html.IsSelected(action: "Manage", controller: "Account")>
+                            @if (Request.IsAuthenticated)
+                            {
+                                <a href="@Url.Action("Manage", "Account")"> Đổi mật khẩu<i class="pull-right fa fa-key"></i></a>
+                            }
+
+                        </li>
+                        <li class="divider"></li>
+                        <li style="padding:0 13px;">
+                            @if (Request.IsAuthenticated)
+                            {
+                                <text>
+                                    @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        <a href="javascript:document.getElementById('logoutForm').submit()">
+                                            Thoát hệ thống
+                                            <i class="pull-right fa fa-sign-out"></i>
+                                        </a>
+                                    }
+                                </text>
+                            }
+
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        <li class="dropdown" style="display:none;">
+            <a href="#" class="hasnotifications dropdown-toggle" data-toggle='dropdown'><i class="fa fa-envelope"></i><span class="badge">1</span></a>
+            <ul class="dropdown-menu messages arrow">
+                <li class="dd-header">
+                    <span>You have 1 new message(s)</span>
+                    <span><a href="#">Mark all Read</a></span>
+                </li>
+                <div class="scrollthis">
+                    <li>
+                        <a href="#" class="active">
+                            <span class="time">6 mins</span>
+                            <img src="~/demo/avatar/doyle.png" alt="avatar" />
+                            <div><span class="name">Alan Doyle</span><span class="msg">Please mail me the files by tonight.</span></div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span class="time">12 mins</span>
+                            <img src="~/demo/avatar/paton.png" alt="avatar" />
+                            <div><span class="name">Polly Paton</span><span class="msg">Uploaded all the files to server. Take a look.</span></div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span class="time">9 hrs</span>
+                            <img src="~/demo/avatar/corbett.png" alt="avatar" />
+                            <div><span class="name">Simon Corbett</span><span class="msg">I am signing off for today.</span></div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span class="time">2 days</span>
+                            <img src="~/demo/avatar/tennant.png" alt="avatar" />
+                            <div><span class="name">David Tennant</span><span class="msg">How are you doing?</span></div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span class="time">6 mins</span>
+                            <img src="~/demo/avatar/doyle.png" alt="avatar" />
+                            <div><span class="name">Alan Doyle</span><span class="msg">Please mail me the files by tonight.</span></div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span class="time">12 mins</span>
+                            <img src="~/demo/avatar/paton.png" alt="avatar" />
+                            <div><span class="name">Polly Paton</span><span class="msg">Uploaded all the files to server. Take a look.</span></div>
+                        </a>
+                    </li>
+                </div>
+                <li class="dd-footer"><a href="#">View All Messages</a></li>
+            </ul>
+        </li>
+        <li class="dropdown" style="display:none;">
+            <a href="#" class="hasnotifications dropdown-toggle" data-toggle='dropdown'><i class="fa fa-bell"></i><span class="badge">3</span></a>
+            <ul class="dropdown-menu notifications arrow">
+                <li class="dd-header">
+                    <span>You have 3 new notification(s)</span>
+                    <span><a href="#">Mark all Seen</a></span>
+                </li>
+                <div class="scrollthis">
+                    <li>
+                        <a href="#" class="notification-user active">
+                            <span class="time">4 mins</span>
+                            <i class="fa fa-user"></i>
+                            <span class="msg">New user Registered. </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="notification-danger active">
+                            <span class="time">20 mins</span>
+                            <i class="fa fa-bolt"></i>
+                            <span class="msg">CPU at 92% on server#3! </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="notification-success active">
+                            <span class="time">1 hr</span>
+                            <i class="fa fa-check"></i>
+                            <span class="msg">Server#1 is live. </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="notification-warning">
+                            <span class="time">2 hrs</span>
+                            <i class="fa fa-exclamation-triangle"></i>
+                            <span class="msg">Database overloaded. </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="notification-order">
+                            <span class="time">10 hrs</span>
+                            <i class="fa fa-shopping-cart"></i>
+                            <span class="msg">New order received. </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="notification-failure">
+                            <span class="time">12 hrs</span>
+                            <i class="fa fa-times-circle"></i>
+                            <span class="msg">Application error!</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="notification-fix">
+                            <span class="time">12 hrs</span>
+                            <i class="fa fa-wrench"></i>
+                            <span class="msg">Installation Succeeded.</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="notification-success">
+                            <span class="time">18 hrs</span>
+                            <i class="fa fa-check"></i>
+                            <span class="msg">Account Created. </span>
+                        </a>
+                    </li>
+                </div>
+                <li class="dd-footer"><a href="#">View All Notifications</a></li>
+            </ul>
+        </li>
+
+        <!--Cong cu quan tri cua admin-->
+        @if (User.IsInRole(project.config.library.Utilities.ConstantVariable.Value_AspNetRoles_Administrator) ||
+            User.IsInRole(project.config.library.Utilities.ConstantVariable.Value_AspNetRoles_System)
+            )
+        {
+            <li>
+                <a href="#" id="headerbardropdown" title="Admin tool"><span><i class="fa fa-level-down"></i></span></a>
+            </li>
+        }
+
+        @*su dung de thay layout*@
+            @*<li class="dropdown demodrop">
+                    <a href="#" class="dropdown-toggle tooltips" data-toggle="dropdown"><i class="fa fa-magic"></i></a>
+
+                    <ul class="dropdown-menu arrow dropdown-menu-form" id="demo-dropdown">
+                        <li>
+                            <label for="demo-header-variations" class="control-label">Header Colors</label>
+                            <ul class="list-inline demo-color-variation" id="demo-header-variations">
+                                <li><a class="color-black" href="javascript:;" data-headertheme="header-black.css"></a></li>
+                                <li><a class="color-dark" href="javascript:;" data-headertheme="default.css"></a></li>
+                                <li><a class="color-red" href="javascript:;" data-headertheme="header-red.css"></a></li>
+                                <li><a class="color-blue" href="javascript:;" data-headertheme="header-blue.css"></a></li>
+                            </ul>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <label for="demo-color-variations" class="control-label">Sidebar Colors</label>
+                            <ul class="list-inline demo-color-variation" id="demo-color-variations">
+                                <li><a class="color-lite" href="javascript:;" data-theme="default.css"></a></li>
+                                <li><a class="color-steel" href="javascript:;" data-theme="sidebar-steel.css"></a></li>
+                                <li><a class="color-lavender" href="javascript:;" data-theme="sidebar-lavender.css"></a></li>
+                                <li><a class="color-green" href="javascript:;" data-theme="sidebar-green.css"></a></li>
+                            </ul>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <label for="fixedheader">Fixed Header</label>
+                            <div id="fixedheader" style="margin-top:5px;"></div>
+                        </li>
+                    </ul>
+                </li>*@
+        </ul>
+    </header>
+
+
+
+    @*<div class="row border-bottom">
+            <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
+                <div class="navbar-header">
+                    <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
+                    <form role="search" class="navbar-form-custom" method="post" action="">
+                        <div class="form-group">
+                            <input type="text" placeholder="Search for something..." class="form-control" name="top-search" id="top-search">
+                        </div>
+                    </form>
+                </div>
+                <ul class="nav navbar-top-links navbar-right">
+                    <li>
+                        @if (Request.IsAuthenticated)
+                        {
+                            <text>
+                                <span class="m-r-sm text-muted welcome-message">Hello, @Html.ActionLink(User.Identity.Name, "Manage", "Account", routeValues: null, htmlAttributes: new { @class = "username", title = "Manage" })!</span>
+                            </text>
+                        }
+                    </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
+                            <i class="fa fa-envelope"></i>  <span class="label label-warning">16</span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-messages">
+                            <li>
+                                <div class="dropdown-messages-box">
+                                    <a href="#" class="pull-left">
+                                        <img alt="image" class="img-circle" src="~/Images/a7.jpg">
+                                    </a>
+                                    <div class="media-body">
+                                        <small class="pull-right">46h ago</small>
+                                        <strong>Mike Loreipsum</strong> started following <strong>Monica Smith</strong>. <br>
+                                        <small class="text-muted">3 days ago at 7:58 pm - 10.06.2014</small>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <div class="dropdown-messages-box">
+                                    <a href="#" class="pull-left">
+                                        <img alt="image" class="img-circle" src="~/Images/a4.jpg">
+                                    </a>
+                                    <div class="media-body ">
+                                        <small class="pull-right text-navy">5h ago</small>
+                                        <strong>Chris Johnatan Overtunk</strong> started following <strong>Monica Smith</strong>. <br>
+                                        <small class="text-muted">Yesterday 1:21 pm - 11.06.2014</small>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <div class="dropdown-messages-box">
+                                    <a href="#" class="pull-left">
+                                        <img alt="image" class="img-circle" src="~/Images/profile.jpg">
+                                    </a>
+                                    <div class="media-body ">
+                                        <small class="pull-right">23h ago</small>
+                                        <strong>Monica Smith</strong> love <strong>Kim Smith</strong>. <br>
+                                        <small class="text-muted">2 days ago at 2:30 am - 11.06.2014</small>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <div class="text-center link-block">
+                                    <a href="#">
+                                        <i class="fa fa-envelope"></i> <strong>Read All Messages</strong>
+                                    </a>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
+                            <i class="fa fa-bell"></i>  <span class="label label-primary">8</span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-alerts">
+                            <li>
+                                <a href="#">
+                                    <div>
+                                        <i class="fa fa-envelope fa-fw"></i> You have 16 messages
+                                        <span class="pull-right text-muted small">4 minutes ago</span>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <a href="#">
+                                    <div>
+                                        <i class="fa fa-twitter fa-fw"></i> 3 New Followers
+                                        <span class="pull-right text-muted small">12 minutes ago</span>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <a href="#">
+                                    <div>
+                                        <i class="fa fa-upload fa-fw"></i> Server Rebooted
+                                        <span class="pull-right text-muted small">4 minutes ago</span>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <div class="text-center link-block">
+                                    <a href="#">
+                                        <strong>See All Alerts</strong>
+                                        <i class="fa fa-angle-right"></i>
+                                    </a>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+
+
+                    <li>
+
+                        @if (Request.IsAuthenticated)
+                        {
+                            <text>
+
+                                @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    <a href="javascript:document.getElementById('logoutForm').submit()">
+                                        <i class="fa fa-sign-out"></i> Log out
+                                    </a>
+                                }
+                            </text>
+                        }
+
+                    </li>
+                </ul>
+            </nav>
+        </div>*@

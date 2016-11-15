@@ -1,0 +1,45 @@
+﻿
+
+
+
+
+<div class="modal-header">
+    <h3 class="modal-title" id="modal-title">Danh sách phòng trống</h3>
+</div>
+<div class="modal-body" id="modal-body">
+    <div class="row">
+        <div class="col-sm-3">
+            <select class="form-control" ng-options="item.CoSoName for item in listCoSo track by item.CoSoGuid" ng-model="filterto.coso" ng-change="LoadDDLLau(filterto.coso)"></select>
+        </div>
+        <div class="col-sm-3">
+            <select class="form-control" ng-options="item.LauName for item in listLau track by item.LauGuid" ng-model="filterto.lau" ng-change="DanhSachPhong(filterto)"></select>
+        </div>
+        <div class="col-sm-6">
+            <input class="form-control" type="text" placeholder="Phập mã phòng để tìm kiếm..." ng-model="filterto.phongid" ng-keypress="EnterToFilter(filterto,$event)">
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="p-b-10"  ng-show="TongSoPhongTrong != null">
+            Tìm được: <b> {{TongSoPhongTrong}} </b> Phòng trống
+        </div>
+        <div ng-repeat="obj in objs track by $id(obj)">
+            <div class="col-sm-3">
+                <a href="javascript:void(0)" ng-click="ok(obj)"
+                   class="info-tiles tiles-success">
+                    <div class="tiles-heading">
+                        <div class="pull-right">{{obj.SucChua}}</div>
+                    </div>
+                    <div class="tiles-body" style="font-size: 18px;">
+                        <div class="pull-right">{{obj.PhongID}}<span class="text-smallcaps"></span></div>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-warning" type="button" ng-click="cancel()">Trở lại</button>
+</div>

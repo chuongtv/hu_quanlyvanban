@@ -1,0 +1,110 @@
+﻿@*
+    Author:   			ntdai
+    Created: 			2016-3-18
+    Last Modified: 		2016-3-18
+*@
+
+
+@{
+    ViewBag.Title = "QuanLyDotGui";
+}
+<div id="page-heading">
+    <ol class="breadcrumb">
+        <li>
+            <a href="@Url.Action("Index", "Dashboards")">
+                <i class="fa fa-lg fa-home text-warning text-size-20">
+                </i> Trang chủ
+            </a>
+        </li>
+        <li class="active">
+            Quản lý đợt gửi
+        </li>
+    </ol>
+</div>
+
+@*content*@
+<div class="container">
+    <div class="row">
+        @*các thao tác*@
+        <div class="show">
+            <div class="col-sm-4 col-sm-push-8" style="text-align:right;">
+                <div class="form-group ">
+                    <a class=" btn btn-primary" href="@Url.Action("QuanLySendEmails", "QuanLyMaketting", null, Request.Url.Scheme)">
+                        <i class="fa fa-plus" title="Tạo mới"></i> Nhóm Email
+                    </a>
+                    <button data-otf-mutil="true"
+                            onclick="QuanLyDotGui_DotGui_DeleteMulti(this)"
+                            data-otf-confirm="Bạn có chắc muốn xóa những dòng đã chọn?"
+                            data-otf-target="#CPQuanLyDotGui"
+                            data-otf-input="#SearchDotGui"
+                            data-otf-action-target="@Url.Action("DotGuiGet_List", "QuanLyMaketting")?k="
+                            data-otf-action="@Url.Action("DotGuiDelete", "QuanLyMaketting", null, Request.Url.Scheme)?id="
+                            class=" btn btn-danger"
+                            title="Xóa">
+                        <i class="fa fa-trash-o"></i> Xóa
+                    </button>
+                    <a class=" btn btn-success" href="@Url.Action("DotGuiCreate", "QuanLyMaketting", null, Request.Url.Scheme)">
+                        <i class="fa fa-plus" title="Tạo mới"></i> Thêm mới
+                    </a>
+
+                </div>
+            </div>
+            <div class="col-sm-8  col-sm-pull-4">
+                <div class="form-group">
+                    <div class="input-group">
+                        <input id="SearchDotGui"
+                               placeholder="Thông tin cần tìm"
+                               onkeypress="return QuanLyDotGui_DotGui_EnterEvent(event, '#buttonsearch')"
+                               class="form-control " />
+                        <span class="input-group-btn">
+                            <button id="buttonsearch"
+                                    type="button"
+                                    title="Tìm kiếm"
+                                    class="btn btn-primary"
+                                    data-otf-target="#CPQuanLyDotGui"
+                                    data-otf-input="#SearchDotGui"
+                                    data-otf-action="@Url.Action("DotGuiGet_List", "QuanLyMaketting", null, Request.Url.Scheme)?k="
+                                    onclick="QuanLyDotGui_DotGui_IsSearch(this)">
+                                Tìm kiếm
+                            </button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div id="CPQuanLyDotGui">
+                @Html.Action("DotGuiGet_List", "QuanLyMaketting")
+            </div>
+        </div>
+    </div>
+
+
+
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/module/QuanLyMaketting/QuanLyDotGui")
+    <script type="text/javascript">
+        function drawszlider(ossz, meik) {
+            var szazalek = Math.round((meik * 100) / ossz);
+            document.getElementById("szliderbar").style.width = szazalek + '%';
+
+            $.ajax({
+                type: 'Post',
+                cache: false,
+                url: '@Url.Action("DotGuiSendEmail", "QuanLyMaketting")?id=' + (meik + 1),
+                success: function (data) {
+
+                }
+            }).done(function () {
+            });
+        }
+    </script>
+}
+
+
+
+

@@ -1,0 +1,124 @@
+﻿@*
+    Author:   			hoadm
+    Created: 			2016-3-29
+    Last Modified: 		2016-3-29
+*@
+
+@model MvcPaging.IPagedList<nvngoc31122015.giamsatgiangday.library.BaoCaoThongKe.ListTongHopTinhHinhVangBuGiangVienTheoHocKyView>
+@using MvcPaging
+
+@{var i = 1;}
+
+<div class="table-responsive">
+    @if (Model.TotalItemCount > 0)
+    {
+        <div class="p-b-10">
+            Kết quả tìm kiếm: <b>@Model.TotalItemCount</b> đơn vị
+        </div>
+        <text>
+            <table class="table table-bordered datatables dataTable">
+                <thead>
+                    <tr>
+                        <th class="text-center w-30">
+                            #
+                        </th>
+                        <th class="text-center w-150">
+                            @Html.DisplayNameFor(model => Model[0].DonViID)
+                        </th>
+                        <th class="text-center w-100">
+                            @Html.DisplayNameFor(model => Model[0].DonViName)
+                        </th>
+                        <th class="text-center w-100">
+                            @Html.DisplayNameFor(model => Model[0].TongTietCanBu)
+                        </th>
+                        <th class="text-center w-100">
+                            @Html.DisplayNameFor(model => Model[0].TongTietDaBu)
+                        </th>
+                        <th class="text-center w-100">
+                            @Html.DisplayNameFor(model => Model[0].ChenhLech)
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="text-center">
+                                @Html.Raw((Model.PageNumber - 1) * Model.PageSize + i)
+                                @{i++;}
+                            </td>
+                            <td class="text-left">
+                                @Html.Raw(item.DonViID)
+                            </td>
+                            <td class="text-center">
+                                @Html.Raw(item.DonViName)
+                            </td>
+                            <td class="text-center">
+                                @Html.Raw(item.TongTietCanBu)
+                            </td>
+                            <td class="text-center">                               
+                                    @Html.Raw(item.TongTietDaBu)
+                            </td>
+                            <td class="text-center">                                
+                                    @Html.Raw(item.ChenhLech)
+
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </text>
+    }
+    else
+    {
+        <text><br />
+    <div class="alert alert-dismissable alert-info">
+        <strong>Yêu cầu tìm kiếm lúc @{ var date = DateTime.Now; } @date.ToString("HH:mm:ss dd/MM/yyyy") không có dữ liệu</strong>
+        <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+    </div>
+        </text>
+    }
+    <div class="pager">
+        @if (Model.TotalItemCount > Model.PageSize)
+        {
+
+            <text>
+
+                @Html.Raw(Ajax.Pager(
+                       new Options
+                       {
+                           PageSize = Model.PageSize,
+                           TotalItemCount = Model.TotalItemCount,
+                           CurrentPage = Model.PageNumber,
+                           ItemTexts = new ItemTexts() { Next = "Next", Previous = "Previous", Page = "" },
+                           ItemIcon = new ItemIcon() { First = "icon-backward", Previous = "icon-chevron-left", Next = "icon-chevron-right", Last = "icon-forward" },
+                           TooltipTitles = new TooltipTitles() { Next = "Next page", Previous = "Previous page", Page = "Page {0}." },
+                           Size = Size.normal,
+                           Alignment = Alignment.centered,
+                           IsShowControls = true,
+                           IsShowFirstLast = true,
+                           CssClass = ""
+                       },
+                       new AjaxOptions
+                       {
+                           UpdateTargetId = "BaoCaoThongKe_TinhHinhVangBu_DS_content"
+                       }, new
+                       {
+                           controller = "GiamSatGiangDay",
+                           action = "TinhHinhVangBuTheoHocKyGet_List",
+                           donvi = ViewData["donvi"]
+                            ,
+                           giangvien = ViewData["giangvien"]
+                            ,
+                           namhoc = ViewData["namhoc"]
+                            ,
+                           hocky = ViewData["hocky"]
+                       }))
+            </text>
+        }
+    </div>
+</div>
+
+
+
+

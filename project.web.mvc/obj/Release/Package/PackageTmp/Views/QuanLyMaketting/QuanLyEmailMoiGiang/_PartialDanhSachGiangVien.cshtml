@@ -1,0 +1,107 @@
+﻿@*
+    Author:   			ntdai
+    Created: 			2016-3-18
+    Last Modified: 		2016-3-18
+*@
+
+@model List<ntdai16032016.maketing.library.Models.QuanLyMaketting_EmailMoiGiang_ntdai_GetGiangVienByDonVi_Result>
+
+<div class="table-responsive">
+    @if (Model.Count > 0)
+    {
+        <div class="p-b-10">
+            Kết quả tìm kiếm: <b>@Model.Count</b> Giảng viên
+        </div>
+        <text>
+            <table class="table table-bordered datatables dataTable">
+                <thead>
+                    <tr>
+                        <th class="text-center w-30">
+                            <input id="CheckBoxAll" onclick="javascript: checkAlllist('#listcheckall',this);" type="checkbox" />
+                        </th>
+                        <th class="text-left w-150">
+                            Mã giảng viên
+                        </th>
+                        <th class="text-left ">
+                            Tên giảng viên
+                        </th>
+                        <th class="text-left ">
+                            Đơn vị
+                        </th>
+                        <th class="text-left w-100">
+                           Email
+                        </th>
+                        <th class="text-left w-100">
+                            Điện thoại
+                        </th>
+
+                        <th class="text-right w-150">
+                            Sô lượng lớp
+                        </th>
+                        <th class="text-left w-150">
+                            Học hàm-học vị
+                        </th>
+
+                    </tr>
+                </thead>
+                <tbody id="listcheckall">
+                    @foreach (var item in Model)
+                    {
+                        <tr data="@item.NhanVienGuid" class="showhim">
+                            <td class="text-center">
+                                <input type="checkbox" class="checkbox-item" value="@item.NhanVienGuid" />
+                            </td>
+                            
+                            <td class="text-left">
+                                @Html.Raw(item.NhanVienID)
+                            </td>
+                            <td class="text-left">
+                                @Html.Raw(item.Ho + " " + item.TenLot + " " + item.Ten)
+                            </td>
+                            <td class="text-left">
+                                @Html.Raw(item.DonViName)
+                            </td>
+                            <td class="text-left">
+                                @Html.Raw(item.EmailCaNhan)
+                            </td>
+                            <td class="text-left">
+                                @Html.Raw(item.SoDienThoaiDiDong)
+                            </td>
+
+                            <td class="text-right">
+                               @Html.Raw(item.SoLuongLop)
+                            </td>
+                            <td class="text-left">
+                                @Html.Raw(item.HocHamName + " " + item.HocViName)
+                            </td>
+
+                           
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </text>
+    }
+    else
+    {
+        <text><br />
+    <div class="alert alert-dismissable alert-info">
+        <strong>Yêu cầu tìm kiếm lúc @{ var date = DateTime.Now; } @date.ToString("HH:mm:ss dd/MM/yyyy") không có dữ liệu</strong>
+        <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+    </div>
+        </text>
+    }
+    
+</div>
+
+@using (Html.BeginScriptContext())
+{
+    Html.AddScriptBlock(
+    @<script type="text/javascript">
+        loadSelect("QuanLyDotGui");
+    </script>
+, true);
+}
+
+
+

@@ -1,0 +1,113 @@
+﻿@*
+    Author:   			ntdai
+    Created: 			2016-3-17
+    Last Modified: 		2016-3-17
+*@
+@model ntdai16032016.maketing.library.QuanLySendEmails.UpdateGroupEmailsView
+
+<div class="modal-content">
+    <div class="modal-header">
+        <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+        <h4 class="modal-title">Cập nhật GroupEmails</h4>
+    </div>
+    <div class="modal-body">
+
+        @using (Ajax.BeginForm(
+                                    "GroupEmailsEdit",
+                                    "QuanLyMaketting",
+                                    new AjaxOptions
+                                {
+                                    InsertionMode = InsertionMode.Replace,//cach thuc update du lieu. Thay the hay them vao
+                                    HttpMethod = "POST",
+                                    UpdateTargetId = "modalQuanLySendEmails_GroupEmails_c",
+                                    LoadingElementId = "loader"
+                                }, new { @class = "form-horizontal", id = "frm_EditGroupEmails" }))
+        {
+            
+            
+            @Html.HiddenFor(model => Model.GroupMailsGuid)
+            
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+
+
+           
+
+            
+             <div class="form-group ">
+                @Html.LabelFor(model => Model.GroupName, new { @class = "col-sm-3 control-label", @for = "text_GroupName" })
+                <div class="col-sm-9">
+                    @Html.TextBoxFor(model => Model.GroupName, new { @class = "form-control", id = "text_GroupName" })
+                    @Html.ValidationMessageFor(model => Model.GroupName, null, new { @class = "text-danger" })
+                </div>
+           
+            </div>
+            
+             <div class="form-group ">
+                @Html.LabelFor(model => Model.Mota, new { @class = "col-sm-3 control-label", @for = "text_Mota" })
+                <div class="col-sm-9">
+                    @Html.TextBoxFor(model => Model.Mota, new { @class = "form-control", id = "text_Mota" })
+                    @Html.ValidationMessageFor(model => Model.Mota, null, new { @class = "text-danger" })
+                </div>
+          
+            </div>
+        }
+     
+    </div>
+ 
+    <div class="modal-footer">
+
+        <div class="col-sm-12  text-center">
+      
+            <button type="button" aria-hidden="true" data-dismiss="modal"
+                            onclick="QuanLySendEmails_GroupEmails_DeleteView(this)"
+                            data-otf-action="@Url.Action("GroupEmailsDelete", "QuanLyMaketting", null, Request.Url.Scheme)?id=@Model.GroupMailsGuid"
+                            data-otf-action-exit="@Url.Action("GroupEmailsGet_List", "QuanLyMaketting", null, Request.Url.Scheme)"
+                            data-otf-confirm="Bạn muốn xóa dữ liệu này?"
+                            data-otf-target-exit="#QuanLySendEmails_GroupEmails_DS_content"
+                            data-target="#modalQuanLySendEmails_GroupEmails"
+                            class="btn btn-danger">
+                        <i class="fa fa-trash-o"></i> Xóa
+                    </button>
+                    <button type="button" onclick="QuanLySendEmails_GroupEmails_OnSaveExit('#callbackQuanLySendEmails_GroupEmails', 'true', '#frm_EditGroupEmails')" class="btn btn-success">Lưu & Thoát</button>
+                    <button type="button" onclick="QuanLySendEmails_GroupEmails_OnSaveExit('#callbackQuanLySendEmails_GroupEmails', 'false', '#frm_EditGroupEmails')" class="btn btn-primary"><i class="fa fa-floppy-o"></i> Lưu dữ liệu</button>
+                    &nbsp;hoặc&nbsp;
+                    
+                    <a class="btn btn-link" data-otf-action="@Url.Action("GroupEmailsGet_List", "QuanLyMaketting", null, Request.Url.Scheme) " data-target="#QuanLySendEmails_GroupEmails_DS_content" aria-hidden="true" data-dismiss="modal" onclick="QuanLySendEmails_GroupEmails_BakList(this)"> Trở lại</a>
+
+                    <input type="hidden" id="callbackQuanLySendEmails_GroupEmails"
+                           data-otf-target="#modalQuanLySendEmails_GroupEmails"
+                           data-otf-target-exit="#QuanLySendEmails_GroupEmails_DS_content"
+                           data-otf-action-exit="@Url.Action("GroupEmailsGet_List", "QuanLyMaketting", null, Request.Url.Scheme)"
+                           data-otf-action="@Url.Action("GroupEmailsEdit", "QuanLyMaketting", null, Request.Url.Scheme)?id=@Model.GroupMailsGuid" />
+            
+         
+        </div>
+    </div>
+
+</div>
+
+@using (Html.BeginScriptContext())
+{
+    Html.AddScriptBlock(
+        @<script type="text/javascript">
+             //Su dung cau hinh dropdownlist
+            var config = {
+                '.chosen-select': {},
+                '.chosen-select-deselect': { allow_single_deselect: true },
+                '.chosen-select-no-single': { disable_search_threshold: 10 },
+                '.chosen-select-no-results': { no_results_text: 'Lỗi! Vui lòng chọn ít nhất 1 mục.' },
+                '.chosen-select-width': { width: "95%" }
+            }
+            for (var selector in config) {
+                $(selector).chosen(config[selector]);
+            }
+            
+
+        </script>
+, true);
+}
+
+
+
+

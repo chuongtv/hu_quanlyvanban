@@ -1,0 +1,35 @@
+﻿@model nvngoc31122015.giamsatgiangday.library.GiamSatGiangDay.PhanCongThanhTraDetail
+
+
+
+<div class="modal-content">
+    <div class="modal-header">
+        <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+        <h4 class="modal-title">Chi tiết thông tin lich trực</h4>
+    </div>
+    <div class="modal-body">
+        @*body*@
+        <h5><b>Thanh tra:</b> @Html.Raw(Model.HoTenThanhTra + " (" + Model.MaThanhTra + ")")</h5>
+        <h5><b>Năm học:</b> @Html.Raw(Model.NamHocName)</h5>
+        <h5><b>Thời gian:</b> @Html.Raw(Model.KhoangThoiGian)</h5>
+        <hr />
+        <h5>
+            @Html.Raw(Model.ThongTinTruc)
+        </h5>
+    </div>
+    <div class="modal-footer">
+        <div class="col-sm-12  text-center">
+            <button class="btn btn-default" data-otf-action="@Url.Action("DSPhanCongThanhTra", "GiamSatGiangDay", null, Request.Url.Scheme)" aria-hidden="true" data-dismiss="modal"> Quay lại</button>
+        </div>
+    </div>
+</div>
+
+@using (Html.BeginScriptContext())
+{
+    Html.AddScriptBlock(
+        @<script type="text/javascript">
+
+        </script>
+, true);
+}
+

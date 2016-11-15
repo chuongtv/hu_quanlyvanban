@@ -1,0 +1,364 @@
+﻿
+@model nvngoc31122015.giamsatgiangday.library.GiamSatGiangDay.LuuLichTrucCuaThanhTra
+
+
+
+@using (Ajax.BeginForm(
+                                                                                                                                                "PhanCongLichTrucCreate_Partial",
+                                                                                                                                                "GiamSatGiangDay",
+                                                                                                                                                new AjaxOptions
+                                                                                                                                                {
+                                                                                                                                                    InsertionMode = InsertionMode.Replace,//cach thuc update du lieu. Thay the hay them vao
+                                                                                                                                                    HttpMethod = "POST",
+                                                                                                                                                    UpdateTargetId = "GiamSatGiangDay_PhanCongLichTruc_Create",
+                                                                                                                                                    LoadingElementId = "loader"
+                                                                                                                                                }, new { @class = "form-horizontal", id = "frm_Create_PhanCongLichTruc" }))
+{
+
+
+
+    <fieldset class="scheduler-border">
+        <legend class="scheduler-border">Thời gian trực</legend>
+        <div class="control-group">
+            <div class="row">
+
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        @*<input type="text" class="form-control " placeholder="Tìm & chọn nhân viên phân công trực" data-otf-action="@Url.Action("PhanCongLichTrucAutoCompateNhanVien", "GiamSatGiangDay", null, Request.Url.Scheme)" id="text_TimNhanVien" />*@
+                        <input id="text_TimNhanVien"
+                               placeholder="Mã giảng viên"
+                               onkeypress=""
+                               class="form-control "
+                               data-otf-action="@Url.Action("PhanCongLichTrucAutoCompateNhanVien", "GiamSatGiangDay")" />
+                    
+                    
+                       </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <b> Nhân viên trực: <span id="text_HoVaTen">@Model.NhanVienDangTruc</span></b>
+                        @Html.ValidationMessageFor(model => Model.NhanVienGuid, null, new { @class = "text-danger" })
+                    </div>
+                </div>
+
+            </div>
+
+            @Html.HiddenFor(model => Model.ThongTinPhanCongThanhTraGuid)
+            @Html.HiddenFor(model => Model.NhanVienGuid, new { id = "hiden_NhanVienGuid" })
+            @Html.HiddenFor(model => Model.DanhSachBuoi, new { id = "hiden_DanhSachBuoi" })
+            @Html.HiddenFor(model => Model.DanhSachLau, new { id = "hiden_DanhSachLau" })
+
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+            <div class="row">
+                <div class="col-sm-6">
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => Model.NamHoc, new { @class = "col-sm-2 control-label", @for = "DDL_NamHoc" })
+                        <div class="col-sm-4">
+                            @Html.DropDownListFor(model => Model.NamHoc, new SelectList(Model.ListNamHoc, "ValueString", "Name"), new { @class = "form-control chosen-select", id = "DDL_ListNamHoc" })
+                            @Html.ValidationMessageFor(model => Model.NamHoc, null, new { @class = "text-danger" })
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.TuNgay, new { @class = "col-sm-2 control-label", @for = "data_Tungay" })
+                        <div class="col-sm-4">
+                            <div id="data_PhanCongLichTruc_Tungay">
+                                <div class="input-group date">
+                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                    @Html.EditorFor(model => model.TuNgay, new { @class = "form-control" })
+                                </div>
+                            </div>
+                            @Html.ValidationMessageFor(model => Model.TuNgay, null, new { @class = "text-danger" })
+                        </div>
+
+                        @Html.LabelFor(model => model.DenNgay, new { @class = "col-sm-2 control-label", @for = "data_Denngay" })
+                        <div class="col-sm-4">
+                            <div id="data_PhanCongLichTruc_Denngay">
+                                <div class="input-group date">
+                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                    @Html.EditorFor(model => model.DenNgay, new { @class = "form-control" })
+                                </div>
+                            </div>
+                            @Html.ValidationMessageFor(model => Model.DenNgay, null, new { @class = "text-danger" })
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="col-sm-6">
+                    <div class="col-sm-6">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                Thứ trong tuần
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="control-label">@Html.CheckBoxFor(model => Model.Thu2, new { id = "Thu2" }) Thứ 2</label>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="control-label"> @Html.CheckBoxFor(model => Model.Thu3, new { id = "Thu3" }) Thứ 3</label>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="control-label"> @Html.CheckBoxFor(model => Model.Thu4, new { id = "Thu4" }) Thứ 4</label>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="control-label">@Html.CheckBoxFor(model => Model.Thu5, new { id = "Thu5" }) Thứ 5</label>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="control-label">@Html.CheckBoxFor(model => Model.Thu6, new { id = "Thu6" }) Thứ 6</label>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="control-label">@Html.CheckBoxFor(model => Model.Thu7, new { id = "Thu7" }) Thứ 7</label>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="control-label"> @Html.CheckBoxFor(model => Model.Cn, new { id = "Cn" }) Chủ nhật</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                Buổi đi thanh tra @Html.ValidationMessageFor(model => Model.DanhSachBuoi, null, new { @class = "text-danger" })
+                            </div>
+
+                        </div>
+                        @foreach (var item in Model.ListBuoiTruc)
+                        {
+                            <text>
+                                <div class="form-group">
+                                    <label class="control-label">@Html.CheckBox(item.BuoiTrucGuid.ToString(), item.Checked, new { onclick = "ClickCheckBox(this)", data_otf_addto = "#hiden_DanhSachBuoi" }) @item.BuoiTrucName (Tiết @item.TietTu-@item.TietDen)</label>
+                                </div>
+                            </text>
+                        }
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </fieldset>
+    <fieldset class="scheduler-border">
+        <legend class="scheduler-border">Các lầu được phân công trực</legend>
+        <div class="control-group">
+            @Html.ValidationMessageFor(model => Model.DanhSachLau, null, new { @class = "text-danger" })
+            @foreach (var item in Model.listLauCoSo)
+            {
+                <text>
+                    <div class="col-sm-12">
+                        <h4>@item.CoSoName</h4>
+                        @foreach (var item1 in item.listLauCoSo)
+                        {
+                            <text>
+                                <div class="col-sm-2"><div class="form-group"><label class="control-label">@Html.CheckBox(item1.LauGuid.ToString(), item1.Checked, new { onclick = "ClickCheckBox(this)", data_otf_addto = "#hiden_DanhSachLau" }) @item1.LauName</label></div></div>
+                            </text>
+                        }
+
+                    </div>
+
+                </text>
+            }
+        </div>
+  </fieldset>
+}
+<div class="modal-footer">
+
+
+    <div class="col-sm-12  text-right">
+        @if (Model.NhanVienGuid != null)
+        {
+            <text>
+                <button type="button"
+                        onclick="GiamSatGiangDay_PhanCongLichTruc_DeleteView(this)"
+                        data-otf-action="@Url.Action("PhanCongThanhTraDelete", "GiamSatGiangDay", null, Request.Url.Scheme)?id=@Model.ThongTinPhanCongThanhTraGuid"
+                        data-otf-action-exit="@Url.Action("DSPhanCongThanhTra", "GiamSatGiangDay", null, Request.Url.Scheme)"
+                        data-otf-confirm="Bạn muốn xóa dữ liệu này?"
+                        class="btn btn-danger">
+                    <i class="fa fa-trash-o"></i> Xóa phân công
+                </button>&nbsp;
+            </text>
+        }
+
+
+
+        <button type="button" onclick="GiamSatGiangDay_PhanCongLichTruc_OnSaveExit('#callbackGiamSatGiangDay_PhanCongLichTruc', 'true', '#frm_Create_PhanCongLichTruc')" class="btn btn-success">Lưu lịch trực</button>
+        &nbsp;hoặc&nbsp;
+
+        <a class="btn btn-link" href="@Url.Action("DSPhanCongThanhTra", "GiamSatGiangDay", null, Request.Url.Scheme)"> Quay lại</a>
+
+        <input type="hidden" id="callbackGiamSatGiangDay_PhanCongLichTruc"
+               data-otf-action="@Url.Action("PhanCongLichTrucCreate", "GiamSatGiangDay", null, Request.Url.Scheme)" />
+
+
+
+
+    </div>
+
+</div>
+@using (Html.BeginScriptContext())
+            {
+                Html.AddScriptBlock(
+                    @<script type="text/javascript">
+                        var config = {
+                            '.chosen-select': {},
+                            '.chosen-select-deselect': { allow_single_deselect: true },
+                            '.chosen-select-no-single': { disable_search_threshold: 10 },
+                            '.chosen-select-no-results': { no_results_text: 'Lỗi! Vui lòng chọn ít nhất 1 mục.' },
+                            '.chosen-select-width': { width: "95%" }
+                        }
+                        for (var selector in config) {
+                            $(selector).chosen(config[selector]);
+                        }
+                        //AutoCompleteNhanvienTruc('#text_TimNhanVien', '#hiden_NhanVienGuid', '#text_HoVaTen');
+
+                        $('#data_PhanCongLichTruc_Tungay .input-group.date').datepicker({
+                            format: 'dd/mm/yyyy',
+                            todayBtn: "linked",
+                            keyboardNavigation: false,
+                            forceParse: false,
+                            calendarWeeks: true,
+                            autoclose: true
+                        });
+                        $('#data_PhanCongLichTruc_Denngay .input-group.date').datepicker({
+                            format: 'dd/mm/yyyy',
+                            todayBtn: "linked",
+                            keyboardNavigation: false,
+                            forceParse: false,
+                            calendarWeeks: true,
+                            autoclose: true
+                        });
+
+                        //function AutoCompleteNhanvienTruc(element, valueset, hovaten) {
+                        //    var $input = $(element);
+                        //    function CreateAutoCompleteNhanVien() {
+                        //        var options = {
+                        //            columns: ["value", "label", "valuequery"],
+                        //            delay: 100,
+                        //            source: $input.attr("data-otf-action"),
+                        //            select: function (event, ui) {
+                        //                this.value = (ui.item ? ui.item.manv : '');
+                        //                $(valueset).val(ui.item.value);
+
+                        //                $(hovaten).html(ui.item.hovaten);
+                        //                return false;
+                        //            },
+                        //            focus: function (event, ui) {
+                        //                $(this).val(ui.item.manv);
+                        //                return false;
+                        //            },
+                        //        };
+                        //        $input.autocomplete(options);
+
+                        //    }
+                        //    CreateAutoCompleteNhanVien();
+                        //}
+
+                        function ClickCheckBox(element) {
+                            var addtocontrol = $(element).attr("data-otf-addto");
+                            var macontrol = $(element).attr("name");
+
+                            var valuescontrol = $(addtocontrol).val();
+                            if ($(element).is(":checked")) {
+                                $(addtocontrol).val(valuescontrol + "," + macontrol);
+                            }
+                            else {
+                                $(addtocontrol).val(valuescontrol.replace("," + macontrol, ''));
+                            }
+                        }
+                        function GiamSatGiangDay_PhanCongLichTruc_BakList(element) {
+                            $($(element).attr("data-target")).load($(element).attr("data-otf-action"))
+                        }
+                        function GiamSatGiangDay_PhanCongLichTruc_OnSaveExit(e, v, f) {
+
+                            //if (v == "true")
+                            //    $(e).attr('data-otf-save-exit', 'true');
+                            //else
+                            //    $(e).removeAttr('data-otf-save-exit');
+                            $(f).submit();
+                        }
+
+                        function GiamSatGiangDay_PhanCongLichTruc_ReLoadAjaxPartial(id) {
+                            DialogAlert('', 'Thao tác thành công!', 'info');
+                            setTimeout(function () {
+                                window.location = $("#callbackGiamSatGiangDay_PhanCongLichTruc").attr("data-otf-action") + "?id=" + id;
+                            }, 1000);
+
+                        }
+
+                        function GiamSatGiangDay_PhanCongLichTruc_DeleteView(element) {
+                            BeginWaiting();
+                            var $button = $(element);
+                            if ($button.attr('data-otf-confirm'))
+                                if (!confirm($button.attr('data-otf-confirm'))) {
+                                    EndWaiting();
+                                    return false;
+                                }
+                            $.ajax({
+                                type: 'Post',
+                                cache: false,
+                                url: $button.attr('data-otf-action'),
+                                success: function (data) {
+                                    var acindex = $button.attr('data-otf-action-exit');
+                                    window.location = acindex;
+                                    EndWaiting();
+                                }
+                            }).done(function () {
+                            });
+
+                            return true;
+                        }
+                    
+                        AutoCompleteSearchGiangVien('#text_TimNhanVien', '#hiden_NhanVienGuid', "#text_HoVaTen");
+
+                        function AutoCompleteSearchGiangVien(element, valueset, valuehovaten) {
+
+                            var $input = $(element);
+                            var options = {
+                                requestDelay: 500,
+                                url: function (keyWord) {
+                                    return $input.attr("data-otf-action") + "?term=" + keyWord;
+                                },
+                                getValue: "label",
+                                list: {
+                                    onShowListEvent: function () {
+                                        $(valueset).val("").trigger("change");
+                                        $($input.attr("data-otf-target")).attr("style", "display:none;");
+                                    },
+                                    onSelectItemEvent: function () {
+                                        // gan lai gia tri khi chon
+                                        var valuename = $(element).getSelectedItemData().value;
+                                        $(valueset).val(valuename).trigger("change");
+
+                                        var hovaten = $(element).getSelectedItemData().hovaten;
+                                        $(valuehovaten).html(hovaten).trigger("change");
+                                    },
+                                    match: {
+                                        enabled: false,
+                                    },
+                                },
+                                template: {
+                                    type: "custom",
+                                    method: function (value, item) {
+                                        return "<img src='" + item.LinkHinhAnh + "' style='width:40px; height:40px; float:left;' /><strong style='float:left; margin-left:10px;'>" + value + "</strong><br/><span style='margin-left:10px;'>" + item.hovaten + " - " + item.valuequery + "</span><div style='clear:both;'></div>";
+                                    }
+                                }
+                            };
+                            $input.easyAutocomplete(options);
+                        }
+    
+    </script>
+, true);
+            }

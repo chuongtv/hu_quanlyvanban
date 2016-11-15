@@ -1,0 +1,137 @@
+﻿@*
+    Author:   			pdgiai
+    Created: 			2016-1-11
+    Last Modified: 		2016-1-11
+*@
+@model nvngoc31122015.giamsatgiangday.library.GiamSatGiangDay.UpdateCauHinhLoaiViPhamView
+
+<div class="modal-content">
+    <div class="modal-header">
+        <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+        <h4 class="modal-title">Cập nhật loại vi phạm</h4>
+    </div>
+    <div class="modal-body">
+
+        @using (Ajax.BeginForm(
+                                    "CauHinhLoaiViPhamEdit",
+                                    "GiamSatGiangDay",
+                                    new AjaxOptions
+                                {
+                                    InsertionMode = InsertionMode.Replace,//cach thuc update du lieu. Thay the hay them vao
+                                    HttpMethod = "POST",
+                                    UpdateTargetId = "modalGiamSatGiangDay_CauHinhLoaiViPham_c",
+                                    LoadingElementId = "loader"
+                                }, new { @class = "form-horizontal", id = "frm_EditCauHinhLoaiViPham" }))
+        {
+            
+            
+            @Html.HiddenFor(model => Model.LoaiViPhamGuid)
+            
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+
+
+           
+            <div class="form-group ">
+                @Html.LabelFor(model => Model.LoaiViPhamID, new { @class = "col-sm-4 control-label", @for = "text_LoaiViPhamID" })
+                <div class="col-sm-4">
+                    @Html.TextBoxFor(model => Model.LoaiViPhamID, new { @class = "form-control", id = "text_LoaiViPhamID" })
+                    @Html.ValidationMessageFor(model => Model.LoaiViPhamID, null, new { @class = "text-danger" })
+                </div>
+                <div class="col-sm-2">
+
+                </div>
+            </div>
+            
+             <div class="form-group ">
+                @Html.LabelFor(model => Model.LoaiViPhamName, new { @class = "col-sm-4 control-label", @for = "text_LoaiViPhamName" })
+                <div class="col-sm-4">
+                    @Html.TextBoxFor(model => Model.LoaiViPhamName, new { @class = "form-control", id = "text_LoaiViPhamName" })
+                    @Html.ValidationMessageFor(model => Model.LoaiViPhamName, null, new { @class = "text-danger" })
+                </div>
+                <div class="col-sm-2">
+
+                </div>
+            </div>
+            
+             <div class="form-group ">
+                @Html.LabelFor(model => Model.MoTa, new { @class = "col-sm-4 control-label", @for = "text_MoTa" })
+                <div class="col-sm-4">
+                    @Html.TextBoxFor(model => Model.MoTa, new { @class = "form-control", id = "text_MoTa" })
+                    @Html.ValidationMessageFor(model => Model.MoTa, null, new { @class = "text-danger" })
+                </div>
+                <div class="col-sm-2">
+
+                </div>
+            </div>
+            
+             <div class="form-group ">
+                @Html.LabelFor(model => Model.HTMLStyle, new { @class = "col-sm-4 control-label", @for = "text_HTMLStyle" })
+                <div class="col-sm-4">
+                    @Html.TextBoxFor(model => Model.HTMLStyle, new { @class = "form-control", id = "text_HTMLStyle" })
+                    @Html.ValidationMessageFor(model => Model.HTMLStyle, null, new { @class = "text-danger" })
+                </div>
+                <div class="col-sm-2">
+
+                </div>
+            </div>
+        }
+ 
+    </div>
+ 
+    <div class="modal-footer">
+
+        <div class="col-sm-12  text-center">
+      
+            <button type="button" aria-hidden="true" data-dismiss="modal"
+                            onclick="GiamSatGiangDay_CauHinhLoaiViPham_DeleteView(this)"
+                            data-otf-action="@Url.Action("CauHinhLoaiViPhamDelete", "GiamSatGiangDay", null, Request.Url.Scheme)?id=@Model.LoaiViPhamGuid"
+                            data-otf-action-exit="@Url.Action("CauHinhLoaiViPhamGet_List", "GiamSatGiangDay", null, Request.Url.Scheme)"
+                            data-otf-confirm="Bạn muốn xóa dữ liệu này?"
+                            data-otf-target-exit="#GiamSatGiangDay_CauHinhLoaiViPham_DS_content"
+                            data-target="#modalGiamSatGiangDay_CauHinhLoaiViPham"
+                            class="btn btn-danger">
+                        <i class="fa fa-trash-o"></i> Xóa
+                    </button>
+                    <button type="button" onclick="GiamSatGiangDay_CauHinhLoaiViPham_OnSaveExit('#callbackGiamSatGiangDay_CauHinhLoaiViPham', 'true', '#frm_EditCauHinhLoaiViPham')" class="btn btn-success">Lưu & Thoát</button>
+                    <button type="button" onclick="GiamSatGiangDay_CauHinhLoaiViPham_OnSaveExit('#callbackGiamSatGiangDay_CauHinhLoaiViPham', 'false', '#frm_EditCauHinhLoaiViPham')" class="btn btn-primary"><i class="fa fa-floppy-o"></i> Lưu dữ liệu</button>
+                    &nbsp;hoặc&nbsp;
+                    
+                    <a class="btn btn-link" data-otf-action="@Url.Action("CauHinhLoaiViPhamGet_List", "GiamSatGiangDay", null, Request.Url.Scheme)" data-target="#GiamSatGiangDay_CauHinhLoaiViPham_DS_content" aria-hidden="true" data-dismiss="modal" onclick="GiamSatGiangDay_CauHinhLoaiViPham_BakList(this)"> Quay lại</a>
+
+                    <input type="hidden" id="callbackGiamSatGiangDay_CauHinhLoaiViPham"
+                           data-otf-target="#modalGiamSatGiangDay_CauHinhLoaiViPham"
+                           data-otf-target-exit="#GiamSatGiangDay_CauHinhLoaiViPham_DS_content"
+                           data-otf-action-exit="@Url.Action("CauHinhLoaiViPhamGet_List", "GiamSatGiangDay", null, Request.Url.Scheme)"
+                           data-otf-action="@Url.Action("CauHinhLoaiViPhamEdit", "GiamSatGiangDay", null, Request.Url.Scheme)?id=@Model.LoaiViPhamGuid" />
+            
+         
+        </div>
+    </div>
+
+</div>
+
+@using (Html.BeginScriptContext())
+{
+    Html.AddScriptBlock(
+        @<script type="text/javascript">
+             //Su dung cau hinh dropdownlist
+            //var config = {
+            //    '.chosen-select': {},
+            //    '.chosen-select-deselect': { allow_single_deselect: true },
+            //    '.chosen-select-no-single': { disable_search_threshold: 10 },
+            //    '.chosen-select-no-results': { no_results_text: 'Lỗi! Vui lòng chọn ít nhất 1 mục.' },
+            //    '.chosen-select-width': { width: "95%" }
+            //}
+            //for (var selector in config) {
+            //    $(selector).chosen(config[selector]);
+            //}
+            
+
+        </script>
+, true);
+}
+
+
+
+

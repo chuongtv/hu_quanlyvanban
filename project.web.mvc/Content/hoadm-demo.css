@@ -1,0 +1,131 @@
+﻿/*button edit list*/
+.showme {
+    display: none;
+}
+
+.showhim td {
+    vertical-align: middle;
+}
+
+.showhim:hover .showme {
+    display: block;
+}
+
+.showhim:hover .hideme {
+    display: none;
+}
+
+.showhim .showme a {
+    margin-bottom: 0pc !important;
+}
+
+.current {
+    font-weight: bold;
+}
+/*end button edit list*/
+
+/*tootip cho textbox search*/
+#elementToHide {
+    display: none;
+}
+
+.showtooltip:focus + #elementToHide {
+    display: block;
+    position: absolute;
+    width: 200px;
+    background: #fff;
+    padding: 5px;
+    z-index: 15;
+    top: 35px;
+    border: 1px solid #f8ac59;
+    -webkit-border-radius: 0 10px 0 10px;
+    -moz-border-radius: 0 10px 0 10px;
+    border-radius: 0 10px 0 10px;
+}
+/*end tootip cho textbox search*/
+
+/*box control*/
+.box-action {
+    border-bottom: 1px dashed #cdcdcd;
+    display: table;
+    margin-bottom: 15px;
+    padding: 10px;
+    width: 100%;
+}
+/*end box control*/
+
+
+.m-b-5 {
+    margin-bottom: 5px;
+}
+
+.chosen-container {
+    margin-bottom: 5px;
+    width: 100% !important;
+}
+
+.input-daterange {
+    width: 100%;
+}
+
+.lbl-valid {
+    color: red;
+}
+
+.text-italic {
+    font-style: italic;
+}
+
+
+/*Cấu hình cài đặt*/
+.setting a, .setting a:hover, .setting a:focus {
+    text-decoration: none;
+}
+
+.setting .status {
+    height: 130px;
+}
+
+    .setting .status .panel-heading {
+        padding: 0 10px !important;
+        height: 70px;
+    }
+
+    .setting .status .panel-title {
+        color: #fff;
+        font-family: Arial,sans-serif;
+        font-size: 80px;
+        font-weight: bold;
+        letter-spacing: -0.8px;
+        line-height: 45px;
+        margin-top: 0;
+        padding-top: 20px;
+    }
+
+    .setting .status .panel-body {
+        color: #333;
+    }
+
+.w-50 {
+    width: 50px;
+}
+
+.row-header{background: #edeef0;font-weight: bold;}
+.row-active{background: #98d3f1 !important;}
+.p-b-50{padding-bottom: 50px;}
+.p-l-50{padding-left: 50px !important;}
+.p-l-20{padding-left: 20px;}
+
+.m-b-none{margin-bottom: 0 !important;}
+
+.modal-width-a4{width: 850px !important;font-family: 'Times New Roman';}
+.form-print{padding: 10px; border: 1px double #000000;}
+.form-print .row{margin-left: 0;margin-right:0;}
+.form-print .title{font-size: 25px;padding-top: 15px;padding-bottom: 30px;}
+
+
+/*tile custom BaoCaoThongKe*/
+.shortcut-tiles .tiles-footer-report{text-align: left !important;text-transform: none !important;min-height: 70px;}
+/*legend tile custom*/
+
+.row-title{background: #f6f6f6 none repeat scroll 0 0 !important;font-weight: bold;text-transform: uppercase;}

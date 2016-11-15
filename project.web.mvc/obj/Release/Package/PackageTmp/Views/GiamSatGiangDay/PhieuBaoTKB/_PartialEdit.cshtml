@@ -1,0 +1,208 @@
+﻿@*
+    Author:   			pdgiai
+    Created: 			2016-2-1
+    Last Modified: 		2016-2-1
+*@
+@model nvngoc31122015.giamsatgiangday.library.GiamSatGiangDay.UpdatePhieuBaoTKBView
+
+<div class="modal-content">
+    <div class="modal-header">
+        <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+        <h4 class="modal-title">Cập nhật sản phẩm</h4>
+    </div>
+    <div class="modal-body">
+
+        @using (Ajax.BeginForm(
+                                    "PhieuBaoTKBEdit",
+                                    "GiamSatGiangDay",
+                                    new AjaxOptions
+                                {
+                                    InsertionMode = InsertionMode.Replace,//cach thuc update du lieu. Thay the hay them vao
+                                    HttpMethod = "POST",
+                                    UpdateTargetId = "modalGiamSatGiangDay_PhieuBaoTKB_c",
+                                    LoadingElementId = "loader"
+                                }, new { @class = "form-horizontal", id = "frm_EditPhieuBaoTKB" }))
+        {
+            
+            
+            @Html.HiddenFor(model => Model.PhieuBaoGuid)
+            
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+
+
+           
+
+             <div class="form-group">
+                @Html.LabelFor(model => Model.NhanVien_Guid, new { @class = "col-sm-2 control-label", @for = "DDL_NhanVien_Guid" })
+                <div class="col-sm-4">
+                    @Html.DropDownListFor(model => Model.NhanVien_Guid, new SelectList(Model.ListNhanVien_Guid, "ValueString", "Name"), new { @class = "form-control chosen-select", id = "DDL_LoaiSanPhamGuid" })
+                    @Html.ValidationMessageFor(model => Model.NhanVien_Guid, null, new { @class = "text-danger" })
+                </div>
+                <div class="col-sm-2">
+
+                </div>
+            </div>
+             <div class="form-group">
+                @Html.LabelFor(model => Model.LoaiPhieu_Guid, new { @class = "col-sm-2 control-label", @for = "DDL_LoaiPhieu_Guid" })
+                <div class="col-sm-4">
+                    @Html.DropDownListFor(model => Model.LoaiPhieu_Guid, new SelectList(Model.ListLoaiPhieu_Guid, "ValueString", "Name"), new { @class = "form-control chosen-select", id = "DDL_LoaiSanPhamGuid" })
+                    @Html.ValidationMessageFor(model => Model.LoaiPhieu_Guid, null, new { @class = "text-danger" })
+                </div>
+                <div class="col-sm-2">
+
+                </div>
+            </div>
+            
+             <div class="form-group ">
+                @Html.LabelFor(model => Model.PhieuBaoID, new { @class = "col-sm-2 control-label", @for = "text_PhieuBaoID" })
+                <div class="col-sm-4">
+                    @Html.TextBoxFor(model => Model.PhieuBaoID, new { @class = "form-control", id = "text_PhieuBaoID" })
+                    @Html.ValidationMessageFor(model => Model.PhieuBaoID, null, new { @class = "text-danger" })
+                </div>
+                <div class="col-sm-2">
+
+                </div>
+            </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.NgayGui, new { @class = "col-sm-2 control-label", @for = "data_NgayGui" })
+                        <div class="col-sm-4">
+                            <div id="data_PhieuBaoTKB_NgayGui">
+                                <div class="input-group date">
+                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                    @Html.EditorFor(model => model.NgayGui, new { @class = "form-control" })
+                                </div>
+                            </div>
+                            @Html.ValidationMessageFor(model => Model.NgayGui, null, new { @class = "text-danger" })
+                        </div>
+                        <div class="col-sm-2">
+
+                        </div>
+                    </div>
+            <div class="form-group">
+                @Html.LabelFor(model => Model.TrangThai, new { @class = "col-sm-2 control-label", @for = "chek_TrangThai" })
+                <div class="col-sm-4">
+                    @Html.CheckBoxFor(model => Model.TrangThai, new { @checked = "checked", id = "chek_TrangThai" })
+                    @Html.ValidationMessageFor(model => Model.TrangThai, null, new { @class = "text-danger" })
+                </div>
+                <div class="col-sm-2">
+
+                </div>
+            </div>
+             <div class="form-group">
+                @Html.LabelFor(model => Model.PhieuBaoNghi_Guid, new { @class = "col-sm-2 control-label", @for = "DDL_PhieuBaoNghi_Guid" })
+                <div class="col-sm-4">
+                    @Html.DropDownListFor(model => Model.PhieuBaoNghi_Guid, new SelectList(Model.ListPhieuBaoNghi_Guid, "ValueString", "Name"), new { @class = "form-control chosen-select", id = "DDL_LoaiSanPhamGuid" })
+                    @Html.ValidationMessageFor(model => Model.PhieuBaoNghi_Guid, null, new { @class = "text-danger" })
+                </div>
+                <div class="col-sm-2">
+
+                </div>
+            </div>
+            
+             <div class="form-group ">
+                @Html.LabelFor(model => Model.NoiDung, new { @class = "col-sm-2 control-label", @for = "text_NoiDung" })
+                <div class="col-sm-4">
+                    @Html.TextBoxFor(model => Model.NoiDung, new { @class = "form-control", id = "text_NoiDung" })
+                    @Html.ValidationMessageFor(model => Model.NoiDung, null, new { @class = "text-danger" })
+                </div>
+                <div class="col-sm-2">
+
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => Model.IsPhieuNhap, new { @class = "col-sm-2 control-label", @for = "chek_IsPhieuNhap" })
+                <div class="col-sm-4">
+                    @Html.CheckBoxFor(model => Model.IsPhieuNhap, new { @checked = "checked", id = "chek_IsPhieuNhap" })
+                    @Html.ValidationMessageFor(model => Model.IsPhieuNhap, null, new { @class = "text-danger" })
+                </div>
+                <div class="col-sm-2">
+
+                </div>
+            </div>
+        }
+      <div class="form-horizontal">
+            <div class="form-group">
+                <label class="col-sm-2 control-label">
+                    File đính kèm
+                </label>
+                <div class="col-sm-10">
+
+                    @*2 hàm ulupload 1 cho xóa và k xóa*@
+                    @Html.Action("LoadUploadOne", "FileSystem", new { itemguid = Model.PhieuBaoGuid, id = 1, auto = "false", isDelete = "true", mo = "PhieuBaoTKB" })
+                    @*@Html.Action("LoadUploadOne", "FileSystem", new { itemguid = Model.ItemGuid, id = 1, auto = "false", isDelete = "false", mo = "PhieuBaoTKB" })*@
+
+
+                    @*s = style hiển thị danh sách file 0:1; 0 dạng block, 1 là dạng list
+                    d ="true" :"fasle" cho phép delete hay k
+                    id quy định nơi upload file, nơi load file lên trong contantvalble*@
+                   @* @Html.Action("LoadUploadFiles", "FileSystem", new { itemguid = Model.PhieuBaoGuid, id = 1, auto = "false", d = "true", s = 1, mo = "PhieuBaoTKB" })*@
+                </div>
+            </div>
+        </div>
+    </div>
+ 
+    <div class="modal-footer">
+
+        <div class="col-sm-12  text-center">
+      
+            <button type="button" aria-hidden="true" data-dismiss="modal"
+                            onclick="GiamSatGiangDay_PhieuBaoTKB_DeleteView(this)"
+                            data-otf-action="@Url.Action("PhieuBaoTKBDelete", "GiamSatGiangDay", null, Request.Url.Scheme)?id=@Model.PhieuBaoGuid"
+                            data-otf-action-exit="@Url.Action("PhieuBaoTKBGet_List", "GiamSatGiangDay", null, Request.Url.Scheme)?idnv=@Model.NhanVienGuid"
+                            data-otf-confirm="Bạn muốn xóa dữ liệu này?"
+                            data-otf-target-exit="#GiamSatGiangDay_PhieuBaoTKB_DS_content"
+                            data-target="#modalGiamSatGiangDay_PhieuBaoTKB"
+                            class="btn btn-danger">
+                        <i class="fa fa-trash-o"></i> Xóa
+                    </button>
+                    <button type="button" onclick="GiamSatGiangDay_PhieuBaoTKB_OnSaveExit('#callbackGiamSatGiangDay_PhieuBaoTKB', 'true', '#frm_EditPhieuBaoTKB')" class="btn btn-success">Lưu & Thoát</button>
+                    <button type="button" onclick="GiamSatGiangDay_PhieuBaoTKB_OnSaveExit('#callbackGiamSatGiangDay_PhieuBaoTKB', 'false', '#frm_EditPhieuBaoTKB')" class="btn btn-primary"><i class="fa fa-floppy-o"></i> Lưu dữ liệu</button>
+                    &nbsp;hoặc&nbsp;
+                    
+                    <a class="btn btn-link" data-otf-action="@Url.Action("PhieuBaoTKBGet_List", "GiamSatGiangDay", null, Request.Url.Scheme)?idnv=@Model.NhanVienGuid " data-target="#GiamSatGiangDay_PhieuBaoTKB_DS_content" aria-hidden="true" data-dismiss="modal" onclick="GiamSatGiangDay_PhieuBaoTKB_BakList(this)"> Quay lại</a>
+
+                    <input type="hidden" id="callbackGiamSatGiangDay_PhieuBaoTKB"
+                           data-otf-target="#modalGiamSatGiangDay_PhieuBaoTKB"
+                           data-otf-target-exit="#GiamSatGiangDay_PhieuBaoTKB_DS_content"
+                           data-otf-action-exit="@Url.Action("PhieuBaoTKBGet_List", "GiamSatGiangDay", null, Request.Url.Scheme)?idnv=@Model.NhanVienGuid"
+                           data-otf-action="@Url.Action("PhieuBaoTKBEdit", "GiamSatGiangDay", null, Request.Url.Scheme)?id=@Model.PhieuBaoGuid" />
+            
+         
+        </div>
+    </div>
+
+</div>
+
+@using (Html.BeginScriptContext())
+{
+    Html.AddScriptBlock(
+        @<script type="text/javascript">
+             //Su dung cau hinh dropdownlist
+            var config = {
+                '.chosen-select': {},
+                '.chosen-select-deselect': { allow_single_deselect: true },
+                '.chosen-select-no-single': { disable_search_threshold: 10 },
+                '.chosen-select-no-results': { no_results_text: 'Lỗi! Vui lòng chọn ít nhất 1 mục.' },
+                '.chosen-select-width': { width: "95%" }
+            }
+            for (var selector in config) {
+                $(selector).chosen(config[selector]);
+            }
+            
+
+            $('#data_PhieuBaoTKB_NgayGui .input-group.date').datepicker({
+                format: 'dd/mm/yyyy',
+                todayBtn: "linked",
+                keyboardNavigation: false,
+                forceParse: false,
+                calendarWeeks: true,
+                autoclose: true
+            });
+        </script>
+, true);
+}
+
+
+
+

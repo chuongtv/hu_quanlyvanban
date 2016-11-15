@@ -1,0 +1,162 @@
+﻿
+@model  project.web.mvc.Views.FileModalView
+@{
+    string itemGuid = Model.ItemGuid == null ? Guid.Empty.ToString() : Model.ItemGuid;
+    string id = Model.Id == null ? "0" : Model.Id;
+    string auto = Model.AutoUpload == null ? "true" : Model.AutoUpload;
+    string isDelete = Model.IsDelete == null ? "false" : Model.IsDelete;
+    string submodel = Model.SubModel == null ? "null" : Model.SubModel;
+    string path = Model.Path == null ? "null" : Model.Path;
+}
+@Styles.Render("~/plugins/dropZoneStyles")
+
+
+<form id="dropzone-@itemGuid.ToUpper()" class="dropzone dz-default_v2" action="@Url.Action("CreateFiles", "FileSystem", new { itemguid = itemGuid, id = id, path = path })" method="post" enctype="multipart/form-data" style="min-height: 50px !important;width:250px !important; padding: 5px !important;margin-bottom:10px;">
+    <div class="dropzone-previews"></div>
+    <div style="display:none;">
+        <button id="btnUpload-@itemGuid.ToUpper()" type="button">Tải lên</button>
+    </div>
+</form>
+
+<div id="FileList-@itemGuid.ToUpper()">
+</div>
+
+
+
+@using (Html.BeginScriptContext())
+{
+    Html.AddScriptBlock(
+        @<script type="text/javascript">
+            $("#FileList-@itemGuid.ToUpper()").load('@Url.Action("v2_LoadOne", "FileSystem", null, Request.Url.Scheme)?q=@itemGuid.ToUpper()&d=@isDelete', function myfunction() {
+                if ($("#FileList-@itemGuid.ToUpper() .dropzone-previews").html().trim() != "")
+                    $("#dropzone-@itemGuid.ToUpper()").addClass("hide");
+                else
+                    $("#dropzone-@itemGuid.ToUpper()").removeClass("hide");
+            });
+            Dropzone.autoDiscover = false;
+            Dropzone.options.myAwesomeDropzone = false;
+
+            @{if(auto=="true")
+        {
+            <text>
+            $("#dropzone-@itemGuid.ToUpper()").dropzone({
+         
+                autoProcessQueue: true,
+                parallelUploads: 1,
+                maxFiles: 1,
+                paramName: "files",
+                uploadMultiple: false,
+                maxFilesize: 1000,
+                init: function () {
+                    Dropzone.options.previewaDropzone = false;
+                    var myDropzone = this;
+                    this.on("complete", function (data) {
+                    });
+                    this.on("queuecomplete", function (file) {
+                        $("#FileList-@itemGuid.ToUpper()").load('@Url.Action("v2_LoadOne", "FileSystem", null, Request.Url.Scheme)?q=@itemGuid.ToUpper()');
+                        myDropzone.removeAllFiles();
+                        $("#dropzone-@itemGuid.ToUpper()").remove();
+
+                    });
+                    this.on("errormultiple", function (files, response) {
+                    });
+                }
+            });
+            </text>
+    }
+    else
+    {<text>
+
+            $("#dropzone-@itemGuid.ToUpper()").dropzone({
+                addRemoveLinks: true,
+                autoProcessQueue: false,
+                parallelUploads: 1,
+                maxFiles: 1,
+                paramName: "files",
+                uploadMultiple: false,
+                maxFilesize: 1000,
+                init: function () {
+                    Dropzone.options.previewaDropzone = false;
+                    var myDropzone = this;
+                    $("#btnUpload-@itemGuid.ToUpper()").click(function (e) {
+
+                        var count = myDropzone.files.length;
+                        if (count > 0) {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            myDropzone.processQueue();
+                        }
+                        else {
+                             @{if (submodel == "null") {
+                                 <text>
+                                     FileUploadCallBack("Thao tác thành công!");
+                                 </text>
+                             }
+                             else
+                             {
+                                 <text>
+                                     FileUploadCallBack_@submodel ("Thao tác thành công!");
+                                 </text>
+                                              
+                             }
+                             }
+                        }
+
+                    });
+
+                    this.on("complete", function (data) {
+                        myDropzone.processQueue();
+                    });
+                    this.on("queuecomplete", function (file) {
+                        $("#FileList-@itemGuid.ToUpper()").load('@Url.Action("v2_LoadOne", "FileSystem", null, Request.Url.Scheme)?q=@itemGuid.ToUpper()&d=@isDelete', function myfunction() {
+                            if ($("#FileList-@itemGuid.ToUpper() .dropzone-previews").html().trim() != "")
+                                $("#dropzone-@itemGuid.ToUpper()").addClass("hide");
+                            else
+                                $("#dropzone-@itemGuid.ToUpper()").removeClass("hide");
+                        });
+
+                        myDropzone.removeAllFiles();
+
+                         @{if (submodel == "null") {
+                             <text>
+                                 if ($.isFunction(FileUploadCallBack)) {//hàm mặc định gọi ra control ngoài
+                                     FileUploadCallBack("Thao tác thành công!");
+                                 }
+                             </text>
+                         }
+                         else
+                         {
+                             <text>
+                                 if ($.isFunction(FileUploadCallBack_@submodel)) {//hàm mặc định gọi ra control ngoài
+                                     FileUploadCallBack_@submodel ("Thao tác thành công!");
+                                 }
+                             </text>     
+                         }
+                        }
+                    });
+                    this.on("errormultiple", function (files, response) {
+                    });
+
+
+                    //this.on("addedfile", function () {
+                    //    if ($.isFunction(FileUpload_Added_CallBack)) {//hàm mặc định gọi ra control ngoài khi đã chọn file
+                    //        FileUpload_Added_CallBack();
+                    //    }
+                    //});
+
+                }
+            });
+            </text>
+    }
+   }
+
+
+        </script>
+, true);
+}
+
+
+
+
+
+

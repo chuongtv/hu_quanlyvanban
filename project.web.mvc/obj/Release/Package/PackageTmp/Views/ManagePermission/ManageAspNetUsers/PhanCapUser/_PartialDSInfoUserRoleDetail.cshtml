@@ -1,0 +1,55 @@
+﻿@*
+    Author:   			ntdai
+    Created: 			2015-11-12
+    Last Modified: 		2015-11-12
+*@
+
+
+
+
+<div class="panel panel-gray">
+    <div class="panel-heading">
+        <h4><i class="fa fa-cloud icon-highlight icon-highlight-primary"></i> Danh sách User đang quản lý</h4>
+        
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            @*các thao tác*@
+
+            <div class="col-sm-12  ">
+                <div class="form-group">
+                    <div class="input-group">
+                        <input id="ManageUserRoleDetail_InfoUserRoleDetail_SearchInput"
+                               placeholder="Lọc theo: Họ và tên có dấu, tên đăng nhập hoặc email..."
+                               onkeypress="return ManagePhanCapUser_EnterEvent(event, '#ManagePhanCapUser_buttonsearch')"
+                               class="form-control " />
+                        <span class="input-group-btn">
+                            <button id="ManagePhanCapUser_buttonsearch"
+                                    type="submit"
+                                    title="Tìm kiếm"
+                                    class="btn btn-primary"
+                                    data-otf-target="#ManageUserRoleDetail_InfoUserRoleDetail_DS_content"
+                                    data-otf-input="#ManageUserRoleDetail_InfoUserRoleDetail_SearchInput"
+                                    data-otf-action="@Url.Action("ManagePhanCapUserGet_List", "ManagePermission", null, Request.Url.Scheme)?id=@Request["id"]&k="
+                                    onclick="ManagePhanCapUser_IsSearch(this)">
+                                Tìm kiếm
+                            </button>
+                        </span>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12" id="ManageUserRoleDetail_InfoUserRoleDetail_DS_content">
+                @Html.Action("ManagePhanCapUserGet_List", "ManagePermission", new { id = @Request["id"] })
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+

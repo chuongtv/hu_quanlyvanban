@@ -1,0 +1,143 @@
+﻿@*
+    Author:   			pdgiai
+    Created: 			2016-1-7
+    Last Modified: 		2016-1-7
+*@
+
+@model MvcPaging.IPagedList<nvngoc31122015.giamsatgiangday.library.GiamSatGiangDay.ListCauHinhLauView>
+@using MvcPaging
+
+@{var i = 1;}
+
+<div class="table-responsive">
+    @if (Model.TotalItemCount > 0)
+    {
+        <div class="p-b-10">
+            Kết quả tìm kiếm: <b>@Model.TotalItemCount</b> lầu
+        </div>
+        <text>
+            <table class="table table-bordered datatables dataTable">
+                <thead>
+                    <tr>
+                        <th class="text-center w-30">
+                            <input id="CheckBoxAll" onclick="javascript: checkAlllist('#listcheckall',this);" type="checkbox" />
+                        </th>
+                        <th class="text-center w-30">
+                            #
+                        </th>
+                        <th class="text-center w-100">
+                            @Html.DisplayNameFor(model => Model[0].LauID)
+                        </th>
+                        <th class="text-center w-200">
+                            @Html.DisplayNameFor(model => Model[0].LauName)
+                        </th>
+                        <th class="text-center w-200">
+                            @Html.DisplayNameFor(model => Model[0].CoSoName)
+                        </th>
+                        
+                        <th class="text-right w-100"></th>
+
+                    </tr>
+                </thead>
+                <tbody id="listcheckall">
+                    @foreach (var item in Model)
+                    {
+                    <tr dataCauHinhLau="@item.LauGuid" class="showhim">
+                        <td class="text-center">
+                            <input type="checkbox" class="checkbox-item" value="@item.LauGuid" />
+                        </td>
+                        <td class="text-center">
+                            @Html.Raw((Model.PageNumber - 1) * Model.PageSize + i)
+                            @{i++;}
+                        </td>
+                        <td class="text-center">
+                            @Html.Raw(item.LauID)
+                        </td>
+                        <td class="text-center">
+                            @Html.Raw(item.LauName)
+                        </td>
+                        <td class="text-center">
+                            @Html.Raw(item.CoSoName)
+                        </td>
+
+                        <td class="text-right w-100">
+
+                            <a data-otf-confirm="Bạn có chắc muôn xóa?"
+                               title="Xóa dữ liệu này" href="javascript:void(0)"
+                               onclick="GiamSatGiangDay_CauHinhLau_DeleteMulti(this)"
+                               data-otf-target="#GiamSatGiangDay_CauHinhLau_DS_content"
+                               data-otf-input="#GiamSatGiangDay_CauHinhLau_SearchInput"
+                               data-otf-inputcoso="#DDLCoSo"
+                               data-otf-action-target="@Url.Action("CauHinhLauGet_List", "GiamSatGiangDay")"
+                               data-otf-action="@Url.Action("CauHinhLauDelete", "GiamSatGiangDay", null, Request.Url.Scheme)?id=@item.LauGuid">
+                                <i class="fa fa-lg fa-trash-o text-danger"></i>
+                            </a>
+                                &nbsp;
+                                <a data-otf-action="@Url.Action("CauHinhLauEdit", "GiamSatGiangDay", null, Request.Url.Scheme)?id=@item.LauGuid"
+                                   data-toggle="modal" onclick="GiamSatGiangDay_CauHinhLau_GetView(this)"
+                                   data-target="#modalGiamSatGiangDay_CauHinhLau" title="Chỉnh sửa">
+                                    <i class="fa fa-lg fa-pencil-square-o text-info"></i>
+                                </a>
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </text>
+    }
+    else
+    {
+        <text>
+    <br />
+    <div class="alert alert-dismissable alert-info">
+        <strong>Yêu cầu tìm kiếm lúc @{ var date = DateTime.Now; } @date.ToString("HH:mm:ss dd/MM/yyyy") không có dữ liệu</strong>
+        <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+    </div>
+        </text>
+    }
+    <div class="pager">
+        @if (Model.TotalItemCount > Model.PageSize)
+        {
+
+            <text>
+
+                @Html.Raw(Ajax.Pager(
+                       new Options
+                       {
+                           PageSize = Model.PageSize,
+                           TotalItemCount = Model.TotalItemCount,
+                           CurrentPage = Model.PageNumber,
+                           ItemTexts = new ItemTexts() { Next = "Next", Previous = "Previous", Page = "" },
+                           ItemIcon = new ItemIcon() { First = "icon-backward", Previous = "icon-chevron-left", Next = "icon-chevron-right", Last = "icon-forward" },
+                           TooltipTitles = new TooltipTitles() { Next = "Next page", Previous = "Previous page", Page = "Page {0}." },
+                           Size = Size.normal,
+                           Alignment = Alignment.centered,
+                           IsShowControls = true,
+                           IsShowFirstLast = true,
+                           CssClass = ""
+                       },
+                       new AjaxOptions
+                       {
+                           UpdateTargetId = "GiamSatGiangDay_CauHinhLau_DS_content"
+                       }, new { controller = "GiamSatGiangDay", action = "CauHinhLauGet_List"
+                           , 
+                           k = @ViewData["keysearch"]
+                            ,
+                           CoSoGuid = @ViewData["CoSoGuid"] 
+                       }))
+            </text>
+        }
+    </div>
+</div>
+
+@using (Html.BeginScriptContext())
+{
+    Html.AddScriptBlock(
+        @<script type="text/javascript">
+            loadSelect("GiamSatGiangDay_CauHinhLau","CauHinhLau");
+        </script>
+, true);
+}
+
+
+

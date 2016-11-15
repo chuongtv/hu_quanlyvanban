@@ -1,0 +1,30 @@
+﻿
+<div style="width:90%; float:left; " >
+
+    <uib-pagination style="margin-top:5px; margin-bottom:5px; float:right;display:normal;"
+                boundary-links="true"
+                max-size="maxSize"
+                items-per-page="itemsPerPage"
+                total-items="pagingOptionsCopydata.length"
+                ng-model="currentPage"
+                rotate="false"
+                class="nomargin"
+                previous-text="&lsaquo;" 
+                next-text="&rsaquo;" 
+                first-text="&laquo;" 
+                last-text="&raquo;"
+                ng-change="pageChanged()"
+                >
+    </uib-pagination>          
+
+</div>
+
+<div style="width:55px; float:right; ">        
+    <select ng-model="itemsPerPage" ng-options="x for x in listPageSize" ng-change="itemsPerPageChanged()" 
+            style="margin-top:5px; margin-bottom:5px; height:30px; width:50px; margin-right:10px; ">
+    </select>
+</div>
+
+
+
+

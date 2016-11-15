@@ -1,0 +1,81 @@
+﻿@*
+    Author:   			pdgiai
+    Created: 			2016-1-8
+    Last Modified: 		2016-1-8
+*@
+<div class="container">
+    <div class="row col-sm-12"><h4>CẤU HÌNH CA HỌC</h4></div>
+    <div class="row">
+        @*các thao tác*@
+        <div class="show">
+            <div class="col-sm-4 col-sm-push-8" style="text-align:right;">
+                <div class="form-group ">
+                    <button data-otf-mutil="true"
+                            onclick="GiamSatGiangDay_CauHinhCaHoc_DeleteMulti(this)"
+                            data-otf-confirm="Bạn có chắc muốn xóa những dòng đã chọn?"
+                            data-otf-target="#GiamSatGiangDay_CauHinhCaHoc_DS_content"
+                            data-otf-input="#GiamSatGiangDay_CauHinhCaHoc_SearchInput"
+                            data-otf-action-target="@Url.Action("CauHinhCaHocGet_List", "GiamSatGiangDay")?idnv=@Request["id"]&k="
+                            data-otf-action="@Url.Action("CauHinhCaHocDelete", "GiamSatGiangDay", null, Request.Url.Scheme)?id="
+                            class=" btn btn-danger"
+                            title="Xóa">
+                        <i class="fa fa-trash-o"></i> Xóa
+                    </button>
+                    <a data-toggle="modal" onclick="GiamSatGiangDay_CauHinhCaHoc_GetView(this)"
+                       data-target="#modalGiamSatGiangDay_CauHinhCaHoc" class=" btn btn-success" data-otf-action="@Url.Action("CauHinhCaHocCreate", "GiamSatGiangDay", null, Request.Url.Scheme)?id=@Request["id"]" href="javascript:void(0)">
+                        <i class="fa fa-plus" title="Tạo mới"></i> Thêm mới
+                    </a>
+
+
+                </div>
+            </div>
+            <div class="col-sm-8  col-sm-pull-4">
+                <div class="form-group">
+                    <div class="input-group">
+                        <input id="GiamSatGiangDay_CauHinhCaHoc_SearchInput"
+                               placeholder="Thông tin cần tìm"
+                               onkeypress="return GiamSatGiangDay_CauHinhCaHoc_EnterEvent(event, '#GiamSatGiangDay_CauHinhCaHoc_buttonsearch')"
+                               class="form-control " />
+                        <span class="input-group-btn">
+                            <button id="GiamSatGiangDay_CauHinhCaHoc_buttonsearch"
+                                    type="button"
+                                    title="Tìm kiếm"
+                                    class="btn btn-primary"
+                                    data-otf-target="#GiamSatGiangDay_CauHinhCaHoc_DS_content"
+                                    data-otf-input="#GiamSatGiangDay_CauHinhCaHoc_SearchInput"
+                                    data-otf-action="@Url.Action("CauHinhCaHocGet_List", "GiamSatGiangDay", null, Request.Url.Scheme)?idnv=@Request["id"]&k="
+                                    onclick="GiamSatGiangDay_CauHinhCaHoc_IsSearch(this)">
+                                Tìm kiếm
+                            </button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12" id="GiamSatGiangDay_CauHinhCaHoc_DS_content">
+            @Html.Action("CauHinhCaHocGet_List", "GiamSatGiangDay", new { idnv = @Request["id"] })
+        </div>
+    </div>
+</div>
+<!--Chép đoạn này vào page để khai báo popup-->
+@section dialog {
+
+    <!-- GiamSatGiangDay_CauHinhCaHoc UNIT MODAL -->
+    <div class="modal inmodal fade" id="modalGiamSatGiangDay_CauHinhCaHoc" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog " id="modalGiamSatGiangDay_CauHinhCaHoc_c">
+        </div>
+	</div>
+    <!-- GiamSatGiangDay_CauHinhCaHoc UNIT END-->
+}
+@section Scripts {
+    @Scripts.Render("~/module/GiamSatGiangDay/CauHinhCaHoc")
+    @Scripts.Render("~/plugins/fancybox")
+}
+
+
+
+
+
+

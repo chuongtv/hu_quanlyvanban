@@ -1,0 +1,160 @@
+﻿@*
+    Author:   			hanhat
+    Created: 			2015-11-18
+    Last Modified: 		2015-11-18
+*@
+@model nvngoc29082015.permission.library.ManageRoleDetail.InfoRoleDetail
+@using (Ajax.BeginForm(
+                                    "InfoRoleDetailGet_List",
+                                    "ManagePermission",
+                                    new AjaxOptions
+                                {
+                                    InsertionMode = InsertionMode.Replace,
+                                    HttpMethod = "Post",
+                                    UpdateTargetId = "ManageRoleDetail_InfoRoleDetail_DS_content",
+                                    LoadingElementId = "loader",
+                                    OnBegin = "BeginWaiting();",
+                                    OnComplete = "EndWaiting();"
+                                }, new { @class = "form-horizontal", id = "frm_SearchNhanVien" }))
+{
+
+    @Html.HiddenFor(model => Model.page, new { id = "hidenpagenumber" })
+
+    @Html.HiddenFor(model => Model.RoleForCodeGuid)
+
+    @Html.HiddenFor(model => Model.RoleGuid, new { Value = @Request["id"] })
+
+    @Html.AntiForgeryToken()
+
+    @Html.ValidationSummary(true)
+
+
+    <div class="row">
+        
+
+        <div class="show">
+
+       
+                <div class="col-lg-3 col-md-6">
+
+                 
+
+                        @Html.LabelFor(model => model.AppGuid, new { @class = " control-label" })
+                        
+                            @Html.DropDownListFor(model => model.AppGuid,
+                                                        new SelectList(Model.ListApp, "ValueString", "Name", Model.AppGuid),
+                                        new
+                                        {
+                                            @class = "form-control chosen-select",
+                                            id = "ddlapp",
+                                            data_otf_target = "#ddlmodule",
+                                            data_otf_actionname = "quanhuyen",
+                                            data_otf_selectchange = "dropdownlisttinhchange",
+                                            data_otf_action = @Url.Action("DropdownListChange", "ManagePermission")
+                                        })
+
+                       
+                  
+                </div>
+                <div class="col-lg-3 col-md-6">
+                  
+
+                        @Html.LabelFor(model => model.ModuleGuid, new { @class = " control-label" })
+                       
+
+                            @Html.DropDownListFor(x => Model.ModuleGuid,
+                                                                    new SelectList(Model.ListModule, "ValueString", "Name", Model.ModuleGuid),
+         new { @class = "form-control chosen-select", id = "ddlmodule" })
+                            @Html.ValidationMessageFor(model => Model.ModuleGuid, null, new { @class = "text-danger" })
+
+
+                      
+                    
+                </div><div class="col-lg-3 col-md-6">
+                   
+
+                        @Html.LabelFor(model => Model.TrangThai, new { @class = " control-label", @for = "text_DonViName" })
+                       
+                            @Html.DropDownListFor(model => Model.TrangThai,
+                                new SelectList(Model.ListTrangThai, "ValueString", "Name"),
+                                                  new
+                                                  {
+                                                      @class = "form-control chosen-select",
+                                                      id = "ddltrangthai",
+                                                  })
+                            @Html.ValidationMessageFor(model => Model.TrangThai, null, new { @class = "text-danger" })
+                       
+
+                    
+                </div>
+                <div class="col-lg-3 col-md-6">
+               
+                    <label class="control-label">&nbsp;</label>
+
+                    <div class=" ">
+                       <div style="display:none;">
+                         <input type="submit" value="Submit" id="PhanQuyenRole_ChucNangbuttonsearch"  />
+                           </div>
+                        <div class="input-group">
+
+
+                            @Html.TextBoxFor(model => model.Key, new { @class = "form-control", 
+                                                                                            id = "ManageRoleDetail_InfoRoleDetail_SearchInput",
+                                                                                            placeholder="Thông tin cần tìm",
+                                                                       onkeypress = "return ManageRoleDetail_InfoRoleDetail_EnterEvent(event, '#PhanQuyenRole_ChucNangbuttonsearch')"
+                       })
+                            <span class="input-group-btn">
+                                <input id="buttonsearch1"
+                                       title="Tìm kiếm"
+                                       type="submit"
+                                       value="Tìm kiếm"
+                                       class="btn btn-primary "
+                                       @*onclick="PhanQuyenRole_ChucNang_SearchClick()"*@ 
+                                       />
+
+
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+           
+
+        </div>
+
+
+
+}
+<div class="row">
+
+    <div class="col-sm-12" id="ManageRoleDetail_InfoRoleDetail_DS_content">
+
+    </div>
+</div>
+
+
+
+
+@*@using (Html.BeginScriptContext())
+    {
+        Html.AddScriptBlock(
+            @<script type="text/javascript">
+                //Su dung cau hinh dropdownlist
+                var config = {
+                    '.chosen-select': {},
+                    '.chosen-select-deselect': { allow_single_deselect: true },
+                    '.chosen-select-no-single': { disable_search_threshold: 10 },
+                    '.chosen-select-no-results': { no_results_text: 'Lỗi! Vui lòng chọn ít nhất 1 mục.' },
+                    '.chosen-select-width': { width: "95%" }
+                }
+                for (var selector in config) {
+                    $(selector).chosen(config[selector]);
+                }
+
+
+            </script>
+    , true);
+    }*@
+
+
+

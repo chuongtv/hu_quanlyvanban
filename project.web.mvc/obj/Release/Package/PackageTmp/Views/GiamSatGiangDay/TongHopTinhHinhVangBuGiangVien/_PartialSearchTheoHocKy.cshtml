@@ -1,0 +1,50 @@
+﻿@model nvngoc31122015.giamsatgiangday.library.BaoCaoThongKe.TongHopTinhHinhVangBuGiangVien
+
+
+@Html.HiddenFor(model => Model.GiangVien_Guid, new { id = "hidden_giangvienguid" })
+
+
+<div class="show" id="show">
+    <div class="form-group text-center"><h4>BẢNG TỔNG HỢP TÌNH HÌNH VẮNG BÙ THEO NĂM - HỌC KỲ</h4></div>
+    <div class="row form-group col-sm-12">
+        <div class="col-sm-2">
+            @Html.DropDownListFor(model => Model.NamHoc_Guid, new SelectList(Model.ListNamHoc_Guid, "ValueString", "Name", Model.NamHocID), new { @class = "form-control chosen-select", id = "DDL_NamHoc_Guid" })
+            @Html.ValidationMessageFor(model => Model.NamHoc_Guid, null, new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-2">
+            @Html.DropDownListFor(model => Model.HocKy_Guid, new SelectList(Model.ListHocKy_Guid, "ValueString", "Name"), new { @class = "form-control chosen-select", id = "DDL_HocKy_Guid" })
+            @Html.ValidationMessageFor(model => Model.HocKy_Guid, null, new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-2">
+            @Html.DropDownListFor(model => Model.DonVi_Guid, new SelectList(Model.ListDonVi_Guid, "ValueString", "Name", Model.DonViName), new { @class = "form-control chosen-select", id = "DDL_DonVi_Guid" })
+            @Html.ValidationMessageFor(model => Model.DonViGuid, null, new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-2">
+            @Html.TextBoxFor(model => Model.GiangVienID, new { @class = "form-control", @placeholder = "Mã/ Họ tên giảng viên", id = "text_GiangVienID", data_otf_action = @Url.Action("LoadAutoCompleteGiangVien", "GiamSatGiangDay") })
+            @Html.ValidationMessageFor(model => Model.GiangVien_Guid, null, new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-4">
+            <button id="BaoCaoThongKe_TinhHinhVangBuTheoHocKy_buttonsearchHocKy"
+                    type="button"
+                    title="Tìm kiếm"
+                    class="btn btn-primary"
+                    data-otf-target="#BaoCaoThongKe_TinhHinhVangBu_DS_content"
+                    data-otf-action="@Url.Action("TinhHinhVangBuTheoHocKyGet_List", "GiamSatGiangDay", null, Request.Url.Scheme)"
+                    onclick="BaoCaoThongKe_TinhHinhVangBu_IsSearchHocKy(this)">
+                Tìm kiếm
+            </button>
+            <button id="BaoCaoThongKe_TinhHinhVangBu_buttonExportHocKy"
+                    type="button"
+                    title="Xuất dữ liệu"
+                    class=" btn btn-info"
+                    data-otf-target="#BaoCaoThongKe_TinhHinhVangBu_DS_content"
+                    data-otf-action="@Url.Action("TongHopTinhHinhVangBuTheoHocKy_ExportExcel", "GiamSatGiangDay", null, Request.Url.Scheme)"
+                    onclick="BaoCaoThongKe_TinhHinhVangBu_ExportHocKy(this)">
+                Xuất dữ liệu
+            </button>
+
+        </div>
+    </div>
+</div>
+
+

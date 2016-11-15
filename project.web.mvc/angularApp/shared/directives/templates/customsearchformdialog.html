@@ -1,0 +1,43 @@
+﻿<script type="text/ng-template" id="customsearchformdialog.html">
+    <p>This is the content of the template</p>
+</script>
+<div class="modal-header header-form-dialog">
+    <button type="button" class="close" data-dismiss="modal" ng-click="fnCancel()">&times;</button>
+    <h4 class="modal-title title-form-dialog">Form Search</h4>
+
+</div>
+<div class="modal-body" style="min-height: 445px;" datalength="{{dataLength}}" arrow-selector>
+    <div class="row" style="text-align: center; border: 0px solid; font-size: 15px; margin: 5px;">
+        <input type="text" placeholder="Nhập từ khóa tìm kiếm, Enter => Chọn, Esc => Thoát" class="form-control width300" ng-model="searchfilter"
+               id="searchfilter" ng-keypress="EnterSelectedObject($event)" />
+    </div>
+    <div class="row" style="text-align: center; border: 0px solid; font-size: 15px; margin: 5px;">
+        <div class="masterpage-table" style="height: 400px; overflow: auto;">
+            <table class="table-bordered" id="customsearchformdialog">
+                <thead>
+                    <tr>
+                        <th class="width40 text-align-center">#</th>
+
+                        <th ng-repeat="col in gridOptions.columnDefs" class="{{col.headerclass}}" translate="{{col.display}}">{{col.display}}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="row in gridOptions.data | filter: searchfilter" ng-click="setClickedRow($index)" ng-class="{'selectedrow':$index == selectedRow}">
+
+                        <td class="text-align-center">{{$index + 1}} </td>
+
+                        <td ng-repeat="(colindex,col) in gridOptions.columnDefs" class="{{gridOptions.columnDefs[colindex].detailclass}} paddingleft padingright">{{col.formatnumber != '' ? (row[col.field] | number : col.formatnumber) : col.formatdatetime != '' ? (row[col.field] | date : col.formatdatetime) : (row[col.field]) }}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+</div>
+
+<div class="modal-footer">
+    <button type="button" ng-click="SelectedObject()" class="btn btn-info" translate="CMN_BTN_SELECTED">selected</button>
+</div>
+
+

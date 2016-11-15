@@ -1,0 +1,76 @@
+﻿@model List<nvngoc29082015.permission.library.ManageRoleForCode.ListActionInRoleForCode>
+
+@{var i = 1;}
+
+<div class="modal-content">
+    <div class="modal-header">
+        <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+        <h4 class="modal-title">Danh sách action trong role for code</h4>
+    </div>
+    <div class="modal-body">
+        <div class="table-responsive">
+            @if (ViewBag.TotalItemCount > 0)
+            {
+                <div class="p-b-10">
+                    Kết quả tìm kiếm: <b>@ViewBag.TotalItemCount</b> action
+                </div>
+                <text>
+                    <table class="table table-bordered datatables dataTable">
+                        <thead>
+                            <tr>
+                                <th class="text-center" style="width:50px;">
+                                    #
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => Model[0].ActionID)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => Model[0].ActionName)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => Model[0].ActionGroupName)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => Model[0].ControllerName)
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody id="listcheckall">
+                            @foreach (var item in Model)
+                            {
+                                <tr data="@item.RoleForCodeGuid" class="showhim">
+                                    <td class="text-center">
+                                        @Html.Raw(i)
+                                        @{i++;}
+                                    </td>
+                                    <td>
+                                        @Html.Raw(item.ActionID)
+                                    </td>
+                                    <td>
+                                        @Html.Raw(item.ActionName)
+                                    </td>
+                                    <td>
+                                        @Html.Raw(item.ActionGroupName)
+                                    </td>
+                                    <td>
+                                        @Html.Raw(item.ControllerName)
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </text>
+            }
+            else
+            {
+                <text><br />
+            <div class="alert alert-dismissable alert-info">
+                <strong>Yêu cầu tìm kiếm lúc @{ var date = DateTime.Now; } @date.ToString("HH:mm:ss dd/MM/yyyy") không có dữ liệu</strong>
+                <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+            </div>
+                </text>
+            }
+        </div>
+    </div>
+</div>
+

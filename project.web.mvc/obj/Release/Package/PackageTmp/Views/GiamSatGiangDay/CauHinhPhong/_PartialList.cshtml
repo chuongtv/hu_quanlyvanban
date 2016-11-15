@@ -1,0 +1,189 @@
+﻿@*
+    Author:   			pdgiai
+    Created: 			2016-1-7
+    Last Modified: 		2016-1-7
+*@
+
+@model MvcPaging.IPagedList<nvngoc31122015.giamsatgiangday.library.GiamSatGiangDay.ListCauHinhPhongView>
+@using MvcPaging
+
+@{var i = 1;}
+
+<div class="table-responsive">
+    @if (Model.TotalItemCount > 0)
+    {
+        <div class="p-b-10">
+            Kết quả tìm kiếm: <b>@Model.TotalItemCount</b> Phòng
+        </div>
+        <text>
+            <table class="table table-bordered datatables dataTable">
+                <thead>
+                    <tr>
+                        <th class="text-center w-30">
+                            <input id="CheckBoxAll" onclick="javascript: checkAlllist('#listcheckall',this);" type="checkbox" />
+                        </th>
+                        <th class="text-center w-30">
+                            #
+                        </th>
+                        <th class="text-center w-50">
+                            @Html.DisplayNameFor(model => Model[0].PhongID)
+                        </th>
+                        <th class="text-center w-50">
+                            @Html.DisplayNameFor(model => Model[0].DienTich)
+                        </th>
+                        <th class="text-center w-50">
+                            @Html.DisplayNameFor(model => Model[0].SucChua)
+                        </th>
+                        <th class="text-center w-50">
+                            @Html.DisplayNameFor(model => Model[0].MayChieu)
+                        </th>
+                        <th class="text-center w-50">
+                            @Html.DisplayNameFor(model => Model[0].Micro)
+                        </th>
+                        <th class="text-center w-50">
+                            @Html.DisplayNameFor(model => Model[0].Camera)
+                        </th>
+                        <th class="text-center w-50">
+                            @Html.DisplayNameFor(model => Model[0].MayLanh)
+                        </th>
+                        <th class="text-center w-50">
+                            @Html.DisplayNameFor(model => Model[0].Quat)
+                        </th>
+                        <th class="text-center w-50">
+                            @Html.DisplayNameFor(model => Model[0].TrangThai)
+                        </th>
+                        <th class="text-center w-50">
+                            @Html.DisplayNameFor(model => Model[0].Lau)
+                        </th>
+                        <th class="text-center w-100">
+                            @Html.DisplayNameFor(model => Model[0].CoSo)
+                        </th>
+                        
+                        <th class="text-right w-50"></th>
+
+                    </tr>
+                </thead>
+                <tbody id="listcheckall">
+                    @foreach (var item in Model)
+                    {
+                    <tr dataCauHinhPhong="@item.PhongGuid" class="showhim">
+                        <td class="text-center">
+                            <input type="checkbox" class="checkbox-item" value="@item.PhongGuid" />
+                        </td>
+                        <td class="text-center">
+                            @Html.Raw((Model.PageNumber - 1) * Model.PageSize + i)
+                            @{i++;}
+                        </td>
+                        <td class="text-center">
+                            @Html.Raw(item.PhongID)
+                        </td>
+                        <td class="text-center">
+                            @Html.Raw(item.DienTich)
+                        </td>
+                        <td class="text-center">
+                            @Html.Raw(item.SucChua)
+                        </td>
+                        <td class="text-center">
+                            @Html.CheckBox("chkMayChieu", bool.Parse(item.MayChieu.ToString()), new { @onchange = "UpdateCheck('" + @item.PhongGuid + "','" + @item.TrangThai.ToString() + "',Check('" + @item.MayChieu.ToString() + "'),'" + @item.Micro.ToString() + "','" + @item.Camera.ToString() + "','" + @item.MayLanh.ToString() + "','" + @item.Quat.ToString() + "')" })
+                        </td>
+                        <td class="text-center">
+                            @Html.CheckBox("chkMicro", bool.Parse(item.Micro.ToString()), new { @onchange = "UpdateCheck('" + @item.PhongGuid + "','" + @item.TrangThai.ToString() + "','" + @item.MayChieu.ToString() + "',Check('" + @item.Micro.ToString() + "'),'" + @item.Camera.ToString() + "','" + @item.MayLanh.ToString() + "','" + @item.Quat.ToString() + "')" })
+                        </td>
+                        <td class="text-center">
+                            @Html.CheckBox("chkCamera", bool.Parse(item.Camera.ToString()), new { @onchange = "UpdateCheck('" + @item.PhongGuid + "','" + @item.TrangThai.ToString() + "','" + @item.MayChieu.ToString() + "','" + @item.Micro.ToString() + "',Check('" + @item.Camera.ToString() + "'),'" + @item.MayLanh.ToString() + "','" + @item.Quat.ToString() + "')" })
+                        </td>
+                        <td class="text-center">
+                            @Html.CheckBox("chkMayLanh", bool.Parse(item.MayLanh.ToString()), new { @onchange = "UpdateCheck('" + @item.PhongGuid + "','" + @item.TrangThai.ToString() + "','" + @item.MayChieu.ToString() + "','" + @item.Micro.ToString() + "','" + @item.Camera.ToString() + "',Check('" + @item.MayLanh.ToString() + "'),'" + @item.Quat.ToString() + "')" })
+                        </td>
+                        <td class="text-center">
+                            @Html.CheckBox("chkQuat", bool.Parse(item.Quat.ToString()), new { @onchange = "UpdateCheck('" + @item.PhongGuid + "','" + @item.TrangThai.ToString() + "','" + @item.MayChieu.ToString() + "','" + @item.Micro.ToString() + "','" + @item.Camera.ToString() + "','" + @item.MayLanh.ToString() + "',Check('" + @item.Quat.ToString() + "'))" })
+                        </td>
+                        <td class="text-center">
+                            @Html.CheckBox("chkTrangThai", bool.Parse(item.TrangThai.ToString()), new { @onchange = "UpdateCheck('" + @item.PhongGuid + "',Check('" + @item.TrangThai.ToString() + "'),'" + @item.MayChieu.ToString() + "','" + @item.Micro.ToString() + "','" + @item.Camera.ToString() + "','" + @item.MayLanh.ToString() + "','" + @item.Quat.ToString() + "')" })
+                        </td>
+                        <td class="text-center">
+                            @Html.Raw(item.Lau)
+                        </td>
+                        <td class="text-center">
+                            @Html.Raw(item.CoSo)
+                        </td>
+                        <td class="text-right">
+
+                           <a data-otf-confirm="Bạn có chắc muôn xóa?"
+                                   title="Xóa dữ liệu này" href="javascript:void(0)"
+                                   onclick="GiamSatGiangDay_CauHinhPhong_DeleteMulti(this)"
+                                   data-otf-target="#GiamSatGiangDay_CauHinhPhong_DS_content"
+                                   data-otf-input="#GiamSatGiangDay_CauHinhPhong_SearchInput"
+                                   data-otf-action-target="@Url.Action("CauHinhPhongGet_List", "GiamSatGiangDay")?k="
+                                   data-otf-action="@Url.Action("CauHinhPhongDelete", "GiamSatGiangDay", null, Request.Url.Scheme)?id=@item.PhongGuid">
+                                    <i class="fa fa-lg fa-trash-o text-danger"></i>
+                                </a>
+                                &nbsp;
+                                <a data-otf-action="@Url.Action("CauHinhPhongEdit", "GiamSatGiangDay", null, Request.Url.Scheme)?id=@item.PhongGuid"
+                                   data-toggle="modal" onclick="GiamSatGiangDay_CauHinhPhong_GetView(this)"
+                                   data-target="#modalGiamSatGiangDay_CauHinhPhong" title="Chỉnh sửa">
+                                    <i class="fa fa-lg fa-pencil-square-o text-info"></i>
+                                </a>
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </text>
+    }
+    else
+    {
+        <text>
+    <br />
+    <div class="alert alert-dismissable alert-info">
+        <strong>Yêu cầu tìm kiếm lúc @{ var date = DateTime.Now; } @date.ToString("HH:mm:ss dd/MM/yyyy") không có dữ liệu</strong>
+        <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+    </div>
+        </text>
+    }
+    <div class="pager">
+        @if (Model.TotalItemCount > Model.PageSize)
+        {
+
+            <text>
+
+                @Html.Raw(Ajax.Pager(
+                       new Options
+                       {
+                           PageSize = Model.PageSize,
+                           TotalItemCount = Model.TotalItemCount,
+                           CurrentPage = Model.PageNumber,
+                           ItemTexts = new ItemTexts() { Next = "Next", Previous = "Previous", Page = "" },
+                           ItemIcon = new ItemIcon() { First = "icon-backward", Previous = "icon-chevron-left", Next = "icon-chevron-right", Last = "icon-forward" },
+                           TooltipTitles = new TooltipTitles() { Next = "Next page", Previous = "Previous page", Page = "Page {0}." },
+                           Size = Size.normal,
+                           Alignment = Alignment.centered,
+                           IsShowControls = true,
+                           IsShowFirstLast = true,
+                           CssClass = ""
+                       },
+                       new AjaxOptions
+                       {
+                           UpdateTargetId = "GiamSatGiangDay_CauHinhPhong_DS_content"
+                       }, new { controller = "GiamSatGiangDay", action = "CauHinhPhongGet_List", k = @ViewData["keysearch"]
+                       ,
+                                CoSoGuid = @ViewData["CoSoGuid"]
+                                ,
+                                LauGuid = @ViewData["LauGuid"] 
+                       }))
+            </text>
+        }
+    </div>
+</div>
+
+@using (Html.BeginScriptContext())
+{
+    Html.AddScriptBlock(
+        @<script type="text/javascript">
+            loadSelect("GiamSatGiangDay_CauHinhPhong","CauHinhPhong");
+        </script>
+, true);
+}
+
+
+

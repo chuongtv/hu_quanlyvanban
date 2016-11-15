@@ -1,0 +1,91 @@
+﻿@model nvngoc29082015.permission.library.ManageRoleForCode.ConfigActionRoleForCodeViewModel
+@{
+    ViewBag.Title = "ConfigActionRoleForCode";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@Html.ActionLink("Quay lại danh sách", "DanhSachRoleForCode", "ManagePermission")
+
+
+<h2>Quyền đang sử dụng</h2>
+<table class="table">
+    <tr>
+        <td>Controller</td>
+        <td>Nhóm Action</td>
+        <td>Action</td>
+        <td>Quyền Roleforcode</td>
+        <td>Module</td>
+        
+    </tr>
+    @foreach (var rd in Model.ListRoleDetailForCode)
+    {
+        <tr>
+            <td>@rd.ControllerName</td>
+            <td>@rd.ActionGroupName</td>
+            <td>@rd.ActionName</td>
+            <td>@rd.RoleForCodeName</td>
+            <td>@rd.ModuleName</td>
+            
+        </tr>
+    }
+</table>
+
+
+
+<h2>Danh sách action</h2>
+@foreach (var c in Model.Controllers)
+{
+
+    <h2>Controller @c.ControllerName</h2>
+    <i>@c.Description</i>
+    <br />
+
+    foreach (var temp in c.ActionGroups)
+    {
+        <ul>
+            <li>
+                <h4>@temp.ActionGroupName</h4>
+                <i>@temp.Description</i>
+                @*@Html.ActionLink("Thêm quyền", "SaveRoleForCode", "ManagePermission", new { @ida = app.AppGuid, @idm = temp.ModuleGuid }, null)*@
+                <table class="table">
+                    <tr>
+                        <td>Tên action</td>
+                        <td>Mô tả</td>
+                        <td>Sử dụng cho quyền này</td>
+                        <td>Quyền khác / module</td>
+                        <td>Tác vụ</td>
+                    </tr>
+                    @foreach (var item in temp.Actions)
+                    {
+                        <tr>
+                            <td>@item.ActionName</td>
+                            <td>@item.Description</td>
+                            <td>
+                                @if (!string.IsNullOrEmpty(item.danhdau1))
+                                {
+                                    <text>X</text>
+                                }
+                            </td>
+                            <td>
+                                @if (!string.IsNullOrEmpty(item.danhdau2))
+                                {
+                                    @item.danhdau2 
+                                    <text>/</text>
+                                    @item.danhdau3
+                                }
+                            </td>
+                            <td>
+                                @Html.ActionLink(" Thêm", "AddConfigActionRoleForCode", "ManagePermission", new { @ida = item.ActionGuid,@idr=Model.RoleForCodeGuid }, null)
+                                -
+                                @Html.ActionLink(" Xóa", "DeleteConfigActionRoleForCode", "ManagePermission", new { @ida = item.ActionGuid, @idr = Model.RoleForCodeGuid }, null)
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </li>
+        </ul>
+    }
+
+
+}

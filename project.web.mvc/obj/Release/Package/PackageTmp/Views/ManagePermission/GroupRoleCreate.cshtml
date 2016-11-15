@@ -1,0 +1,41 @@
+﻿@*
+    Author:   			ntdai
+    Created: 			2015-11-25
+    Last Modified: 		2015-11-25
+*@
+
+
+@{
+    ViewBag.Title = "Thêm mới";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div id="page-heading">
+    <ol class="breadcrumb">
+        <li>
+            <a href="@Url.Action("Index", "Dashboards")">
+                <i class="fa fa-lg fa-home text-warning text-size-20">
+                </i> Trang chủ
+            </a>
+        </li>
+        <li class="active">
+            Tạo mới GroupRole
+        </li>
+    </ol>
+</div>
+
+@*content*@
+<div class="container" id="CPManageGroupRole">
+        @Html.Partial("~/Views/ManagePermission/ManageGroupRole/_PartialCreate.cshtml")
+</div>
+
+@section Styles {
+}
+
+@section Scripts {
+    @Scripts.Render("~/module/ManagePermission/ManageGroupRole")
+    <script src="~/Content/plugins/ckeditor/ckeditor.js"></script>
+}
+
+
+

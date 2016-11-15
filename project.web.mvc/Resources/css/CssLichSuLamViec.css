@@ -1,0 +1,7 @@
+﻿body {
+}
+
+.lbl-valid {
+    color: Red;
+    font-weight: normal !important;
+}

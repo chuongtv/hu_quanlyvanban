@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>Forloop.HtmlHelpers</id>
+    <version>1.2.0.0</version>
+    <title>Forloop.HtmlHelpers</title>
+    <authors>forloop</authors>
+    <owners>forloop</owners>
+    <licenseUrl>https://bitbucket.org/forloop/forloop-htmlhelpers</licenseUrl>
+    <projectUrl>https://bitbucket.org/forloop/forloop-htmlhelpers</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>HtmlHelpers for managing scripts for Razor Partial Views and Templates in ASP.NET MVC</description>
+    <releaseNotes>Support for rendering scripts on AJAX requests. BREAKING CHANGE to ScriptContext. See wiki for details</releaseNotes>
+    <copyright>Copyright Forloop 2013</copyright>
+    <tags>Asp.Net AspNet Mvc AspNetMvc Asp.Net-Mvc HtmlHelper JavaScript Partial View</tags>
+    <dependencies>
+      <dependency id="Microsoft.AspNet.Mvc" version="4.0.30506.0" />
+    </dependencies>
+  </metadata>
+</package>

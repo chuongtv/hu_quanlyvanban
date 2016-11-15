@@ -1,0 +1,193 @@
+﻿@model MvcPaging.IPagedList<nvngoc31122015.giamsatgiangday.library.GiamSatGiangDay.ListThoiKhoaBieuChiTietView>
+@using MvcPaging
+
+@{var i = 1;}
+
+<div class="table-responsive">
+    @if (Model.TotalItemCount > 0)
+    {
+        <div class="p-b-10">
+            Kết quả tìm kiếm: <b>@Model.TotalItemCount</b> Lịch trình giảng dạy
+        </div>
+        <text>
+            <table class="table table-bordered datatables dataTable">
+                <thead>
+                    <tr>
+                        <th class="text-center w-30">
+                            #
+                        </th>
+                        <th class="text-left" width="100px" title="Tên lớp ghép">
+                            @Html.DisplayNameFor(model => Model[0].LopName)
+                        </th>
+                        <th class="text-left">
+                            @Html.DisplayNameFor(model => Model[0].MonHocName)
+                        </th>
+                        <th class="text-center w-150">
+                            Thời gian học
+                        </th>
+                        <th class="text-center " style="width:60px;">
+                            @Html.DisplayNameFor(model => Model[0].PhongID)
+                        </th>
+                        <th class="text-center w-30">
+                            @Html.DisplayNameFor(model => Model[0].Thu)
+                        </th>
+                        <th class="text-center w-30">
+                            @Html.DisplayNameFor(model => Model[0].TietBatDau)
+                        </th>
+                        <th class="text-center w-100">
+                            Học kỳ
+                        </th>
+                        <th class="text-left w-200">
+                            @Html.DisplayNameFor(model => Model[0].GiangVien)
+                        </th>
+                        @if ((@User as project.web.mvc.Common.IOIORTPrincipal).HasPermission("LichTrinhGiangDayDelete_GiamSatGiangDay"))
+                        {
+                            <th class="text-right" colspan="2"> Tác vụ</th>}
+                        else
+                        {
+                            <th class="text-right"> Tác vụ</th>
+                        }
+                    </tr>
+                </thead>
+                <tbody id="listcheckall">
+                    @foreach (var item in Model)
+                    {
+                        <tr datathoikhoabieu="@item.ThoiKhoaBieuGuid" class="showhim">
+                            <td class="text-center">
+                                @Html.Raw((Model.PageNumber - 1) * Model.PageSize + i)
+                                @{i++;}
+                            </td>
+                            <td class="text-left" title="@Html.Raw(item.LopName)">
+                                <div class="slipsistext" style="width: 100px;">
+                                    @Html.Raw(item.LopName)
+                                </div>
+                            </td>
+                            <td class="text-left">
+                                <span data-role="hint" data-hint-position="right" data-hint-mode="2" data-hint="
+                                    <i class='fa fa-credit-card'></i>&nbsp;<b>Mã môn</b>: @Html.Raw(item.MonHocID)
+                                    <br /><i class='fa fa-calendar'></i>&nbsp;&nbsp;<b>Tên môn</b>: @Html.Raw(item.MonHocName)">
+                                    @Html.Raw(item.MonHocName)
+                                </span>
+                            </td>
+                            <td class="text-center">
+                                @if (item.Tungay != null)
+                                {
+                                    @Html.Raw(item.Tungay.Value.ToString("dd/MM/yyyy"))
+                                }
+                            </td>
+                            <td class="text-center">
+                                <span data-role="hint" data-hint-position="right" data-hint-mode="2" data-hint="
+                                      <i class='fa fa-credit-card'></i>&nbsp;<b>Phòng</b>: @Html.Raw(item.PhongID)
+                                    <br /><i class='fa fa-calendar'></i>&nbsp;&nbsp;<b>Lầu</b>: @Html.Raw(item.Lau)
+                                    <br /><i class='fa fa-building-o'></i>&nbsp;&nbsp;<b>Cơ sở</b>: @Html.Raw(item.CoSo)
+                                    ">
+                                    @Html.Raw(item.PhongID)
+                                </span>
+                            </td>
+                            <td class="text-center">
+                                @Html.Raw(item.Thu)
+                            </td>
+                            <td class="text-center">
+                                @Html.Raw(item.TietBatDau)
+                            </td>
+                            <td class="text-center">
+                                HK @Html.Raw(item.HocKyID) - @Html.Raw(item.NamHocID)
+                            </td>
+                            <td class="text-left">
+                                <span data-role="hint" data-hint-position="left" data-hint-mode="2" data-hint="
+                                    <i class=' fa fa-credit-card'></i>&nbsp;<b>Mã GV</b>: @Html.Raw(item.GiangVien)
+                                    <br /><i class='fa fa-calendar'></i>&nbsp;&nbsp;<b>Tên GV</b>: @Html.Raw(item.TenGiangVien)
+                                    ">
+                                    @Html.Raw(item.TenGiangVien)
+                                </span>
+                            </td>
+
+                            @if ((@User as project.web.mvc.Common.IOIORTPrincipal).HasPermission("LichTrinhGiangDayDelete_GiamSatGiangDay"))
+                            {
+                                <td class="text-right" width="30px;">
+                                    <text>
+                                        <a data-otf-confirm="Bạn có chắc muôn xóa lịch trình giảng giạy này?"
+                                           title="Xóa dữ liệu này" href="javascript:void(0)"
+                                           onclick="GiamSatGiangDay_LichTrinhGiangDay_DeleteMulti(this)"
+                                           data-otf-target="#GiamSatGiangDay_ThoiKhoaBieuChiTiet_DS_content"
+                                           data-otf-action-target="@Url.Action("ThoiKhoaBieuChiTietGet_List", "GiamSatGiangDay")?id=@item.LopHoc_Guid"
+                                           data-otf-action="@Url.Action("LichTrinhGiangDayDelete", "GiamSatGiangDay", null, Request.Url.Scheme)?id=@item.ThoiKhoaBieuGuid">
+                                            <i class="fa fa-lg fa-trash-o text-danger"></i>
+                                        </a>
+                                    </text>
+                                </td>
+                            }
+
+                            <td class="text-right" width="30px;">
+                                <a data-otf-action="@Url.Action("ThoiKhoaBieuChiTietEdit", "GiamSatGiangDay", null, Request.Url.Scheme)?id=@item.ThoiKhoaBieuGuid"
+                                   data-toggle="modal" onclick="GiamSatGiangDay_ThoiKhoaBieu_GetView(this)"
+                                   data-target="#modalGiamSatGiangDay_ThoiKhoaBieu" title="Chỉnh sửa">
+                                    <i class="fa fa-lg fa-pencil-square-o text-info"></i>
+                                </a>
+                            </td>
+
+                        </tr>
+                                    }
+                </tbody>
+            </table>
+        </text>
+                                    }
+                                    else
+                                    {
+                                        <text><br />
+                                            <div class="alert alert-dismissable alert-info">
+                                                <strong>Yêu cầu tìm kiếm lúc @{ var date = DateTime.Now; } @date.ToString("HH:mm:ss dd/MM/yyyy") không có dữ liệu</strong>
+                                                <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+                                            </div>
+                                        </text>
+                                                    }
+    <div class="pager">
+        @if (Model.TotalItemCount > Model.PageSize)
+        {
+
+            <text>
+
+                @Html.Raw(Ajax.Pager(
+                       new Options
+                       {
+                           PageSize = Model.PageSize,
+                           TotalItemCount = Model.TotalItemCount,
+                           CurrentPage = Model.PageNumber,
+                           ItemTexts = new ItemTexts() { Next = "Next", Previous = "Previous", Page = "" },
+                           ItemIcon = new ItemIcon() { First = "icon-backward", Previous = "icon-chevron-left", Next = "icon-chevron-right", Last = "icon-forward" },
+                           TooltipTitles = new TooltipTitles() { Next = "Next page", Previous = "Previous page", Page = "Page {0}." },
+                           Size = Size.normal,
+                           Alignment = Alignment.centered,
+                           IsShowControls = true,
+                           IsShowFirstLast = true,
+                           CssClass = ""
+                       },
+                       new AjaxOptions
+                       {
+                           UpdateTargetId = "GiamSatGiangDay_ThoiKhoaBieuChiTiet_DS_content"
+                       }, new
+                       {
+                           controller = "GiamSatGiangDay",
+                           action = "ThoiKhoaBieuChiTietGet_List",
+                           id = @ViewData["LopHocGuid"]
+                       }))
+            </text>
+        }
+    </div>
+</div>
+<style>
+    .slipsistext {
+        white-space: nowrap;
+        overflow: hidden; /* "overflow" value must be different from "visible" */
+        text-overflow: ellipsis;
+    }
+</style>
+
+@using (Html.BeginScriptContext())
+{
+    Html.AddScriptBlock(
+        @<script type="text/javascript">
+            loadSelect("GiamSatGiangDay_ThoiKhoaBieu", "ThoiKhoaBieu");
+        </script>
+, true);
+}

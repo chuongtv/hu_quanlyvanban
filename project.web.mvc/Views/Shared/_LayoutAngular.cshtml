@@ -1,0 +1,103 @@
+﻿<!DOCTYPE html>
+<html ng-app="HutechApp">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="CNTT HUTECH, IT HUTECH, ERP SYSTEM, Business management System, Edu management System ">
+    <meta name="keywords" content="HTML, CSS, JS, JavaScript, framework, bootstrap, front-end, frontend, web development">
+    <meta name="author" content="IOIORT Team - Email: nv.ngoc@hutech.edu.vn">
+
+    <title>HUTECH | @ViewBag.Title</title>
+
+    <!-- Add local styles, mostly for plugins css file -->
+    @if (IsSectionDefined("Styles"))
+    {@RenderSection("Styles", required: false)}
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries. Placeholdr.js enables the placeholder attribute -->
+    <!--[if lt IE 9]>
+        <script type="text/javascript" src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/respond.js/1.1.0/respond.min.js"></script>
+        <script type="text/javascript" src="~/Scripts/plugins/charts-flot/excanvas.min.js"></script>
+    <![endif]-->
+    <!-- Primary Inspinia style -->
+    @Styles.Render("~/bundles/font")            @*style font*@
+    @Styles.Render("~/Content/css")             @*style ca nhan*@
+    @Styles.Render("~/bundles/jqueryuiStyles")  @*style jquery ui*@
+    @Styles.Render("~/error/css")               @*mau sac cac validation*@
+    @Styles.Render("~/plugins/toastrStyles")    @*thong bao*@
+    <link href="~/Content/angular-material.css" rel="stylesheet" />
+</head>
+<body class="horizontal-nav">
+
+    <div style="text-align: center;">
+        <div id="spinnerLoadingImg" style="position: fixed; display: none;z-index: 1000;" align="right">
+            <img src="~/Resources/img/loading.gif" title="Loading" width="100" height="100" />
+            <br />
+
+        </div>
+        <div id="spinnerLoadingLockScreen" style="width: 100%; height: 100%; position: fixed; display: none;
+            z-index: 999;">
+        </div>
+    </div>
+
+    <!--End Spinner loading-->
+
+    <!-- Admin tool -->
+    @Html.Partial("_AdminTool")
+    <!-- All header links, including sidebar triggers and drop downs-->
+    <!-- Top Navbar -->
+    @Html.Partial("_TopNavbar")
+
+    @Html.Partial("_Navigation")
+
+
+    <!-- Wrapper-->
+    <div id="page-container">
+        <div id="page-content" class="animated fadeInRight">
+            <!-- Page wraper -->
+            <div id="wrap">
+                <!-- Main view  -->
+                @RenderBody()
+            </div> <!-- #wrap -->
+        </div> <!-- page-content -->
+        <!-- Footer -->
+        @Html.Partial("_Footer")
+
+    </div> <!-- page-container -->
+    <!-- MODAL DIALOG -->
+    @RenderSection("dialog", false)
+    <!-- MODAL DIALOG END -->
+
+    <!-- End wrapper-->
+
+    <!-- Section for main scripts render -->
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/angularjs")
+    @Scripts.Render("~/bundles/plugins")
+
+
+    <!-- load momentJS (required for angular-moment) -->
+    <script src="~/Scripts/angularUI/moment.min.js"></script>
+    <script src="~/Scripts/angularUI/angular-moment.min.js"></script>
+    <script src="~/Scripts/angularUI/moment/locale/vi.js"></script>
+
+    @*cac du lieu kieu so*@
+    <script src="~/Scripts/angularUI/dynamic-number.min.js"></script>
+    @*Mac na nhap lieu*@
+    <script src="~/Scripts/angularUI/mask/mask.min.js"></script>
+
+    <!-- Angular Material Library -->
+    <script src="~/Scripts/angularUI/angular-material.min.js"></script>
+    <script src="~/Scripts/angularUI/svg-assets-cache.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-sanitize.js"></script>
+
+    <!-- Handler for local scripts -->
+    @RenderSection("scripts", required: false)
+
+    <div id="Error" class="freeow freeow-bottom-right">
+    </div>
+   
+</body>
+</html>

@@ -1,0 +1,48 @@
+﻿@{
+    ViewBag.Title = "QuanLyConfigEmails";
+}
+
+<div id="page-heading">
+    <ol class="breadcrumb">
+        <li>
+            <a href="@Url.Action("Index", "Dashboards")">
+                <i class="fa fa-lg fa-home text-warning text-size-20">
+                </i> Trang chủ
+            </a>
+        </li>
+        <li class="active">
+            Thông tin người gửi
+        </li>
+    </ol>
+</div>
+
+
+<div class="container">
+
+    <div class="row">
+        <div class="col-xs-12">
+            @Html.Action("MyEmailConfigGet_DanhSach", "QuanLyMaketting")
+        </div>
+
+
+    </div>
+
+</div>
+
+
+
+
+
+@section Scripts {
+    @Scripts.Render("~/module/QuanLyMaketting/QuanLySendEmails/MyEmailConfig")
+
+}
+@section dialog {
+
+        <!-- QuanLySendEmails_MyEmailConfig UNIT MODAL -->
+        <div class="modal inmodal fade" id="modalQuanLySendEmails_MyEmailConfig" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog " id="modalQuanLySendEmails_MyEmailConfig_c">
+            </div>
+        </div>
+        <!-- QuanLySendEmails_MyEmailConfig UNIT END-->
+    }

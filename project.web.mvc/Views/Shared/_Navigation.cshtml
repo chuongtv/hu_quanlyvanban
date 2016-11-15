@@ -1,0 +1,18 @@
+﻿@using Microsoft.AspNet.Identity;
+
+<nav class="navbar navbar-default ioiort-desktop" role="navigation">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+            <i class="fa fa-bars"></i>
+        </button>
+    </div>
+    <div class="collapse navbar-collapse navbar-ex1-collapse" id="horizontal-navbar">
+        <ul class="nav navbar-nav">
+
+            <li class="@Html.IsSelected(controller: "Home")">
+                <a href="@Url.Action("Index", "Home")"><i class="fa fa-dashboard"></i> <span>Bảng thông tin</span></a>
+            </li>
+          
+        </ul>
+    </div>
+</nav>

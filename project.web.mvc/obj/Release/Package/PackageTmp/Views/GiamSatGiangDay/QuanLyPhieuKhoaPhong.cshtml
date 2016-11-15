@@ -1,0 +1,192 @@
+﻿
+@{
+    ViewBag.Title = "Quản lý danh sách khóa phòng";
+}
+<div id="page-heading">
+    <ol class="breadcrumb">
+        <li>
+            <a href="@Url.Action("Index", "Home")">
+                <i class="fa fa-lg fa-home text-warning text-size-20">
+                </i> Trang chủ
+            </a>
+        </li>
+        <li class="active">
+            @ViewBag.Title
+        </li>
+    </ol>
+</div>
+<div class="container">
+    <div class="row">
+        @*các thao tác*@
+        <div class="panel panel-primary">
+            <div class="panel-body">
+                @Html.Action("QuanLyPhieuKhoaPhong_LoadSearch", "GiamSatGiangDay")
+
+
+                <div class="row form-group">
+                    <div class="col-sm-12">
+                        <button id="GiamSatGiangDay_QuanLyDanhSachMuonPhong_buttonsearch"
+                                type="button"
+                                title="Tìm kiếm"
+                                class="btn btn-primary"
+                                data-otf-target="#GiamSatGiangDay_DS_content"
+                                data-otf-action="@Url.Action("QuanLyPhieuKhoaPhongGet_List", "GiamSatGiangDay", null, Request.Url.Scheme)"
+                                onclick="GiamSatGiangDay_QuanLyKhoaPhong_IsSearch(this)">
+                            Xem thông tin
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row form-group">
+
+            <div class="col-sm-12 text-right">
+                <a href="@Url.Action("KhoaPhong", "GiamSatGiangDay", null, Request.Url.Scheme)"
+                   class="btn btn-success"
+                   title="Tạo phiếu khóa phòng">
+                    Tạo phiếu khóa phòng
+                </a>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12" id="GiamSatGiangDay_DS_content">
+                @Html.Action("QuanLyPhieuKhoaPhongGet_List", "GiamSatGiangDay", new {})
+            </div>
+        </div>
+        <div class="row">
+            <div id="DetailBieuMauPrint"></div>
+        </div>
+    </div>
+</div>
+<!--Chép đoạn này vào page để khai báo popup-->
+@section dialog {
+    @*<div class="modal inmodal fade" id="modalGiamSatGiangDay_QuanLyDanhSachMuonPhong" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg" id="modalGiamSatGiangDay_QuanLyDanhSachMuonPhong_c">
+        </div>
+    </div>*@
+}
+
+@section Styles {
+    @Styles.Render("~/plugins/chosenStyles")
+    @Styles.Render("~/plugins/dataPickerStyles")
+    <link href="~/Content/plugins/EasyAutocomplete/easy-autocomplete.css" rel="stylesheet" />
+}
+@section Scripts {
+    <script src="~/Content/plugins/metro-ui/docs/js/metro.js"></script>
+    <script src="~/Content/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+    <script src="~/Content/plugins/EasyAutocomplete/jquery.easy-autocomplete.js"></script>
+    @Scripts.Render("~/plugins/dropZone")
+    @Scripts.Render("~/plugins/chosen")
+    @Scripts.Render("~/plugins/dataPicker")
+    @Scripts.Render("~/plugins/fancybox")
+
+    <script type="text/javascript">
+        //Su dung cau hinh dropdownlist
+        var config = {
+            '.chosen-select': {},
+            '.chosen-select-deselect': { allow_single_deselect: true },
+            '.chosen-select-no-single': { disable_search_threshold: 10 },
+            '.chosen-select-no-results': { no_results_text: 'Lỗi! Vui lòng chọn ít nhất 1 mục.' },
+            '.chosen-select-width': { width: "95%" }
+        }
+        for (var selector in config) {
+            $(selector).chosen(config[selector]);
+        }
+
+        $('#data_TuNgay_Time .input-group.date').datepicker({
+            format: 'dd/mm/yyyy',
+            todayBtn: "linked",
+            keyboardNavigation: false,
+            forceParse: false,
+            calendarWeeks: true,
+            autoclose: true
+        });
+
+        $('#data_DenNgay_Time .input-group.date').datepicker({
+            format: 'dd/mm/yyyy',
+            todayBtn: "linked",
+            keyboardNavigation: false,
+            forceParse: false,
+            calendarWeeks: true,
+            autoclose: true
+        });
+
+        window.addEventListener('load', function (event) {
+            //LoadDefaultTextNgay();
+        });
+
+
+        ////Sự kiện tìm kiếm
+        function GiamSatGiangDay_QuanLyKhoaPhong_IsSearch(element) {
+            $.removeCookie('pageperQuanLyKhoaPhong', { path: '/' });
+
+            BeginWaiting();
+            var tungay = document.getElementById("tungay_time");
+            var denngay = document.getElementById("denngay_time");
+            var phong = document.getElementById("PhongID");
+
+            //var loaiphieu = "";
+            //var rbGrp = document.getElementsByName("rbGrpLoaiPhieu");
+            //for (var i = 0; i < rbGrp.length; i++) {
+            //    if (rbGrp[i].checked == true) {
+            //        loaiphieu = rbGrp[i].value;
+            //    }
+            //}
+
+            //alert(giangvien);
+            var date_regex = /^([1-9]|[1][012])\/|\/([1-9]|[1][0-9]|[2][0-9]|[3][01])\/|\/([1][6-9][0-9][0-9]|[2][0][01][0-9])$/;
+           
+            if (tungay.value != "") {
+                if (!(date_regex.test(tungay.value))) {
+                    alert("Từ ngày không đúng định dạng dd/MM/yyyy");
+                    EndWaiting();
+                    return;
+                }
+            }
+
+            if (denngay.value != "") {
+                if (!(date_regex.test(denngay.value))) {
+                    alert("Đến ngày không đúng định dạng dd/MM/yyyy");
+                    EndWaiting();
+                    return;
+                }
+            }
+
+            var idloadTo = $(element).attr('data-otf-target');
+            var action = $(element).attr('data-otf-action');
+
+            //$(idloadTo).load(action + '?TuNgay=' + tungay.value.replace(/ /g, '+') + '&DenNgay=' + denngay.value.replace(/ /g, '+') + '&NguoiDeNghi_Guid=' + giangvien.replace(/ /g, '+'));
+            $.ajax({
+                url: action,
+                type: 'POST',
+                //dataType: 'json',
+                data: {
+                    TuNgay: tungay.value,
+                    DenNgay: denngay.value,
+                    PhongID: phong.value
+                },
+                success: function (data, textStatus, xhr) {
+                    //console.log(data);
+                    //alert();
+                    $(idloadTo).html(data);
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    console.log(textStatus);
+                }
+            });
+
+            EndWaiting();
+
+        }
+
+    </script>
+}
+
+
+
+
+
+
+
+

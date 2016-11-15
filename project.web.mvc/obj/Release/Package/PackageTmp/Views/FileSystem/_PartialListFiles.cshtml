@@ -1,0 +1,204 @@
+﻿@{    
+    int liststyle = ViewBag.liststyle == null ? 0 : ViewBag.liststyle;
+    string isDelete = ViewBag.isDelete == null ? "true" : ViewBag.isDelete;
+}
+@Styles.Render("~/plugins/fancyboxStyles")
+@*@Scripts.Render("~/plugins/fancybox")*@
+<style>
+    .sm-dz-details {
+        display: inline-block;
+    }
+</style>
+<div class="dropzone-previews">
+    @if (ViewBag.ListFiles != null)
+    {
+        foreach (ntdai09102015.quanlyfile.library.FileSystem item in ViewBag.ListFiles)
+        {
+            if (isDelete == "true")
+            {
+                if (liststyle == 0)
+                {
+                    <text>
+                        <div class="dz-preview dz-image-preview">
+                            <div class="dz-details">
+                                <div class="dz-filename">
+                                    <span>  @item.ClientFileName</span>
+                                </div>
+                                <div data-dz-size="" class="dz-size">
+                                    <strong>@item.FileSize</strong> MB
+                                </div>
+                                @if (item.FileType.ToLower().Equals(".png") ||
+                                    item.FileType.ToLower().Equals(".jpg") ||
+                                    item.FileType.ToLower().Equals(".jpge") ||
+                                    item.FileType.ToLower().Equals(".gif") ||
+                                    item.FileType.ToLower().Equals(".ico") ||
+                                    item.FileType.ToLower().Equals(".tif")
+                                    )
+                                {
+                                    <a class="fancybox" style="float:left;" rel="gallery" href="~/@item.MapPath/@item.ServerFileName" title="@item.ClientFileName">
+                                        <img data-dz-thumbnail="" src="~/@item.MapPath/@project.config.library.Utilities.ConstantVariable.sizeImage_W[0]-@project.config.library.Utilities.ConstantVariable.sizeImage_H[0]/@item.ServerFileName">
+                                    </a>
+                                }
+                                else
+                                {
+                                    <a href="~/Download.ashx?id=@item.FileSystemGuid" title="@item.ClientFileName">
+                                        <img data-dz-thumbnail="" alt="@item.ClientFileName" src="~/Images/ico/@item.FileType.Replace(".","")_.png">
+                                    </a>
+                                }
+                            </div>
+                            <a class="dz-error-mark" id="link-@item.FileSystemGuid" onclick="DeleteFileSystem(this)" @*data-otf-confirm="Bạn muốn xóa file?"*@
+                               data-otf-action-target="@Url.Action("LoadList", "FileSystem", null, Request.Url.Scheme)?q=@item.ItemGuid.ToString().ToUpper()&s=@liststyle&d=@isDelete"
+                               data-otf-target="#FileList-@item.ItemGuid.ToString().ToUpper()"
+                               data-otf-action="@Url.Action("Delete", "FileSystem", null, Request.Url.Scheme)?q=@item.FileSystemGuid"
+                               style="opacity: 1;">
+                                <span>✘</span>
+                            </a>
+                        </div>
+                    </text>
+                }
+                if (liststyle == 1)
+                {
+                    <text>
+                        <div class="sm-dz-preview sm-dz-image-preview">
+                            <div class="sm-dz-details">
+
+                                @if (item.FileType.ToLower().Equals(".png") ||
+                                    item.FileType.ToLower().Equals(".jpg") ||
+                                    item.FileType.ToLower().Equals(".jpge") ||
+                                    item.FileType.ToLower().Equals(".gif") ||
+                                    item.FileType.ToLower().Equals(".ico") ||
+                                    item.FileType.ToLower().Equals(".tif")
+                                    )
+                                {
+                                    <a class="fancybox" style="float:left;" rel="gallery" href="~/@item.MapPath/@item.ServerFileName" title="@item.ClientFileName">
+                                        <img data-dz-thumbnail="" style="padding:5px;" height="32" src="~/@item.MapPath/@project.config.library.Utilities.ConstantVariable.sizeImage_W[0]-@project.config.library.Utilities.ConstantVariable.sizeImage_H[0]/@item.ServerFileName">@item.ClientFileName
+                                    </a>
+                                }
+                                else
+                                {
+                                    <a style="float:left;" href="~/Download.ashx?id=@item.FileSystemGuid">
+                                        <img data-dz-thumbnail="" style="padding:5px;" height="32" src="~/Images/ico/@item.FileType.Replace(".","")_.png">@item.ClientFileName
+                                    </a>
+                                }
+
+
+                                <a id="link-@item.FileSystemGuid" onclick="DeleteFileSystem(this)" data-otf-confirm="Bạn muốn xóa file?"
+                                   data-otf-action-target="@Url.Action("LoadList", "FileSystem", null, Request.Url.Scheme)?q=@item.ItemGuid.ToString().ToUpper()&s=@liststyle&d=@isDelete"
+                                   data-otf-target="#FileList-@item.ItemGuid.ToString().ToUpper()"
+                                   data-otf-action="@Url.Action("Delete", "FileSystem", null, Request.Url.Scheme)?q=@item.FileSystemGuid"
+                                   style="color: red; float: left; padding-left: 10px; padding-top: 6px;">
+                                    <i class="fa fa-times-circle"></i>
+                                </a>
+                            </div>
+
+                        </div>
+                    </text>
+                }
+
+            }
+            else
+            {
+
+                if (liststyle == 0)
+                {
+                    <text>
+                        <div class="dz-preview dz-image-preview">
+                            <div class="dz-details">
+                                <div class="dz-filename">
+                                    <span>  @item.ClientFileName</span>
+                                </div>
+                                <div data-dz-size="" class="dz-size">
+                                    <strong>@item.FileSize</strong> MB
+                                </div>
+                                @if (item.FileType.ToLower().Equals(".png") ||
+                                    item.FileType.ToLower().Equals(".jpg") ||
+                                    item.FileType.ToLower().Equals(".jpge") ||
+                                    item.FileType.ToLower().Equals(".gif") ||
+                                    item.FileType.ToLower().Equals(".ico") ||
+                                    item.FileType.ToLower().Equals(".tif")
+                                    )
+                                {
+                                    <a class="fancybox" style="float:left;" rel="gallery" href="~/@item.MapPath/@item.ServerFileName" title="@item.ClientFileName">
+                                        <img data-dz-thumbnail="" alt="@item.ClientFileName" src="~/@item.MapPath/@project.config.library.Utilities.ConstantVariable.sizeImage_W[0]-@project.config.library.Utilities.ConstantVariable.sizeImage_H[0]/@item.ServerFileName">@item.ClientFileName
+                                    </a>
+                                }
+                                else
+                                {
+                                    <a href="~/Download.ashx?id=@item.FileSystemGuid" title="@item.ClientFileName">
+                                        <img data-dz-thumbnail="" alt="@item.ClientFileName" src="~/Images/ico/@item.FileType.Replace(".","")_.png">
+                                    </a>
+                                }
+                            </div>
+
+                        </div>
+                    </text>
+                }
+                if (liststyle == 1)
+                {
+                    <text>
+                        <div class="sm-dz-preview sm-dz-image-preview">
+                            <div class="sm-dz-details">
+                                @if (item.FileType.ToLower().Equals(".png") ||
+                                    item.FileType.ToLower().Equals(".jpg") ||
+                                    item.FileType.ToLower().Equals(".jpge") ||
+                                    item.FileType.ToLower().Equals(".gif") ||
+                                    item.FileType.ToLower().Equals(".ico") ||
+                                    item.FileType.ToLower().Equals(".tif")
+                                    )
+                                {
+                                    <a class="fancybox" style="float:left;" rel="gallery" href="~/@item.MapPath/@item.ServerFileName" title="@item.ClientFileName">
+                                        <img data-dz-thumbnail="" style="padding:5px;" height="32" src="~/@item.MapPath/@project.config.library.Utilities.ConstantVariable.sizeImage_W[0]-@project.config.library.Utilities.ConstantVariable.sizeImage_H[0]/@item.ServerFileName">@item.ClientFileName
+                                    </a>
+                                }
+                                else
+                                {
+                                    <a style="float:left;" href="~/Download.ashx?id=@item.FileSystemGuid">
+                                        <img data-dz-thumbnail="" style="padding:5px;" height="32" src="~/Images/ico/@item.FileType.Replace(".","")_.png">@item.ClientFileName
+                                    </a>
+                                }
+                            </div>
+                        </div>
+                    </text>
+                }
+
+            }
+        }
+    }
+</div>
+
+
+
+<script>
+    $(document).ready(function () {
+        $('.fancybox').fancybox({
+            openEffect: 'none',
+            closeEffect: 'none'
+        });
+    });
+
+    function DeleteFileSystem(element) {
+        var $button = $(element);
+        if ($button.attr("data-otf-confirm"))
+            if (!confirm($button.attr("data-otf-confirm")))
+                return false;
+
+
+        var idList = $button.attr("data-otf-target");
+        //chua kiem tra data-otf-mutil
+
+        //trường họp 1 item
+        $.ajax({
+            type: 'Post',
+            cache: false,
+            url: $button.attr("data-otf-action"),
+            //data: { selectedIds: selectedIds },
+            //dataType: "json",
+            success: function (data) {
+                $(idList).load($button.attr("data-otf-action-target"));
+            }
+        }).done(function () {
+        });
+        return true;
+    }
+
+</script>

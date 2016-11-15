@@ -1,0 +1,323 @@
+﻿<!DOCTYPE html>
+<html ng-app="app">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Tuyển sinh onile</title>
+    <meta name="description" content="Dăng ký xét tuyển online.">
+    <meta name="othor" content="ioiort team">
+
+    <script type="text/javascript" src="https://code.angularjs.org/1.5.5/angular.min.js"></script>
+    <script src="../../Scripts/angular-ui-router.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+
+
+    <link href="../../Content/plugins/anguler-datapicker/angularjs-datetime-picker.css" rel="stylesheet" />
+    <script src="../../Content/plugins/anguler-datapicker/angularjs-datetime-picker.js"></script>
+    <script src="../../Content/plugins/mask/mask.js"></script>
+
+
+    <script type="text/javascript" src="../../Scripts/app/TuyenSinh/TuyenSinhApp.js"></script>
+    <script type="text/javascript" src="../../Scripts/app/TuyenSinh/TuyenSinhSvc.js"></script>
+    <script type="text/javascript" src="../../Scripts/app/TuyenSinh/TuyenSinhCtrl.js"></script>
+
+
+    <style>
+        .input-group-addon {
+            border: none;
+            background: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container" style="width: 970px;">
+        <div class="row">
+            <div class="col-sm-12">
+
+                <div>
+                    <div ng-controller="TuyenSinhCtrlEdit">
+                        <form name="form" ng-submit="submitDangKy(form)">
+                            <div class="text-center form-group">
+                                <h2>ĐĂNG KÝ XÉT TUYỂN</h2>
+
+
+
+                                <span>Đợt xét tuyển: </span>{{kq.DotXetTuyen}}
+
+                            </div>
+                            <div class="form-group">
+
+                                <div class="input-group textinput">
+                                    <span class="input-group-addon">Loại tiếp nhận:</span>
+                                    <select class="form-control" ng-options="item.LoaiTiepNhanName for item in dangky.ListLoaiTiepNhan track by item.LoaiTiepNhanID" ng-model="kq.LoaiTiepNhan"></select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-8">
+                                    <div class="form-group">
+                                        <div class="input-group textinput" ng-class="{ 'has-error': form.HoVaTen.$touched && form.HoVaTen.$error.required  }">
+                                            <span class="input-group-addon">Họ và tên thí sinh:</span>
+                                            <input name="HoVaTen" ng-model="kq.HoVaTen" ng-minlength="1" required type="text" placeholder="Họ và tên thí sinh" class="form-control">
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col-xs-4">
+                                    <div class="form-group">
+                                        <div class="input-group textinput">
+                                            <span class="input-group-addon">Giới tính:</span>
+                                            <select class="form-control" name="GioiTinh" ng-options="item.GioiTinhName for item in dangky.ListGioiTinh track by item.GioiTinhID" ng-model="kq.GioiTinh"></select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group textinput" ng-class="{ 'has-error': form.NgaySinh.$touched && form.NgaySinh.$error.required   }">
+                                    <span class="input-group-addon">Ngày, tháng, năm sinh:</span>
+                                    <!--                                    <input model-view-value="true" ui-mask="99/99/9999" ui-mask-placeholder ui-mask-placeholder-char="_" id="NgaySinh" name="NgaySinh" ng-model="kq.NgaySinh" required type="text" placeholder="dd/mm/yyyy" class="form-control">-->
+
+                                    <input readonly="true" type="datetime" pattern="dd/MM/yyyy" valid-date ng-model="kq.NgaySinh" model-view-value="true" datepicker-popup="dd/MM/yyyy" ui-mask="99/99/9999" ui-mask-placeholder ui-mask-placeholder-char="_" date-only positionleft name="NgaySinh" datetime-picker required date-format="dd/MM/yyyy" class="form-control" close-on-select="true" min="@DateTime.Now.AddYears(-100)" max="@DateTime.Now" />
+                                </div>
+
+                            </div>
+
+                            <div class="form-group">
+
+                                <div class="input-group textinput" ng-class="{ 'has-error': form.SoBaoDanh.$touched && form.SoBaoDanh.$error.required  }">
+                                    <span class="input-group-addon">Số báo danh (trong kỳ thi THPT quốc gia):</span>
+                                    <input model-view-value="true" ui-mask="*********" ui-mask-placeholder ui-mask-placeholder-char="_" name="SoBaoDanh" ng-model="kq.SoBaoDanh" ng-minlength="1" required type="text" placeholder="Số báo danh" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group textinput" ng-class="{ 'has-error': form.SoChungMinh.$touched && form.SoChungMinh.$error.required  }">
+                                    <span class="input-group-addon">Số CMND (như hồ sơ đăng ký dự thi):</span>
+                                    <input model-view-value="true" ui-mask="99999999999" ui-mask-placeholder ui-mask-placeholder-char="_" name="SoChungMinh" ng-model="kq.SoChungMinh" ng-minlength="1" required type="text" placeholder="Số CMND" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group textinput" ng-class="{ 'has-error': form.MaDangKyXetTuyen.$touched && form.MaDangKyXetTuyen.$error.required  }">
+                                    <span class="input-group-addon">Mã ĐKXT:</span>
+                                    <input model-view-value="true" ui-mask="***-***-***-***" ui-mask-placeholder ui-mask-placeholder-char="_" name="MaDangKyXetTuyen" ng-model="kq.MaDangKyXetTuyen" required type="text" placeholder="AAA-AAA-AAA-AAA" class="form-control">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-4">
+                                    <div class="form-group">
+                                        <div class="input-group textinput">
+                                            <span class="input-group-addon">Diện "Ưu tiên xét tuyển":</span>
+                                            <input name="DienUuTien" ng-model="kq.DienUuTien" type="text" placeholder="" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-4">
+                                    <div class="form-group">
+                                        <div class="input-group textinput">
+                                            <span class="input-group-addon">Đối tượng:</span>
+                                            <input name="DoiTuongUuTien" ng-model="kq.DoiTuongUuTien" type="text" placeholder="" class="form-control">
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col-xs-4">
+                                    <div class="form-group">
+                                        <div class="input-group textinput">
+                                            <span class="input-group-addon">Loại giải, huy chương:</span>
+                                            <input name="LoaiHuyChuong" ng-model="kq.LoaiHuyChuong" type="text" placeholder="" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group textinput">
+                                    <span class="input-group-addon">Môn đoạt giải:</span>
+                                    <input name="MonDatGiai" ng-model="kq.MonDatGiai" type="text" placeholder="Môn đạt giải" class="form-control">
+                                </div>
+
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group textinput" ng-class="{ 'has-error': form.DiaChiNhanGiayBaoTrungTuyen.$touched && form.DiaChiNhanGiayBaoTrungTuyen.$error.required  }">
+                                    <span class="input-group-addon">Địa chỉ nhận giáy báo trúng tuyển:</span>
+                                    <input name="DiaChiNhanGiayBaoTrungTuyen" ng-model="kq.DiaChiNhanGiayBaoTrungTuyen" ng-minlength="1" required type="text" placeholder="Địa chỉ nhận giấy báo trúng tuyển" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group textinput" ng-class="{ 'has-error': form.SoDienThoai.$touched && form.SoDienThoai.$error.required  }">
+                                    <span class="input-group-addon">Số điện thoại:</span>
+                                    <input name="SoDienThoai" ng-model="kq.SoDienThoai" ng-minlength="1" required type="text" placeholder="Số điện thoại" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group textinput" ng-class="{ 'has-error': (form.Email.$invalid && form.Email.$dirty) || (form.Email.$touched && form.Email.$error.required) }">
+                                    <span class="input-group-addon">Email:</span>
+                                    <input name="Email" ng-model="kq.Email" required type="email" placeholder="Email" class="form-control">
+                                </div>
+                            </div>
+
+
+
+                            <h2> Chế độ ưu tiên</h2>
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <div class="form-group">
+                                        <div class="input-group textinput">
+                                            <span class="input-group-addon">Khu vực tuyển sinh:</span>
+                                            <select class="form-control" ng-options="item.KhuVucTuyenSinhName for item in dangky.ListKhuVucTuyenSinh track by item.KhuVucTuyenSinhID" ng-model="kq.KhuVucTuyenSinh"></select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-6">
+                                    <div class="form-group">
+
+                                        <div class="input-group textinput">
+                                            <span class="input-group-addon">Đối tượng ưu tiên tuyển sinh:</span>
+                                            <select class="form-control" ng-options="item.DoiTuongUuTienName for item in dangky.ListDoiTuongUuTien track by item.DoiTuongUuTienID" ng-model="kq.DoiTuongTuyenSinh"></select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group textinput">
+                                    <span>Chế độ ưu tiên có thay đổi so với hồ sơ đăng ký dự thi THPT quốc gia:</span>
+                                    <input name="CheDoUuTienThayDoi" ng-model="kq.CheDoUuTienThayDoi" type="checkbox">
+                                </div>
+                            </div>
+
+
+                            <h2> Đăng ký xét tuyển vào:</h2>
+                            <div class="row">
+                                <div class="col-xs-4">
+                                    <div class="form-group">
+                                        <div class="input-group textinput" ng-class="{ 'has-error': form.MaTruong.$touched && form.MaTruong.$error.required  }">
+                                            <span>Mã trường:</span>
+                                            {{kq.MaTruong}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-8">
+                                    <div class="form-group">
+                                        <div class="input-group textinput" ng-class="{ 'has-error': form.TenTruongDangKy.$touched && form.TenTruongDangKy.$error.required  }">
+                                            <span>Tên trường:</span>
+                                            {{kq.TenTruongDangKy}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 ">
+
+
+                                <div class="row">
+                                    <h2 class="text-center">CÁC NGUYỆN VỌNG ĐĂNG KÝ <br /> (Xếp theo thứ tự ưu tiên từ trên xuống dưới)</h2>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-4">
+                                        <div class="form-group">
+                                            <div class="input-group textinput" ng-class="{ 'has-error': form.NhomNganh1.$touched && form.NhomNganh1.$error.required  }">
+                                                <span class="input-group-addon">1. Nhóm ngành/Ngành:</span>
+                                                <select id="NhomNganh1" class="chosen-select form-control" ng-options="item.TenNganh for item in dangky.ListChuyenNganhToHopMon track by item.MaNganh " ng-model="kq.NhomNganh1" required ng-change="hasChangedNganhHoc(0,kq.NhomNganh1)"></select>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-4">
+                                        <div class="form-group">
+                                            <div class="input-group textinput">
+                                                <span>Mã ngành:</span> {{kq.MaNghanh1}}
+                                                <!-- <input name="MaNghanh1" ng-model="kq.MaNghanh1" ng-minlength="2"  required type="text" placeholder="" class="form-control">-->
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-4">
+                                        <div class="form-group">
+                                            <div class="input-group textinput">
+                                                <span>Tổ hợp môn thi dùng để xét tuyển:</span> {{kq.ToHopMonThiDungDeXetTuyen1}}
+                                                <!--<input name="ToHopMonThiDungDeXetTuyen1" ng-model="kq.ToHopMonThiDungDeXetTuyen1"  type="text" placeholder="" class="form-control">-->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+                                <div class="row">
+                                    <div class="col-xs-4">
+                                        <div class="form-group">
+                                            <div class="input-group textinput" ng-class="{ 'has-error': form.NhomNganh2.$touched && form.NhomNganh2.$error.required  }">
+                                                <span class="input-group-addon">2. Nhóm ngành/Ngành:</span>
+                                                <select class="chosen-select form-control" ng-options="item.TenNganh for item in dangky.ListChuyenNganhToHopMon track by item.MaNganh" ng-model="kq.NhomNganh2" required ng-change="hasChangedNganhHoc(1,kq.NhomNganh2)"></select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-4">
+                                        <div class="form-group">
+                                            <div class="input-group textinput" ng-class="{ 'has-error': form.MaNghanh2.$touched && form.MaNghanh2.$error.required  }">
+                                                <span>Mã ngành:</span> {{kq.MaNghanh2}}
+                                                <!--  <input name="MaNghanh2" ng-model="kq.MaNghanh2" ng-minlength="2"  required type="text" placeholder="" class="form-control">-->
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-4">
+                                        <div class="form-group">
+                                            <div class="input-group textinput">
+                                                <span>Tổ hợp môn thi dùng để xét tuyển:</span> {{kq.ToHopMonThiDungDeXetTuyen2}}
+                                                <!--<input name="ToHopMonThiDungDeXetTuyen2" ng-model="kq.ToHopMonThiDungDeXetTuyen2"  type="text" placeholder="" class="form-control">-->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group textinput">
+                                    <span>Có đăng ký xét tuyển và trường khác:</span>
+                                    <input name="CoDangKyXetTuyenVaoTruongKhac" ng-model="kq.CoDangKyXetTuyenVaoTruongKhac" type="checkbox" placeholder="">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-4">
+                                    <div class="form-group">
+                                        <div class="input-group textinput">
+                                            <span class="input-group-addon">Mã trường:</span>
+                                            <input ui-mask="***" model-view-value="true" ui-mask-placeholder ui-mask-placeholder-char="_" name="MaTruongDaDangKy" ng-model="kq.MaTruongDaDangKy" type="text" placeholder="Mã trường" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-8">
+                                    <div class="form-group">
+                                        <div class="input-group textinput">
+                                            <span class="input-group-addon">Tên trường:</span>
+                                            <input name="TenTruongDaDangKy" ng-model="kq.TenTruongDaDangKy" type="text" placeholder="Tên trường" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+
+
+                                <input type="submit" value="Đăng ký" class="btn btn-primary pull-right">
+                            </div>
+                        </form>
+                        <div class="clearfix"></div>
+                        {{kq}}
+                    </div>
+
+                </div>
+
+
+
+
+            </div>
+
+        </div>
+
+
+
+
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,117 @@
+﻿@model MvcPaging.IPagedList<nvngoc29082015.permission.library.ManageRoleDetail.ListInfoRoleDetailView>
+@using MvcPaging
+
+@{var i = 1;}
+
+<div class="">
+    @if (Model.TotalItemCount > 0)
+    {
+        <div class="p-b-10">
+            Kết quả tìm kiếm: <b>@Model.TotalItemCount</b> Quyền sử dụng.
+        </div>
+        <text>
+            <table class="table table-bordered datatables dataTable">
+                <thead>
+                    <tr>
+                        <th class="text-center w-30">
+                            <input id="CheckBoxAll" onclick="javascript: checkAlllist('#listcheckall',this);" type="checkbox" />
+                        </th>
+                        <th class="text-center">
+                            #
+                        </th>
+                        <th class="text-left w-150">
+                            @Html.DisplayNameFor(model => Model[0].RoleForCodeName)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => Model[0].ModuleName)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => Model[0].AppName)
+                        </th>
+
+                        <th class="text-center w-100">Trạng thái</th>
+
+                    </tr>
+                </thead>
+                <tbody id="listcheckall">
+                    @foreach (var item in Model)
+                    {
+                        <tr data="@item.ModuleGuid" class="showhim">
+                            <td class="text-center">
+                                <input type="checkbox"
+                                       class="checkbox-item"
+                                       data-offset-RoleforcodeName="@item.RoleForCodeName"
+                                       data-offset-valuecheck="@item.TrangThaiSB"
+                                       data-otf-value-roleforcodeguid="@item.RoleForCodeGuid"
+                                       data-otf-value-roleguid="@item.RoleGuid" />
+                            </td>
+                            <td class="text-center w-50">
+                                @Html.Raw((Model.PageNumber - 1) * Model.PageSize + i)
+                                @{i++;}
+                            </td>
+                            <td class="text-left w-100">
+                                @Html.Raw(item.RoleForCodeName)
+                            </td>
+                            <td>
+                                @Html.Raw(item.ModuleName)
+                            </td>
+                            <td>
+                                @Html.Raw(item.AppName)
+                            </td>
+
+                            <td class="text-center w-100">
+                                @Html.CheckBoxFor(x => item.TrangThaiSB, new { disabled = "disabled"  })
+                               
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </text>
+    }
+    else
+    {
+        <text><br />
+    <div class="alert alert-dismissable alert-info">
+        <strong>Yêu cầu tìm kiếm lúc @{ var date = DateTime.Now; } @date.ToString("HH:mm:ss dd/MM/yyyy") không có dữ liệu</strong>
+        <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+    </div>
+        </text>
+    }
+    <div class="pager">
+        @if (Model.TotalItemCount > Model.PageSize)
+        {
+        <text>
+            @Html.Raw(Ajax.Pager(
+                       new Options
+                       {
+                           PageSize = Model.PageSize,
+                           TotalItemCount = Model.TotalItemCount,
+                           CurrentPage = Model.PageNumber,
+                           ItemTexts = new ItemTexts() { Next = "Next", Previous = "Previous", Page = "" },
+                           ItemIcon = new ItemIcon() { First = "icon-backward", Previous = "icon-chevron-left", Next = "icon-chevron-right", Last = "icon-forward" },
+                           TooltipTitles = new TooltipTitles() { Next = "Next page", Previous = "Previous page", Page = "Page {0}." },
+                           Size = Size.normal,
+                           Alignment = Alignment.centered,
+                           IsShowControls = true,
+                           IsShowFirstLast = true,
+                           CssClass = ""
+                       },
+                       new AjaxOptions
+                       {
+                           UpdateTargetId = "ManageRoleDetail_InfoRoleDetail_DS_content"
+                       },
+                          new { controller = "ManagePermission", action = "PageNumberSubmit" }
+                       ))
+        </text>
+        }
+    </div>
+</div>
+@using (Html.BeginScriptContext())
+{
+    Html.AddScriptBlock(
+        @<script type="text/javascript">
+            loadSelect("QLTTNhanSu");
+        </script>
+, true);
+}

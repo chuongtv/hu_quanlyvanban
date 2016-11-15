@@ -1,0 +1,129 @@
+﻿@*
+    Author:   			hanhat
+    Created: 			2015-10-22
+    Last Modified: 		2015-10-22
+*@
+@model nvngoc29082015.permission.library.ManageAction.UpdateActionView
+
+<div class="row">
+    <div class="col-sm-12">
+
+        @using (Ajax.BeginForm(
+                                    "ActionEdit",
+                                    "ManagePermission",
+                                    new AjaxOptions
+                                {
+                                    InsertionMode = InsertionMode.Replace,//cach thuc update du lieu. Thay the hay them vao
+                                    HttpMethod = "POST",
+                                    UpdateTargetId = "CPManageAction",
+                                    LoadingElementId = "loader"
+                                }, new { @class = "form-horizontal", id = "frm_EditAction" }))
+        {
+
+            @Html.HiddenFor(model => Model.ActionGuid)
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+
+        <div class="form-group">
+                @Html.LabelFor(model => Model.ActionID, new { @class = "col-sm-2 control-label", @for = "text_ActionID" })
+                <div class="col-sm-4">
+                    @Html.TextBoxFor(model => Model.ActionID, new { @class = "form-control", id = "text_ActionID" })
+                    @Html.ValidationMessageFor(model => Model.ActionID, null, new { @class = "text-danger" })
+                </div>
+                <div class="col-sm-2">
+
+                </div>
+            </div>
+            <div class="form-group ">
+                @Html.LabelFor(model => Model.ActionName, new { @class = "col-sm-2 control-label", @for = "text_ActionName" })
+                <div class="col-sm-4">
+                    @Html.TextBoxFor(model => Model.ActionName, new { @class = "form-control", id = "text_ActionName" })
+                    @Html.ValidationMessageFor(model => Model.ActionName, null, new { @class = "text-danger" })
+                </div>
+                <div class="col-sm-2">
+
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => Model.GroupActionGuid, new { @class = "col-sm-2 control-label", @for = "DDL_LoaiSanPham_Guid" })
+                <div class="col-sm-4">
+                    @Html.DropDownListFor(model => Model.GroupActionGuid, new SelectList(Model.ListActionGroupGuid, "ValueString", "Name"), new { @class = "form-control chosen-select", id = "DDL_ControllerGuid" })
+                    @Html.ValidationMessageFor(model => Model.GroupActionGuid, null, new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-2">
+
+                </div>
+                <div class="col-sm-4">
+                    @Html.CheckBoxFor(model => Model.IsActive, new { @class = "", @checked = "checked", id = "chek_IsActive" })
+                    @Html.LabelFor(model => Model.IsActive, new { @class = "control-label", @for = "chek_IsActive" })
+
+                    @Html.ValidationMessageFor(model => Model.IsActive, null, new { @class = "text-danger" })
+                </div>
+
+            </div>
+            <div class="form-group ">
+                @Html.LabelFor(model => Model.Description, new { @class = "col-sm-2 control-label", @for = "text_Description" })
+                <div class="col-sm-6">
+                    @Html.TextAreaFor(model => Model.Description, new { @class = "form-control", id = "text_Description" })
+                    @Html.ValidationMessageFor(model => Model.Description, null, new { @class = "text-danger" })
+                </div>
+
+            </div>
+
+        }
+
+    </div>
+    <div class="row">
+        <div class="col-sm-6 col-sm-offset-3 text-center">
+            <div class="btn-toolbar">
+                <button type="button"
+                        onclick="ManageAction_Action_DeleteView(this)"
+                        data-otf-action="@Url.Action("ActionDelete", "ManagePermission", null, Request.Url.Scheme)?id=@Model.ActionGuid"
+                        data-otf-action-exit="@Url.Action("ManageAction", "ManagePermission", null, Request.Url.Scheme)"
+                        data-otf-confirm="Bạn muốn xóa dữ liệu này?"
+                        class="btn btn-danger">
+                    <i class="fa fa-trash-o"></i> Xóa
+                </button>
+                <button type="button" onclick="ManageAction_Action_OnSaveExit('#callbackManageAction_Action', 'true', '#frm_EditAction')" class="btn btn-success">Lưu & Thoát</button>
+                <button type="button" onclick="ManageAction_Action_OnSaveExit('#callbackManageAction_Action', 'false', '#frm_EditAction')" class="btn btn-primary"><i class="fa fa-floppy-o"></i> Lưu dữ liệu</button>&nbsp;hoặc&nbsp;
+                <a class="btn btn-link" href="@Url.Action("ManageAction", "ManagePermission", null, Request.Url.Scheme)"> Trở lại</a>
+
+                <input type="hidden" id="callbackManageAction_Action"
+                       data-otf-action-exit="@Url.Action("ManageAction", "ManagePermission", null, Request.Url.Scheme)"
+                       data-otf-action="@Url.Action("ActionEdit", "ManagePermission", null, Request.Url.Scheme)?id=@Model.ActionGuid" />
+            </div>
+        </div>
+    </div>
+
+</div>
+
+@using (Html.BeginScriptContext())
+{
+    Html.AddScriptBlock(
+        @<script type="text/javascript">
+            //Su dung cau hinh dropdownlist
+            var config = {
+                '.chosen-select': {},
+                '.chosen-select-deselect': { allow_single_deselect: true },
+                '.chosen-select-no-single': { disable_search_threshold: 10 },
+                '.chosen-select-no-results': { no_results_text: 'Lỗi! Vui lòng chọn ít nhất 1 mục.' },
+                '.chosen-select-width': { width: "95%" }
+            }
+            for (var selector in config) {
+                $(selector).chosen(config[selector]);
+            }
+
+            if (typeof CKEDITOR != 'undefined') {
+                var a = CKEDITOR.replace('text_Description', {
+                    customConfig: '../../../Scripts/ManagePermission/ManageActionGroup/jsCKEditor-custom.js'
+                });
+            }
+        </script>
+, true);
+}
+
+
+
+

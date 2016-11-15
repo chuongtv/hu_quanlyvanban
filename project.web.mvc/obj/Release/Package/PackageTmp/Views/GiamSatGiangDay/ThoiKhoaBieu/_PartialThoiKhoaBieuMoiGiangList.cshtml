@@ -1,0 +1,287 @@
+﻿@*
+    Author:   			pdgiai
+    Created: 			2016-1-4
+    Last Modified: 		2016-1-4
+*@
+
+@model MvcPaging.IPagedList<nvngoc31122015.giamsatgiangday.library.GiamSatGiangDay.ListThoiKhoaBieuMoiGiangView>
+@using MvcPaging
+
+@{var i = 1;}
+
+<div class="table-responsive">
+    @if (Model.TotalItemCount > 0)
+    {
+        <div class="p-b-10">
+            Kết quả tìm kiếm: <b>@Model.TotalItemCount</b> thời khóa biểu
+        </div>
+        <text>
+            <table class="table table-bordered datatables dataTable" id="demo">
+                <thead>
+                    <tr>
+                        <th class="text-center w-30">
+                            <input id="CheckBoxAll" onclick="javascript: checkAlllist('#listcheckall',this);" type="checkbox" />
+                        </th>
+                        <th class="text-center w-30">
+                            #
+                        </th>
+                        <th class="text-center w-30" title="Nhóm học">
+                            NH
+                        </th>
+                        <th class="text-center w-30" title="Tổ thực hành">
+                            TH
+                        </th>
+						@*
+                        <th class="text-center w-30" title="Tổ hợp nhóm">
+                            THN
+                        </th>
+						*@
+                        <th class="text-left">
+                            @Html.DisplayNameFor(model => Model[0].MonHocName)
+                        </th>
+                        <th class="text-center w-30" title="Tín chỉ">
+                            @Html.DisplayNameFor(model => Model[0].TinChi)
+                        </th>
+                        <th class="text-center w-50" title="Sĩ số">
+                            SS
+                        </th>
+                        <th class="text-left" style="width:100px;" title="Họ tên giảng viên giảng dạy">
+                            @Html.DisplayNameFor(model => Model[0].TenGiangVien)
+                        </th>
+                        <th class="text-center w-30">
+                            @Html.DisplayNameFor(model => Model[0].Thu)
+                        </th>
+                        <th class="text-center w-30" title="Tiết bắt đầu">
+                            TBĐ
+                        </th>
+                        <th class="text-center w-30">
+                            Tiết
+                        </th>
+                        <th class="text-center" style="width: 60px;">
+                            @Html.DisplayNameFor(model => Model[0].PhongID)
+                        </th>
+                        <th class="text-left" title="Tên lớp ghép" style="width: 70px;">
+                            @Html.DisplayNameFor(model => Model[0].LopName)
+                        </th>
+                        <th class="text-center" style="width:130px;">
+                            Thời gian học
+                        </th>
+                        @if ((@User as project.web.mvc.Common.IOIORTPrincipal).HasPermission("ThoiKhoaBieuMoiGiangDelete_GiamSatGiangDay"))
+                        {
+                            <th class="text-center" colspan="3">Tác vụ</th>
+                        }
+                        else
+                        {
+                            <th class="text-center" colspan="2">Tác vụ</th>
+                        }
+                    </tr>
+                </thead>
+                <tbody id="listcheckall">
+                    @foreach (var item in Model)
+                    {
+                        <tr datathoikhoabieu="@item.LopHocGuid" class="showhim">
+                            <td class="text-center">
+                                <input type="checkbox" class="checkbox-item" value="@item.LopHocGuid" />
+                            </td>
+                            <td class="text-center">
+                                @Html.Raw((Model.PageNumber - 1) * Model.PageSize + i)
+                                @{i++;}
+                            </td>
+                            <td class="text-center">
+
+                                @Html.Raw(item.NhomHoc)
+
+                            </td>
+                            <td class="text-center">
+
+                                @Html.Raw(item.NhomThucHanh)
+
+                            </td>
+							@*
+                            <td class="text-center">
+
+                                @Html.Raw(item.ToHopNhom)
+
+                            </td>
+							*@
+                            <td class="text-left">
+                                <span data-role="hint" data-hint-position="right" data-hint-mode="2" data-hint="
+                                    <i class='fa fa-credit-card'></i>&nbsp;<b>Mã môn</b>: @Html.Raw(item.MonHocID)
+                                    <br /><i class='fa fa-calendar'></i>&nbsp;&nbsp;<b>Tên môn</b>: @Html.Raw(item.MonHocName)">
+                                    @Html.Raw(item.MonHocName)
+                                </span>
+                            </td>
+                            <td class="text-center">
+                                @if (item.TinChi > 0)
+                                {
+                                    @Html.Raw(item.TinChi)
+                                }
+                            </td>
+                            <td class="text-center">
+                                @Html.Raw(item.SiSoLopHoc)
+                            </td>
+                            <td class="text-left">
+                                <div class="slipsistext" style="width:130px;">
+                                    <span data-role="hint" data-hint-position="left" data-hint-mode="2" data-hint="
+										<i class='fa fa-credit-card'></i>&nbsp;<b>Mã GV</b>: @Html.Raw(item.GiangVienID)
+										<br /><i class='fa fa-calendar'></i>&nbsp;&nbsp;<b>Tên GV</b>: @Html.Raw(item.TenGiangVien)
+										<br /><i class='fa fa-building-o'></i>&nbsp;&nbsp;<b>Đơn vị</b>: @Html.Raw(item.DonViName)
+										">
+										@Html.Raw(item.TenGiangVien)
+									</span>
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                @Html.Raw(item.Thu)
+                            </td>
+                            <td class="text-center">
+                                @Html.Raw(item.TietBatDau)
+                            </td>
+                            <td class="text-center">
+                                @Html.Raw(project.config.library.Utilities.ConstantVariable.FormatDiem(item.SoTiet))
+                            </td>
+                            <td class="text-center">
+                                <div class="slipsistext">
+                                    @Html.Raw(item.PhongID)
+                                </div>
+                            </td>
+                            <td class="text-left">
+                                <div class="slipsistext" style="width: 70px;">
+									<span data-role="hint" data-hint-position="left" data-hint-mode="2" data-hint="
+										<i class='fa fa-credit-card'></i>&nbsp;<b>Lớp</b>: @Html.Raw(item.LopThucTeGhep)">
+										@Html.Raw(item.LopThucTeGhep)
+									</span>
+                                    
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                @if (item.ThoiGianBatDau != null)
+                                {
+                                    @Html.Raw(item.ThoiGianBatDau.Value.ToString("dd/MM/yy"))
+                                }
+                                -
+                                @if (item.ThoiGianKetThuc != null)
+                                {
+                                    @Html.Raw(item.ThoiGianKetThuc.Value.ToString("dd/MM/yy"))
+                                }
+                            </td>
+
+                            @*<td class="text-right w-100"></td>*@
+                            @if ((@User as project.web.mvc.Common.IOIORTPrincipal).HasPermission("ThoiKhoaBieuMoiGiangDelete_GiamSatGiangDay"))
+                            {
+                                <td class="text-right" style="width:30px;">
+                                    <text>
+                                        <a data-otf-confirm="Bạn có chắc muôn xóa?"
+                                           title="Xóa dữ liệu này" href="javascript:void(0)"
+                                           @*onclick="GiamSatGiangDay_ThoiKhoaBieu_DeleteMulti(this)"*@
+                                           onclick="alert('Chức năng đang xây dựng')"
+                                           data-otf-target="#GiamSatGiangDay_ThoiKhoaBieu_DS_content"
+                                           data-otf-input="#Hiddenfiled_SearchInput"
+                                           data-otf-action-target="@Url.Action("ThoiKhoaBieuMoiGiangGet_List", "GiamSatGiangDay")?"
+                                           data-otf-action="@Url.Action("ThoiKhoaBieuMoiGiangDelete", "GiamSatGiangDay", null, Request.Url.Scheme)?id=@item.LopHocGuid">
+                                            <i class="fa fa-lg fa-trash-o text-danger"></i>
+                                        </a>
+                                    </text>
+
+                                </td> }
+                            <td class="text-right" style="width:30px;">
+                                <a data-otf-action="@Url.Action("ThoiKhoaBieuMoiGiangEdit", "GiamSatGiangDay", null, Request.Url.Scheme)?id=@item.LopHocGuid"
+                                   data-toggle="modal" onclick="GiamSatGiangDay_ThoiKhoaBieu_GetView(this)"
+                                   data-target="#modalGiamSatGiangDay_ThoiKhoaBieu" title="Chỉnh sửa">
+                                    <i class="fa fa-lg fa-pencil-square-o text-info"></i>
+                                </a>
+                            </td>
+                            <td class="text-right" style="width:70px;">
+                                <a href="@Url.Action("DSThoiKhoaBieuChiTiet", "GiamSatGiangDay", null, Request.Url.Scheme)?id=@item.LopHocGuid"
+                                   title="Xem lịch trình giảng dạy">
+                                    Lịch trình
+                                </a>
+                            </td>
+                        </tr>
+                                    }
+                </tbody>
+            </table>
+        </text>
+                                    }
+                                    else
+                                    {
+                                        <text><br />
+                                            <div class="alert alert-dismissable alert-info">
+                                                <strong>Yêu cầu tìm kiếm lúc @{ var date = DateTime.Now; } @date.ToString("HH:mm:ss dd/MM/yyyy") không có dữ liệu</strong>
+                                                <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+                                            </div>
+                                        </text>
+                                                    }
+    <div class="pager">
+        @if (Model.TotalItemCount > Model.PageSize)
+        {
+
+            <text>
+
+                @Html.Raw(Ajax.Pager(
+                       new Options
+                       {
+                           PageSize = Model.PageSize,
+                           TotalItemCount = Model.TotalItemCount,
+                           CurrentPage = Model.PageNumber,
+                           ItemTexts = new ItemTexts() { Next = "Next", Previous = "Previous", Page = "" },
+                           ItemIcon = new ItemIcon() { First = "icon-backward", Previous = "icon-chevron-left", Next = "icon-chevron-right", Last = "icon-forward" },
+                           TooltipTitles = new TooltipTitles() { Next = "Next page", Previous = "Previous page", Page = "Page {0}." },
+                           Size = Size.normal,
+                           Alignment = Alignment.centered,
+                           IsShowControls = true,
+                           IsShowFirstLast = true,
+                           CssClass = ""
+                       },
+                       new AjaxOptions
+                       {
+                           UpdateTargetId = "GiamSatGiangDay_ThoiKhoaBieu_DS_content"
+                       }, new
+                       {
+                           controller = "GiamSatGiangDay",
+                           action = "ThoiKhoaBieuMoiGiangGet_List",
+                           NHG = @ViewData["NamHocGuid"],
+                           MMH = @ViewData["MaMonHoc"],
+                           MGV = @ViewData["MaGiangVien"],
+                           CSG = @ViewData["CoSoGuid"],
+                           LG = @ViewData["LauGuid"],
+                           PG = @ViewData["PhongGuid"],
+                           CG = @ViewData["CaGuid"],
+                           LOG = @ViewData["LopGuid"],
+                           TN = @ViewData["TuNgay"],
+                           DN = @ViewData["DenNgay"],
+                           HK = @ViewData["HocKy"],
+                           DV = @ViewData["DonVi"]
+                       }))
+            </text>
+        }
+    </div>
+</div>
+<style>
+    .slipsistext {
+        white-space: nowrap;
+        overflow: hidden; /* "overflow" value must be different from "visible" */
+        text-overflow: ellipsis;
+    }
+</style>
+
+
+@using (Html.BeginScriptContext())
+{
+    Html.AddScriptBlock(
+
+        @<script type="text/javascript">
+
+            loadSelect("GiamSatGiangDay_ThoiKhoaBieu", "ThoiKhoaBieu");
+            $('#tablelist tbody tr').hover(function () {
+                $(this).addClass('hover');
+            }, function () {
+                $(this).removeClass('hover');
+            });
+
+        </script>
+, true);
+}
+
+
+

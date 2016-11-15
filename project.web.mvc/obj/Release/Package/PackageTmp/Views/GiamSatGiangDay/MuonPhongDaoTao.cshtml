@@ -1,0 +1,102 @@
+﻿@{
+    ViewBag.Title = "Đào tạo duyệt mượn phòng";
+    Layout = "~/Views/Shared/_LayoutAngular.cshtml";
+}
+
+<div id="page-heading">
+    <ol class="breadcrumb">
+        <li>
+            <a href="@Url.Action(" Index", "Home" )">
+                <i class="fa fa-lg fa-home text-warning text-size-20">
+                </i> Trang chủ
+            </a>
+        </li>
+        <li class="active">
+            Đào tạo duyệt mượn phòng
+        </li>
+    </ol>
+</div>
+<div class="container" ng-controller="MuonPhongDaoTaoCtrl">
+    <div class="col-sm-12 form-group">
+        <div>
+            <b>Giảng viên</b>:
+            <span id="lblName">{{phieumuonphong.HoTen}}</span>
+        </div>
+    </div>
+    <div class="col-sm-12 form-group">
+        <b>Lý do</b>:
+    </div>
+    <div class="col-sm-12 form-group">
+        <span>{{phieumuonphong.NoiDung}}</span>
+    </div>
+    <div class="col-sm-12 form-group">
+        <div class="col-sm-6 nopadding"><b>Danh sách các ngày mượn</b></div>
+        <div class="col-sm-6 text-right nopadding"></div>
+    </div>
+    <div ng-show="listAdd.length > 0">
+        <div class="col-sm-12 form-group">
+            <table cellpadding="0" cellspacing="0" border="0" class="table table-bordered datatables">
+                <thead>
+                    <tr>
+                        <th class="w-30">STT</th>
+                        <th>Ngày mượn</th>
+                        <th class="w-100">Tiết bắt đầu</th>
+                        <th class="w-100">Tiết kết thúc</th>
+                        <th class="w-100">Phòng</th>
+                        <th >Tác vụ</th>
+                    </tr>
+                </thead>
+
+                <tbody ng-repeat="item in listAdd">
+                    <tr>
+                        <td>{{$index + 1}}</td>
+                        <td>{{item.NgayMuonPhong |  date :  "dd/MM/yyyy"}}</td>
+
+                        <td>{{item.TietBatDau}}</td>
+                        <td>{{item.TietKetThuc}}</td>
+
+                        <td style="color:red;font-weight:bold;">{{item.PhongID}}</td>
+
+                        <td class="w-100 text-center" ng-show="phieumuonphong.TrangThai != 1">
+                            <a ng-show="item.PhongGuid == null " ng-click="fnPhanPhong(item.ChiTietPhieuMuonPhongGuid, item.NgayMuonPhong ,item.TietBatDau, item.SoTiet, item.PhongID, item.PhongGuid)">Chọn phòng</a>
+                            <a ng-show="item.PhongGuid != null " ng-click="fnPhanPhong(item.ChiTietPhieuMuonPhongGuid, item.NgayMuonPhong ,item.TietBatDau, item.SoTiet, item.PhongID, item.PhongGuid)">Đổi phòng</a>
+
+                        </td>
+                        <td class="w-100 text-center" ng-show="phieumuonphong.TrangThai == 1"><a  ng-click="fnDelete(item.ChiTietPhieuMuonPhongGuid)"><i class="fa fa-lg fa-trash-o text-danger"></i> Xóa</a> </td>
+
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-sm-12 text-right">
+            <button ng-show="phieumuonphong.TrangThai != 1" id="btnLuuPhieu"
+                    type="button"
+                    title="Lưu thông tin báo nghỉ"
+                    class="btn btn-primary"
+                    ng-click="XacNhanCapPhongMuonPhong()">
+                Xác nhận cấp phòng
+            </button>
+            <a class="btn btn-default" href="@Url.Action("YeuCauNghiBuMuonPhong", "GiamSatGiangDay" )">Trở lại</a>
+        </div>
+    </div>
+    <div class="col-sm-12 " ng-show="listAdd.length == 0">
+        <div class="alert alert-dismissable alert-info">
+            <strong>Không có dữ liệu</strong>
+        </div>
+    </div>
+
+
+</div>
+
+
+@section dialog {
+}
+
+@section Styles {
+}
+
+
+@section Scripts {
+    <script src="~/angularApp/app/GiamSatHoatDongGiangDay/MuonPhong/MuonPhongDaoTaoCtrl.js"></script>
+
+}

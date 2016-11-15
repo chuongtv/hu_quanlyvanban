@@ -1,0 +1,493 @@
+﻿@using Microsoft.AspNet.Identity;
+
+<nav class="navbar navbar-default ioiort-desktop" role="navigation">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+            <i class="fa fa-bars"></i>
+        </button>
+    </div>
+    <div class="collapse navbar-collapse navbar-ex1-collapse" id="horizontal-navbar">
+        <ul class="nav navbar-nav">
+
+            <li class="@Html.IsSelected(controller: "Home")">
+                <a href="@Url.Action("Index", "Home")"><i class="fa fa-dashboard"></i> <span>Bảng thông tin</span></a>
+            </li>
+            @if (User.IsInRole(project.config.library.Utilities.ConstantVariable.Value_AspNetRoles_Administrator) ||
+                     User.IsInRole(project.config.library.Utilities.ConstantVariable.Value_AspNetRoles_System)
+                 )
+            {
+                <text>
+            <li class="@Html.IsSelected(controller: "Home")">
+                <a href="@Url.Action("Index", "Home")"><i class="fa fa-dashboard"></i> <span>------------------------------------------</span></a>
+            </li>
+                    <li class="dropdown">
+                        <a href="/" class="dropdown-toggle" data-toggle='dropdown'>
+                            <span>Hệ thống <i class="fa fa-angle-down"></i></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li class="@Html.IsSelected(action: "DSPhanCongThanhTra", controller: "GiamSatGiangDay")">
+                                <a href="@Url.Action("DSPhanCongThanhTra", "GiamSatGiangDay")"><span>Phân công lịch trực thanh tra</span></a>
+                            </li>
+                            <li class="@Html.IsSelected(action: "ThanhTraDiTruc", controller: "GiamSatGiangDay")">
+                                <a href="@Url.Action("ThanhTraDiTruc", "GiamSatGiangDay")"><span>Đi thanh tra</span></a>
+                            </li>
+                            <li class="@Html.IsSelected(action: "TinhHinhThanhTra", controller: "GiamSatGiangDay")">
+                                <a href="@Url.Action("TinhHinhThanhTra", "GiamSatGiangDay")"><span>Theo dõi thông tin vi phạm</span></a>
+                            </li>
+                            <li class="@Html.IsSelected(action: "DSThoiKhoaBieuMoiGiang", controller: "GiamSatGiangDay")">
+                                <a href="@Url.Action("DSThoiKhoaBieuMoiGiang", "GiamSatGiangDay")"><span>Quản lý thời khóa biểu</span></a>
+                            </li>
+                            <li class="@Html.IsSelected(action: "XemThongTinViPham", controller: "GiamSatGiangDay")">
+                                <a href="@Url.Action("XemThongTinViPham", "GiamSatGiangDay")"><span>Thông tin từ thanh tra (Giảng viên xem thông tin từ thanh tra)</span></a>
+                            </li>
+                            <li class="@Html.IsSelected(action: "XemThongTinThoiKhoaBieu", controller: "GiamSatGiangDay")">
+                                <a href="@Url.Action("XemThongTinThoiKhoaBieu", "GiamSatGiangDay")"><span>Thời khóa biểu giảng dạy (Thời khóa biểu cá nhân của giảng viên)</span></a>
+                            </li>
+                            <li class="@Html.IsSelected(action: "GiamSatGiangDay1", controller: "GiamSatGiangDay")">
+                                <a href="@Url.Action("", "GiamSatGiangDay")"><span>chưa-- Thông tin báo nghỉ, báo bù(Giảng viên xem của cá nhân)</span></a>
+                            </li>
+                            <li class="@Html.IsSelected(action: "QuanLyDanhSachNghiBu", controller: "GiamSatGiangDay")">
+                                <a href="@Url.Action("QuanLyDanhSachNghiBu", "GiamSatGiangDay")"><span>Quản lý báo nghỉ, báo bù (Của thư ký khoa)</span></a>
+                            </li>
+                            <li class="@Html.IsSelected(action: "QuanLyDanhSachMuonPhong", controller: "GiamSatGiangDay")">
+                                <a href="@Url.Action("QuanLyDanhSachMuonPhong", "GiamSatGiangDay")"><span>Quản lý danh sách mượn phòng (Của thư ký khoa)</span></a>
+                            </li>
+                            <li class="@Html.IsSelected(action: "YeuCauNghiBuMuonPhong", controller: "GiamSatGiangDay")">
+                                <a href="@Url.Action("YeuCauNghiBuMuonPhong", "GiamSatGiangDay")"><span>Quản lý yêu cầu nghỉ, bù, mượn phòng (Của đào tạo)</span></a>
+                            </li>
+                            <li class="@Html.IsSelected(action: "QuanLyPhieuKhoaPhong", controller: "GiamSatGiangDay")">
+                                <a href="@Url.Action("QuanLyPhieuKhoaPhong", "GiamSatGiangDay")"><span>Quản lý danh sách khóa phòng</span></a>
+                            </li>
+
+                        </ul>
+                    </li>
+                </text>
+            }
+            @if (User.IsInRole(project.config.library.Utilities.ConstantVariable.Value_AspNetRoles_GiamSatGiangDay_GiangVien))
+            {
+                <text>
+                    <li class="dropdown">
+                        <a href="/" class="dropdown-toggle" data-toggle='dropdown'>
+                            <span>Giảng viên <i class="fa fa-angle-down"></i></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li class="@Html.IsSelected(action: "XemThongTinViPham", controller: "GiamSatGiangDay")">
+                                <a href="@Url.Action("XemThongTinViPham", "GiamSatGiangDay")"><span>Thông tin từ thanh tra</span></a>
+                            </li>
+                            <li class="@Html.IsSelected(action: "XemThongTinThoiKhoaBieu", controller: "GiamSatGiangDay")">
+                                <a href="@Url.Action("XemThongTinThoiKhoaBieu", "GiamSatGiangDay")"><span>Thời khóa biểu giảng dạy</span></a>
+                            </li>
+                            <li class="@Html.IsSelected(action: "GiamSatGiangDay1", controller: "GiamSatGiangDay")">
+                                <a href="@Url.Action("", "GiamSatGiangDay")"><span>chưa-- Thông tin báo nghỉ, báo bù</span></a>
+                            </li>
+                        </ul>
+                    </li>
+                </text>
+            }
+            @if (User.IsInRole(project.config.library.Utilities.ConstantVariable.Value_AspNetRoles_GiamSatGiangDay_ThuKy))
+            {
+                <text>
+                    <li class="dropdown">
+                        <a href="/" class="dropdown-toggle" data-toggle='dropdown'>
+                            <span>Thư ký<i class="fa fa-angle-down"></i></span>
+                        </a>
+                        <ul class="dropdown-menu">
+
+                            <li class="@Html.IsSelected(action: "DSThoiKhoaBieuMoiGiang", controller: "GiamSatGiangDay")">
+                                <a href="@Url.Action("DSThoiKhoaBieuMoiGiang", "GiamSatGiangDay")"><span>Quản lý thời khóa biểu</span></a>
+                            </li>
+                            <li class="@Html.IsSelected(action: "XemThongTinViPham", controller: "GiamSatGiangDay")">
+                                <a href="@Url.Action("XemThongTinViPham", "GiamSatGiangDay")"><span>Thông tin từ thanh tra</span></a>
+                            </li>
+                            <li class="@Html.IsSelected(action: "QuanLyDanhSachNghiBu", controller: "GiamSatGiangDay")">
+                                <a href="@Url.Action("QuanLyDanhSachNghiBu", "GiamSatGiangDay")"><span>Quản lý báo nghỉ, báo bù</span></a>
+                            </li>
+                            <li class="@Html.IsSelected(action: "QuanLyDanhSachMuonPhong", controller: "GiamSatGiangDay")">
+                                <a href="@Url.Action("QuanLyDanhSachMuonPhong", "GiamSatGiangDay")"><span>Quản lý danh sách mượn phòng</span></a>
+                            </li>
+                        </ul>
+                    </li>
+                </text>
+            }
+            @if (User.IsInRole(project.config.library.Utilities.ConstantVariable.Value_AspNetRoles_GiamSatGiangDay_NhanVienThanhTra))
+            {
+                <text>
+                    <li class="dropdown">
+                        <a href="/" class="dropdown-toggle" data-toggle='dropdown'>
+                            <span>Thanh tra <i class="fa fa-angle-down"></i></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li class="@Html.IsSelected(action: "ThanhTraDiTruc", controller: "GiamSatGiangDay")">
+                                <a href="@Url.Action("ThanhTraDiTruc", "GiamSatGiangDay")"><span>Đi thanh tra</span></a>
+                            </li>
+                            <li class="@Html.IsSelected(action: "TinhHinhThanhTra", controller: "GiamSatGiangDay")">
+                                <a href="@Url.Action("TinhHinhThanhTra", "GiamSatGiangDay")"><span>Theo dõi thông tin vi phạm</span></a>
+                            </li>
+                        </ul>
+                    </li>
+                </text>
+            }
+            @if (User.IsInRole(project.config.library.Utilities.ConstantVariable.Value_AspNetRoles_GiamSatGiangDay_LanhDaoThanhTra))
+            {
+                <text>
+                    <li class="dropdown">
+                        <a href="/" class="dropdown-toggle" data-toggle='dropdown'>
+                            <span>Trưởng thanh tra <i class="fa fa-angle-down"></i></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li class="@Html.IsSelected(action: "DSPhanCongThanhTra", controller: "GiamSatGiangDay")">
+                                <a href="@Url.Action("DSPhanCongThanhTra", "GiamSatGiangDay")"><span>Phân công lịch trực thanh tra</span></a>
+                            </li>
+                            <li class="@Html.IsSelected(action: "TinhHinhThanhTra", controller: "GiamSatGiangDay")">
+                                <a href="@Url.Action("TinhHinhThanhTra", "GiamSatGiangDay")"><span>Theo dõi thông tin vi phạm</span></a>
+                            </li>
+                        </ul>
+                    </li>
+                </text>
+            }
+            @if (User.IsInRole(project.config.library.Utilities.ConstantVariable.Value_AspNetRoles_GiamSatGiangDay_DaoTao))
+            {
+                <text><li class="@Html.IsSelected(controller: "Home")">
+    <a href="@Url.Action("Index", "Home")"><i class="fa fa-dashboard"></i> <span>------------------------------------------</span></a>
+</li>
+                    <li class="dropdown">
+                        <a href="/" class="dropdown-toggle" data-toggle='dropdown'>
+                            <span>Đào tạo <i class="fa fa-angle-down"></i></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li class="@Html.IsSelected(action: "DSThoiKhoaBieuMoiGiang", controller: "GiamSatGiangDay")">
+                                <a href="@Url.Action("DSThoiKhoaBieuMoiGiang", "GiamSatGiangDay")"><span>Quản lý thời khóa biểu</span></a>
+                            </li>
+                            <li class="@Html.IsSelected(action: "YeuCauNghiBuMuonPhong", controller: "GiamSatGiangDay")">
+                                <a href="@Url.Action("YeuCauNghiBuMuonPhong", "GiamSatGiangDay")"><span>Quản lý yêu cầu nghỉ, bù, mượn phòng</span></a>
+                            </li>
+                            <li class="@Html.IsSelected(action: "QuanLyPhieuKhoaPhong", controller: "GiamSatGiangDay")">
+                                <a href="@Url.Action("QuanLyPhieuKhoaPhong", "GiamSatGiangDay")"><span>Quản lý danh sách khóa phòng</span></a>
+                            </li>
+                        </ul>
+                    </li>
+                </text>
+            }
+            @*-----------------Các menu trong công tác giảng dạy----begin-----------*@
+            @*@if (User.IsInRole(project.config.library.Utilities.ConstantVariable.Value_AspNetRoles_Administrator) ||
+                    User.IsInRole(project.config.library.Utilities.ConstantVariable.Value_AspNetRoles_System)
+                )
+                {
+                    <li class="dropdown">
+                        <a href="/" class="dropdown-toggle" data-toggle='dropdown'>
+                            <span>Giám sát giảng dạy <i class="fa fa-angle-down"></i></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li class="@Html.IsSelected(action: "XemThongTinThoiKhoaBieu", controller: "GiamSatGiangDay")">
+                                <a href="@Url.Action("XemThongTinThoiKhoaBieu", "GiamSatGiangDay")"><span>Thời khóa biểu cá nhân</span></a>
+                            </li>
+                            <li class="@Html.IsSelected(action: "DSThoiKhoaBieuMoiGiang", controller: "GiamSatGiangDay")">
+                                <a href="@Url.Action("DSThoiKhoaBieuMoiGiang", "GiamSatGiangDay")"><span>Quản lý thời khóa biểu</span></a>
+                            </li>
+                            <li class="@Html.IsSelected(action: "PhieuBaoTKB", controller: "GiamSatGiangDay")">
+                                <a href="@Url.Action("PhieuBaoTKB", "GiamSatGiangDay")"><span>Báo nghỉ</span></a>
+                            </li>
+                            <li class="@Html.IsSelected(action: "DSPhieuBaoBu", controller: "GiamSatGiangDay")">
+                                <a href="@Url.Action("DSPhieuBaoBu", "GiamSatGiangDay")"><span>Báo bù</span></a>
+                            </li>
+                            <li class="@Html.IsSelected(action: "PhieuMuonPhong", controller: "GiamSatGiangDay")">
+                                <a href="@Url.Action("PhieuMuonPhong", "GiamSatGiangDay")"><span>Mượn phòng</span></a>
+                            </li>
+                            <li class="@Html.IsSelected(action: "ThongTinTuThanhTra", controller: "GiamSatGiangDay")">
+                                <a href="@Url.Action("ThongTinTuThanhTra", "GiamSatGiangDay")"><span>Thông tin từ thanh tra</span></a>
+                            </li>
+                            <li class="@Html.IsSelected(action: "DSPhanCongThanhTra", controller: "GiamSatGiangDay")">
+                                <a href="@Url.Action("DSPhanCongThanhTra", "GiamSatGiangDay")"><span>Phân công lịch trực</span></a>
+                            </li>
+                            <li class="@Html.IsSelected(action: "PhieuGhiNhanThanhTra", controller: "GiamSatGiangDay")">
+                                <a href="@Url.Action("PhieuGhiNhanThanhTra", "GiamSatGiangDay")"><span>Ghi nhận vi phạm</span></a>
+                            </li>
+                            <li class="@Html.IsSelected(action: "TinhHinhQuyPhong", controller: "GiamSatGiangDay")">
+                                <a href="@Url.Action("TinhHinhQuyPhong", "GiamSatGiangDay")"><span>Tra cứu tình trạng phòng</span></a>
+                            </li>
+                            <li class="@Html.IsSelected(action: "ThongTinTuThanhTra", controller: "GiamSatGiangDay")">
+                                <a href="@Url.Action("ThongTinTuThanhTra", "GiamSatGiangDay")"><span>Thông tin thanh tra</span></a>
+                            </li>
+                            <li class="@Html.IsSelected(action: "BaoCaoThongKe",controller: "GiamSatGiangDay")">
+                                <a href="@Url.Action("BaoCaoThongKe", "GiamSatGiangDay")"><span>Báo cáo thống kê</span></a>
+                            </li>
+
+                            <li class="@Html.IsSelected(action: "ThanhTraDiTruc",controller: "GiamSatGiangDay")">
+                                <a href="@Url.Action("ThanhTraDiTruc", "GiamSatGiangDay")"><span>Thanh tra đi trực</span></a>
+                            </li>
+                        </ul>
+                    </li>
+                }*@
+
+            @*@if (User.IsInRole(project.config.library.Utilities.ConstantVariable.Value_AspNetRoles_GiamSatGiangDay_GiangVien))
+                {
+                    <li class="dropdown">
+                        <a href="/" class="dropdown-toggle" data-toggle='dropdown'>
+                            <span>Giảng dạy <i class="fa fa-angle-down"></i></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li class="@Html.IsSelected(action: "XemThongTinThoiKhoaBieu", controller: "GiamSatGiangDay")">
+                                <a href="@Url.Action("XemThongTinThoiKhoaBieu", "GiamSatGiangDay")"><span>Thời khóa biểu</span></a>
+                            </li>
+                            <li class="@Html.IsSelected(action: "PhieuBaoTKB", controller: "GiamSatGiangDay")">
+                                <a href="@Url.Action("PhieuBaoTKB", "GiamSatGiangDay")"><span>Báo nghỉ</span></a>
+                            </li>
+                            <li class="@Html.IsSelected(action: "DSPhieuBaoBu", controller: "GiamSatGiangDay")">
+                                <a href="@Url.Action("DSPhieuBaoBu", "GiamSatGiangDay")"><span>Báo bù</span></a>
+                            </li>
+                            <li class="@Html.IsSelected(action: "ThongTinTuThanhTra", controller: "GiamSatGiangDay")">
+                                <a href="@Url.Action("ThongTinTuThanhTra", "GiamSatGiangDay")"><span>Thông tin từ thanh tra</span></a>
+                            </li>
+                            <li class="@Html.IsSelected(action: "PhieuMuonPhong", controller: "GiamSatGiangDay")">
+                                <a href="@Url.Action("PhieuMuonPhong", "GiamSatGiangDay")"><span>Mượn phòng</span></a>
+                            </li>
+                        </ul>
+                    </li>
+                }*@
+            @*@if (User.IsInRole(project.config.library.Utilities.ConstantVariable.Value_AspNetRoles_GiamSatGiangDay_LanhDaoThanhTra) ||
+                    User.IsInRole(project.config.library.Utilities.ConstantVariable.Value_AspNetRoles_GiamSatGiangDay_NhanVienThanhTra)
+
+                    )
+                {
+                    <li class="dropdown">
+                        <a href="/" class="dropdown-toggle" data-toggle='dropdown'>
+                            <span>Thanh tra giảng dạy <i class="fa fa-angle-down"></i></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            @if ((@User as project.web.mvc.Common.IOIORTPrincipal).HasPermission("DSPhanCongThanhTra_GiamSatGiangDay"))
+                            {
+                                <li class="@Html.IsSelected(action: "DSPhanCongThanhTra", controller: "GiamSatGiangDay")">
+                                    <a href="@Url.Action("DSPhanCongThanhTra", "GiamSatGiangDay")"><span>Phân công lịch trực</span></a>
+                                </li>
+                            }
+
+                            <li class="@Html.IsSelected(action: "PhieuGhiNhanThanhTra", controller: "GiamSatGiangDay")">
+                                <a href="@Url.Action("PhieuGhiNhanThanhTra", "GiamSatGiangDay")"><span>Ghi nhận vi phạm</span></a>
+                            </li>
+
+                            <li class="@Html.IsSelected(action: "TinhHinhQuyPhong", controller: "GiamSatGiangDay")">
+                                <a href="@Url.Action("TinhHinhQuyPhong", "GiamSatGiangDay")"><span>Tra cứu tình trạng phòng</span></a>
+                            </li>
+
+                            @*<li class="@Html.IsSelected(action: "ThongTinTuThanhTra", controller: "GiamSatGiangDay")">
+                                    <a href="@Url.Action("ThongTinTuThanhTra", "GiamSatGiangDay")"><span>Thông tin từ thanh tra</span></a>
+                                </li>
+                    @if ((@User as project.web.mvc.Common.IOIORTPrincipal).HasPermission("BaoCaoThongKe_GiamSatGiangDay"))
+                            {
+                                <li class="@Html.IsSelected(action: "BaoCaoThongKe", controller: "GiamSatGiangDay")">
+                                    <a href="@Url.Action("BaoCaoThongKe", "GiamSatGiangDay")"><span>Báo cáo thống kê</span></a>
+                                </li>
+                            }
+
+                            <li class="@Html.IsSelected(action: "ThanhTraDiTruc",controller: "GiamSatGiangDay")">
+                                <a href="@Url.Action("ThanhTraDiTruc", "GiamSatGiangDay")"><span>Thanh tra đi trực</span></a>
+                            </li>
+                        </ul>
+                    </li>
+                }*@
+
+            @*@if (User.IsInRole(project.config.library.Utilities.ConstantVariable.Value_AspNetRoles_GiamSatGiangDay_LanhDaoKhoa) ||
+                    User.IsInRole(project.config.library.Utilities.ConstantVariable.Value_AspNetRoles_GiamSatGiangDay_ThuKy))
+                {
+                    <li class="dropdown">
+                        <a href="/" class="dropdown-toggle" data-toggle='dropdown'>
+                            <span>Giảng dạy <i class="fa fa-angle-down"></i></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li class="@Html.IsSelected(action: "DSThoiKhoaBieuMoiGiang", controller: "GiamSatGiangDay")">
+                                <a href="@Url.Action("DSThoiKhoaBieuMoiGiang", "GiamSatGiangDay")"><span>Thời khóa biểu mời giảng</span></a>
+                            </li>
+                            <li class="@Html.IsSelected(action: "PhieuBaoTKB", controller: "GiamSatGiangDay")">
+                                <a href="@Url.Action("PhieuBaoTKB", "GiamSatGiangDay")"><span>Báo nghỉ</span></a>
+                            </li>
+                            <li class="@Html.IsSelected(action: "DSPhieuBaoBu", controller: "GiamSatGiangDay")">
+                                <a href="@Url.Action("DSPhieuBaoBu", "GiamSatGiangDay")"><span>Báo bù</span></a>
+                            </li>
+                            <li class="@Html.IsSelected(action: "PhieuMuonPhong", controller: "GiamSatGiangDay")">
+                                <a href="@Url.Action("PhieuMuonPhong", "GiamSatGiangDay")"><span>Mượn phòng</span></a>
+                            </li>
+                            <li class="@Html.IsSelected(action: "ThongTinTuThanhTra", controller: "GiamSatGiangDay")">
+                                <a href="@Url.Action("ThongTinTuThanhTra", "GiamSatGiangDay")"><span>Thông tin từ thanh tra</span></a>
+                            </li>
+                        </ul>
+                    </li>
+                }*@
+            @*@if (User.IsInRole(project.config.library.Utilities.ConstantVariable.Value_AspNetRoles_GiamSatGiangDay_DaoTao))
+                {
+                    <li class="dropdown">
+                        <a href="/" class="dropdown-toggle" data-toggle='dropdown'>
+                            <span>Quản lý đào tạo <i class="fa fa-angle-down"></i></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li class="@Html.IsSelected(action: "DSThoiKhoaBieuMoiGiang", controller: "GiamSatGiangDay")">
+                                <a href="@Url.Action("DSThoiKhoaBieuMoiGiang", "GiamSatGiangDay")"><span>Quản lý thời khóa biểu</span></a>
+                            </li>
+                            <li class="@Html.IsSelected(action: "DSPhieuBaoBu", controller: "GiamSatGiangDay")">
+                                <a href="@Url.Action("DSPhieuBaoBu", "GiamSatGiangDay")"><span>Quản lý báo bù</span></a>
+                            </li>
+                            <li class="@Html.IsSelected(action: "PhieuMuonPhong", controller: "GiamSatGiangDay")">
+                                <a href="@Url.Action("PhieuMuonPhong", "GiamSatGiangDay")"><span>Quản lý mượn phòng</span></a>
+                            </li>
+                            <li class="@Html.IsSelected(action: "TinhHinhQuyPhong", controller: "GiamSatGiangDay")">
+                                <a href="@Url.Action("TinhHinhQuyPhong", "GiamSatGiangDay")"><span>Tra cứu tình trạng phòng</span></a>
+                            </li>
+                        </ul>
+                    </li>
+                }*@
+            @*-----------------Các menu trong công tác giảng dạy----end-----------*@
+
+
+
+            @*<li class="dropdown">
+                    <a href="/" class="dropdown-toggle" data-toggle='dropdown'>
+                        <i class="fa fa-tv"></i><span>Quản lý <i class="fa fa-angle-down"></i></span>
+                    </a>
+                    <ul class="dropdown-menu">
+
+                        <li class="@Html.IsSelected(action: "DSPhanCongThanhTra",controller: "GiamSatGiangDay")">
+                            <a href="@Url.Action("DSPhanCongThanhTra", "GiamSatGiangDay")"><span>Phân công thanh tra</span></a>
+                        </li>
+
+                        <li class="@Html.IsSelected(action: "PhieuGhiNhanThanhTra", controller: "GiamSatGiangDay")">
+                            <a href="@Url.Action("PhieuGhiNhanThanhTra", "GiamSatGiangDay")"><span>Phiếu ghi nhận thanh tra</span></a>
+                        </li>
+                        <li class="@Html.IsSelected(action: "ThongTinTuThanhTra", controller: "GiamSatGiangDay")">
+                            <a href="@Url.Action("ThongTinTuThanhTra", "GiamSatGiangDay")"><span>Thông tin từ thanh tra</span></a>
+                        </li>
+                        <li class="@Html.IsSelected(action: "PhieuBaoBu", controller: "GiamSatGiangDay")">
+                            <a href="@Url.Action("PhieuBaoBu", "GiamSatGiangDay")"><span>Tình hình giảng dạy</span></a>
+                        </li>
+                        <li class="@Html.IsSelected(action: "PhieuBaoTKB", controller: "GiamSatGiangDay")">
+                            <a href="@Url.Action("PhieuBaoTKB", "GiamSatGiangDay")"><span>Phiếu báo nghỉ</span></a>
+                        </li>
+                        <li class="@Html.IsSelected(action: "DSPhieuBaoBu", controller: "GiamSatGiangDay")">
+                            <a href="@Url.Action("DSPhieuBaoBu", "GiamSatGiangDay")"><span>Phiếu báo bù</span></a>
+                        </li>
+                        <li class="@Html.IsSelected(action: "PhieuMuonPhong", controller: "GiamSatGiangDay")">
+                            <a href="@Url.Action("PhieuMuonPhong", "GiamSatGiangDay")"><span>Phiếu mượn phòng</span></a>
+                        </li>
+                        <li class="@Html.IsSelected(action: "TinhHinhQuyPhong", controller: "GiamSatGiangDay")">
+                            <a href="@Url.Action("TinhHinhQuyPhong", "GiamSatGiangDay")"><span>Tình hình quỹ phòng</span></a>
+                        </li>
+
+                        <li class="@Html.IsSelected(action: "XemThongTinThoiKhoaBieu", controller: "GiamSatGiangDay")">
+                            <a href="@Url.Action("XemThongTinThoiKhoaBieu", "GiamSatGiangDay")"><span>Xem thời khóa biểu (GV)</span></a>
+                        </li>
+
+                        <li class="@Html.IsSelected(action: "DSThoiKhoaBieuMoiGiang", controller: "GiamSatGiangDay")">
+                            <a href="@Url.Action("DSThoiKhoaBieuMoiGiang", "GiamSatGiangDay")"><span>Quản lý thời khóa biểu mời giảng</span></a>
+                        </li>
+                        <li class="@Html.IsSelected(action: "QuanLySendEmails", controller: "QuanLyMaketting")">
+
+                            <a href="@Url.Action("QuanLySendEmails", "QuanLyMaketting")"><span>Quản lý nhóm email</span></a>
+                        </li>
+                        <li class="@Html.IsSelected(action: "QuanLyDotGui", controller: "QuanLyMaketting")">
+                            <a href="@Url.Action("QuanLyDotGui", "QuanLyMaketting")"><span>Quản lý đợt gửi</span></a>
+                        </li>
+                    </ul>
+                </li>*@
+            @*@if ((@User as project.web.mvc.Common.IOIORTPrincipal).HasPermission("QuanLyConfigEmails_QuanLyMaketting"))
+                {
+                    <text>
+                        <li class="dropdown">
+                            <a href="/" class="dropdown-toggle" data-toggle='dropdown'>
+                                <i class="fa fa-cubes"></i><span>Gửi Email <i class="fa fa-angle-down"></i></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                @if ((@User as project.web.mvc.Common.IOIORTPrincipal).HasPermission("QuanLySendEmails_QuanLyMaketting"))
+                                {
+                                    <text>
+                                        <li class="@Html.IsSelected(action: "QuanLySendEmails", controller: "QuanLyMaketting")">
+                                            <a href="@Url.Action("QuanLySendEmails", "QuanLyMaketting")"><span>Quản lý Send Email</span></a>
+                                        </li>
+                                    </text>
+                                }
+                                @if ((@User as project.web.mvc.Common.IOIORTPrincipal).HasPermission("QuanLyDotGui_QuanLyMaketting"))
+                                {
+                                    <text>
+                                        <li class="@Html.IsSelected(action: "QuanLyDotGui", controller: "QuanLyMaketting")">
+                                            <a href="@Url.Action("QuanLyDotGui", "QuanLyMaketting")"><span>Quản lý đợt gửi</span></a>
+                                        </li>
+                                    </text>
+                                }
+                                @if ((@User as project.web.mvc.Common.IOIORTPrincipal).HasPermission("QuanLyGuiThuMoiGiang_QuanLyMaketting"))
+                                {
+                                    <text>
+                                        <li class="@Html.IsSelected(action: "QuanLyGuiThuMoiGiang", controller: "QuanLyMaketting")">
+                                            <a href="@Url.Action("QuanLyGuiThuMoiGiang", "QuanLyMaketting")"><span>Gửi thư mời giảng</span></a>
+                                        </li>
+                                    </text>
+                                }
+                                @if ((@User as project.web.mvc.Common.IOIORTPrincipal).HasPermission("QuanLyConfigEmails_QuanLyMaketting"))
+                                {
+                                    <text>
+                                        <li class="@Html.IsSelected(action: "QuanLyConfigEmails", controller: "QuanLyMaketting")">
+                                            <a href="@Url.Action("QuanLyConfigEmails", "QuanLyMaketting")"><span>Cấu hình email gửi</span></a>
+                                        </li>
+                                    </text>
+                                }
+
+                            </ul>
+                        </li>
+                    </text>
+                }*@
+            @*@if (User.IsInRole(project.config.library.Utilities.ConstantVariable.Value_AspNetRoles_Administrator) ||
+                            User.IsInRole(project.config.library.Utilities.ConstantVariable.Value_AspNetRoles_System)
+                        )
+                {
+                    <li class="dropdown">
+                        <a href="/" class="dropdown-toggle" data-toggle='dropdown'>
+                            <i class="fa fa-cubes"></i><span>Cài đặt <i class="fa fa-angle-down"></i></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li class="@Html.IsSelected(action: "CauHinhCoSo", controller: "GiamSatGiangDay")">
+                                <a href="@Url.Action("CauHinhCoSo", "GiamSatGiangDay")"><span>Cơ sở</span></a>
+                            </li>
+                            <li class="@Html.IsSelected(action: "CauHinhLau", controller: "GiamSatGiangDay")">
+                                <a href="@Url.Action("CauHinhLau", "GiamSatGiangDay")"><span>Lầu</span></a>
+                            </li>
+                            <li class="@Html.IsSelected(action: "CauHinhPhong", controller: "GiamSatGiangDay")">
+                                <a href="@Url.Action("CauHinhPhong", "GiamSatGiangDay")"><span>Phòng học</span></a>
+                            </li>
+                            <li class="@Html.IsSelected(action: "CauHinhCaHoc", controller: "GiamSatGiangDay")">
+                                <a href="@Url.Action("CauHinhCaHoc", "GiamSatGiangDay")"><span>Ca học</span></a>
+                            </li>
+                            <li class="@Html.IsSelected(action: "CauHinhLoaiViPham", controller: "GiamSatGiangDay")">
+                                <a href="@Url.Action("CauHinhLoaiViPham", "GiamSatGiangDay")"><span>Loại vi phạm</span></a>
+                            </li>
+                            <li class="@Html.IsSelected(action: "CauHinhLoaiPhieu", controller: "GiamSatGiangDay")">
+                                <a href="@Url.Action("CauHinhLoaiPhieu", "GiamSatGiangDay")"><span>Loại phiếu</span></a>
+                            </li>
+
+
+                        </ul>
+                    </li>
+                }*@
+
+            @*@if (User.IsInRole(project.config.library.Utilities.ConstantVariable.Value_AspNetRoles_System))
+                {
+
+                    <li class="dropdown @Html.IsSelected(controller: "ManagePermission")">
+                        <a href="/" class="dropdown-toggle" data-toggle='dropdown'>
+                            <i class="fa fa-lock"></i><span>Quản trị <i class="fa fa-angle-down"></i></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li class="@Html.IsSelected(controller: "ManagePermission", action: "ManageAspNetRoles")">
+                                <a href="@Url.Action("ManageAspNetRoles", "ManagePermission")"><span>Phân quyền</span> </a>
+                            </li>
+                            <li class="@Html.IsSelected(controller: "ManagePermission", action: "ManageAspNetUsers")">
+                                <a href="@Url.Action("ManageAspNetUsers", "ManagePermission")"><span>Tài khoản</span> </a>
+                            </li>
+                            <li class="@Html.IsSelected(controller: "Config", action: "QLSettingData")">
+                                <a href="@Url.Action("QLSettingData", "Config")"><span>Cấu hình thông số Cache</span> </a>
+                            </li>
+
+
+                        </ul>
+                    </li>
+                }*@
+
+
+        </ul>
+    </div>
+</nav>

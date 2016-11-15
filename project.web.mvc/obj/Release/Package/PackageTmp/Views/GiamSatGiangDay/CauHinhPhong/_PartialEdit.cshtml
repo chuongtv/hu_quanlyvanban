@@ -1,0 +1,213 @@
+﻿@*
+    Author:   			pdgiai
+    Created: 			2016-1-7
+    Last Modified: 		2016-1-7
+*@
+@model nvngoc31122015.giamsatgiangday.library.GiamSatGiangDay.UpdateCauHinhPhongView
+
+<div class="modal-content">
+    <div class="modal-header">
+        <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+        <h4 class="modal-title">Cập nhật Phòng</h4>
+    </div>
+    <div class="modal-body">
+
+        @using (Ajax.BeginForm(
+                                    "CauHinhPhongEdit",
+                                    "GiamSatGiangDay",
+                                    new AjaxOptions
+                                {
+                                    InsertionMode = InsertionMode.Replace,//cach thuc update du lieu. Thay the hay them vao
+                                    HttpMethod = "POST",
+                                    UpdateTargetId = "modalGiamSatGiangDay_CauHinhPhong_c",
+                                    LoadingElementId = "loader"
+                                }, new { @class = "form-horizontal", id = "frm_EditCauHinhPhong" }))
+        {
+            
+            
+            @Html.HiddenFor(model => Model.PhongGuid)
+            
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+
+
+           
+
+             <div class="form-horizontal">
+                <div class="form-group">
+                    <div class="col-sm-2">
+                        @Html.LabelFor(model => Model.CoSo_Guid, new { @class = "control-label", @for = "DDLCoSo2" })
+                    </div>
+                    <div class="col-sm-4">
+                        @Html.DropDownListFor(model => Model.CoSo_Guid, new SelectList(Model.ListCoSo_Guid, "ValueString", "Name"), new { @class = "form-control chosen-select", id = "DDLCoSo2", @onchange = "FillLau2()" })
+                        @Html.ValidationMessageFor(model => Model.CoSo_Guid, null, new { @class = "text-danger" })
+                    </div>
+                    <div class="col-sm-2 text-right validate-label">
+                        @Html.LabelFor(model => Model.Lau_Guid, new { @class = "control-label", @for = "DDLlau2" })
+                    </div>
+                    <div class="col-sm-4">
+                        @Html.DropDownListFor(model => Model.Lau_Guid, new SelectList(Model.ListLau_Guid, "ValueString", "Name"), new { @class = "form-control chosen-select", id = "DDLlau2" })
+                        @Html.ValidationMessageFor(model => Model.Lau_Guid, null, new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <div class="col-sm-2 validate-label">
+                        @Html.LabelFor(model => Model.PhongID, new { @class = "control-label", @for = "text_PhongID" })
+                    </div>
+                    <div class="col-sm-10">
+                        @Html.TextBoxFor(model => Model.PhongID, new { @class = "form-control", id = "text_PhongID" })
+                        @Html.ValidationMessageFor(model => Model.PhongID, null, new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <div class="col-sm-2">
+                        @Html.LabelFor(model => Model.DienTich, new { @class = "control-label", @for = "text_DienTich" })
+                    </div>
+                    <div class="col-sm-4">
+                        @Html.TextBoxFor(model => Model.DienTich, new { @class = "form-control", id = "text_DienTich" })
+                        @Html.ValidationMessageFor(model => Model.DienTich, null, new { @class = "text-danger" })
+                    </div>
+                    <div class="col-sm-2 text-right">
+                        @Html.LabelFor(model => Model.SucChua, new { @class = "control-label", @for = "text_SucChua" })
+                    </div>
+                    <div class="col-sm-4">
+                        @Html.TextBoxFor(model => Model.SucChua, new { @class = "form-control", id = "text_SucChua" })
+                        @Html.ValidationMessageFor(model => Model.SucChua, null, new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <hr />
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <div class="col-sm-6">
+                        @*@Html.LabelFor(model => Model.TrangThai, new { @class = "control-label", @for = "chek_TrangThai" })*@
+                        @Html.CheckBoxFor(model => Model.TrangThai, new { @checked = "checked", id = "chek_TrangThai" })
+                        <label for="chek_TrangThai" class="control-label">Cho phép sử dụng</label>
+                        
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        Chọn cơ sở vật chất nếu phòng học có sử dụng:
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <div class="col-sm-3">
+                        @Html.CheckBoxFor(model => Model.MayChieu, new { @checked = "checked", id = "chek_MayChieu" })
+                        @Html.LabelFor(model => Model.MayChieu, new { @class = "control-label", @for = "chek_MayChieu" })
+                    </div>
+                    <div class="col-sm-2">
+                        @Html.CheckBoxFor(model => Model.Micro, new { @checked = "checked", id = "chek_Micro" })
+                        @Html.LabelFor(model => Model.Micro, new { @class = "control-label", @for = "chek_Micro" })
+                    </div>
+                    <div class="col-sm-2">
+                        @Html.CheckBoxFor(model => Model.Camera, new { @checked = "checked", id = "chek_Camera" })
+                        @Html.LabelFor(model => Model.Camera, new { @class = "control-label", @for = "chek_Camera" })
+                    </div>
+                    <div class="col-sm-2">
+                        @Html.CheckBoxFor(model => Model.MayLanh, new { @checked = "checked", id = "chek_MayLanh" })
+                        @Html.LabelFor(model => Model.MayLanh, new { @class = "control-label", @for = "chek_MayLanh" })
+                    </div>
+                    <div class="col-sm-2">
+                        @Html.CheckBoxFor(model => Model.Quat, new { @checked = "checked", id = "chek_Quat" })
+                        @Html.LabelFor(model => Model.Quat, new { @class = "control-label", @for = "chek_Quat" })
+                    </div>
+                </div>
+            </div>
+        }
+
+    </div>
+ 
+    <div class="modal-footer">
+
+        <div class="col-sm-12  text-center">
+      
+            <button type="button" aria-hidden="true" data-dismiss="modal"
+                            onclick="GiamSatGiangDay_CauHinhPhong_DeleteView(this)"
+                            data-otf-action="@Url.Action("CauHinhPhongDelete", "GiamSatGiangDay", null, Request.Url.Scheme)?id=@Model.PhongGuid"
+                            data-otf-action-exit="@Url.Action("CauHinhPhongGet_List", "GiamSatGiangDay", null, Request.Url.Scheme)"
+                            data-otf-confirm="Bạn muốn xóa dữ liệu này?"
+                            data-otf-target-exit="#GiamSatGiangDay_CauHinhPhong_DS_content"
+                            data-target="#modalGiamSatGiangDay_CauHinhPhong"
+                            class="btn btn-danger">
+                        <i class="fa fa-trash-o"></i> Xóa
+                    </button>
+                    <button type="button" onclick="GiamSatGiangDay_CauHinhPhong_OnSaveExit('#callbackGiamSatGiangDay_CauHinhPhong', 'true', '#frm_EditCauHinhPhong')" class="btn btn-success">Lưu & Thoát</button>
+                    <button type="button" onclick="GiamSatGiangDay_CauHinhPhong_OnSaveExit('#callbackGiamSatGiangDay_CauHinhPhong', 'false', '#frm_EditCauHinhPhong')" class="btn btn-primary"><i class="fa fa-floppy-o"></i> Lưu dữ liệu</button>
+                    &nbsp;hoặc&nbsp;
+                    
+                    <a class="btn btn-link" data-otf-action="@Url.Action("CauHinhPhongGet_List", "GiamSatGiangDay", null, Request.Url.Scheme)" data-target="#GiamSatGiangDay_CauHinhPhong_DS_content" aria-hidden="true" data-dismiss="modal" onclick="GiamSatGiangDay_CauHinhPhong_BakList(this)"> Quay lại</a>
+
+                    <input type="hidden" id="callbackGiamSatGiangDay_CauHinhPhong"
+                           data-otf-target="#modalGiamSatGiangDay_CauHinhPhong"
+                           data-otf-target-exit="#GiamSatGiangDay_CauHinhPhong_DS_content"
+                           data-otf-action-exit="@Url.Action("CauHinhPhongGet_List", "GiamSatGiangDay", null, Request.Url.Scheme)"
+                           data-otf-action="@Url.Action("CauHinhPhongEdit", "GiamSatGiangDay", null, Request.Url.Scheme)?id=@Model.PhongGuid" />
+            
+         
+        </div>
+    </div>
+
+</div>
+
+@using (Html.BeginScriptContext())
+{
+    Html.AddScriptBlock(
+        @<script type="text/javascript">
+             //Su dung cau hinh dropdownlist
+            var config = {
+                '.chosen-select': {},
+                '.chosen-select-deselect': { allow_single_deselect: true },
+                '.chosen-select-no-single': { disable_search_threshold: 10 },
+                '.chosen-select-no-results': { no_results_text: 'Lỗi! Vui lòng chọn ít nhất 1 mục.' },
+                '.chosen-select-width': { width: "95%" }
+            }
+            for (var selector in config) {
+                $(selector).chosen(config[selector]);
+            }
+            function FillLau3() {
+                var abbr3 = $("#DDLCoSo3").val();
+                getLau3(abbr3);
+            }
+
+            function getLau3(abbr) {
+                $.ajax({
+                    url: "@Url.Action("FillLau", "GiamSatGiangDay")",
+                    data: { CoSoGuid: abbr },
+                dataType: "json",
+                type: "POST",
+                error: function() {
+                    alert("An error occurred.");
+                },
+                success: function(data) {
+                    var items = "";
+                    $("#DDLlau3").empty().append('<option value="00000000-0000-0000-0000-000000000000">---Chọn lầu---</option>');
+                    $.each(data, function(i, item) {
+                        items += "<option value=\"" + item.ValueString + "\">" + item.Name + "</option>";
+                    });
+                    $("#DDLlau3").html(items);
+                    $('#DDLlau3').trigger('chosen:updated');
+                }
+            });
+
+            }
+
+        </script>
+, true);
+}
+
+
+
+

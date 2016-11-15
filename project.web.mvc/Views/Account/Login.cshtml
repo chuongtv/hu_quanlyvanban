@@ -1,0 +1,82 @@
+﻿@{
+    ViewBag.Title = "Đăng nhập hệ thống";
+    Layout = "~/Views/Shared/_LayoutNone.cshtml";
+}
+@model project.web.mvc.Models.LoginViewModel
+
+
+@*<link rel="stylesheet" href="assets/css/styles.min.css?=113">
+    <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600' rel='stylesheet' type='text/css'>*@
+
+<div class="verticalcenter focusedform" >
+    <a href="index.htm"><img src="~/Images/logo-hutech.png" alt="Logo" class="brand" /></a>
+
+    <div class="panel panel-primary">
+        @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form",id="login" }))
+        {
+            @Html.AntiForgeryToken()
+            
+            <div class="panel-body">
+
+                <h3>Cổng thông tin nội bộ</h3>
+                <p>Vui lòng sử dụng <strong>mã nhân viên</strong> và <strong>mật mã</strong> để đăng nhập.</p>
+                @*<form action="#" class="form-horizontal" style="margin-bottom: 0px !important;">*@
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                            @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", placeholder = "Tài khoản",id="username" })
+
+                        </div>
+                        @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "fg-red" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+                            @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Mật mã", id = "password" })
+
+                        </div>
+                        @Html.ValidationMessageFor(model => model.Password, "", new { @class = "fg-red" })
+                    </div>
+                </div>
+                @Html.ValidationSummary(true,null, new { @class = "fg-red" })
+                <div class="clearfix">
+
+                    @Html.CheckBoxFor(m => m.RememberMe, new { style = "" })
+                    @Html.LabelFor(m => m.RememberMe)
+                </div>
+            </div>
+            <div class="panel-footer">
+                @*<a href="@Html.Action("Quên mật khẩu?","ForgotPassword")" class="pull-left btn btn-link" style="padding-left:0">Quên mật khẩu?</a>*@
+
+                @Html.ActionLink("Quên mật khẩu?", "ForgotPassword", null, new { @class = "pull-left btn btn-link", style = "padding-left:0" })
+
+                <div class="pull-right">
+                    @*<a href="#" class="btn btn-default">Reset</a>*@
+                    <button type="submit" value="Đăng nhập" class="btn btn-primary ">
+                        <i class="fa fa-sign-in"></i> Đăng nhập
+                    </button>
+                    @*@Html.ActionLink("Save", "Login", "Account", null, new { @class = "saveButton", onclick = "return false;" })*@
+                </div>
+            </div>
+            
+        }
+    </div>
+    <div class="text-center">
+        Phiên bản 2.2.9 <br />
+        Bản quyền của <a href="http://www.hutech.edu.vn/">HUTECH</a> – Phát triển bởi <a href="http://qlcntt.hutech.edu.vn/">TTQLCNTT</a> © 2012 - 2015
+        <br />
+        Email: <a href="mailto:tt.qlcntt@hutech.edu.vn">tt.qlcntt@hutech.edu.vn</a>
+        <br />
+        Điện thoại: (08) 3512 0783 - Nội bộ: 45
+        <br />
+        <br />
+        Hỗ trợ tốt nhất trình duyệt Firefox phiên bản 11.0 trở lên.
+    </div>
+</div>
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/jqueryui")
+
+

@@ -1,0 +1,82 @@
+﻿@{
+    ViewBag.Title = "ManagePermission";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div id="page-heading">
+    <ol class="breadcrumb">
+        <li>
+            <a href="@Url.Action("Index", "Dashboards")">
+                <i class="fa fa-lg fa-home text-warning text-size-20">
+                </i> Trang chủ
+            </a>
+        </li>
+        <li>
+            <a href="@Url.Action("ManagePermission", "ManagePermission")">
+                <i>
+                </i>Quản Lý Phân Quyền
+            </a>
+        </li>
+        <li>
+            <a href="@Url.Action("ManageAspNetRoles", "ManagePermission")">
+                <i>
+                </i>Quản Lý Roles
+            </a>
+        </li>
+        <li class="active">
+            Quản lý phân quyền chức năng
+        </li>
+    </ol>
+</div>
+<div class="container" id="demo">
+    <div class="row">
+
+        <div class="col-xs-8"><h4>@ViewBag.NhomQuyenName</h4></div>
+        <div class="col-xs-4">
+            <div class="pull-right">
+                <div class="form-group ">
+                    <a data-otf-mutil="true"
+                       onclick="ManageRoleDetail_InfoRoleDetail_DeleteMulti(this)"
+                       data-otf-confirm="Bạn có chắc muốn xóa những dòng đã chọn?"
+                       data-otf-target="#listcheckall"
+                       data-otf-action="@Url.Action("InfoRoleDetailDelete", "ManagePermission", null, Request.Url.Scheme)?idRoleforcode="
+                       class=" btn btn-danger"
+                       title="Xóa">
+                        <i class="fa fa-trash-o"></i> Xóa
+                    </a>
+                    <a class=" btn btn-success"
+                       data-otf-target="#listcheckall"
+                       onclick="ManageRoleDetail_InfoRoleDetail_CreateMulti(this)"
+                       data-otf-action="@Url.Action("InfoRoleDetailCreate", "ManagePermission", null, Request.Url.Scheme)?idRoleforcode=">
+
+                        <i class="fa fa-plus" title="Tạo mới"></i> Thêm
+                    </a>
+
+                    <a class=" btn btn btn-primary" href="@Url.Action("ManageAspNetRoles", "ManagePermission")">
+                        Trở lại
+                    </a>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            @Html.Action("InfoRoleDetailGet_DanhSach", "ManagePermission",
+            new { id = Request["id"] })
+        </div>
+    </div>
+</div>
+
+@section Styles {
+
+    @Styles.Render("~/plugins/chosenStyles")
+
+    @Styles.Render("~/plugins/dataPickerStyles")
+}
+
+@section Scripts {
+    @Scripts.Render("~/plugins/chosen")
+    @Scripts.Render("~/module/ManagePermission/ManageRoleDetail/InfoRoleDetail")
+}

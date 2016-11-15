@@ -1,0 +1,178 @@
+﻿@model nvngoc31122015.giamsatgiangday.library.GiamSatGiangDay.ListThongTinTuThanhTraView
+<div class="row ">
+    @if ((@User as project.web.mvc.Common.IOIORTPrincipal).HasPermission("PhieuGhiNhanThanhTraCreate_GiamSatGiangDay") // Quyen thanh tra
+            || (@User as project.web.mvc.Common.IOIORTPrincipal).HasPermission("DangKyPhieuBaoBu_CapPhongBu_GiamSatGiangDay")) // Quyen dao tao
+{
+    <label class="control-label col-sm-1 linelable" style="float:left;">Đon vị</label>
+        <div class="col-sm-2">
+            @Html.DropDownListFor(model => Model.DonVi_Guid, new SelectList(Model.ListDonVi_Guid, "ValueString", "Name"), new { @class = "form-control chosen-select", id = "DDL_DonVi_Guid", @onchange = "FillListGiangVien()" })
+            @Html.ValidationMessageFor(model => Model.DonVi_Guid, null, new { @class = "text-danger" })
+        </div>
+    }
+    @if ((@User as project.web.mvc.Common.IOIORTPrincipal).HasPermission("PhieuMuonPhongCreate_GiamSatGiangDay") // Quyen thu ky
+            || (@User as project.web.mvc.Common.IOIORTPrincipal).HasPermission("PhieuGhiNhanThanhTraCreate_GiamSatGiangDay") // Quyen thanh tra
+            || (@User as project.web.mvc.Common.IOIORTPrincipal).HasPermission("DangKyPhieuBaoBu_CapPhongBu_GiamSatGiangDay")) // Quyen dao tao
+{
+    <label class="control-label col-sm-1 linelable" style="float:left;">Giảng viên</label>
+        <div class="col-sm-2 form-group ">
+            @Html.DropDownListFor(model => Model.NhanVien_Guid, new SelectList(Model.ListNhanVien_Guid, "ValueString", "Name"), new { @class = "form-control chosen-select", id = "DDL_NhanVien_Guid" })
+            @Html.ValidationMessageFor(model => Model.NhanVien_Guid, null, new { @class = "text-danger" })
+        </div>
+    }
+
+</div>
+
+<div class="row" id="show">
+
+    <label class="control-label col-sm-1 linelable " style="float:left;">Năm học</label>
+    <div class="col-sm-2 form-group ">
+        @Html.DropDownListFor(model => Model.NamHoc_Guid, new SelectList(Model.ListNamHoc_Guid, "ValueString", "Name", Model.NamHocID), new { @class = "form-control chosen-select", id = "DDL_NamHoc_Guid" })
+        @Html.ValidationMessageFor(model => Model.NamHoc_Guid, null, new { @class = "text-danger" })
+    </div>
+    <label class="control-label col-sm-1 linelable " style="float:left;">Học kỳ</label>
+    <div class="col-sm-2 form-group ">
+        @Html.DropDownListFor(model => Model.HocKy_Guid, new SelectList(Model.ListHocKy_Guid, "ValueString", "Name"), new { @class = "form-control chosen-select", id = "DDL_HocKy_Guid" })
+        @Html.ValidationMessageFor(model => Model.HocKy_Guid, null, new { @class = "text-danger" })
+    </div>
+    @*<label class="control-label col-sm-1" style="float:left;">Từ ngày</label>
+        <div id="data_TuNgay_Time" class="col-sm-2">
+            <div class=" input-group date">
+                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                <input type="datetime" value="" name="TuNgay_Time" id="tungay_time" class="text-box single-line" />
+            </div>
+        </div>
+        <label class="control-label col-sm-1" style="float:left;">Đến ngày</label>
+        <div id="data_DenNgay_Time" class="col-sm-2">
+            <div class=" input-group date">
+                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                <input type="datetime" value="" name="DenNgay_Time" id="denngay_time" class="text-box single-line" />
+            </div>
+        </div>*@
+    <div class="col-sm-3 form-group ">
+        <div class="input-daterange input-group" id="datepicker3">
+            <input type="text" id="tungay_time" class="input-small form-control" placeholder="Từ ngày">
+            <span class="input-group-addon">đến</span>
+            <input type="text" id="denngay_time" class="input-small form-control" placeholder="Đến ngày">
+        </div>
+
+    </div>
+    <div class="col-sm-2">
+        <button id="GiamSatGiangDay_PhieuBaoTKB_buttonsearch"
+                type="button"
+                title="Tìm kiếm"
+                class="btn btn-primary"
+                data-otf-target="#GiamSatGiangDay_PhieuBaoBu_DS_content"
+                data-otf-input="#GiamSatGiangDay_PhieuGhiNhanThanhTra_SearchInput"
+                data-otf-action="@Url.Action("ThongTinTuThanhTraGet_List", "GiamSatGiangDay", null, Request.Url.Scheme)"
+                onclick="GiamSatGiangDay_ThongTinTuThanhTra_IsSearch(this)">
+            Tìm kiếm
+        </button>
+    </div>
+
+
+
+    @*<div class="row form-group">
+            <label class="control-label col-sm-1" style="float:left;">Từ ngày</label>
+            <div id="data_TuNgay_Time" class="col-sm-2">
+                <div class=" input-group date">
+                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    <input type="datetime" value="" name="TuNgay_Time" id="tungay_time" class="text-box single-line" />
+                </div>
+            </div>
+            <label class="control-label col-sm-1" style="float:left;">Đến ngày</label>
+            <div id="data_DenNgay_Time" class="col-sm-2">
+                <div class=" input-group date">
+                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    <input type="datetime" value="" name="DenNgay_Time" id="denngay_time" class="text-box single-line" />
+                </div>
+            </div>
+            <div class="col-sm-5">
+                <span class="input-group-btn">
+                    <button id="GiamSatGiangDay_ThoiKhoaBieu_buttonsearch"
+                            type="button"
+                            title="Tìm kiếm"
+                            class="btn btn-primary"
+                            data-otf-target="#GiamSatGiangDay_ThoiKhoaBieu_DS_content"
+                            data-otf-input="#GiamSatGiangDay_ThoiKhoaBieu_SearchInput"
+                            data-otf-action="@Url.Action("ThoiKhoaBieuGet_List", "GiamSatGiangDay", null, Request.Url.Scheme)?"
+                            onclick="GiamSatGiangDay_ThoiKhoaBieu_IsSearch(this)">
+                        Tìm kiếm
+                    </button>
+                    <button data-otf-mutil="true"
+                            onclick="GiamSatGiangDay_ThoiKhoaBieu_DeleteMulti(this)"
+                            data-otf-confirm="Bạn có chắc muốn xóa những dòng đã chọn?"
+                            data-otf-target="#GiamSatGiangDay_ThoiKhoaBieu_DS_content"
+                            data-otf-input="#GiamSatGiangDay_ThoiKhoaBieu_SearchInput"
+                            data-otf-action-target="@Url.Action("ThoiKhoaBieuGet_List", "GiamSatGiangDay")?idnv=@Request["id"]&k="
+                            data-otf-action="@Url.Action("ThoiKhoaBieuDelete", "GiamSatGiangDay", null, Request.Url.Scheme)?id="
+                            class=" btn btn-danger"
+                            title="Xóa">
+                        <i class="fa fa-trash-o"></i> Xóa
+                    </button>
+                    <a data-toggle="modal" onclick="GiamSatGiangDay_ThoiKhoaBieu_GetView(this)"
+                       data-target="#modalGiamSatGiangDay_ThoiKhoaBieu" class=" btn btn-success" data-otf-action="@Url.Action("ThoiKhoaBieuCreate", "GiamSatGiangDay", null, Request.Url.Scheme)?id=0" href="javascript:void(0)">
+                        <i class="fa fa-plus" title="Tạo mới"></i> Thêm mới
+                    </a>
+                </span>
+            </div>
+        </div>*@
+
+
+    @*<div class="col-sm-4 col-sm-push-8" style="text-align:right;">
+            <div class="form-group ">
+                <button data-otf-mutil="true"
+                        onclick="GiamSatGiangDay_ThoiKhoaBieu_DeleteMulti(this)"
+                        data-otf-confirm="Bạn có chắc muốn xóa những dòng đã chọn?"
+                        data-otf-target="#GiamSatGiangDay_ThoiKhoaBieu_DS_content"
+                        data-otf-input="#GiamSatGiangDay_ThoiKhoaBieu_SearchInput"
+                        data-otf-action-target="@Url.Action("ThoiKhoaBieuGet_List", "GiamSatGiangDay")?idnv=@Request["id"]&k="
+                        data-otf-action="@Url.Action("ThoiKhoaBieuDelete", "GiamSatGiangDay", null, Request.Url.Scheme)?id="
+                        class=" btn btn-danger"
+                        title="Xóa">
+                    <i class="fa fa-trash-o"></i> Xóa
+                </button>
+
+                <a data-toggle="modal" onclick="GiamSatGiangDay_ThoiKhoaBieu_GetView(this)"
+                   data-target="#modalGiamSatGiangDay_ThoiKhoaBieu" class=" btn btn-success" data-otf-action="@Url.Action("ThoiKhoaBieuCreate", "GiamSatGiangDay", null, Request.Url.Scheme)?id=0" href="javascript:void(0)">
+                    <i class="fa fa-plus" title="Tạo mới"></i> Thêm mới
+                </a>
+
+            </div>
+        </div>
+        <div class="col-sm-8  col-sm-pull-4">
+            <div class="form-group">
+                <div class="input-group">
+                    <input id="GiamSatGiangDay_ThoiKhoaBieu_SearchInput"
+                           placeholder="Thông tin cần tìm"
+                           onkeypress="return GiamSatGiangDay_ThoiKhoaBieu_EnterEvent(event, '#GiamSatGiangDay_ThoiKhoaBieu_buttonsearch')"
+                           class="form-control " />
+                    <span class="input-group-btn">
+                        <button id="GiamSatGiangDay_ThoiKhoaBieu_buttonsearch"
+                                type="button"
+                                title="Tìm kiếm"
+                                class="btn btn-primary"
+                                data-otf-target="#GiamSatGiangDay_ThoiKhoaBieu_DS_content"
+                                data-otf-input="#GiamSatGiangDay_ThoiKhoaBieu_SearchInput"
+                                data-otf-action="@Url.Action("ThoiKhoaBieuGet_List", "GiamSatGiangDay", null, Request.Url.Scheme)?idnv=@Request["id"]&k="
+                                onclick="GiamSatGiangDay_ThoiKhoaBieu_IsSearch(this)">
+                            Tìm kiếm
+                        </button>
+                    </span>
+                </div>
+            </div>
+        </div>*@
+</div>
+
+@section Scripts {
+
+
+    <script type="text/javascript">
+        //Su dung cau hinh dropdownlist
+
+    </script>
+
+}
+
+
+
+

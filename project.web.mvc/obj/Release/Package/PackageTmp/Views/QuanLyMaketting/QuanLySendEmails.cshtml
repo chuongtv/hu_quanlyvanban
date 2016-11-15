@@ -1,0 +1,51 @@
+﻿@{
+    ViewBag.Title = "Nhóm người dùng";
+}
+<div id="page-heading">
+    <ol class="breadcrumb">
+        <li>
+            <a href="@Url.Action("Index", "Dashboards")">
+                <i class="fa fa-lg fa-home text-warning text-size-20">
+                </i> Trang chủ
+            </a>
+        </li>
+        <li class="active">
+            Nhóm người dùng
+        </li>
+    </ol>
+</div>
+
+@*content*@
+<div class="container">
+
+    <div class="row">
+        <div class="col-xs-12" >
+           @Html.Action("GroupEmailsGet_DanhSach", "QuanLyMaketting")
+        </div>
+
+
+    </div>
+
+</div>
+
+
+
+
+@section Styles {
+    
+}
+
+@section Scripts {
+@Scripts.Render("~/module/QuanLyMaketting/QuanLySendEmails/GroupEmails")
+}
+@section dialog {
+
+        <!-- QuanLySendEmails_GroupEmails UNIT MODAL -->
+        <div class="modal inmodal fade" id="modalQuanLySendEmails_GroupEmails" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog " id="modalQuanLySendEmails_GroupEmails_c">
+            </div>
+        </div>
+        <!-- QuanLySendEmails_GroupEmails UNIT END-->
+    }
+
+

@@ -1,0 +1,179 @@
+﻿
+
+@model MvcPaging.IPagedList<nvngoc31122015.giamsatgiangday.library.GiamSatGiangDay.PhieuGhiNhanThanhTra>
+@using MvcPaging
+
+@{var i = 1;}
+
+<div class="table-responsive">
+    @if (Model.TotalItemCount > 0)
+    {
+        <div class="p-b-10">
+            Kết quả tìm kiếm: <b>@Model.TotalItemCount</b> ghi nhận vi phạm
+        </div>
+        <text>
+            <table class="table table-bordered datatables dataTable">
+                <thead>
+                    <tr>
+                        <th class="text-center w-30">
+                            <input id="CheckBoxAll" onclick="javascript: checkAlllist('#listcheckall',this);" type="checkbox" />
+                        </th>
+                        <th class="text-center w-30">
+                            #
+                        </th>
+                        <th class="text-left">
+                            @Html.DisplayNameFor(model => Model[0].ThoiKhoaBieuGuid2)
+                        </th>
+                        <th class="text-left">
+                            @Html.DisplayNameFor(model => Model[0].NhanVienFullName)
+                        </th>
+                        <th class="text-left">
+                            @Html.DisplayNameFor(model => Model[0].LopThucTeGhep)
+                        </th>
+                        <th class="text-left">
+                            @Html.DisplayNameFor(model => Model[0].MonHocName)
+                        </th>
+                        <th class="text-left">
+                            @Html.DisplayNameFor(model => Model[0].PhongID)
+                        </th>
+                        <th class="text-left">
+                            @Html.DisplayNameFor(model => Model[0].LoaiViPhamName)
+                        </th>
+                        <th class="text-left">
+                            @Html.DisplayNameFor(model => Model[0].NgayLap)
+                        </th>
+                        <th class="text-left">
+                            @Html.DisplayNameFor(model => Model[0].IsDuyet)
+                        </th>
+                        <th class="text-center">
+                            Không kỷ luật
+                        </th>
+                        <th class="text-center">
+                            Chi tiết
+                        </th>
+                    </tr>
+                </thead>
+                <tbody id="listcheckall">
+                    @foreach (var item in Model)
+                    {
+                        string styletinhtrang = "";
+                        styletinhtrang = project.config.library.Utilities.ConstantVariable.StyleTinhTrangDuyet(item.IsDuyet);
+
+                        <tr class="showhim">
+                            <td class="text-center">
+                                <input type="checkbox" class="checkbox-item" value="@item.PhieuGhiNhanGuid" />
+                            </td>
+                            <td class="text-center">
+                                @Html.Raw((Model.PageNumber - 1) * Model.PageSize + i)
+                                @{i++;}
+                            </td>
+                            <td class="text-left">
+                                <a data-otf-action="@Url.Action("TinhHinhThanhTra_ThongTinGhiNhan", "GiamSatGiangDay", null, Request.Url.Scheme)?id=@item.PhieuGhiNhanGuid" data-t data-toggle="modal" onclick="TinhHinhThanhTra_ThongTinGhiNhan_GetView(this)" data-target="#modalGiamSatGiangDay_PhieuBaoTKB" title="Thông tin ghi nhận từ thanh tra">
+                                    @Html.DisplayFor(x => item.ThoiKhoaBieuGuid2)
+                                </a>
+                            </td>
+                            <td class="text-left">
+                                <a data-otf-action="@Url.Action("TinhHinhThanhTra_ThongTinGhiNhan", "GiamSatGiangDay", null, Request.Url.Scheme)?id=@item.PhieuGhiNhanGuid" data-t data-toggle="modal" onclick="TinhHinhThanhTra_ThongTinGhiNhan_GetView(this)" data-target="#modalGiamSatGiangDay_PhieuBaoTKB" title="Thông tin ghi nhận từ thanh tra">
+                                    @Html.DisplayFor(x => item.NhanVienFullName)
+                                </a>
+                            </td>
+                            <td class="text-left">
+                                @Html.DisplayFor(x => item.LopThucTeGhep)
+                            </td>
+                            <td class="text-left">
+                                @Html.DisplayFor(x => item.MonHocName)
+                            </td>
+                            <td class="text-left">
+                                @Html.DisplayFor(x => item.PhongID)
+                            </td>
+                            <td class="text-left">
+                                @Html.DisplayFor(x => item.LoaiViPhamName)
+                            </td>
+                            <td class="text-left">
+                                @Html.DisplayFor(x => item.NgayLap)
+                            </td>
+                            <td class="text-left">
+                                @Html.Raw(styletinhtrang)
+
+                            </td>
+                            <td class="text-center">
+                                @if (item.IsKyLuat == false)
+                                {
+                                    <i class="fa fa-check text-info" title="Không kỷ luật"></i>
+                                }
+
+                            </td>
+                            <td class="text-center">
+                                <a data-otf-action="@Url.Action("TinhHinhThanhTra_ThongTinGhiNhan", "GiamSatGiangDay", null, Request.Url.Scheme)?id=@item.PhieuGhiNhanGuid" data-t data-toggle="modal" onclick="TinhHinhThanhTra_ThongTinGhiNhan_GetView(this)" data-target="#modalGiamSatGiangDay_PhieuBaoTKB" title="Thông tin ghi nhận từ thanh tra">
+                                    Xem
+                                </a>
+                            </td>
+                        </tr>
+                                    }
+                </tbody>
+            </table>
+        </text>
+                                    }
+                                    else
+                                    {
+                                        <text><br />
+                                            <div class="alert alert-dismissable alert-info">
+                                                <strong>Yêu cầu tìm kiếm lúc @{ var date = DateTime.Now; } @date.ToString("HH:mm:ss dd/MM/yyyy") không có dữ liệu</strong>
+                                                <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+                                            </div>
+                                        </text>
+
+                                                    }
+    <div class="pager">
+        @if (Model.TotalItemCount > Model.PageSize)
+        {
+
+            <text>
+
+                @Html.Raw(Ajax.Pager(
+                       new Options
+                       {
+                           PageSize = Model.PageSize,
+                           TotalItemCount = Model.TotalItemCount,
+                           CurrentPage = Model.PageNumber,
+                           ItemTexts = new ItemTexts() { Next = "Next", Previous = "Previous", Page = "" },
+                           ItemIcon = new ItemIcon() { First = "icon-backward", Previous = "icon-chevron-left", Next = "icon-chevron-right", Last = "icon-forward" },
+                           TooltipTitles = new TooltipTitles() { Next = "Next page", Previous = "Previous page", Page = "Page {0}." },
+                           Size = Size.normal,
+                           Alignment = Alignment.centered,
+                           IsShowControls = true,
+                           IsShowFirstLast = true,
+                           CssClass = ""
+                       },
+                       new AjaxOptions
+                       {
+                           UpdateTargetId = "DichVuSinhVien_XacNhanBieuMau_DS_content"
+                       }, new
+                       {
+                           controller = "GiamSatGiangDay",
+                           action = "TinhHinhThanhTraGet_List"
+                       ,
+                           NamHocID = @ViewData["NamHocID"]
+                       ,
+                           DonVi_Guid = @ViewData["DonVi_Guid"]
+                       ,
+                           LoaiViPham_Guid = @ViewData["LoaiViPham_Guid"]
+                       ,
+                           NhanVienGuid = @ViewData["NhanVienGuid"]
+                       ,
+                           MonHocID = @ViewData["MonHocID"]
+
+                       }))
+            </text>
+        }
+    </div>
+</div>
+
+@using (Html.BeginScriptContext())
+{
+    Html.AddScriptBlock(
+        @<script type="text/javascript">
+            //loadSelect("DichVuSinhVien_XacNhanBieuMau", "XacNhanBieuMau");
+        </script>
+, true);
+}

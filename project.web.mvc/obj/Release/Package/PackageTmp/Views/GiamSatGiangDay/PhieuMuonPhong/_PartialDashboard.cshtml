@@ -1,0 +1,94 @@
+﻿@*
+    Author:   			pdgiai
+    Created: 			2016-2-1
+    Last Modified: 		2016-2-1
+*@
+
+@model List<nvngoc31122015.giamsatgiangday.library.PhieuMuonPhong.DashboardPhieu>
+<div class="table-responsive">
+
+    @if (Model.Count > 0)
+    {
+        <text>
+            <h3>Thông tin phiếu vắng, bù, mượn phòng</h3>
+            <table class="table table-bordered ">
+                <thead>
+                    <tr>
+
+                        <th class="text-center w-100">
+                            Ngày gửi
+                        </th>
+                        <th class="text-center w-200">
+                            Loại phiếu
+                        </th>
+                        <th class="text-center ">
+                            Giảng viên
+                        </th>
+                        <th class="text-center w-100">
+                            Trạng thái
+                        </th>
+                    </tr>
+                </thead>
+
+                <tbody id="listcheckall">
+                    @foreach (var item in Model)
+                    {
+
+                        <tr>
+
+                            <td class="text-center">
+                                @Html.Raw(item.CreatedDate.Value.ToString("dd/MM/yyyy"))
+                            </td>
+                            <td class="text-left">
+                                @item.LoaiPhieu
+                            </td>
+                            <td class="text-left">
+
+                                <span data-tooltip="
+                                <i class=' fa fa-credit-card'></i>&nbsp;<b>Mã NV</b>: @Html.Raw(item.NhanVienID)
+                                <br /><i class='fa fa-calendar'></i>&nbsp;&nbsp;<b>Họ tên</b>: @Html.Raw(item.HoVaTen)
+                                <br /><i class='fa fa-building-o'></i>&nbsp;&nbsp;<b>Đơn vị</b>: @Html.Raw(item.DonViName)
+
+                                @if (item.NoiDung != null)
+                                {<text> <br /><i class='fa fa-building-o'></i>&nbsp;&nbsp;<b>Nội dung</b>: @Html.Raw(item.NoiDung)</text>}
+                                @if (item.MonHocName != null)
+                                {<text><br /><i class='fa fa-building-o'></i>&nbsp;&nbsp;<b>Môn học</b>: @Html.Raw(item.MonHocName)</text>}
+                                @if (item.CaID != null)
+                                {<text> <br /><i class='fa fa-building-o'></i>&nbsp;&nbsp;<b>Ca học</b>: @Html.Raw(item.CaID)</text>}
+                                @if (item.LopHocName != null)
+                                {<text><br /><i class='fa fa-building-o'></i>&nbsp;&nbsp;<b>Lớp học</b>: @Html.Raw(item.LopHocName)</text>}
+                                "
+                                href="#">@Html.Raw(item.NhanVienID + " - " + item.HoVaTen)
+                                </span>
+                            </td>
+
+                            <td class="text-left">
+                                
+                               @Html.Raw(item.Class) 
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+
+            </table>
+        </text>
+    }
+</div>
+@using (Html.BeginScriptContext())
+{
+    Html.AddScriptBlock(
+        @<script type="text/javascript">
+            $('[data-tooltip!=""]').qtip({ // Grab all elements with a non-blank data-tooltip attr.
+                content: {
+                    attr: 'data-tooltip' // Tell qTip2 to look inside this attr for its content
+                },
+                position: {
+                    target: 'mouse'//, // Position it where the click was...
+                    // adjust: { mouse: false } // ...but don't follow the mouse
+                }
+            })
+        </script>
+, true);
+
+
+}

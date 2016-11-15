@@ -1,0 +1,186 @@
+﻿@{
+    ViewBag.Title = "Thanh tra đi trực";
+}<div id="page-heading">
+    <ol class="breadcrumb">
+        <li>
+            <a href="@Url.Action("Index", "Home")">
+                <i class="fa fa-lg fa-home text-warning text-size-20">
+                </i> Trang chủ
+            </a>
+        </li>
+        <li class="active">
+            Dữ liêu thanh tra đi trực
+        </li>
+    </ol>
+</div>
+<div class="container">
+    @*<div class="row">*@
+    @*các thao tác*@
+    <div class="show">
+
+        <div class="col-sm-6 form-horizontal">
+            <div class="form-group">
+                <div class="col-sm-3">
+                    @Html.DropDownList("CoSo_Guid", new SelectList(ViewBag.ListCoSo_Guid, "ValueString", "Name"),
+                                                                         new { @class = "form-control chosen-select", data_otf_action = Url.Action("ThanhTraDiTrucGet_List", "GiamSatGiangDay", null, Request.Url.Scheme), data_otf_target = "#GiamSatGiangDay_ThanhTraDiTruc_DS_content", id = "DDLCoSo", @onchange = "GiamSatGiangDay_ThanhTraDiTruc_GetLau(this)" })
+                </div>
+                <div class="col-sm-3">
+                    @Html.DropDownList("Lau_Guid", new SelectList(ViewBag.ListLau_Guid, "ValueString", "Name"),
+                                                                                new { @class = "form-control chosen-select", data_otf_action = Url.Action("ThanhTraDiTrucGet_List", "GiamSatGiangDay", null, Request.Url.Scheme), data_otf_target = "#GiamSatGiangDay_ThanhTraDiTruc_DS_content", id = "DDLlau", @onchange = "GiamSatGiangDay_ThanhTraDiTruc_IsSearch(this)" })
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-2">
+                    <select class="form-control chosen-select" data-otf-action="@Url.Action("ThanhTraDiTrucGet_List", "GiamSatGiangDay", null, Request.Url.Scheme)" data-otf-target="#GiamSatGiangDay_ThanhTraDiTruc_DS_content" onchange="GiamSatGiangDay_ThanhTraDiTruc_IsSearch(this)" id="DDL_SoLanKiemTra">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                    </select>
+                </div>
+
+                <div class="col-sm-3 checkbox">
+                    <label class="control-label"><input type="checkbox" id="chk_ChuaKT" checked="checked" data-otf-action="@Url.Action("ThanhTraDiTrucGet_List", "GiamSatGiangDay", null, Request.Url.Scheme)" data-otf-target="#GiamSatGiangDay_ThanhTraDiTruc_DS_content" onclick="GiamSatGiangDay_ThanhTraDiTruc_IsSearch(this)" /> Chưa Kiểm tra</label>
+                </div>
+                <div class="col-sm-3 checkbox">
+                    <label class="control-label"><input type="checkbox" id="chk_DaKT" data-otf-action="@Url.Action("ThanhTraDiTrucGet_List", "GiamSatGiangDay", null, Request.Url.Scheme)" data-otf-target="#GiamSatGiangDay_ThanhTraDiTruc_DS_content" onclick="GiamSatGiangDay_ThanhTraDiTruc_IsSearch(this)" /> Đã kiểm tra</label>
+                </div>
+                <div class="col-sm-3 checkbox">
+                    <label class="control-label"><input type="checkbox" id="chk_ViPham" data-otf-action="@Url.Action("ThanhTraDiTrucGet_List", "GiamSatGiangDay", null, Request.Url.Scheme)" data-otf-target="#GiamSatGiangDay_ThanhTraDiTruc_DS_content" onclick="GiamSatGiangDay_ThanhTraDiTruc_IsSearch(this)" /> Vi phạm</label>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-sm-12 form-horizontal">
+            <div class="col-sm-7"></div>
+            <div class="col-sm-3">
+                <div id="data_ThanhTraDiTruc_NgayXuat" class="isdisable" disabled="true">
+                    <div class="input-group date">
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                        <input type="text" id="Input_NgayDiTruc" class="form-control" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-2 ">
+                <a title="Xuất dữ liệu Excel" href="javascript:void(0)"  onclick="GiamSatGiangDay_ThanhTraDiTruc_XuatExcel(this)" class="btn btn-success pull-right" data-otf-action="@Url.Action("ThanhTraDiTruc_ExportExcel", "GiamSatGiangDay", null, Request.Url.Scheme)?date=">
+                    Xuất dữ liệu file Excel
+                </a>
+            </div>
+        </div>
+    </div>
+    @*</div>*@
+
+    <div class="row">
+        <div class="col-sm-12" id="GiamSatGiangDay_ThanhTraDiTruc_DS_content">
+        </div>
+    </div>
+</div>
+<!--Chép đoạn này vào page để khai báo popup-->
+@section dialog {
+
+    <!-- GiamSatGiangDay_ThanhTraDiTruc UNIT MODAL -->
+    <div class="modal inmodal fade" id="modalGiamSatGiangDay_ThanhTraDiTruc" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog " id="modalGiamSatGiangDay_ThanhTraDiTruc_c">
+        </div>
+    </div>
+    <!-- GiamSatGiangDay_ThanhTraDiTruc UNIT END-->
+}
+
+@section Styles {
+    @Styles.Render("~/plugins/chosenStyles")
+@Styles.Render("~/plugins/dataPickerStyles")
+}
+@section Scripts {
+@Scripts.Render("~/plugins/dataPicker")
+    @Scripts.Render("~/plugins/chosen")
+    <script type="text/javascript">
+        function GiamSatGiangDay_ThanhTraDiTruc_XuatExcel(element) {
+            var action = $(element).attr("data-otf-action");
+            window.open(action + $("#Input_NgayDiTruc").val(), '_blank');
+
+        }
+
+        function GiamSatGiangDay_ThanhTraDiTruc_GetView(element) {
+            $($(element).attr("data-target") + "_c").load($(element).attr("data-otf-action"))
+        }
+        function GiamSatGiangDay_ThanhTraDiTruc_GetLau(elemet) {
+            var abbr = $(elemet).val();
+
+            $.ajax({
+                url: "@Url.Action("ThanhTraDiTruc_FillLau", "GiamSatGiangDay")",
+                data: { CoSoGuid: abbr },
+                dataType: "json",
+                type: "POST",
+                error: function () {
+                    alert("An error occurred.");
+                },
+                success: function (data) {
+                    var items = "";
+                    $.each(data, function (i, item) {
+                        items += "<option value=\"" + item.ValueString + "\">" + item.Name + "</option>";
+                    });
+                    $("#DDLlau").html(items);
+                    $('#DDLlau').trigger('chosen:updated');
+                    GiamSatGiangDay_ThanhTraDiTruc_IsSearch("#DDLCoSo");
+                }
+            });
+
+        }
+
+        function GiamSatGiangDay_ThanhTraDiTruc_IsSearch(element) {
+            BeginWaiting();
+            var cosoguid = $("#DDLCoSo").val();
+            var lauguid = $("#DDLlau").val();
+            var solan = $("#DDL_SoLanKiemTra").val();
+            var chk_ChuaKT = 0;
+            if ($("#chk_ChuaKT").is(":checked"))
+                chk_ChuaKT = 1;
+            else
+                chk_ChuaKT = 0;
+
+            var chk_DaKT = 0;
+            if ($("#chk_DaKT").is(":checked"))
+                chk_DaKT = 1;
+            else
+                chk_DaKT = 0;
+
+            var chk_ViPham = 0;
+            if ($("#chk_ViPham").is(":checked"))
+                chk_ViPham = 1;
+            else
+                chk_ViPham = 0;
+
+            var idloadTo = $(element).attr('data-otf-target');
+            var action = $(element).attr('data-otf-action');
+
+            $(idloadTo).load(action + "?lau=" + lauguid + "&coso=" + cosoguid + "&chuakt=" + chk_ChuaKT + "&dakt=" + chk_DaKT + "&vipham=" + chk_ViPham + "&sl=" + solan, function () {
+                EndWaiting();
+            });
+        }
+        GiamSatGiangDay_ThanhTraDiTruc_IsSearch("#DDLCoSo");
+
+        function GiamSatGiangDay_ThanhTraDiTruc_DaKiemTra(element) {
+            var action = $(element).attr('data-otf-action');
+            $.ajax({
+                url: action,
+                dataType: "json",
+                type: "POST",
+                error: function () {
+                    alert("An error occurred.");
+                },
+                success: function (data) {
+                    GiamSatGiangDay_ThanhTraDiTruc_IsSearch("#DDLCoSo");
+                }
+            });
+        }
+
+        $('#data_ThanhTraDiTruc_NgayXuat  .input-group.date').datepicker({
+            format: 'dd/mm/yyyy',
+            todayBtn: "linked",
+            keyboardNavigation: false,
+            forceParse: false,
+            calendarWeeks: true,
+            autoclose: true
+        });
+    </script>
+}

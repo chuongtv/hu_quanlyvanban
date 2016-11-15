@@ -1,0 +1,161 @@
+﻿@{
+    ViewBag.Title = "Đăng nhập hệ thống";
+    Layout = "~/Views/Shared/_LayoutNhapHocOnlineLogin.cshtml";
+}
+@model project.web.mvc.Models.LoginViewModel
+
+
+@*<link rel="stylesheet" href="assets/css/styles.min.css?=113">
+    <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600' rel='stylesheet' type='text/css'>*@
+<div class="container blockContent login">
+    <div class="row blockLogin">
+        <div class="content">
+            <div class="col-sm-6"></div>
+            <div class="col-sm-6">
+
+                <div class="title">ĐĂNG KÝ NHẬP HỌC TRỰC TUYẾN</div>
+                <div class="loginnhaphoc">
+                    @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form", id = "login" }))
+            {
+                        @Html.AntiForgeryToken()
+
+                        <div>
+                            @*<form action="#" class="form-horizontal" style="margin-bottom: 0px !important;">*@
+
+                            <div class="lable">
+                                Mã số sinh viên
+                            </div>
+
+                            <div>
+                                @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "fg-red" })
+                                @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", placeholder = "nhập thông tin", id = "username" })
+
+                               
+                            </div>
+
+                            <div class="lable">
+                                Số CMND
+                            </div>
+
+                            <div>
+                                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "fg-red" })
+                                @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "nhập thông tin", id = "password" })
+
+
+                                
+                            </div>
+                            @Html.ValidationSummary(true, null, new { @class = "fg-red" })
+
+                        </div>
+                            <div>
+
+
+                                <button type="submit" value="Đăng nhập" class="btn btn-primary ">
+                                    <i class="fa fa-sign-in"></i> Đăng nhập
+                                </button>
+
+
+                            </div>
+                                <div class="note">
+                                    Nếu không đăng nhập được, vui lòng liên hệ <b>(08) 5445 2222</b> để được hỗ trợ
+                                </div>
+                                @*<div class="col-sm-12">
+                                        <p>Ví dụ: Thí sinh Nguyễn Văn A có mã số sinh viên 1511150187 và số CMND 311999999 nhập</p>
+                                        <div class="form-group">
+                                            <div class="col-sm-3">
+                                                Tên đăng nhập
+                                            </div>
+                                            <div class="col-sm-9">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                                                    <input type="text" class="form-control" value="1511150187" disabled="disabled" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-sm-3">
+                                                Mật khẩu
+                                            </div>
+                                            <div class="col-sm-9">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+                                                    <input type="text" class="form-control" value="311999999" disabled="disabled" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-sm-12">
+                                                <p>Nếu không đăng nhập được, vui lòng liên hệ <strong class="text-info">(08) 5445 2222</strong>để được hỗ trợ</p>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="pull-right">
+
+                                        </div>
+                                    </div>*@
+                    }
+                </div>
+            </div>
+
+        </div>
+
+
+    </div>
+</div>
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/jqueryui")
+<script type="text/javascript">
+    $('#system').click(function () {
+
+        document.getElementById('username').value = 'system';
+        document.getElementById('password').value = '123123';
+        document.getElementById('login').submit();
+    });
+    $('#thanhtra').click(function () {
+
+        document.getElementById('username').value = 'MCH0240382';
+        document.getElementById('password').value = '123123';
+        document.getElementById('login').submit();
+    });
+    $('#thuky').click(function () {
+
+        document.getElementById('username').value = 'TNH0250787';
+        document.getElementById('password').value = '123123';
+        document.getElementById('login').submit();
+    });
+    $('#truongkhoa').click(function () {
+
+        document.getElementById('username').value = 'CTV0010291';
+        document.getElementById('password').value = '123123';
+        document.getElementById('login').submit();
+    });
+    $('#giangvien').click(function () {
+
+        document.getElementById('username').value = 'TTTH231078';
+        document.getElementById('password').value = '123123';
+        document.getElementById('login').submit();
+    });
+    $('#truongthanhtra').click(function () {
+
+        document.getElementById('username').value = 'DNN0080169';
+        document.getElementById('password').value = '123123';
+        document.getElementById('login').submit();
+    });
+    $('#daotao').click(function () {
+
+        document.getElementById('username').value = 'HDM0040890';
+        document.getElementById('password').value = '123123';
+        document.getElementById('login').submit();
+    });
+    $('#1511150187').click(function () {
+
+        document.getElementById('username').value = '1511150187';
+        document.getElementById('password').value = '123123';
+        document.getElementById('login').submit();
+    });
+
+
+
+</script>
+

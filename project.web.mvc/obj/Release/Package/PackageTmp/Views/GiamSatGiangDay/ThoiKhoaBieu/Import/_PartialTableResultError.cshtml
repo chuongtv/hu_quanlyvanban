@@ -1,0 +1,107 @@
+﻿@model nvngoc31122015.giamsatgiangday.library.GiamSatGiangDay.ImportThoiKhoaBieuStep2View
+
+
+
+<div class="row" style="overflow-y:auto;">
+    <div class="col-sm-12">
+        <div class="ibox">
+            <div class="ibox-content">
+                <div class="mail-box">
+                    @if (Model.DataSetThoiKhoaBieu.Tables.Count > 0)
+                    {
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <a class="text-success" href="@Url.Action("ExportDanhSachThongBaoLoi","GiamSatGiangDay")">>> Xuất danh sách lỗi (excel)</a>
+                            </div>
+                        </div>
+                        <br />
+
+                        <table class="table table-striped table-bordered">
+                            <tr>
+                                <th class="text-center w-50">#</th>
+                                <th class="text-center" title="nhóm học">NH</th>
+                                <th class="text-center" title="Nhóm Thực hành">TH</th>
+                                <th class="text-center">Mã môn</th>
+                                <th class="text-left">Tên môn</th>
+                                <th title="Sĩ số">Ss</th>
+                                <th class="text-center">Thứ</th>
+                                <th class="text-center" title="Tín chỉ">TC</th>
+                                <th class="text-center" title="Tiết bắt đầu">BĐ</th>
+                                <th class="text-center">Phòng</th>
+                                <th class="text-center">KSDP</th>
+                                <th class="text-left" title="Tên lớp ghép">Lớp</th>
+                                <th class="text-center" title="Ngày bắt đầu">Bắt đầu</th>
+                                <th class="text-center" title="Ngày kết thúc">Kết thúc</th>
+                                <th>
+                                    Nội dung lỗi
+                                </th>
+                            </tr>
+                            @foreach (System.Data.DataRow row in Model.DataSetThoiKhoaBieu.Tables[0].Rows)
+                            {
+                                <tr class="row-error-true">
+                                    <td class="text-center">
+                                        @(row["Keys"].ToString())
+                                    </td>
+                                    <td class="text-center">
+                                        @(row["NhomHoc"].ToString())
+                                    </td>
+                                    <td class="text-center">
+                                        @(row["NhomThucHanh"].ToString())
+                                    </td>
+                                    <td class="text-center">
+                                        @(row["MaMonHoc"].ToString())
+                                    </td>
+                                    <td class="text-left">
+                                        @(row["TenMonHoc"].ToString())
+                                    </td>
+                                    <td class="text-center">
+                                        @(row["SiSo"].ToString())
+                                    </td>
+                                    <td class="text-center">
+                                        @(row["Thu"].ToString())
+                                    </td>
+                                    <td class="text-center">
+                                        @(row["TinChi"].ToString())
+                                    </td>
+                                    <td class="text-center">
+                                        @(row["TietBatDau"].ToString())
+                                    </td>
+                                    <td class="text-center">
+                                        @(row["PhongHoc"].ToString())
+                                    </td>
+                                    <td class="text-center">
+                                        @(row["MonKhongDungPhong"].ToString())
+                                    </td>
+                                    <td class="text-left" title="@(row["LopThucTeGhep"].ToString())">
+                                        <div style="word-wrap: break-word; width: 60px;">
+                                            @(row["LopThucTeGhep"].ToString())
+                                        </div>
+                                    </td>
+                                    <td class="text-center">
+                                        @(row["ThoiGianBatDau"].ToString())
+                                    </td>
+                                    <td class="text-center">
+                                        @(row["ThoiGianKetThuc"].ToString())
+                                    </td>
+                                    <td class="text-left text-danger">
+                                        @Html.Raw(row["ErrorContent"].ToString())
+                                    </td>
+                                </tr>
+                            }
+
+                        </table>
+                    }
+                    else
+                    {
+                        <text>
+                            <div class="alert alert-dismissable alert-info" id="thanhcongpart">
+                                <strong>Thực hiện import thành công và không có lỗi xãy ra - @{ var date = DateTime.Now; } @date.ToString("dd/MM/yyyy HH:mm:ss")</strong>
+                                <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+                            </div>
+                        </text>
+                                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

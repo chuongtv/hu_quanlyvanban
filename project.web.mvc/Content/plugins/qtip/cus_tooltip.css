@@ -1,0 +1,19 @@
+
+.custooltip {
+}
+
+.headertooltip {
+    font-weight:bold;
+    font-size: 14px;
+    padding-bottom:10px;
+}
+
+.contenttooltip {
+    font-size: 11px;
+    line-height:15px;
+}
+.breaktooltip{
+    padding-top:5px;
+    margin-top:5px;
+    border-top:1px solid #808080;
+}

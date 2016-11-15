@@ -1,0 +1,42 @@
+﻿@{
+    ViewBag.Title = " Phân công lịch trực thanh tra";
+}
+
+
+
+<div id="page-heading">
+    <ol class="breadcrumb">
+        <li>
+            <a href="@Url.Action("Index", "Home")">
+                <i class="fa fa-lg fa-home text-warning text-size-20">
+                </i> Trang chủ
+            </a>
+        </li>
+        <li class="active">
+            Phân công lịch trực thanh tra
+        </li>
+    </ol>
+</div>
+<div class="container">
+
+    <div id="GiamSatGiangDay_PhanCongLichTruc_Create">
+        @Html.Action("PhanCongLichTrucCreate_Partial", "GiamSatGiangDay",new { id=Request["id"]})
+    </div>
+</div>
+
+
+@section Styles {
+    @Styles.Render("~/plugins/chosenStyles")
+    @Styles.Render("~/plugins/dataPickerStyles")
+<link href="~/Content/plugins/EasyAutocomplete/easy-autocomplete.css" rel="stylesheet" />
+}
+@section Scripts {
+    @Scripts.Render("~/plugins/chosen")
+    @Scripts.Render("~/plugins/dataPicker")
+<script src="~/Content/plugins/EasyAutocomplete/jquery.easy-autocomplete.js"></script>
+    <script type="text/javascript">
+     
+
+       
+    </script>
+}

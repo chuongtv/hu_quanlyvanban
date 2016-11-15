@@ -1,0 +1,435 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="dmhoaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="dmhoaEntities" annotation:LazyLoadingEnabled="true">
+    <FunctionImport Name="ioiort_Controller_Delete">
+      <Parameter Name="ControllerGuid" Mode="In" Type="Guid" />
+    </FunctionImport>
+    <FunctionImport Name="ioiort_Controller_GetCount" ReturnType="Collection(Int32)" />
+    <FunctionImport Name="ioiort_Controller_Insert">
+      <Parameter Name="ControllerGuid" Mode="In" Type="Guid" />
+      <Parameter Name="ControllerName" Mode="In" Type="String" />
+      <Parameter Name="Description" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="ioiort_Controller_SelectAll" ReturnType="Collection(dmhoaModel.ioiort_Controller_SelectAll_Result)" />
+    <FunctionImport Name="ioiort_Controller_SelectOne" ReturnType="Collection(dmhoaModel.ioiort_Controller_SelectOne_Result)">
+      <Parameter Name="ControllerGuid" Mode="In" Type="Guid" />
+    </FunctionImport>
+    <FunctionImport Name="ioiort_Controller_SelectPage">
+      <Parameter Name="PageNumber" Mode="In" Type="Int32" />
+      <Parameter Name="PageSize" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="ioiort_Controller_Update">
+      <Parameter Name="ControllerGuid" Mode="In" Type="Guid" />
+      <Parameter Name="ControllerName" Mode="In" Type="String" />
+      <Parameter Name="Description" Mode="In" Type="String" />
+    </FunctionImport>
+    <EntitySet Name="AspNetRoles" EntityType="dmhoaModel.AspNetRoles" />
+    <EntitySet Name="AspNetUserClaims" EntityType="dmhoaModel.AspNetUserClaims" />
+    <EntitySet Name="AspNetUserLogins" EntityType="dmhoaModel.AspNetUserLogins" />
+    <EntitySet Name="AspNetUsers" EntityType="dmhoaModel.AspNetUsers" />
+    <EntitySet Name="AspNetUsers_Sub" EntityType="dmhoaModel.AspNetUsers_Sub" />
+    <EntitySet Name="ioiort_Action" EntityType="dmhoaModel.ioiort_Action" />
+    <EntitySet Name="ioiort_ActionGroup" EntityType="dmhoaModel.ioiort_ActionGroup" />
+    <EntitySet Name="ioiort_App" EntityType="dmhoaModel.ioiort_App" />
+    <EntitySet Name="ioiort_Controller" EntityType="dmhoaModel.ioiort_Controller" />
+    <EntitySet Name="ioiort_Module" EntityType="dmhoaModel.ioiort_Module" />
+    <EntitySet Name="ioiort_RoleForCode" EntityType="dmhoaModel.ioiort_RoleForCode" />
+    <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="dmhoaModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="dmhoaModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ioiort_Action_ioiort_ActionGroup" Association="dmhoaModel.FK_ioiort_Action_ioiort_ActionGroup">
+      <End Role="ioiort_ActionGroup" EntitySet="ioiort_ActionGroup" />
+      <End Role="ioiort_Action" EntitySet="ioiort_Action" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ioiort_ActionGroup_ioiort_Controller" Association="dmhoaModel.FK_ioiort_ActionGroup_ioiort_Controller">
+      <End Role="ioiort_Controller" EntitySet="ioiort_Controller" />
+      <End Role="ioiort_ActionGroup" EntitySet="ioiort_ActionGroup" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ioiort_Mo__AppGu__1C0818FF" Association="dmhoaModel.FK__ioiort_Mo__AppGu__1C0818FF">
+      <End Role="ioiort_App" EntitySet="ioiort_App" />
+      <End Role="ioiort_Module" EntitySet="ioiort_Module" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ioiort_RoleForCo__1B13F4C6" Association="dmhoaModel.FK__ioiort_RoleForCo__1B13F4C6">
+      <End Role="ioiort_Module" EntitySet="ioiort_Module" />
+      <End Role="ioiort_RoleForCode" EntitySet="ioiort_RoleForCode" />
+    </AssociationSet>
+    <AssociationSet Name="AspNetUserRoles" Association="dmhoaModel.AspNetUserRoles">
+      <End Role="AspNetRoles" EntitySet="AspNetRoles" />
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+    </AssociationSet>
+    <AssociationSet Name="ioiort_RoleDetail" Association="dmhoaModel.ioiort_RoleDetail">
+      <End Role="ioiort_RoleForCode" EntitySet="ioiort_RoleForCode" />
+      <End Role="AspNetRoles" EntitySet="AspNetRoles" />
+    </AssociationSet>
+    <AssociationSet Name="ioiort_RoleDetailForCode" Association="dmhoaModel.ioiort_RoleDetailForCode">
+      <End Role="ioiort_Action" EntitySet="ioiort_Action" />
+      <End Role="ioiort_RoleForCode" EntitySet="ioiort_RoleForCode" />
+    </AssociationSet>
+    <AssociationSet Name="ioiort_UserRoleDenied" Association="dmhoaModel.ioiort_UserRoleDenied">
+      <End Role="ioiort_RoleForCode" EntitySet="ioiort_RoleForCode" />
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+    </AssociationSet>
+    <AssociationSet Name="ioiort_UserRoleDetail" Association="dmhoaModel.ioiort_UserRoleDetail">
+      <End Role="ioiort_RoleForCode" EntitySet="ioiort_RoleForCode" />
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+    </AssociationSet>
+    <FunctionImport Name="ioiort_RoleDetailForCode_GetAllByRoleForCodeGuid" ReturnType="Collection(dmhoaModel.ioiort_RoleDetailForCode_GetAllByRoleForCodeGuid_Result)">
+      <Parameter Name="RoleForCodeGuid" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="ioiort_ActionGroup_GetAllByControllerGuid" ReturnType="Collection(dmhoaModel.ioiort_ActionGroup_GetAllByControllerGuid_Result)">
+      <Parameter Name="ControllerGuid" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="ioiort_RoleDetailForCode_AddActionIntoRoleForCode">
+      <Parameter Name="ActionGuid" Mode="In" Type="String" />
+      <Parameter Name="RoleForCodeGuid" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="ioiort_RoleDetailForCode_DeleteActionIntoRoleForCode">
+      <Parameter Name="ActionGuid" Mode="In" Type="String" />
+      <Parameter Name="RoleForCodeGuid" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="ioiort_Action_GetAllByActionGroupGuidAndExsitInRoleDetailForCode" ReturnType="Collection(dmhoaModel.ioiort_Action_GetAllByActionGroupGuidAndExsitInRoleDetailForCode_Result)">
+      <Parameter Name="ActionGroupGuid" Mode="In" Type="String" />
+      <Parameter Name="RoleForCodeGuid" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="ioiort_RoleForCode_Delete">
+      <Parameter Name="RoleForCodeGuid" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="AspNetRoles_SelectAll" ReturnType="Collection(dmhoaModel.AspNetRoles_SelectAll_Result)" />
+    <FunctionImport Name="AspNetRoles_GetRoleForCodeVaDanhDauTheoQuyenTheoRoleGuidVaModule" ReturnType="Collection(dmhoaModel.AspNetRoles_GetRoleForCodeVaDanhDauTheoQuyenTheoRoleGuidVaModule_Result)">
+      <Parameter Name="RoleGuid" Mode="In" Type="String" />
+      <Parameter Name="ModuleGuid" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="AspNetRoles_AddRoleDetail">
+      <Parameter Name="RoleGuid" Mode="In" Type="String" />
+      <Parameter Name="RoleForCodeGuid" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="AspNetRoles_DeleteRoleDetail">
+      <Parameter Name="RoleGuid" Mode="In" Type="String" />
+      <Parameter Name="RoleForCodeGuid" Mode="In" Type="String" />
+    </FunctionImport>
+    <EntitySet Name="contact_Email" EntityType="dmhoaModel.contact_Email" />
+    <FunctionImport Name="DoanhNghiep_EmailManagement_ntdai_AspNetUsers_Insert">
+      <Parameter Name="UserId" Mode="In" Type="String" />
+      <Parameter Name="DonViID" Mode="In" Type="String" />
+      <Parameter Name="NguoiDungID" Mode="In" Type="String" />
+      <Parameter Name="NguoiDungName" Mode="In" Type="String" />
+    </FunctionImport>
+  </EntityContainer>
+  <ComplexType Name="ioiort_Controller_SelectAll_Result">
+    <Property Type="Guid" Name="ControllerGuid" Nullable="false" />
+    <Property Type="String" Name="ControllerName" Nullable="true" MaxLength="256" />
+    <Property Type="String" Name="Description" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="ioiort_Controller_SelectOne_Result">
+    <Property Type="Guid" Name="ControllerGuid" Nullable="false" />
+    <Property Type="String" Name="ControllerName" Nullable="true" MaxLength="256" />
+    <Property Type="String" Name="Description" Nullable="true" />
+  </ComplexType>
+  <EntityType Name="AspNetRoles">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="IsDelete" Type="Boolean" />
+    <Property Name="FullName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="AspNetUsers" Relationship="dmhoaModel.AspNetUserRoles" FromRole="AspNetRoles" ToRole="AspNetUsers" />
+    <NavigationProperty Name="ioiort_RoleForCode" Relationship="dmhoaModel.ioiort_RoleDetail" FromRole="AspNetRoles" ToRole="ioiort_RoleForCode" />
+  </EntityType>
+  <EntityType Name="AspNetUserClaims">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="ClaimType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ClaimValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="AspNetUsers" Relationship="dmhoaModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUserClaims" ToRole="AspNetUsers" />
+  </EntityType>
+  <EntityType Name="AspNetUserLogins">
+    <Key>
+      <PropertyRef Name="LoginProvider" />
+      <PropertyRef Name="ProviderKey" />
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="LoginProvider" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="ProviderKey" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="AspNetUsers" Relationship="dmhoaModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUserLogins" ToRole="AspNetUsers" />
+  </EntityType>
+  <EntityType Name="AspNetUsers">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
+    <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="PhoneNumberConfirmed" Type="Boolean" Nullable="false" />
+    <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
+    <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
+    <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
+    <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
+    <Property Name="UserName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="AspNetUserClaims" Relationship="dmhoaModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserClaims" />
+    <NavigationProperty Name="AspNetUserLogins" Relationship="dmhoaModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
+    <NavigationProperty Name="AspNetRoles" Relationship="dmhoaModel.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
+    <NavigationProperty Name="ioiort_RoleForCode" Relationship="dmhoaModel.ioiort_UserRoleDenied" FromRole="AspNetUsers" ToRole="ioiort_RoleForCode" />
+    <NavigationProperty Name="ioiort_RoleForCode1" Relationship="dmhoaModel.ioiort_UserRoleDetail" FromRole="AspNetUsers" ToRole="ioiort_RoleForCode" />
+  </EntityType>
+  <EntityType Name="AspNetUsers_Sub">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="DonViGuid" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="NguoiDungID" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="NguoiDungName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ParentGuid" Type="Guid" />
+    <Property Name="ParentName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ListStringToSort" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ListPlacementGuid" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ListPlacementID" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ListPlacementName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Level" Type="Int32" />
+    <Property Name="NguoiDungNameKhongDau" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Position" Type="Int32" />
+  </EntityType>
+  <EntityType Name="ioiort_Action">
+    <Key>
+      <PropertyRef Name="ActionGuid" />
+    </Key>
+    <Property Name="ActionGuid" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="GroupActionGuid" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="ActionName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="ioiort_ActionGroup" Relationship="dmhoaModel.FK_ioiort_Action_ioiort_ActionGroup" FromRole="ioiort_Action" ToRole="ioiort_ActionGroup" />
+    <NavigationProperty Name="ioiort_RoleForCode" Relationship="dmhoaModel.ioiort_RoleDetailForCode" FromRole="ioiort_Action" ToRole="ioiort_RoleForCode" />
+  </EntityType>
+  <EntityType Name="ioiort_ActionGroup">
+    <Key>
+      <PropertyRef Name="ActionGroupGuid" />
+    </Key>
+    <Property Name="ActionGroupGuid" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="ActionGroupName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="Description" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+    <Property Name="ControllerGuid" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="ioiort_Action" Relationship="dmhoaModel.FK_ioiort_Action_ioiort_ActionGroup" FromRole="ioiort_ActionGroup" ToRole="ioiort_Action" />
+    <NavigationProperty Name="ioiort_Controller" Relationship="dmhoaModel.FK_ioiort_ActionGroup_ioiort_Controller" FromRole="ioiort_ActionGroup" ToRole="ioiort_Controller" />
+  </EntityType>
+  <EntityType Name="ioiort_App">
+    <Key>
+      <PropertyRef Name="AppGuid" />
+    </Key>
+    <Property Name="AppGuid" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="AppName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="Desctiption" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="ioiort_Module" Relationship="dmhoaModel.FK__ioiort_Mo__AppGu__1C0818FF" FromRole="ioiort_App" ToRole="ioiort_Module" />
+  </EntityType>
+  <EntityType Name="ioiort_Controller">
+    <Key>
+      <PropertyRef Name="ControllerGuid" />
+    </Key>
+    <Property Name="ControllerGuid" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="ControllerName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="ioiort_ActionGroup" Relationship="dmhoaModel.FK_ioiort_ActionGroup_ioiort_Controller" FromRole="ioiort_Controller" ToRole="ioiort_ActionGroup" />
+  </EntityType>
+  <EntityType Name="ioiort_Module">
+    <Key>
+      <PropertyRef Name="ModuleGuid" />
+      <PropertyRef Name="AppGuid" />
+    </Key>
+    <Property Name="ModuleGuid" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="ModuleName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="Desctiption" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="AppGuid" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="ioiort_App" Relationship="dmhoaModel.FK__ioiort_Mo__AppGu__1C0818FF" FromRole="ioiort_Module" ToRole="ioiort_App" />
+    <NavigationProperty Name="ioiort_RoleForCode" Relationship="dmhoaModel.FK__ioiort_RoleForCo__1B13F4C6" FromRole="ioiort_Module" ToRole="ioiort_RoleForCode" />
+  </EntityType>
+  <EntityType Name="ioiort_RoleForCode">
+    <Key>
+      <PropertyRef Name="RoleForCodeGuid" />
+    </Key>
+    <Property Name="RoleForCodeGuid" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="ModuleGuid" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="AppGuid" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="RoleForCodeName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedTime" Type="DateTime" Precision="3" />
+    <Property Name="UpdatedTime" Type="DateTime" Precision="3" />
+    <Property Name="Description" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="ioiort_Module" Relationship="dmhoaModel.FK__ioiort_RoleForCo__1B13F4C6" FromRole="ioiort_RoleForCode" ToRole="ioiort_Module" />
+    <NavigationProperty Name="AspNetRoles" Relationship="dmhoaModel.ioiort_RoleDetail" FromRole="ioiort_RoleForCode" ToRole="AspNetRoles" />
+    <NavigationProperty Name="ioiort_Action" Relationship="dmhoaModel.ioiort_RoleDetailForCode" FromRole="ioiort_RoleForCode" ToRole="ioiort_Action" />
+    <NavigationProperty Name="AspNetUsers" Relationship="dmhoaModel.ioiort_UserRoleDenied" FromRole="ioiort_RoleForCode" ToRole="AspNetUsers" />
+    <NavigationProperty Name="AspNetUsers1" Relationship="dmhoaModel.ioiort_UserRoleDetail" FromRole="ioiort_RoleForCode" ToRole="AspNetUsers" />
+  </EntityType>
+  <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+    <End Type="dmhoaModel.AspNetUsers" Role="AspNetUsers" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="dmhoaModel.AspNetUserClaims" Role="AspNetUserClaims" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AspNetUserClaims">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+    <End Type="dmhoaModel.AspNetUsers" Role="AspNetUsers" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="dmhoaModel.AspNetUserLogins" Role="AspNetUserLogins" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AspNetUserLogins">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ioiort_Action_ioiort_ActionGroup">
+    <End Type="dmhoaModel.ioiort_ActionGroup" Role="ioiort_ActionGroup" Multiplicity="1" />
+    <End Type="dmhoaModel.ioiort_Action" Role="ioiort_Action" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ioiort_ActionGroup">
+        <PropertyRef Name="ActionGroupGuid" />
+      </Principal>
+      <Dependent Role="ioiort_Action">
+        <PropertyRef Name="GroupActionGuid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ioiort_ActionGroup_ioiort_Controller">
+    <End Type="dmhoaModel.ioiort_Controller" Role="ioiort_Controller" Multiplicity="0..1" />
+    <End Type="dmhoaModel.ioiort_ActionGroup" Role="ioiort_ActionGroup" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ioiort_Controller">
+        <PropertyRef Name="ControllerGuid" />
+      </Principal>
+      <Dependent Role="ioiort_ActionGroup">
+        <PropertyRef Name="ControllerGuid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ioiort_Mo__AppGu__1C0818FF">
+    <End Type="dmhoaModel.ioiort_App" Role="ioiort_App" Multiplicity="1" />
+    <End Type="dmhoaModel.ioiort_Module" Role="ioiort_Module" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ioiort_App">
+        <PropertyRef Name="AppGuid" />
+      </Principal>
+      <Dependent Role="ioiort_Module">
+        <PropertyRef Name="AppGuid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ioiort_RoleForCo__1B13F4C6">
+    <End Type="dmhoaModel.ioiort_Module" Role="ioiort_Module" Multiplicity="1" />
+    <End Type="dmhoaModel.ioiort_RoleForCode" Role="ioiort_RoleForCode" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ioiort_Module">
+        <PropertyRef Name="ModuleGuid" />
+        <PropertyRef Name="AppGuid" />
+      </Principal>
+      <Dependent Role="ioiort_RoleForCode">
+        <PropertyRef Name="ModuleGuid" />
+        <PropertyRef Name="AppGuid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="AspNetUserRoles">
+    <End Type="dmhoaModel.AspNetRoles" Role="AspNetRoles" Multiplicity="*" />
+    <End Type="dmhoaModel.AspNetUsers" Role="AspNetUsers" Multiplicity="*" />
+  </Association>
+  <Association Name="ioiort_RoleDetail">
+    <End Type="dmhoaModel.ioiort_RoleForCode" Role="ioiort_RoleForCode" Multiplicity="*" />
+    <End Type="dmhoaModel.AspNetRoles" Role="AspNetRoles" Multiplicity="*" />
+  </Association>
+  <Association Name="ioiort_RoleDetailForCode">
+    <End Type="dmhoaModel.ioiort_Action" Role="ioiort_Action" Multiplicity="*" />
+    <End Type="dmhoaModel.ioiort_RoleForCode" Role="ioiort_RoleForCode" Multiplicity="*" />
+  </Association>
+  <Association Name="ioiort_UserRoleDenied">
+    <End Type="dmhoaModel.ioiort_RoleForCode" Role="ioiort_RoleForCode" Multiplicity="*" />
+    <End Type="dmhoaModel.AspNetUsers" Role="AspNetUsers" Multiplicity="*" />
+  </Association>
+  <Association Name="ioiort_UserRoleDetail">
+    <End Type="dmhoaModel.ioiort_RoleForCode" Role="ioiort_RoleForCode" Multiplicity="*" />
+    <End Type="dmhoaModel.AspNetUsers" Role="AspNetUsers" Multiplicity="*" />
+  </Association>
+  <ComplexType Name="ioiort_RoleDetailForCode_GetAllByRoleForCodeGuid_Result">
+    <Property Type="String" Name="ActionGuid" Nullable="false" MaxLength="128" />
+    <Property Type="String" Name="RoleForCodeGuid" Nullable="false" MaxLength="128" />
+    <Property Type="String" Name="RoleForCodeName" Nullable="true" MaxLength="256" />
+    <Property Type="String" Name="ActionName" Nullable="true" MaxLength="256" />
+    <Property Type="String" Name="Description" Nullable="true" />
+    <Property Type="String" Name="ActionGroupName" Nullable="true" MaxLength="256" />
+    <Property Type="String" Name="ActionGroupGuid" Nullable="false" MaxLength="128" />
+    <Property Type="String" Name="ControllerGuid" Nullable="false" MaxLength="128" />
+    <Property Type="String" Name="ControllerName" Nullable="true" MaxLength="256" />
+    <Property Type="String" Name="ModuleName" Nullable="true" MaxLength="256" />
+    <Property Type="String" Name="AppName" Nullable="true" MaxLength="256" />
+  </ComplexType>
+  <ComplexType Name="ioiort_ActionGroup_GetAllByControllerGuid_Result">
+    <Property Type="String" Name="ActionGroupGuid" Nullable="false" MaxLength="128" />
+    <Property Type="String" Name="ActionGroupName" Nullable="true" MaxLength="256" />
+    <Property Type="String" Name="Description" Nullable="true" MaxLength="1000" />
+    <Property Type="String" Name="ControllerGuid" Nullable="true" MaxLength="128" />
+  </ComplexType>
+  <ComplexType Name="ioiort_Action_GetAllByActionGroupGuidAndExsitInRoleDetailForCode_Result">
+    <Property Type="String" Name="ActionGuid" Nullable="false" MaxLength="128" />
+    <Property Type="String" Name="GroupActionGuid" Nullable="false" MaxLength="128" />
+    <Property Type="String" Name="ActionName" Nullable="true" MaxLength="256" />
+    <Property Type="String" Name="Description" Nullable="true" />
+    <Property Type="String" Name="danhdau1" Nullable="true" MaxLength="128" />
+    <Property Type="String" Name="danhdau2" Nullable="true" MaxLength="256" />
+    <Property Type="String" Name="danhdau3" Nullable="true" MaxLength="256" />
+  </ComplexType>
+  <ComplexType Name="AspNetRoles_SelectAll_Result">
+    <Property Type="String" Name="Id" Nullable="false" MaxLength="128" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="256" />
+    <Property Type="Boolean" Name="IsDelete" Nullable="true" />
+    <Property Type="String" Name="FullName" Nullable="true" MaxLength="256" />
+  </ComplexType>
+  <ComplexType Name="AspNetRoles_GetRoleForCodeVaDanhDauTheoQuyenTheoRoleGuidVaModule_Result">
+    <Property Type="String" Name="RoleForCodeGuid" Nullable="false" MaxLength="128" />
+    <Property Type="String" Name="ModuleGuid" Nullable="false" MaxLength="128" />
+    <Property Type="String" Name="AppGuid" Nullable="false" MaxLength="128" />
+    <Property Type="String" Name="RoleForCodeName" Nullable="true" MaxLength="256" />
+    <Property Type="DateTime" Name="CreatedTime" Nullable="true" Precision="23" />
+    <Property Type="DateTime" Name="UpdatedTime" Nullable="true" Precision="23" />
+    <Property Type="String" Name="Description" Nullable="true" MaxLength="256" />
+    <Property Type="String" Name="ModuleName" Nullable="true" MaxLength="256" />
+    <Property Type="String" Name="AppName" Nullable="true" MaxLength="256" />
+    <Property Type="String" Name="danhdau1" Nullable="true" MaxLength="128" />
+  </ComplexType>
+  <EntityType Name="contact_Email">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="NhanVienName" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+    <Property Name="NhanVienID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="DonViID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="DonViName" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+    <Property Name="RoleName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="DanhXung" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Email" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+    <Property Name="IsSended" Type="Boolean" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+    <Property Name="SendedDate" Type="DateTime" Precision="3" />
+  </EntityType>
+</Schema>

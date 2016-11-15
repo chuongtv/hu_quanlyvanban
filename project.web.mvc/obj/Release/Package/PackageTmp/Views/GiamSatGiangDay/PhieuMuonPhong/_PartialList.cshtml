@@ -1,0 +1,254 @@
+﻿@*
+    Author:   			ntdai
+    Created: 			2016-2-22
+    Last Modified: 		2016-2-22
+*@
+
+@model MvcPaging.IPagedList<nvngoc31122015.giamsatgiangday.library.PhieuMuonPhong.ListPhieuMuonPhongView>
+@using MvcPaging
+
+@{var i = 1;
+  }
+
+<div class="table-responsive">
+    @if (Model.TotalItemCount > 0)
+    {
+        <div class="p-b-10">
+            Kết quả tìm kiếm: <b>@Model.TotalItemCount</b> Phiếu mượn phòng
+        </div>
+        <text>
+    <table class="table table-bordered datatables dataTable" id="tablelist">
+        <thead>
+            <tr>
+                <th class="text-center w-30">
+                    <input id="CheckBoxAll" onclick="javascript: checkAlllist('#listcheckall',this);" type="checkbox" />
+                </th>
+                <th class="text-center">
+                    #
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => Model[0].HoVaTen)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => Model[0].DonViID)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => Model[0].NoiDung)
+                </th>
+
+                <th class="text-right w-10">
+                    @Html.DisplayNameFor(model => Model[0].CreatedDate)
+                </th>
+                <th class="text-left w-50">
+                    Trạng thái
+                </th>
+                @if ((@User as project.web.mvc.Common.IOIORTPrincipal).HasPermission("PhieuCapPhong_GiamSatGiangDay")
+                            || (@User as project.web.mvc.Common.IOIORTPrincipal).HasPermission("PhieuMuonPhongDelete_GiamSatGiangDay")
+                            || (@User as project.web.mvc.Common.IOIORTPrincipal).HasPermission("PhieuMuonPhongEdit_GiamSatGiangDay")
+                            || (@User as project.web.mvc.Common.IOIORTPrincipal).HasPermission("PhieuMuonPhongXacNhan_GiamSatGiangDay")
+                            )
+                {
+                    <text>
+
+                        <th colspan="4" class="text-center w-200">Tác vụ</th>
+                    </text>
+                }
+            </tr>
+        </thead>
+        <tbody id="listcheckall">
+
+            @foreach (var item in Model)
+            {
+
+               // string text = "";
+               // text = project.config.library.Utilities.ConstantVariable.TextStyle(item.TinhTrangPhieuGuid);
+
+                <tr data="@item.PhieuMuonPhongGuid" class="showhim">
+                    <td class="text-center">
+                        <input type="checkbox" class="checkbox-item" value="@item.PhieuMuonPhongGuid" />
+                    </td>
+                    <td class="text-center w-50">
+                        @Html.Raw((Model.PageNumber - 1) * Model.PageSize + i)
+                        @{i++;}
+                    </td>
+                    <td>
+                        @Html.Raw(item.HocHamName) @Html.Raw(item.HoVaTen)
+                    </td>
+                    <td>
+                        <span data-tooltip="@item.DonViName">  @Html.Raw(item.DonViID)</span>
+                    </td>
+                    <td>
+                        @Html.Raw(item.NoiDung)
+                    </td>
+
+
+                    <td class="text-right w-100">
+                        @Html.Raw(item.CreatedDate.Value.ToString("dd/MM/yyyy"))
+                    </td>
+
+                    <td style=" font-weight:bold;">
+                        
+                        @Html.Raw(item.HTMLStyle)
+                        @*<span class="badge @text " title="@item.TinhTrangName">@Html.Raw(item.TinhTrangName)</span>*@
+                    </td>
+
+
+                    @if ((@User as project.web.mvc.Common.IOIORTPrincipal).HasPermission("PhieuMuonPhongDelete_GiamSatGiangDay"))
+                    {
+                        if (item.TinhTrangPhieuGuid == ioiort.settingdata.library.ContentSettingData.GetDataSettingValue(project.config.library.ConfigurationCache.Cache_PhieuMuonPhong_TinhTrangLuuNhap).Trim() || item.TinhTrangPhieuGuid == ioiort.settingdata.library.ContentSettingData.GetDataSettingValue(project.config.library.ConfigurationCache.Cache_PhieuMuonPhong_TinhTrangHuy).Trim())
+                        {
+                            <text>
+                                <td class="text-right ">
+                                    <a data-otf-confirm="Bạn có chắc muôn xóa?"
+                                       title="Xóa dữ liệu này" href="javascript:void(0)"
+                                       onclick="PhieuMuonPhong_PhieuMuonPhong_DeleteMulti(this)"
+                                       data-otf-target="#CPPhieuMuonPhong"
+                                       data-otf-input="#SearchPhieuMuonPhong"
+                                       data-otf-inputtungay="#date_tungay"
+                                       data-otf-inputdenngay="#date_denngay"
+                                       data-otf-action-target="@Url.Action("PhieuMuonPhongGet_List", "GiamSatGiangDay")?k="
+                                       data-otf-action="@Url.Action("PhieuMuonPhongDelete", "GiamSatGiangDay", null, Request.Url.Scheme)?id=@item.PhieuMuonPhongGuid">
+                                        <i class="fa fa-lg fa-trash-o text-danger"></i>
+                                    </a>
+                                </td>
+                            </text>
+                        }
+                        else
+                        {
+                            <text>
+                                <td class="text-right "></td>
+                            </text>
+                        }
+                    }
+
+                    @if ((@User as project.web.mvc.Common.IOIORTPrincipal).HasPermission("PhieuMuonPhongEdit_GiamSatGiangDay"))
+                    {
+                        <text>
+                            <td class="text-right ">
+                                <a href="@Url.Action("PhieuMuonPhongEdit", "GiamSatGiangDay", null, Request.Url.Scheme)?id=@item.PhieuMuonPhongGuid"
+                                   title="Chỉnh sửa">
+                                    <i class="fa fa-lg fa-pencil-square-o text-info"></i>
+                                </a>
+                            </td>
+                        </text>
+                    }
+
+                    @if ((@User as project.web.mvc.Common.IOIORTPrincipal).HasPermission("PhieuCapPhong_GiamSatGiangDay"))
+                    {
+
+                        if (item.TinhTrangPhieuGuid == ioiort.settingdata.library.ContentSettingData.GetDataSettingValue(project.config.library.ConfigurationCache.Cache_PhieuMuonPhong_TinhTrangDaGui))
+                        {
+                            <text>
+                                <td class="text-right ">
+                                    <a href="@Url.Action("PhieuCapPhong", "GiamSatGiangDay", null, Request.Url.Scheme)?id=@item.PhieuMuonPhongGuid"
+                                       title="Cấp phòng">
+                                        @*<i class="fa fa-tasks fa-lg"></i>*@
+                                        Cấp phòng
+                                    </a>
+                                </td>
+                            </text>
+                        }
+                        else
+                        {
+                            <text>
+                                <td class="text-right "></td>
+                            </text>
+                        }
+                    }
+
+                    @if ((@User as project.web.mvc.Common.IOIORTPrincipal).HasPermission("PhieuMuonPhongXacNhan_GiamSatGiangDay"))
+                    {
+                        @*if (item.TinhTrangPhieuGuid == project.config.library.Utilities.ConstantVariable.Value_PhieuMuonPhong_TinhTrangDaCapPhong)
+                            {
+                                <text>*@
+                        <td class="text-right ">
+                            <a href="@Url.Action("PhieuMuonPhongXacNhan", "GiamSatGiangDay", null, Request.Url.Scheme)?id=@item.PhieuMuonPhongGuid"
+                               title="Xác nhận phiếu">
+                                <i class="fa fa-lg fa-mail-reply text-info"></i>
+                            </a>
+                        </td>
+                        @*</text>
+                            }
+                            else
+                            {
+                                <text>
+                                    <td class="text-right "></td>
+                                </text>
+                            }*@
+                    }
+
+                </tr>
+            }
+        </tbody>
+    </table>
+
+        </text>
+    }
+    else
+    {
+        <text><br />
+    <div class="alert alert-dismissable alert-info">
+        <strong>Yêu cầu tìm kiếm lúc @{ var date = DateTime.Now; } @date.ToString("HH:mm:ss dd/MM/yyyy") không có dữ liệu</strong>
+        <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+    </div>
+        </text>
+    }
+    <div class="pager">
+        @if (Model.TotalItemCount > Model.PageSize)
+        {
+
+            <text>
+
+                @Html.Raw(Ajax.Pager(
+                       new Options
+                       {
+                           PageSize = Model.PageSize,
+                           TotalItemCount = Model.TotalItemCount,
+                           CurrentPage = Model.PageNumber,
+                           ItemTexts = new ItemTexts() { Next = "Next", Previous = "Previous", Page = "" },
+                           ItemIcon = new ItemIcon() { First = "icon-backward", Previous = "icon-chevron-left", Next = "icon-chevron-right", Last = "icon-forward" },
+                           TooltipTitles = new TooltipTitles() { Next = "Next page", Previous = "Previous page", Page = "Page {0}." },
+                           Size = Size.normal,
+                           Alignment = Alignment.centered,
+                           IsShowControls = true,
+                           IsShowFirstLast = true,
+                           CssClass = ""
+                       },
+                       new AjaxOptions
+                       {
+                           UpdateTargetId = "CPPhieuMuonPhong"
+                       }, new { controller = "GiamSatGiangDay", action = "PhieuMuonPhongGet_List", k = @ViewData["keysearch"] }))
+            </text>
+        }
+    </div>
+</div>
+
+
+@using (Html.BeginScriptContext())
+{
+    Html.AddScriptBlock(
+        @<script type="text/javascript">
+            $('[data-tooltip!=""]').qtip({ // Grab all elements with a non-blank data-tooltip attr.
+                content: {
+                    attr: 'data-tooltip' // Tell qTip2 to look inside this attr for its content
+                },
+                position: {
+                    target: 'mouse'//, // Position it where the click was...
+                    // adjust: { mouse: false } // ...but don't follow the mouse
+                }
+            })
+        </script>
+, true);
+ Html.AddScriptBlock(
+        @<script type="text/javascript">
+            loadSelect("PhieuMuonPhong");
+            $('#tablelist tbody tr').hover(function () {
+                $(this).addClass('hover');
+            }, function () {
+                $(this).removeClass('hover');
+            });
+        </script>
+, true);
+
+}
+

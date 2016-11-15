@@ -1,0 +1,371 @@
+﻿@*
+    Author:   			pdgiai
+    Created: 			2016-1-4
+    Last Modified: 		2016-1-4
+*@
+@model nvngoc31122015.giamsatgiangday.library.GiamSatGiangDay.UpdateThoiKhoaBieuMoiGiangView
+@using ioiort.settingdata.library
+@using project.config.library
+
+
+
+<div class="modal-content">
+    <div class="modal-header">
+        <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+        <h4 class="modal-title">Cập nhật thời khóa biểu</h4>
+    </div>
+    <div class="modal-body">
+
+        @using (Ajax.BeginForm(
+                                            "ThoiKhoaBieuMoiGiangEdit",
+                                            "GiamSatGiangDay",
+                                            new AjaxOptions
+                                            {
+                                                InsertionMode = InsertionMode.Replace,//cach thuc update du lieu. Thay the hay them vao
+                                                HttpMethod = "POST",
+                                                UpdateTargetId = "modalGiamSatGiangDay_ThoiKhoaBieu_c",
+                                                LoadingElementId = "loader"
+                                            }, new { @class = "form-horizontal", id = "frm_EditThoiKhoaBieu" }))
+        {
+
+            @Html.HiddenFor(model => Model.LopHocGuid)
+            @Html.HiddenFor(model => Model.NhanVien_Guid, new { id = "hidden_giangvienguid" })
+            @Html.HiddenFor(model => Model.MonHoc_Guid, new { id = "hidden_monhocguid" })
+            @Html.HiddenFor(Model => Model.NamHoc_Guid)
+            @Html.HiddenFor(model => Model.Phong_Guid, new { id = "hidden_Phong_Guid" })
+            @Html.HiddenFor(Model => Model.NhanVien_GuidOld)
+            @Html.HiddenFor(Model => Model.IsCoQuyenQuanLyMon)
+            @Html.HiddenFor(Model => Model.PhanHeDaoTaoGuid)
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+
+            //kiêm tra là đào tạo trước nên sẽ vào đây trước
+
+
+                if (User.IsInRole(project.config.library.Utilities.ConstantVariable.Value_AspNetRoles_GiamSatGiangDay_DaoTao)
+                                                  || User.IsInRole(project.config.library.Utilities.ConstantVariable.Value_AspNetRoles_Administrator)
+                                                  || User.IsInRole(project.config.library.Utilities.ConstantVariable.Value_AspNetRoles_System))
+            {
+                <text>
+                    @if (User.IsInRole(project.config.library.Utilities.ConstantVariable.Value_AspNetRoles_GiamSatGiangDay_ThuKy) && Model.IsCoQuyenQuanLyMon == true)
+                    {
+                        <div class="form-group ">
+                            <label class="col-sm-2 control-label" id="lblDonVi">Mã giảng viên</label>
+                            <div class="col-sm-4">
+                                @Html.TextBoxFor(model => Model.GiangVienID, new { @class = "form-control", id = "text_GiangVienID", data_otf_action = @Url.Action("LoadAutoCompateGiangVien", "GiamSatGiangDay") })
+                                @Html.ValidationMessageFor(model => Model.NhanVien_Guid, null, new { @class = "text-danger" })
+                                @Html.ValidationMessageFor(model => Model.GiangVienID, null, new { @class = "text-danger" })
+                            </div>
+                            <label class="col-sm-2 control-label" id="lblDonVi">Tên giảng viên</label>
+                            <div class="col-sm-4">
+                                @Html.TextBoxFor(model => Model.TenGiangVien, new { @class = "form-control", id = "text_HoVaTen", disabled = "disable" })
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <text>
+                            <div class="form-group ">
+                                <label class="col-sm-2 control-label" id="lblDonVi">Mã giảng viên</label>
+                                <div class="col-sm-4">
+                                    @Html.TextBoxFor(model => Model.GiangVienID, new { @class = "form-control isdisable", id = "text_GiangVienID", data_otf_action = @Url.Action("LoadAutoCompateGiangVien", "GiamSatGiangDay") })
+                                    @Html.ValidationMessageFor(model => Model.NhanVien_Guid, null, new { @class = "text-danger" })
+                                    @Html.ValidationMessageFor(model => Model.GiangVienID, null, new { @class = "text-danger" })
+                                </div>
+                                <label class="col-sm-2 control-label" id="lblDonVi">Tên giảng viên</label>
+                                <div class="col-sm-4">
+                                    @Html.TextBoxFor(model => Model.TenGiangVien, new { @class = "form-control", id = "text_HoVaTen", disabled = "disable" })
+                                </div>
+                            </div>
+                        </text>
+                    }
+
+                    <div class="form-group ">
+                        <label class="col-sm-2 control-label">Môn học</label>
+                        <div class="col-sm-4">
+                            @Html.TextBoxFor(model => Model.MonHocID, new { @class = "form-control", id = "text_MonHocID", data_otf_action = @Url.Action("LoadAutoCompateMonHoc", "GiamSatGiangDay") })
+                            @Html.ValidationMessageFor(model => Model.MonHoc_Guid, null, new { @class = "text-danger" })
+                            @Html.ValidationMessageFor(model => Model.MonHocID, null, new { @class = "text-danger" })
+                        </div>
+                        <label class="col-sm-2 control-label">Tên môn học</label>
+                        <div class="col-sm-4 ">
+                            @Html.TextBoxFor(model => Model.MonHocName, new { @class = "form-control", id = "text_MonHocName", disabled = "disable" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ThoiGianBatDau, new { @class = "col-sm-2 control-label", @for = "data_Tungay" })
+                        <div class="col-sm-4">
+                            <div id="data_ThoiKhoaBieu_Tungay" class="isdisable" disabled="true">
+                                <div class="input-group date">
+                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                    @Html.EditorFor(model => model.ThoiGianBatDau, new { @class = "form-control" })
+                                </div>
+                            </div>
+                            @Html.ValidationMessageFor(model => Model.ThoiGianBatDau, null, new { @class = "text-danger" })
+                        </div>
+                        @Html.LabelFor(model => model.ThoiGianKetThuc, new { @class = "col-sm-2 control-label", @for = "data_Denngay" })
+                        <div class="col-sm-4">
+                            <div id="data_ThoiKhoaBieu_Denngay" class="isdisable" disabled="true">
+                                <div class="input-group date">
+                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                    @Html.EditorFor(model => model.ThoiGianKetThuc, new { @class = "form-control" })
+                                </div>
+                            </div>
+                            @Html.ValidationMessageFor(model => Model.ThoiGianKetThuc, null, new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group ">
+                        @Html.LabelFor(model => Model.SiSoLopHoc, new { @class = "col-sm-2 control-label", @for = "text_SiSo" })
+                        <div class="col-sm-4">
+                            @Html.TextBoxFor(model => Model.SiSoLopHoc, new { @class = "form-control", id = "text_SiSo" })
+                            @Html.ValidationMessageFor(model => Model.SiSoLopHoc, null, new { @class = "text-danger" })
+                        </div>
+                        @Html.LabelFor(model => Model.SoTiet, new { @class = "col-sm-2 control-label", @for = "text_SoTiet" })
+                        <div class="col-sm-4">
+                            @Html.TextBoxFor(model => Model.SoTiet, new { @class = "form-control currency", id = "text_SoTiet" })
+                            @Html.ValidationMessageFor(model => Model.SoTiet, null, new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group ">
+                        @Html.LabelFor(model => Model.NhomHoc, new { @class = "col-sm-2 control-label", @for = "text_NhomHoc" })
+                        <div class="col-sm-4">
+                            @Html.TextBoxFor(model => Model.NhomHoc, new { @class = "form-control", id = "text_NhomHoc" })
+                            @Html.ValidationMessageFor(model => Model.NhomHoc, null, new { @class = "text-danger" })
+                        </div>
+                        @Html.LabelFor(model => Model.NhomThucHanh, new { @class = "col-sm-2 control-label", @for = "text_NhomThucHanh" })
+                        <div class="col-sm-4">
+                            @Html.TextBoxFor(model => Model.NhomThucHanh, new { @class = "form-control", id = "text_NhomThucHanh" })
+                            @Html.ValidationMessageFor(model => Model.NhomThucHanh, null, new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group ">
+                        @Html.LabelFor(model => Model.ToHopNhom, new { @class = "col-sm-2 control-label", @for = "text_ToHopNhom" })
+                        <div class="col-sm-4">
+                            @Html.TextBoxFor(model => Model.ToHopNhom, new { @class = "form-control", id = "text_ToHopNhom" })
+                            @Html.ValidationMessageFor(model => Model.ToHopNhom, null, new { @class = "text-danger" })
+                        </div>
+                        @Html.LabelFor(model => Model.MonHocDocHai, new { @class = "col-sm-2 control-label", @for = "DDL_MonDocHai" })
+                        <div class="col-sm-4">
+                            @Html.CheckBoxFor(model => Model.MonHocDocHai, new { @class = "form-control", id = "DDL_MonDocHai" })
+                            @Html.ValidationMessageFor(model => Model.MonHocDocHai, null, new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group ">
+                        @Html.LabelFor(model => Model.Thu, new { @class = "col-sm-2 control-label", @for = "text_Thu" })
+                        <div class="col-sm-4">
+                            @Html.DropDownListFor(model => Model.Thu, new SelectList(Model.ListThu, "ValueString", "Name"), new { @class = "form-control chosen-select", id = "text_Thu", style = "Width:100%" })
+                            @Html.ValidationMessageFor(model => Model.Thu, null, new { @class = "text-danger" })
+                        </div>
+                        @Html.LabelFor(model => Model.LoaiGiangDayDacBiet, new { @class = "col-sm-2 control-label", @for = "DDL_ListLoaiGiangDayDacBiet" })
+                        <div class="col-sm-4">
+                            @Html.DropDownListFor(model => Model.LoaiGiangDayDacBiet, new SelectList(Model.ListLoaiGiangDayDacBiet, "ValueString", "Name"), new { @class = "form-control chosen-select", id = "DDL_ListLoaiGiangDayDacBiet" })
+                            @Html.ValidationMessageFor(model => Model.LoaiGiangDayDacBiet, null, new { @class = "text-danger" })
+                        </div>
+
+                    </div>
+                    <div class="form-group ">
+                        @Html.LabelFor(model => Model.TietBatDau, new { @class = "col-sm-2 control-label", @for = "DDL_ListCa_Guid" })
+                        <div class="col-sm-4">
+                            @Html.DropDownListFor(model => Model.TietBatDau, new SelectList(Model.ListCa_Guid, "ValueString", "Name"), new { @class = "form-control chosen-select", id = "DDL_ListCa_Guid", style = "Width:100%" })
+                            @Html.ValidationMessageFor(model => Model.TietBatDau, null, new { @class = "text-danger" })
+                        </div>
+                        @Html.LabelFor(model => Model.Phong_Guid, new { @class = "col-sm-2 control-label", @for = "DDL_Phong_Guid" })
+                        <div class="col-sm-4">
+                            @Html.TextBoxFor(model => Model.PhongID, new { @class = "form-control", id = "text_PhongHocID", data_otf_action = @Url.Action("LoadAutoCompatePhongHoc", "GiamSatGiangDay"), disabled = "disable" })
+                            @Html.ValidationMessageFor(model => Model.Phong_Guid, null, new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </text>
+            }
+            else
+            {
+                @Html.Hidden("hidden_checkngayhoc", "1")
+                @Html.Hidden("hidden_ngaycu", Model.ThoiGianBatDau.Value.ToString("dd/MM/yyyy"))
+                <div class="form-group ">
+                    <label class="col-sm-2 control-label" id="lblDonVi">Mã giảng viên</label>
+                    <div class="col-sm-4">
+                        @Html.TextBoxFor(model => Model.GiangVienID, new { @class = "form-control", id = "text_GiangVienID", data_otf_action = @Url.Action("LoadAutoCompateGiangVien", "GiamSatGiangDay") })
+                        @Html.ValidationMessageFor(model => Model.NhanVien_Guid, null, new { @class = "text-danger" })
+                        @Html.ValidationMessageFor(model => Model.GiangVienID, null, new { @class = "text-danger" })
+                    </div>
+                    <label class="col-sm-2 control-label" id="lblDonVi">Tên giảng viên</label>
+                    <div class="col-sm-4">
+                        @Html.TextBoxFor(model => Model.TenGiangVien, new { @class = "form-control", id = "text_HoVaTen", disabled = "disable" })
+                    </div>
+                </div>
+                <div class="form-group ">
+                    <label class="col-sm-2 control-label">Môn học</label>
+                    <div class="col-sm-4">
+                        @Html.TextBoxFor(model => Model.MonHocID, new { @class = "form-control isdisable", id = "text_MonHocID", data_otf_action = @Url.Action("LoadAutoCompateMonHoc", "GiamSatGiangDay") })
+                        @Html.ValidationMessageFor(model => Model.MonHocID, null, new { @class = "text-danger" })
+                        @Html.ValidationMessageFor(model => Model.MonHoc_Guid, null, new { @class = "text-danger" })
+                    </div>
+                    <label class="col-sm-2 control-label">Tên môn học</label>
+                    <div class="col-sm-4 ">
+                        @Html.TextBoxFor(model => Model.MonHocName, new { @class = "form-control", id = "text_MonHocName", disabled = "disable" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ThoiGianBatDau, new { @class = "col-sm-2 control-label", @for = "data_Tungay" })
+                    <div class="col-sm-4">
+                        @Html.TextBox("text_ThoiGianBatDau", Model.ThoiGianBatDau.Value.ToString("dd/MM/yyyy"), new { @class = "form-control text_ThoiGianBatDau", disabled = "disable" })
+                    </div>
+                    @Html.LabelFor(model => model.ThoiGianKetThuc, new { @class = "col-sm-2 control-label", @for = "data_Denngay" })
+                    <div class="col-sm-4">
+                        @Html.TextBox("text_ThoiGianKetThuc", Model.ThoiGianKetThuc.Value.ToString("dd/MM/yyyy"), new { @class = "form-control", disabled = "disable" })
+                    </div>
+                </div>
+                <div class="form-group ">
+                    @Html.LabelFor(model => Model.SiSoLopHoc, new { @class = "col-sm-2 control-label", @for = "text_SiSo" })
+                    <div class="col-sm-4">
+                        @Html.TextBoxFor(model => Model.SiSoLopHoc, new { @class = "form-control", id = "text_SiSo", disabled = "disable" })
+                        @Html.ValidationMessageFor(model => Model.SiSoLopHoc, null, new { @class = "text-danger" })
+                    </div>
+                    @Html.LabelFor(model => Model.SoTiet, new { @class = "col-sm-2 control-label", @for = "text_SoTiet" })
+                    <div class="col-sm-4">
+                        @Html.TextBoxFor(model => Model.SoTiet, new { @class = "form-control currency", id = "text_SoTiet", disabled = "disable" })
+                        @Html.ValidationMessageFor(model => Model.SoTiet, null, new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group ">
+                    @Html.LabelFor(model => Model.NhomHoc, new { @class = "col-sm-2 control-label", @for = "text_NhomHoc" })
+                    <div class="col-sm-4">
+                        @Html.TextBoxFor(model => Model.NhomHoc, new { @class = "form-control isdisable", id = "text_NhomHoc"})
+                        @Html.ValidationMessageFor(model => Model.NhomHoc, null, new { @class = "text-danger" })
+                    </div>
+                    @Html.LabelFor(model => Model.NhomThucHanh, new { @class = "col-sm-2 control-label", @for = "text_NhomThucHanh" })
+                    <div class="col-sm-4">
+                        @Html.TextBoxFor(model => Model.NhomThucHanh, new { @class = "form-control", id = "text_NhomThucHanh", disabled = "disable" })
+                        @Html.ValidationMessageFor(model => Model.NhomThucHanh, null, new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group ">
+                    @Html.LabelFor(model => Model.Thu, new { @class = "col-sm-2 control-label", @for = "text_Thu" })
+                    <div class="col-sm-4">
+                        @Html.TextBoxFor(model => Model.Thu, new { @class = "form-control", id = "text_Thu", disabled = "disable" })
+                        @Html.ValidationMessageFor(model => Model.Thu, null, new { @class = "text-danger" })
+                    </div>
+                    @Html.LabelFor(model => Model.Phong_Guid, new { @class = "col-sm-2 control-label", @for = "DDL_Phong_Guid" })
+                    <div class="col-sm-4">
+                        @Html.TextBoxFor(model => Model.PhongID, new { @class = "form-control", id = "text_PhongHocID", disabled = "disable" })
+                        @Html.ValidationMessageFor(model => Model.Phong_Guid, null, new { @class = "text-danger" })
+                        @Html.ValidationMessageFor(model => Model.PhongID, null, new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group ">
+                    @Html.LabelFor(model => Model.ToHopNhom, new { @class = "col-sm-2 control-label", @for = "text_ToHopNhom" })
+                    <div class="col-sm-4">
+                        @Html.TextBoxFor(model => Model.ToHopNhom, new { @class = "form-control isdisable", id = "text_ToHopNhom" })
+                        @Html.ValidationMessageFor(model => Model.ToHopNhom, null, new { @class = "text-danger" })
+                    </div>
+                    @Html.LabelFor(model => Model.MonHocDocHai, new { @class = "col-sm-2 control-label", @for = "DDL_MonDocHai" })
+                    <div class="col-sm-4">
+                        @Html.CheckBoxFor(model => Model.MonHocDocHai, new { @class = "form-control isdisable", id = "DDL_MonDocHai" })
+                        @Html.ValidationMessageFor(model => Model.MonHocDocHai, null, new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group ">
+                    @Html.LabelFor(model => Model.LoaiGiangDayDacBiet, new { @class = "col-sm-2 control-label", @for = "DDL_ListLoaiGiangDayDacBiet" })
+                    <div class="col-sm-4">
+                        @Html.DropDownListFor(model => Model.LoaiGiangDayDacBiet, new SelectList(Model.ListLoaiGiangDayDacBiet, "ValueString", "Name"),
+                       new { @class = "form-control chosen-select isdisable", id = "DDL_ListLoaiGiangDayDacBiet" })
+                        @Html.ValidationMessageFor(model => Model.LoaiGiangDayDacBiet, null, new { @class = "text-danger" })
+                    </div>
+                </div>
+            }
+        }
+        <div class="form-horizontal" style="display:none;">
+            <div class="form-group">
+                <label class="col-sm-2 control-label">
+                    File đính kèm
+                </label>
+                <div class="col-sm-10">
+
+                    @*2 hàm ulupload 1 cho xóa và k xóa*@
+                    @Html.Action("LoadUploadOne", "FileSystem", new { itemguid = Model.LopHocGuid, id = 1, auto = "false", isDelete = "true", mo = "ThoiKhoaBieu" })
+                    @*@Html.Action("LoadUploadOne", "FileSystem", new { itemguid = Model.ItemGuid, id = 1, auto = "false", isDelete = "false", mo = "ThoiKhoaBieu" })*@
+                    @*s = style hiển thị danh sách file 0:1; 0 dạng block, 1 là dạng list
+                        d ="true" :"fasle" cho phép delete hay k
+                        id quy định nơi upload file, nơi load file lên trong contantvalble*@
+                    @* @Html.Action("LoadUploadFiles", "FileSystem", new { itemguid = Model.ThoiKhoaBieuGuid, id = 1, auto = "false", d = "true", s = 1, mo = "ThoiKhoaBieu" })*@
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+
+        <div class="col-sm-12  text-center">
+
+            @*<button type="button" onclick="GiamSatGiangDay_ThoiKhoaBieuMoiGiang_OnSaveExit('#callbackGiamSatGiangDay_ThoiKhoaBieu', 'true', '#frm_EditThoiKhoaBieu')" class="btn btn-success">Lưu & Thoát</button>*@
+
+            <button type="button" onclick="GiamSatGiangDay_ThoiKhoaBieuMoiGiang_OnSaveExit('#callbackGiamSatGiangDay_ThoiKhoaBieu', 'false', '#frm_EditThoiKhoaBieu')" class="btn btn-primary">Lưu dữ liệu</button>
+            &nbsp; hoặc &nbsp;
+            <a class="btn btn-default" data-otf-action="@Url.Action("ThoiKhoaBieuMoiGiangGet_List", "GiamSatGiangDay", null, Request.Url.Scheme)" data-target="#GiamSatGiangDay_ThoiKhoaBieu_DS_content" aria-hidden="true" data-dismiss="modal" onclick="GiamSatGiangDay_ThoiKhoaBieuMoiGiang_BackList('#GiamSatGiangDay_ThoiKhoaBieu_buttonsearch')"> Quay lại</a>
+
+            <input type="hidden" id="callbackGiamSatGiangDay_ThoiKhoaBieu"
+                   data-otf-target="#modalGiamSatGiangDay_ThoiKhoaBieu"
+                   data-otf-target-exit="#GiamSatGiangDay_ThoiKhoaBieu_DS_content"
+                   data-otf-action-exit="@Url.Action("ThoiKhoaBieuMoiGiangGet_List", "GiamSatGiangDay", null, Request.Url.Scheme)"
+                   data-otf-action="@Url.Action("ThoiKhoaBieuMoiGiangEdit", "GiamSatGiangDay", null, Request.Url.Scheme)?id=@Model.LopHocGuid" />
+
+
+        </div>
+    </div>
+
+</div>
+
+<style>
+    .isdisable {
+        pointer-events: none;
+        opacity: 1;
+        background: #edeef0;
+        cursor: not-allowed !important;
+    }
+</style>
+
+@using (Html.BeginScriptContext())
+{
+    Html.AddScriptBlock(
+        @<script type="text/javascript">
+
+            $("#CPDanhSachBoloc").attr("style", "pointer-events:none;opacity: 0.5;background: #CCC;");
+            //Su dung cau hinh dropdownlist
+            $(document).ready(function () {
+                $('.currency').formatCurrency();
+                $('.currency').blur(function () {
+                    $('.currency').formatCurrency();
+                });
+            });
+
+            //AutoCompalteNhanvien('#text_GiangVienID', '#hidden_giangvienguid', '#text_HoVaTen', '#text_DonViName');
+            AutoCompalteMonHoc('#text_MonHocID', '#hidden_monhocguid', '#text_MonHocName', '#text_DonViName');
+            AutoCompaltePhongHoc('#text_PhongHocID', '#hidden_Phong_Guid')
+
+            AutocompleteNhanVienHinh('#text_GiangVienID', '#hidden_giangvienguid', '#text_HoVaTen', '#text_DonViName');
+
+            $('#data_ThoiKhoaBieu_Tungay .input-group.date').datepicker({
+                format: 'dd/mm/yyyy',
+                todayBtn: "linked",
+                keyboardNavigation: false,
+                forceParse: false,
+                calendarWeeks: true,
+                autoclose: true
+            });
+            $('#data_ThoiKhoaBieu_Denngay .input-group.date').datepicker({
+                format: 'dd/mm/yyyy',
+                todayBtn: "linked",
+                keyboardNavigation: false,
+                forceParse: false,
+                calendarWeeks: true,
+                autoclose: true
+            });
+        </script>
+, true);
+}
+
+
+
+

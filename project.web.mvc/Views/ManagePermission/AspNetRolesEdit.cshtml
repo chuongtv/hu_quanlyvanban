@@ -1,0 +1,55 @@
+﻿@*
+    Author:   			hanhat
+    Created: 			2015-11-6
+    Last Modified: 		2015-11-6
+*@
+
+
+@{
+    ViewBag.Title = "Chỉnh sửa";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div id="page-heading">
+    <div id="page-heading">
+        <ol class="breadcrumb">
+            <li class="active">
+                <a href="@Url.Action("Index", "Dashboards")">
+                    <i class="fa fa-lg fa-home text-warning text-size-20">
+                    </i> Trang Chủ
+                </a>
+            </li>
+            <li>
+                <a href="@Url.Action("ManagePermission", "ManagePermission")">
+                    <i>
+                    </i>Quản Lý Phân Quyền
+                </a>
+            </li>
+            <li>
+                <a href="@Url.Action("ManageAspNetRoles", "ManagePermission")">
+                    <i>
+                    </i> Quản Lý Roles
+                </a>
+            </li>
+            <li class="active">
+                Chỉnh sửa Roles
+            </li>
+        </ol>
+    </div>
+</div>
+
+@*content*@
+<div class="container" id="CPManageAspNetRoles">
+    @Html.Partial("~/Views/ManagePermission/ManageAspNetRoles/_PartialEdit.cshtml")
+</div>
+@section Styles {
+}
+
+@section Scripts {
+    @Scripts.Render("~/module/ManagePermission/ManageAspNetRoles")
+    <script src="~/Content/plugins/ckeditor/ckeditor.js"></script>
+}
+
+
+
+

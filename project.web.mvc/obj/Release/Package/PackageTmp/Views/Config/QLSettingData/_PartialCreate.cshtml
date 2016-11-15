@@ -1,0 +1,103 @@
+﻿@*
+    Author:   			ntdai
+    Created: 			2015-11-27
+    Last Modified: 		2015-11-27
+*@
+
+@model ioiort.settingdata.library.QLSettingData.CreateSettingDataView
+<div class="row">
+    <div class="col-sm-12">
+
+        @using (Ajax.BeginForm(
+                                    "SettingDataCreate",
+                                    "Config",
+                                    new AjaxOptions
+                                {
+                                    InsertionMode = InsertionMode.Replace,
+                                    HttpMethod = "POST",
+                                    UpdateTargetId = "CPQLSettingData",
+                                    LoadingElementId = "loader"
+                                }, new { @class = "form-horizontal", id = "frm_CreateSettingData" }))
+        {
+            @Html.HiddenFor(model => Model.SettingDataGuid)
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+
+
+            <div class="form-group">
+                @Html.LabelFor(model => Model.SettingDataID, new { @class = "col-sm-2 control-label", @for = "text_SettingDataID" })
+                <div class="col-sm-4">
+                    @Html.TextBoxFor(model => Model.SettingDataID, new { @class = "form-control", id = "text_SettingDataID" })
+                    @Html.ValidationMessageFor(model => Model.SettingDataID, null, new { @class = "text-danger" })
+                </div>
+                <div class="col-sm-2">
+
+                </div>
+            </div>
+
+            <div class="form-group ">
+                @Html.LabelFor(model => Model.SettingDataName, new { @class = "col-sm-2 control-label", @for = "text_SettingDataName" })
+                <div class="col-sm-4">
+                    @Html.TextBoxFor(model => Model.SettingDataName, new { @class = "form-control", id = "text_SettingDataName" })
+                    @Html.ValidationMessageFor(model => Model.SettingDataName, null, new { @class = "text-danger" })
+                </div>
+                <div class="col-sm-2">
+
+                </div>
+            </div>
+
+          <div class="form-group ">
+                @Html.LabelFor(model => Model.Value, new { @class = "col-sm-2 control-label", @for = "text_Value" })
+                <div class="col-sm-4">
+                    @Html.TextBoxFor(model => Model.Value, new { @class = "form-control", id = "text_Value" })
+                    @Html.ValidationMessageFor(model => Model.Value, null, new { @class = "text-danger" })
+                </div>
+                <div class="col-sm-2">
+
+                </div>
+            </div>
+            
+            
+        }
+       
+
+        <div class="row">
+            <div class="col-sm-6 col-sm-offset-3 text-center">
+                <div class="btn-toolbar">
+                    <button type="submit" onclick="QLSettingData_SettingData_OnSaveExit('#callbackQLSettingData_SettingData', 'true', '#frm_CreateSettingData')" class="btn">Lưu & Thoát</button>
+                    <button type="submit" onclick="QLSettingData_SettingData_OnSaveExit('#callbackQLSettingData_SettingData', 'false', '#frm_CreateSettingData')" class="btn btn-primary"><i class="fa fa-floppy-o"></i> Lưu dữ liệu</button>&nbsp;hoặc&nbsp;
+                    <a class="btn btn-link" href="@Url.Action("QLSettingData", "Config", null, Request.Url.Scheme)">Quay lại</a>
+
+                    <input type="hidden" id="callbackQLSettingData_SettingData"
+                           data-otf-action-exit="@Url.Action("QLSettingData", "Config", null, Request.Url.Scheme)"
+                           data-otf-action="@Url.Action("SettingDataEdit", "Config", null, Request.Url.Scheme)?id=@Model.SettingDataGuid" />
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@using (Html.BeginScriptContext())
+{
+    Html.AddScriptBlock(
+        @<script type="text/javascript">
+             //Su dung cau hinh dropdownlist
+            //var config = {
+            //    '.chosen-select': {},
+            //    '.chosen-select-deselect': { allow_single_deselect: true },
+            //    '.chosen-select-no-single': { disable_search_threshold: 10 },
+            //    '.chosen-select-no-results': { no_results_text: 'Lỗi! Vui lòng chọn ít nhất 1 mục.' },
+            //    '.chosen-select-width': { width: "95%" }
+            //}
+            //for (var selector in config) {
+            //    $(selector).chosen(config[selector]);
+            //}
+            
+
+        </script>
+, true);
+}
+
+
+

@@ -1,0 +1,237 @@
+﻿@model MvcPaging.IPagedList<nvngoc31122015.giamsatgiangday.library.GiamSatGiangDay.QuanLyYeuCauNghiBuMuon>
+@using MvcPaging
+
+@{var i = 1;}
+
+<div class="table-responsive">
+    @if (Model.TotalItemCount > 0)
+    {
+        <div class="p-b-10">
+            Kết quả tìm kiếm: <b>@Model.TotalItemCount</b> dữ liệu
+        </div>
+        <text>
+            <table class="table table-bordered datatables dataTable">
+                <thead>
+                    <tr>
+                        <th class="text-center w-30">
+                            <input id="CheckBoxAll" onclick="javascript: checkAlllist('#listcheckall',this);" type="checkbox" />
+                        </th>
+                        <th class="text-center w-30">
+                            STT
+                        </th>
+                        <th class="text-left">
+                            @Html.DisplayNameFor(model => Model[0].LoaiPhieuName)
+                        </th>
+                        <th class="text-left" colspan="2">
+
+                            @Html.DisplayNameFor(model => Model[0].NhanVienFullName)
+
+                        </th>
+                        <th class="text-left">
+                            @Html.DisplayNameFor(model => Model[0].Ngay)
+                        </th>
+                        <th class="text-left">
+                            @Html.DisplayNameFor(model => Model[0].DonViName)
+                        </th>
+                        <th class="text-center">
+                            #
+                        </th>
+                    </tr>
+                </thead>
+                <tbody id="listcheckall">
+                    @foreach (var item in Model)
+                    {
+                        <tr class="showhim">
+                            <td class="text-center">
+                                <input type="checkbox" class="checkbox-item" value="@item.PhieuGuid" />
+                            </td>
+                            <td class="text-center">
+                                @Html.Raw((Model.PageNumber - 1) * Model.PageSize + i)
+                                @{i++;}
+                            </td>
+                            <td class="text-left">
+
+                                @if (item.TrangThai == 0)
+                                {
+                                    @Html.DisplayFor(x => item.LoaiPhieuName)
+                                }
+                                else
+                                {
+                                    if (item.LoaiPhieuID == "phieubu")
+                                    {
+                                        <a href="@Url.Action("BaoBuDaoTao", "GiamSatGiangDay", null, Request.Url.Scheme)?id=@item.PhieuGuid"
+                                           title="Xem lại chi tiết phiếu">
+                                            @Html.DisplayFor(x => item.LoaiPhieuName)
+                                        </a>
+                                    }
+                                     if (item.LoaiPhieuID == "phieumuonphong")
+                                    {
+                                        <a href="@Url.Action("MuonPhongDaoTao", "GiamSatGiangDay", null, Request.Url.Scheme)?id=@item.PhieuGuid"
+                                           title="Xem lại chi tiết phiếu">
+                                            @Html.DisplayFor(x => item.LoaiPhieuName)
+                                        </a>
+                                    }
+                                     
+                                    if (item.LoaiPhieuID == "phieubutruoc")
+                                    {
+                                        <a href="@Url.Action("BaoBuTruocDaoTao", "GiamSatGiangDay", null, Request.Url.Scheme)?id=@item.PhieuGuid"
+                                           title="Xem lại chi tiết phiếu">
+                                            @Html.DisplayFor(x => item.LoaiPhieuName)
+                                        </a>
+                                    }
+
+                                    if (item.LoaiPhieuID == "phieunghi")
+                                    {
+                                        <a href="@Url.Action("BaoNghi", "GiamSatGiangDay", null, Request.Url.Scheme)?id=@item.PhieuGuid"
+                                           title="Xem lại chi tiết phiếu">
+                                            @Html.DisplayFor(x => item.LoaiPhieuName)
+                                        </a>
+                                    }
+
+                                }
+                            </td>
+                            <td class="text-left w-30">
+                                @Html.DisplayFor(x => item.NhanVienID)
+                            </td>
+                            <td class="text-left">
+                                @if (item.TrangThai == 0)
+                                {
+                                    @Html.DisplayFor(x => item.NhanVienFullName)
+                                }
+                                else
+                                {
+                                    if (item.LoaiPhieuID == "phieubu")
+                                    {
+                                        <a href="@Url.Action("BaoBuDaoTao", "GiamSatGiangDay", null, Request.Url.Scheme)?id=@item.PhieuGuid"
+                                           title="Xem lại chi tiết phiếu">
+                                            @Html.DisplayFor(x => item.NhanVienFullName)
+                                        </a>
+                                    }
+                                   if (item.LoaiPhieuID == "phieumuonphong")
+                                    {
+                                        <a href="@Url.Action("MuonPhongDaoTao", "GiamSatGiangDay", null, Request.Url.Scheme)?id=@item.PhieuGuid"
+                                           title="Xem lại chi tiết phiếu">
+                                            @Html.DisplayFor(x => item.NhanVienFullName)
+                                        </a>
+                                    }
+                                   if (item.LoaiPhieuID == "phieubutruoc")
+                                    {
+                                        <a href="@Url.Action("BaoBuTruocDaoTao", "GiamSatGiangDay", null, Request.Url.Scheme)?id=@item.PhieuGuid"
+                                           title="Xem lại chi tiết phiếu">
+                                            @Html.DisplayFor(x => item.NhanVienFullName)
+                                        </a>
+                                    }
+                                    
+                                    if (item.LoaiPhieuID == "phieunghi")
+                                    {
+                                        <a href="@Url.Action("BaoNghi", "GiamSatGiangDay", null, Request.Url.Scheme)?id=@item.PhieuGuid"
+                                           title="Xem lại chi tiết phiếu">
+                                            @Html.DisplayFor(x => item.NhanVienFullName)
+                                        </a>
+                                    }
+                                }
+                            </td>
+                            <td class="text-left">
+                                @(DateTime.Parse(item.Ngay.ToString()).ToString("dd/MM/yyyy HH:mm"))
+                                @*@Html.DisplayFor(x => item.Ngay)*@
+                            </td>
+                            <td class="text-left">
+                                @Html.DisplayFor(x => item.DonViID)
+                            </td>
+                            <td class="text-center">
+                                @if (item.LoaiPhieuID == "phieubu" && item.TrangThai == 0)
+                                {
+                                    <a href="@Url.Action("BaoBuDaoTao", "GiamSatGiangDay", null, Request.Url.Scheme)?id=@item.PhieuGuid"
+                                       title="Cấp phòng">
+                                        Cấp phòng
+                                    </a>
+                                }
+                                else if (item.LoaiPhieuID == "phieumuonphong" && item.TrangThai == 0)
+                                {
+                                    <a href="@Url.Action("MuonPhongDaoTao", "GiamSatGiangDay", null, Request.Url.Scheme)?id=@item.PhieuGuid"
+                                       title="Cấp phòng">
+                                        Cấp phòng
+                                    </a>
+                                }
+                                else if (item.LoaiPhieuID == "phieubutruoc" && item.TrangThai == 0)
+                                {
+                                    <a href="@Url.Action("BaoBuTruocDaoTao", "GiamSatGiangDay", null, Request.Url.Scheme)?id=@item.PhieuGuid"
+                                       title="Cấp phòng">
+                                        Cấp phòng
+                                    </a>
+                                }
+                                else if (item.TrangThai == 1)
+                                {
+                                    <i class="fa fa-check-square-o text-success" aria-hidden="true"></i>
+                                }
+                            </td>
+
+                        </tr>
+                                    }
+                </tbody>
+            </table>
+        </text>
+                                    }
+                                    else
+                                    {
+                                        <text><br />
+                                            <div class="alert alert-dismissable alert-info">
+                                                <strong>Yêu cầu tìm kiếm lúc @{ var date = DateTime.Now; } @date.ToString("HH:mm:ss dd/MM/yyyy") không có dữ liệu</strong>
+                                                <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+                                            </div>
+                                        </text>
+                                                    }
+    <div class="pager">
+        @if (Model.TotalItemCount > Model.PageSize)
+        {
+            <text>
+                @Html.Raw(Ajax.Pager(
+                       new Options
+                       {
+                           PageSize = Model.PageSize,
+                           TotalItemCount = Model.TotalItemCount,
+                           CurrentPage = Model.PageNumber,
+                           ItemTexts = new ItemTexts() { Next = "Next", Previous = "Previous", Page = "" },
+                           ItemIcon = new ItemIcon() { First = "icon-backward", Previous = "icon-chevron-left", Next = "icon-chevron-right", Last = "icon-forward" },
+                           TooltipTitles = new TooltipTitles() { Next = "Next page", Previous = "Previous page", Page = "Page {0}." },
+                           Size = Size.normal,
+                           Alignment = Alignment.centered,
+                           IsShowControls = true,
+                           IsShowFirstLast = true,
+                           CssClass = ""
+                       },
+                       new AjaxOptions
+                       {
+                           UpdateTargetId = "GiamSatGiangDay_DS_content"
+                       }, new
+                       {
+                           controller = "GiamSatGiangDay",
+                           action = "QuanLyYeuCauNghiBuMuonGet_List"
+                       ,
+                           NhanVienGuid = @ViewData["NhanVienGuid"]
+                       ,
+                           TuNgay = @ViewData["TuNgay"]
+                       ,
+                           DenNgay = @ViewData["DenNgay"]
+                       ,
+                           ChuaXuLy = @ViewData["ChuaXuLy"]
+                       ,
+                           DaXuLy = @ViewData["DaXuLy"]
+                        ,
+                           DonVi_Guid= ViewData["DonVi"]
+                        ,
+                           LoaiPhieu_Guid=  ViewData["LoaiPhieu"]
+                       }))
+            </text>
+        }
+    </div>
+</div>
+
+@using (Html.BeginScriptContext())
+{
+    Html.AddScriptBlock(
+        @<script type="text/javascript">
+            //loadSelect("DichVuSinhVien_XacNhanBieuMau", "XacNhanBieuMau");
+        </script>
+, true);
+}

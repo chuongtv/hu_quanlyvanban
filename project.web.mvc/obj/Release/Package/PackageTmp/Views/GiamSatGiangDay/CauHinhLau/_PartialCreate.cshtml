@@ -1,0 +1,120 @@
+﻿@*
+    Author:   			pdgiai
+    Created: 			2016-1-7
+    Last Modified: 		2016-1-7
+*@
+@model nvngoc31122015.giamsatgiangday.library.GiamSatGiangDay.CreateCauHinhLauView
+
+<div class="modal-content">
+    <div class="modal-header">
+        <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+        <h4 class="modal-title">Thêm mới lầu</h4>
+    </div>
+    <div class="modal-body">
+        @using (Ajax.BeginForm(
+                                    "CauHinhLauCreate",
+                                    "GiamSatGiangDay",
+                                    new AjaxOptions
+                                {
+                                    InsertionMode = InsertionMode.Replace,//cach thuc update du lieu. Thay the hay them vao
+                                    HttpMethod = "POST",
+                                    UpdateTargetId ="modalGiamSatGiangDay_CauHinhLau_c",
+                                    LoadingElementId = "loader"
+                                }, new { @class = "form-horizontal", id = "frm_CreateCauHinhLau" }))
+        {
+            
+            
+            @Html.HiddenFor(model => Model.LauGuid)
+            
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+
+
+           
+
+            
+             <div class="form-group ">
+                @Html.LabelFor(model => Model.LauID, new { @class = "col-sm-4 control-label", @for = "text_LauID" })
+                <div class="col-sm-4">
+                    @Html.TextBoxFor(model => Model.LauID, new { @class = "form-control", id = "text_LauID" })
+                    @Html.ValidationMessageFor(model => Model.LauID, null, new { @class = "text-danger" })
+                </div>
+                <div class="col-sm-2">
+
+                </div>
+            </div>
+            
+             <div class="form-group ">
+                @Html.LabelFor(model => Model.LauName, new { @class = "col-sm-4 control-label", @for = "text_LauName" })
+                <div class="col-sm-4">
+                    @Html.TextBoxFor(model => Model.LauName, new { @class = "form-control", id = "text_LauName" })
+                    @Html.ValidationMessageFor(model => Model.LauName, null, new { @class = "text-danger" })
+                </div>
+                <div class="col-sm-2">
+
+                </div>
+            </div>
+             <div class="form-group">
+                @Html.LabelFor(model => Model.CoSo_Guid, new { @class = "col-sm-4 control-label", @for = "DDL_CoSo_Guid" })
+                <div class="col-sm-4">
+                    @Html.DropDownListFor(model => Model.CoSo_Guid, new SelectList(Model.ListCoSo_Guid, "ValueString", "Name"), new { @class = "form-control chosen-select", id = "DDLCoSo" })
+                    @Html.ValidationMessageFor(model => Model.CoSo_Guid, null, new { @class = "text-danger" })
+                </div>
+                <div class="col-sm-2">
+
+                </div>
+            </div>
+        }
+      
+    </div>
+    <div class="modal-footer">
+
+        
+           <div class="col-sm-12  text-center">
+               
+                   
+                    <button type="button" onclick="GiamSatGiangDay_CauHinhLau_OnSaveExit('#callbackGiamSatGiangDay_CauHinhLau', 'true', '#frm_CreateCauHinhLau')" class="btn btn-success">Lưu & Thoát</button>
+                    <button type="button" onclick="GiamSatGiangDay_CauHinhLau_OnSaveExit('#callbackGiamSatGiangDay_CauHinhLau', 'false', '#frm_CreateCauHinhLau')" class="btn btn-primary"><i class="fa fa-floppy-o"></i> Lưu dữ liệu</button>
+                    &nbsp;hoặc&nbsp;
+                    
+                    <a class="btn btn-link" data-otf-action="@Url.Action("CauHinhLauGet_List", "GiamSatGiangDay", null, Request.Url.Scheme)" data-target="#GiamSatGiangDay_CauHinhLau_DS_content" aria-hidden="true" data-dismiss="modal" onclick="GiamSatGiangDay_CauHinhLau_BakList(this)"> Quay lại</a>
+
+               <input type="hidden" id="callbackGiamSatGiangDay_CauHinhLau"
+                      data-otf-inputcoso="#DDLCoSo"
+                      data-otf-target="#modalGiamSatGiangDay_CauHinhLau"
+                      data-otf-target-exit="#GiamSatGiangDay_CauHinhLau_DS_content"
+                      data-otf-action-exit="@Url.Action("CauHinhLauGet_List", "GiamSatGiangDay", null, Request.Url.Scheme)"
+                      data-otf-action="@Url.Action("CauHinhLauEdit", "GiamSatGiangDay", null, Request.Url.Scheme)?id=@Model.LauGuid" />
+
+
+
+               
+            </div>
+    </div>
+
+</div>
+
+@using (Html.BeginScriptContext())
+{
+    Html.AddScriptBlock(
+        @<script type="text/javascript">
+             //Su dung cau hinh dropdownlist
+            var config = {
+                '.chosen-select': {},
+                '.chosen-select-deselect': { allow_single_deselect: true },
+                '.chosen-select-no-single': { disable_search_threshold: 10 },
+                '.chosen-select-no-results': { no_results_text: 'Lỗi! Vui lòng chọn ít nhất 1 mục.' },
+                '.chosen-select-width': { width: "95%" }
+            }
+            for (var selector in config) {
+                $(selector).chosen(config[selector]);
+            }
+            
+
+        </script>
+, true);
+}
+
+
+
+

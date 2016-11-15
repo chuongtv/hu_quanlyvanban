@@ -1,0 +1,53 @@
+﻿@*
+    Author:   			httHong
+    Created: 			2015-10-21
+    Last Modified: 		2015-10-21
+*@
+
+
+@{
+    ViewBag.Title = "Thêm mới";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div id="page-heading">
+    <ol class="breadcrumb">
+        <li class="active">
+            <a href="@Url.Action("Index", "Dashboards")">
+                <i class="fa fa-lg fa-home text-warning text-size-20">
+                </i> Trang Chủ
+            </a>
+        </li>
+        <li>
+            <a href="@Url.Action("ManagePermission", "ManagePermission")">
+                <i>
+                </i>Quản Lý Phân Quyền
+            </a>
+        </li>
+        <li>
+            <a href="@Url.Action("ManageApp", "ManagePermission")">
+                <i>
+                </i> Quản Lý Ứng Dụng
+            </a>
+        </li>
+        <li class="active">
+            Tạo mới ứng dụng
+        </li>
+    </ol>
+</div>
+
+@*content*@
+<div class="container" id="CPManageApp">
+        @Html.Partial("~/Views/ManagePermission/ManageApp/_PartialCreate.cshtml")
+</div>
+
+@section Styles {
+}
+
+@section Scripts {
+    @Scripts.Render("~/module/ManagePermission/ManageApp")
+    <script src="~/Content/plugins/ckeditor/ckeditor.js"></script>
+}
+
+
+

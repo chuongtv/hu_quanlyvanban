@@ -1,0 +1,126 @@
+﻿@*
+    Author:   			pdgiai
+    Created: 			2016-1-12
+    Last Modified: 		2016-1-12
+*@
+@{
+    ViewBag.Title = "Import danh sách phiếu ghi nhận thanh tra";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model nvngoc31122015.giamsatgiangday.library.GiamSatGiangDay.ImportPhieuGhiNhanThanhTraStep1View
+
+@*breadcrumb*@
+<div id="page-heading">
+    <ol class="breadcrumb">
+        <li>
+            <a href="@Url.Action("Index", "Home")">
+                <i class="fa fa-lg fa-home text-warning text-size-20">
+                </i> Trang chủ
+            </a>
+        </li>
+        <li>
+            <a href="@Url.Action("TinhHinhThanhTra", "GiamSatGiangDay")">Thông tin thanh tra giảng dạy</a>
+        </li>
+        <li class="active">
+            Import báo cáo
+        </li>
+    </ol>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12" id="contentImport">
+            <h2>Bước 1: Chọn file dữ liệu import</h2>
+            <br />
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="ibox">
+                        <div class="ibox-content">
+                            <div class="mail-box">
+                                @using (Html.BeginForm("ImportPhieuGhiNhanThanhTraStep1", "GiamSatGiangDay", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    <div class="panel panel-primary">
+                                        <div class="panel-body">
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    @Html.Raw(ViewBag.Error)
+                                                    @Html.ValidationMessageFor(m => m.File, null, new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                            <br />
+                                            <div class="row">
+                                                @Html.LabelFor(model => model.File, new { @class = "col-sm-2 control-label" })
+                                                <div class="col-sm-10">
+                                                    @Html.TextBoxFor(m => m.File, new { type = "file" })
+
+                                                </div>
+                                            </div>
+                                            <br />
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    File excel mẫu: <a href="~/Data/Template/Import_PhieuGhiNhanThanhTra.xlsx"><i class="fa fa-cloud-download"></i> Download</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="panel-footer">
+                                            <div class="pull-right">
+                                                <a title="Hướng dẫn" href="#myModal" data-toggle="modal">
+                                                    <i aria-hidden="true" class="fa fa-question-circle fa-lg"></i> Hướng dẫn
+                                                </a>
+                                                <a class="btn btn-default" href='@Url.Action("TinhHinhThanhTra", "GiamSatGiangDay")' title="Quay lại"> Quay lại</a>
+                                                <button id="btnSearch" type="submit" title="Tải lên" class="btn btn-primary">
+                                                    Tiếp tục bước 2
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section dialog {
+
+
+    <!-- Modal huong dan -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Hướng dẫn</h4>
+                </div>
+                <div class="modal-body">
+                    <b>Bước 1: </b>
+                    <ul>
+                        <li>Chuẩn bị file excel để import giống định dạng file excel mẫu</li>
+                        <li>Nhấn vào nút "Browse" để chọn file excel</li>
+                        <li>Nhấn vào nút "Tải lên" bắt đầu Import dữ liệu</li>
+                    </ul>
+                    <b>Bước 2: </b>
+                    <ul>
+                        <li>Kiểm tra dữ liệu Import được hiển thị trên màn hình</li>
+                        <li>Nếu dữ liệu có lỗi thì sẽ được hiển thị bên trái màn hình và vị trí dòng báo lỗi</li>
+                        <li>Kiểm tra lại file dữ liệu trong file excel nững dòng báo lỗi</li>
+                        <li>Nhấn nút "Quay lại" để Import lại</li>
+                        <li>Nếu không lỗi nhấn nút "Lưu dữ liệu" để bắt đầu Import</li>
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+
+}
+
+
+
+

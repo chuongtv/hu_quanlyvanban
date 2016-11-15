@@ -1,0 +1,321 @@
+﻿@*
+    Author:   			pdgiai
+    Created: 			2016-1-4
+    Last Modified: 		2016-1-4
+*@
+@{
+    ViewBag.Title = "Thời khóa biểu";
+}
+<div id="page-heading">
+    <ol class="breadcrumb">
+        <li>
+            <a href="@Url.Action("Index", "Home")">
+                <i class="fa fa-lg fa-home text-warning text-size-20">
+                </i> Trang chủ
+            </a>
+        </li>
+        <li class="active">
+            Thời khóa biểu
+        </li>
+    </ol>
+</div>
+<div class="container">
+    <div class="row">
+        @*các thao tác*@
+        <div class="panel panel-primary">
+            <div class="panel-body">
+                @* <h4>Tra cứu thông tin thời khóa biểu</h4>*@
+                @Html.Action("DSThoiKhoaBieuMoiGiang_LoadSearch", "GiamSatGiangDay")
+                <div class="row form-group">
+                    <div class="col-sm-6">
+                        <input id="Hiddenfiled_SearchInput" type="hidden" />
+                        <button id="GiamSatGiangDay_ThoiKhoaBieu_buttonsearch"
+                                type="button"
+                                title="Tìm kiếm"
+                                class="btn btn-primary"
+                                data-otf-target="#GiamSatGiangDay_ThoiKhoaBieu_DS_content"
+                                data-otf-input="#GiamSatGiangDay_ThoiKhoaBieu_SearchInput"
+                                data-otf-action="@Url.Action("ThoiKhoaBieuMoiGiangGet_List", "GiamSatGiangDay", null, Request.Url.Scheme)?"
+                                onclick="GiamSatGiangDay_ThoiKhoaBieuMoiGiang_IsSearch(this)">
+                            Tìm kiếm
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="show" id="show">
+            <div class="row form-group ">
+                <div class="col-sm-12 text-right">
+                    @*<button data-toggle="modal" data-target="#shownote" class="btn btn-default">Ghi chú</button>*@
+                    @if ((@User as project.web.mvc.Common.IOIORTPrincipal).HasPermission("ThoiKhoaBieuMoiGiangDelete_GiamSatGiangDay"))
+            {
+                        <button data-otf-mutil="true"
+                                @*onclick="GiamSatGiangDay_ThoiKhoaBieu_DeleteMulti(this)"*@
+                                 onclick="alert('Chức năng đang xây dựng')"
+                                data-otf-confirm="Bạn có chắc muốn xóa những dòng đã chọn?"
+                                data-otf-target="#GiamSatGiangDay_ThoiKhoaBieu_DS_content"
+                                data-otf-input="#GiamSatGiangDay_ThoiKhoaBieu_SearchInput"
+                                data-otf-action-target="@Url.Action("ThoiKhoaBieuMoiGiangGet_List", "GiamSatGiangDay")?"
+                                data-otf-action="@Url.Action("ThoiKhoaBieuMoiGiangDelete", "GiamSatGiangDay", null, Request.Url.Scheme)?id="
+                                class="btn btn-danger"
+                                title="Xóa">
+                            Xóa
+                        </button>
+                    }
+
+                    <div class="btn-group">
+                        <button data-toggle="dropdown" class="btn btn-default dropdown-toggle" type="button">
+                            Tác vụ khác <span class="caret"></span>
+                        </button>
+                        <ul role="menu" class="dropdown-menu">
+                            <li>
+                                <a id="buttonExport"
+                                   title="Xuất dữ liệu"
+                                   data-otf-target="#GiamSatGiangDay_ThoiKhoaBieu_DS_content"
+                                   data-otf-input="#DDLThang"
+                                   data-otf-action="@Url.Action("ThoiKhoaBieuMoiGiangExportExcel", "GiamSatGiangDay", null, Request.Url.Scheme)"
+                                   onclick="ReportDanhSachThoiKhoaBieu_Export(this)">
+                                    Xuất dữ liệu
+                                </a>
+                            </li>
+                            @if ((@User as project.web.mvc.Common.IOIORTPrincipal).HasPermission("ImportThoiKhoaBieuGiangVienStep1_GiamSatGiangDay"))
+                            {
+                                <li>
+                                    <a href="@Url.Action("ImportThoiKhoaBieuGiangVienStep1","GiamSatGiangDay")">Import cập nhật giảng viên</a>
+                                </li>
+                            }
+                            @if ((@User as project.web.mvc.Common.IOIORTPrincipal).HasPermission("ImportThoiKhoaBieuStep1_GiamSatGiangDay"))
+                            {
+                                <li>
+                                    <a href="@Url.Action("ImportThoiKhoaBieuStep1","GiamSatGiangDay")">Import dữ liệu thời khóa biểu</a>
+                                </li>
+                            }
+                            @*<li>
+                                <a href="@Url.Action("ImportUpDateThoiKhoaBieuStep1","GiamSatGiangDay")">Import cập nhật thời khóa biểu</a>
+                            </li>*@
+                        </ul>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div id="GiamSatGiangDay_ThoiKhoaBieu_DS_content">
+            <div class="alert alert-dismissable alert-info">
+                <strong>Vui lòng thao tác với bộ lọc để hiển thị thông tin!</strong>
+                <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Chép đoạn này vào page để khai báo popup-->
+@section dialog {
+
+    <!-- GiamSatGiangDay_ThoiKhoaBieu UNIT MODAL -->
+    <div class="modal inmodal fade" id="modalGiamSatGiangDay_ThoiKhoaBieu" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg" id="modalGiamSatGiangDay_ThoiKhoaBieu_c">
+        </div>
+    </div>
+
+    <div class="modal inmodal fade" id="shownote" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+                    <h4 class="modal-title">Ghi chú</h4>
+                </div>
+                <div class="modal-body">
+                    - Khi cập nhật không thực hiện cập nhật ngày tháng bắt đầu và kết thúc, giảng viên, phòng <br />
+                    - Khi cập nhật thông tin thời khóa biểu lớp, không thực hiện cập nhật ở tiến trình giảng dạy <br />
+                    - Thư ký cập nhật mã giảng viên (chỉ khi lớp học chưa xãy ra) và sẽ thay đổi toàn bộ giảng viên ở lịch trình theo<br />
+                    - Nếu có quyền xóa thời khóa biểu sẽ có quyền hiển thị cập nhập thời khóa biểu<br />
+                    - Khi cập nhật lịch trình giảng dạy chỉ cập nhật lại ngày bắt đầu và ngày kết thúc của thời khóa biểu mời giảng và chỉ khi buổi học chưa diễn ra mới được chỉnh sửa<br />
+
+                    + Import thời khóa biểu<br />
+                    - Khi thêm mới vào: kiểm tra xem lớp đã bắt đầu chưa ( chỉ chấp nhận những lớp chưa bắt đầu - sau một ngày so với hiện tại là được phép import)<br />
+                    - Khi kiểm tra phòng trống để import thì mới chỉ kiểm tra được một ngày đầu tiên trong tiến trình giảng dạy
+                    - Điều kiện tạo nên khóa của 1 dòng là : nhóm TH, Nhớm LT, Môn, Năm (ở đây là học kỳ), nhóm tổ hợp<br />
+                    - Khi update lịch trình: những lớp chưa bắt đầu mới được update ngoại trừ trường ghi chú luôn được update không có ngoại lệ, thư ký chỉ được update ghi chú<br />
+                </div>
+                <div class="modal-footer">
+                    <div class="col-sm-12  text-center">
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- GiamSatGiangDay_ThoiKhoaBieu UNIT END-->
+}
+
+@section Styles {
+    @Styles.Render("~/plugins/chosenStyles")
+    @Styles.Render("~/plugins/dataPickerStyles")
+    <link href="~/Content/plugins/EasyAutocomplete/easy-autocomplete.css" rel="stylesheet" />
+
+}
+
+@section Scripts {
+    <script src="~/Content/plugins/metro-ui/docs/js/metro.js"></script>
+    <script src="~/Content/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+    <script src="~/Content/plugins/EasyAutocomplete/jquery.easy-autocomplete.js"></script>
+    <script src="~/Resources/js/formatCurrency/jquery.formatCurrency-1.4.0.js"></script>
+
+
+
+    @Scripts.Render("~/plugins/dropZone")
+    @Scripts.Render("~/plugins/chosen")
+    @Scripts.Render("~/plugins/dataPicker")
+    @Scripts.Render("~/module/GiamSatGiangDay/ThoiKhoaBieuMoiGiang")
+    @Scripts.Render("~/plugins/fancybox")
+
+    <script type="text/javascript">
+
+
+        //Su dung cau hinh dropdownlist
+        var config = {
+            '.chosen-select': {},
+            '.chosen-select-deselect': { allow_single_deselect: true },
+            '.chosen-select-no-single': { disable_search_threshold: 10 },
+            '.chosen-select-no-results': { no_results_text: 'Lỗi! Vui lòng chọn ít nhất 1 mục.' },
+            '.chosen-select-width': { width: "95%" }
+        }
+        for (var selector in config) {
+            $(selector).chosen(config[selector]);
+        }
+
+        $('#data_TuNgay_Time .input-group.date').datepicker({
+            format: 'dd/mm/yyyy',
+            todayBtn: "linked",
+            keyboardNavigation: false,
+            forceParse: false,
+            calendarWeeks: true,
+            autoclose: true
+        });
+
+        $('#data_DenNgay_Time .input-group.date').datepicker({
+            format: 'dd/mm/yyyy',
+            todayBtn: "linked",
+            keyboardNavigation: false,
+            forceParse: false,
+            calendarWeeks: true,
+            autoclose: true
+        });
+
+        window.addEventListener('load', function (event) {
+            //$("#GiamSatGiangDay_ThoiKhoaBieu_buttonsearch").click()
+        });
+
+        function GetDateForQuery(index) {
+            var chuoisearch = "";
+            var fd = " ", td = " ";
+            var today = new Date();
+            switch (index) {
+                case "namnay":
+                    var firstDay = new Date(today.getFullYear(), today.getMonth(), 1);
+                    var lastDay = new Date(today.getFullYear(), today.getMonth() + (12 - today.getMonth()), 0);
+                    //fd = (firstDay.getDate() + '/' + (firstDay.getMonth() + 1) + '/' + firstDay.getFullYear());
+                    fd = ('01/' + '01/' + firstDay.getFullYear());
+                    td = (lastDay.getDate() + '/' + (lastDay.getMonth() + 1) + '/' + lastDay.getFullYear());
+                    chuoisearch = "_" + fd + "_" + td;
+                    return chuoisearch;
+                default:
+                    chuoisearch = "_" + fd + "_" + td;
+                    return chuoisearch;
+            }
+        }
+
+        function FillLau() {
+            var abbr = $("#DDL_CoSo_Guid").val();
+            getLau(abbr);
+        }
+
+        function getLau(abbr) {
+            $.ajax({
+                url: "@Url.Action("ThoiKhoaBieuMoiGiang_FillLau", "GiamSatGiangDay")",
+                data: { CoSoGuid: abbr },
+                dataType: "json",
+                type: "POST",
+                error: function () {
+                    alert("An error occurred.");
+                },
+                success: function (data) {
+                    var items = "";
+                    $("#DDL_Lau_Guid").empty().append('<option value="00000000-0000-0000-0000-000000000000">---Chọn lầu---</option>');
+                    $.each(data, function (i, item) {
+                        items += "<option value=\"" + item.ValueString + "\">" + item.Name + "</option>";
+                    });
+                    $("#DDL_Lau_Guid").html(items);
+                    $('#DDL_Lau_Guid').trigger('chosen:updated');
+                }
+            });
+        }
+
+        function ReportDanhSachThoiKhoaBieu_Export(element) {
+
+            var txttungay = '';
+            if (document.getElementById("tungay_time") != null) txttungay = document.getElementById("tungay_time").value;
+            var txtdenngay = '';
+            if (document.getElementById("denngay_time") != null) txtdenngay = document.getElementById("denngay_time").value;
+            var namhoc = '';
+            if (document.getElementById("DDL_NamHoc") != null) namhoc = document.getElementById("DDL_NamHoc").value;
+            var hocky = '';
+            if (document.getElementById("DDL_HocKy_Guid") != null) hocky = document.getElementById("DDL_HocKy_Guid").value;
+            var monhoc = '';
+            if (document.getElementById("MonHocID") != null) monhoc = document.getElementById("MonHocID").value;
+            var coso = '';
+            if (document.getElementById("DDL_CoSo_Guid") != null) coso = document.getElementById("DDL_CoSo_Guid").value;
+            var lau = '';
+            if (document.getElementById("DDL_Lau_Guid") != null) lau = document.getElementById("DDL_Lau_Guid").value;
+            var phong = '';
+            if (document.getElementById("txtPhongID") != null) phong = document.getElementById("txtPhongID").value;
+            var ca = '';
+            if (document.getElementById("DDL_Ca_Guid") != null) ca = document.getElementById("DDL_Ca_Guid").value;
+            var lop = '';
+            if (document.getElementById("txtLopID") != null) lop = document.getElementById("txtLopID").value;
+            var giangvien = '';
+            if (document.getElementById("GiangVienID") != null) giangvien = document.getElementById("GiangVienID").value;
+            var donvi = '';
+            if (document.getElementById("DDL_DonVi") != null) donvi = document.getElementById("DDL_DonVi").value;
+
+
+
+
+            var idloadTo = $(element).attr('data-otf-target');
+            var action = $(element).attr('data-otf-action');
+
+            var date_regex = /^([1-9]|[1][012])\/|\/([1-9]|[1][0-9]|[2][0-9]|[3][01])\/|\/([1][6-9][0-9][0-9]|[2][0][01][0-9])$/;
+
+            if (txttungay != "") {
+                if (!(date_regex.test(txttungay))) {
+                    EndWaiting();
+                    alert("Từ ngày không đúng định dạng dd/MM/yyyy");
+                    return;
+                }
+            }
+
+            if (txtdenngay != "") {
+                if (!(date_regex.test(txtdenngay))) {
+                    EndWaiting();
+                    alert("Đến ngày không đúng định dạng dd/MM/yyyy");
+                    return;
+                }
+            }
+
+            window.open((action + '?NamHocGuid=' + namhoc.replace(/ /g, '+') + '&MaMonHoc=' + monhoc.replace(/ /g, '+') + '&MaGiangVien=' + giangvien.replace(/ /g, '+') + '&CoSoGuid=' + coso.replace(/ /g, '+') + '&LauGuid=' + lau.replace(/ /g, '+') + '&PhongGuid=' + phong.replace(/ /g, '+') + '&CaGuid=' + ca.replace(/ /g, '+') + '&LopGuid=' + lop.replace(/ /g, '+') + '&TuNgay=' + txttungay.replace(/ /g, '+') + '&DenNgay=' + txtdenngay.replace(/ /g, '+') + '&HocKy=' + hocky.replace(/ /g, '+')) + '&DV=' + donvi, '_parent');
+        }
+
+    </script>
+}
+
+
+
+

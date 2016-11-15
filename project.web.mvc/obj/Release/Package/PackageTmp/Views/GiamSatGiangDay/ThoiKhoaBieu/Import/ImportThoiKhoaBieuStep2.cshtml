@@ -1,0 +1,275 @@
+﻿@*
+    Author:   			pdgiai
+    Created: 			2016-3-3
+    Last Modified: 		2016-3-3
+*@
+@{
+    ViewBag.Title = " Import danh sách thời khóa biểu";
+}
+
+@model nvngoc31122015.giamsatgiangday.library.GiamSatGiangDay.ImportThoiKhoaBieuStep2View
+@*breadcrumb*@
+<div id="page-heading">
+    <ol class="breadcrumb">
+        <li>
+            <a href="@Url.Action("Index", "Home")">
+                <i class="fa fa-lg fa-home text-warning text-size-20">
+                </i> Trang chủ
+            </a>
+        </li>
+        <li>
+            <a id="linkquaylai" href="@Url.Action("DSThoiKhoaBieuMoiGiang", "GiamSatGiangDay")">Thời khóa biểu</a>
+        </li>
+        <li class="active">
+            Import danh sách thời khóa biểu
+        </li>
+    </ol>
+</div>
+
+<div class="container">
+    <h2 id="textbuocth">Bước 2: Xác nhận xử lý</h2>
+    <div class="row">
+        <div class="col-sm-12" id="contentImport">
+            <div class="row">
+                <div class="pull-right" id="CPDanhSachBoloc">
+                    <a class="btn btn-default" id="btnbacklist" href='@Url.Action("ImportThoiKhoaBieuStep1", "GiamSatGiangDay")' title="Quay lại">Quay lại bước 1</a>
+                    <button id="GiamSatGiangDay_ThoiKhoaBieu_buttonsearch"
+                            type="button"
+                            class="btn btn-primary " @*style="float:right;"*@
+                            data-otf-input="#hiddentongsodong"
+                            data-otf-action="@Url.Action("ImportThoiKhoaBieuStep2Post", "GiamSatGiangDay", null, Request.Url.Scheme)"
+                            data-otf-action-end="@Url.Action("ImportThoiKhoaBieuStep3", "GiamSatGiangDay", null, Request.Url.Scheme)"
+                            onclick="QuanTrac_XuatFile_Submit(this)">
+                        Bắt đầu xử lý
+                    </button>
+                    @Html.HiddenFor(model => Model.NamHoc_Guid, new { id = "hiddennamhoc" })
+                    @Html.HiddenFor(model => Model.PathFileTemp, new { id = "hiddenlinkxml" })
+                    @Html.HiddenFor(model => Model.TotalCount, new { id = "hiddentongsodong" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row col-sm-12 form-group">
+        <div id="progressbar" style="display:none;">
+            <b>Tiến trình xử lý dữ liệu</b>: <span id="phantram"></span>
+            <div class="progress progress-striped active">
+                <div id="szliderbar" class="progress-bar progress-bar-info"></div>
+            </div>
+        </div>
+        <div class="text-center ">
+            @*<i style="display:none" id="iconok" class="fa fa-check-square-o text-info"></i>*@
+        </div>
+    </div>
+    <div class="row col-sm-12 form-group">
+        <div class="text-left cus-text" id="toatal">
+        </div>
+        <div class="text-left text-danger" id="error">
+
+        </div>
+
+    </div>
+
+    <div class="row col-sm-12 form-group" style="padding-top:10px;">
+        <div class="text-left cus-text" id="downzip">
+        </div>
+    </div>
+    <div class="row col-sm-12 hide">
+        <input name="TextBoxSo1" type="text" value="yes" id="TextBoxSo1" />
+        <input name="TextBoxstart" type="text" value="0" id="TextBoxstart" />
+        <input name="TextBoxCount" type="text" value="0" id="TextBoxCount" />
+        <input name="TextBoxCountSuccess" type="text" value="0" id="TextBoxCountSuccess" />
+    </div>
+    <div class="hide">
+        @if (Model != null)
+        {
+            <table id="mytblPhieu">
+                <tbody>
+                    @foreach (System.Data.DataRow row in Model.DataSetThoiKhoaBieu.Tables[0].Rows)
+                {
+                        <tr>
+                            <td>@(row["Keys"].ToString().Trim())</td>
+                            <td>@(row["IsFinish"].ToString().Trim())</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+    </div>
+
+</div>
+
+
+@section Scripts {
+    <script type="text/javascript">
+        // lay len danh sach ngay va cac thong so can thiet de dua vao bang tien trinh
+        function QuanTrac_XuatFile_Submit(element) {
+            KichHoatXuly();
+        }
+
+
+        function KichHoatXuly() {
+            $("#GiamSatGiangDay_ThoiKhoaBieu_buttonsearch").attr("style", "display:none")
+            //$("#btnbacklist").attr("disabled", "true");
+            $("#CPDanhSachBoloc").attr("style", "pointer-events:none;opacity: 0.5;background: #CCC;");
+
+            //$('#buttonduyet').attr('visible', 'true');
+            $("#progressbar").attr("style", "");
+            $("#szliderbar").attr("style", "");
+            $("#error").html("");
+            //$("#downzip").html("");
+
+            document.getElementById("TextBoxSo1").value = "yes";
+            var count = 0;
+            count = $("#hiddentongsodong").val();
+            //if ($('#mytblPhieu tbody tr').length >= 1) {
+            //    var table = document.getElementById('mytblPhieu'), rows = table.getElementsByTagName('tr');
+            //    count = rows[0].cells[2].innerHTML;
+            //}
+            document.getElementById("TextBoxCount").value = count;
+
+            var szazalek = 0;
+            szazalek = 0;
+            document.getElementById("szliderbar").style.width = szazalek + '%';
+            $("#phantram").html(szazalek + '%');
+            myVar = setInterval(function () { myTimer() }, 100);
+        }
+
+        function myTimer() {
+            var t1 = document.getElementById("TextBoxSo1");
+            var t2 = document.getElementById("hdfflag");
+            var namhoc = $("#hiddennamhoc").val();
+            var linkxml = $("#hiddenlinkxml").val();
+
+            if (t1.value == "yes") {
+                if ($('#mytblPhieu tbody tr').length >= 1) {
+                    var table = document.getElementById('mytblPhieu'), rows = table.getElementsByTagName('tr');
+                    XuLy(rows[0].cells[0].innerHTML, namhoc, linkxml, rows[0].cells[1].innerHTML);
+                }
+            }
+        }
+
+        function XuLy(key, namhoc, link, isfinish) {
+            document.getElementById("TextBoxSo1").value = "no";
+            var urlink = $("#GiamSatGiangDay_ThoiKhoaBieu_buttonsearch").attr("data-otf-action");
+
+            $.ajax({
+                type: 'Get',
+                cache: false,
+                url: urlink + '?key=' + key + '&namhoc=' + namhoc + '&link=' + link + '&isfinish=' + isfinish,
+                success: function (data) {
+                   
+                    if (data.ValueInt == "1") {
+
+                        if ($("#error").html() == "") {
+                            $("#error").html("Dòng dữ liệu có lỗi: " + data.ValueString + " ");
+                        }
+                        else
+                            $("#error").html($("#error").html() + data.ValueString + " ");
+                    }
+                    else
+                        if (data.ValueInt == "2") {
+
+                            var countsc = $("#TextBoxCountSuccess").val();
+                            countsc++;
+                            $("#TextBoxCountSuccess").val(countsc);
+
+                            BeginWaiting();
+                            $("#downzip").load($("#GiamSatGiangDay_ThoiKhoaBieu_buttonsearch").attr("data-otf-action-end"), function (response, status, xhr) {
+                                if (status == "error") {
+                                    DialogAlert('Lỗi', 'Không load được dữ liệu thông tin log của quá trình import', 'error')
+                                }
+                                else {
+                                    $("#textbuocth").html("Bước 3: Hoàn tất");
+                                    $("#btnbacklist").attr("href", $("#linkquaylai").attr("href"));
+                                    $("#btnbacklist").html("Quay lại thời khóa biểu");
+                                    EndWaiting();
+
+                                }
+                            });
+
+                        } else
+                            if (data.ValueInt == "4") {
+                               
+                                if ($("#error").html() == "") {
+                                    $("#error").html("Dòng dữ liệu thực hiện xãy ra lỗi: " + data.ValueString + " ");
+                                }
+                                else
+                                    $("#error").html($("#error").html() + data.ValueString + " ");
+
+                                BeginWaiting();
+                                $("#downzip").load($("#GiamSatGiangDay_ThoiKhoaBieu_buttonsearch").attr("data-otf-action-end"), function (response, status, xhr) {
+                                    if (status == "error") {
+                                        DialogAlert('Lỗi', 'Không load được dữ liệu thông tin log của quá trình import', 'error')
+                                    }
+                                    else {
+                                        $('#mytblPhieu tbody tr').html("");
+                                        document.getElementById("TextBoxCount").value = "0";
+                                        document.getElementById("TextBoxstart").value = "0";
+                                        document.getElementById("TextBoxSo1").value = "no";
+                                        $("#progressbar").attr("style", "display:none");
+                                        $("#thanhcongpart").attr("style", "display:none");
+                                        $("#CPDanhSachBoloc").attr("style", "");
+                                        
+                                        $("#textbuocth").html("Bước 3: Hoàn tất");
+                                        $("#btnbacklist").attr("href", $("#linkquaylai").attr("href"));
+                                        $("#btnbacklist").html("Quay lại thời khóa biểu");
+                                        EndWaiting();
+                                        
+                                    }
+                                });
+                              
+                            }
+                    if (data.ValueInt == "3") {
+                        var countsc = parseInt($("#TextBoxCountSuccess").val());
+                        countsc++;
+                        $("#TextBoxCountSuccess").val(countsc);
+                    }
+
+                    $('#mytblPhieu tbody tr').first().remove();
+
+                    //if ($('#mytblPhieu tbody tr').length <= 0 || $('#mytblPhieu tbody tr').length == null || $('#mytblPhieu tbody tr').length == 'undefine') {
+                    //    $('#mytbl tbody tr').first().remove();
+                    //}
+
+                    document.getElementById("TextBoxSo1").value = "yes";
+                    document.getElementById("TextBoxstart").value = parseInt(document.getElementById("TextBoxstart").value) + 1;
+
+                    szazalek = Math.round(((parseInt(document.getElementById("TextBoxstart").value)) * 100) / parseInt(document.getElementById("TextBoxCount").value));
+                    document.getElementById("szliderbar").style.width = szazalek + '%';
+                    $("#phantram").html(szazalek + '%' + ' - (' + $("#TextBoxstart").val() + '/' + $("#TextBoxCount").val() + ')');
+
+                    if (parseInt(document.getElementById("TextBoxstart").value) == parseInt(document.getElementById("TextBoxCount").value)) {
+
+                        $("#CPDanhSachBoloc").attr("style", "");
+                        //$("#btnbacklist").attr("disabled", "false");
+
+                        var counttotalsc = $("#TextBoxCountSuccess").val();
+                        var counttotal = $("#TextBoxCount").val();
+
+                        $("#toatal").html("Tổng số dòng: " + counttotal + "<br/>" + "Số dòng thực hiện thành công: " + counttotalsc + "<br/>" + "Số dòng thực hiện thất bại: " + (counttotal - counttotalsc))
+
+                        document.getElementById("TextBoxCount").value = "0";
+                        document.getElementById("TextBoxstart").value = "0";
+                        document.getElementById("TextBoxSo1").value = "no";
+
+                        $("#progressbar").attr("style", "display:none");
+
+                        var action = $("#hdftaget").attr('data-otf-action');
+
+                        //$("#CPDanhSachKhoaThuocDotKhaoSat").load(action, function (response, status, xhr) {
+                        //    if (status == "error") {
+                        //        DialogAlert('Lỗi', 'Thực hiện không thành cồng việc load lại trang', 'error')
+                        //    }
+                        //    DialogAlert('Thành công', 'Duyệt hoàn thành', 'info');
+                        //});
+
+
+                        clearInterval(myVar);
+                    }
+                }
+            }).done(function () {
+            });
+        }
+
+    </script>
+}

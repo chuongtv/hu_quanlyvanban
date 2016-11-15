@@ -1,0 +1,71 @@
+﻿
+<style>
+  .md-datepicker-calendar-pane.md-pane-open{z-index:10000;}
+</style>
+<div ng-controller="BuoiTrucCtrl">
+    @*<div class="modal visiblemodal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title">Modal title</h4>
+                </div>
+                <div class="modal-body">
+                    <p>One fine body…</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->*@
+
+    <div class="row">
+        <div class="col-xs-6">
+            <div class="dataTables_filter" id="example_filter">
+                <label>
+                    <input type="text" ng-model="TenGoi" class="form-control" placeholder="Search...">
+                </label>
+            </div>
+        </div>
+        <button type="button" class="btn btn-primary btn-sm" ng-click="fnSearch()" data-ng-init="fnSearch()">Search</button>
+        <button type="button" class="btn btn-primary btn-sm" ng-click="fnAddNew()">Add new</button>
+
+        <button type="button" class="btn btn-primary btn-sm" ng-click="">Delete</button>
+    </div>
+
+    <table cellpadding="0" cellspacing="0" border="0" class="table table-bordered datatables">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>ID</th>
+                <th>TenGoi</th>
+                <th>KyHieu</th>
+                <th>GiaTriNgayThang</th>
+                <th>GiaTriSoInt</th>
+                <th>GiaTriNgayDecimal</th>
+                <th>GiaTriKieuBit</th>
+            </tr>
+        </thead>
+
+        <tbody ng-repeat="item in listBuoiTruc">
+            <tr>
+                <td>[{{$index + 1}}]</td>
+                <td>{{item.BuoiTrucID}}</td>
+                <td>{{item.TenGoi}}</td>
+                <td>{{item.KyHieu}}</td>
+                <td>{{item.GiaTriNgayThang | amDateFormat:'HH:mm DD/MM/YYYY' }}</td>
+                <td>{{item.GiaTriSoInt}}</td>
+                <td >{{item.GiaTriNgayDecimal | awnum:'number'}}</td>    @*Chua hieu vi sao ko chay*@
+                <td>{{item.GiaTriKieuBit}}</td>
+                <td>
+                    <a href="#" ng-click="fnDelete(item.BuoiTrucID)">Delete</a>
+                    <a ng-click="fnOpenForEdit(item.BuoiTrucID)">Edit</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+

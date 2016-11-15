@@ -1,0 +1,320 @@
+﻿@{
+    ViewBag.Title = "Khóa phòng";
+    Layout = "~/Views/Shared/_LayoutAngular.cshtml";
+}
+
+<div id="page-heading">
+    <ol class="breadcrumb">
+        <li>
+            <a href="@Url.Action("Index", "Home")">
+                <i class="fa fa-lg fa-home text-warning text-size-20">
+                </i> Trang chủ
+            </a>
+        </li>
+        <li class="active">
+            <a href="@Url.Action("QuanLyPhieuKhoaPhong", "GiamSatGiangDay")">
+                Quản lý phiếu khóa phòng
+            </a>
+        </li>
+        <li class="active">
+            @ViewBag.Title
+        </li>
+    </ol>
+</div>
+
+<div class="container" ng-controller="KhoaPhongCtrl">
+    <div ng-show="ThongTinPhieuView.length == 0">
+        <div class="col-sm-12 form-group">
+            <b>Nội dung</b>:
+        </div>
+        <div class="col-sm-12 form-group">
+            <textarea ng-model="LyDo" style="width:100%;border:1px solid #ccc;" rows="2"></textarea>
+        </div>
+
+    </div>
+    <div ng-show="idParameter != ''">
+        <div class="col-sm-12 form-group">
+            <b>Nội dung</b>:
+        </div>
+        <div class="col-sm-12 form-group">
+            <textarea ng-model="LyDo" style="width:100%;border:1px solid #ccc;" rows="2"></textarea>
+        </div>
+
+    </div>
+    <div class="col-sm-12 nopadding form-group" ng-show="idParameter == ''">
+        <div class="col-sm-2">
+            <select class="form-control"
+                    ng-model="TietBatDau"
+                    ng-options="itemValue.value as itemValue.name for itemValue in listTietBatDau"
+                    ng-init="TietBatDau=TietBatDau"></select>
+        </div>
+        <div class="col-sm-2">
+            <select class="form-control"
+                    ng-model="TietKetThuc"
+                    ng-options="itemValue.value as itemValue.name for itemValue in listTietKetThuc"
+                    ng-init="TietKetThuc=TietKetThuc"></select>
+        </div>
+        <div class="col-sm-2">
+            <md-datepicker name="TuNgay" md-min-date="minDate" md-max-date="maxDate" ng-model="TuNgay" md-placeholder="Từ ngày" required></md-datepicker>
+        </div>
+        <div class="col-sm-2">
+            <md-datepicker name="DenNgay" md-min-date="minDate" md-max-date="maxDate" ng-model="DenNgay" md-placeholder="Đến ngày" required></md-datepicker>
+        </div>
+        <div class="col-sm-2">
+            <input id="PhongID"
+                   ng-model="PhongID"
+                   placeholder="Phòng học"
+                   onkeypress=""
+                   class="form-control"
+                   data-otf-action="@Url.Action("QuanLyPhieuKhoaPhong_AutoCompatePhongHoc", "GiamSatGiangDay")" />
+        </div>
+        <div class="col-sm-2">
+            <button id="btnThemPhong"
+                    type="button"
+                    title="Thêm phòng"
+                    class="btn btn-primary"
+                    ng-click="themPhong()"
+                    ng-disabled="PhongID.length == 0 ">
+                Thêm phòng
+            </button>
+        </div>
+    </div>
+   
+    <div class="col-sm-12">
+        <div class="col-sm-6 nopadding"><b>Danh sách phòng khóa</b></div>
+        <div class="col-sm-6 text-right nopadding">            
+        </div>
+
+    </div>
+    <div ng-show="listAdd.length > 0">
+        <div class="col-sm-12 form-group">
+
+            <table cellpadding="0" cellspacing="0" border="0" class="table table-bordered datatables">
+                <thead>
+                    <tr>
+                        <th class="w-30">#</th>
+                        <th class="w-100 ">Tiết bắt đầu</th>
+                        <th class="w-100 ">Tiết kết thúc</th>
+                        <th class="w-150 ">Từ ngày</th>
+                        <th class="w-150 ">Đến ngày</th>
+                        <th class="w-150 ">Phòng</th>
+                        <th class="w-30" ng-show="idParameter == ''">Xóa</th>
+                    </tr>
+                </thead>
+
+                <tbody ng-repeat="item in listAdd">
+
+                    <tr>
+                        <td class="">[{{$index + 1}}]</td>
+                        <td class="">{{item.TietBatDau}}</td>
+                        <td class="">{{item.TietKetThuc}}</td>
+                        <td class="">{{item.TuNgay |  date : "dd/MM/yyyy"}}</td>
+                        <td class="">{{item.DenNgay |  date : "dd/MM/yyyy"}}</td>
+                        <td class="">{{item.PhongID}}</td>
+                       
+                        <td class="text-center" ng-show="idParameter == ''">
+                            <a ng-click="deleteBuoi(item.PhongID)">
+                                <i class="fa fa-lg fa-trash-o text-danger"></i>
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+    <div class="col-sm-12 " ng-show="listAdd.length == 0" style="margin:5px 0 0 0;">
+
+        <div class="alert alert-dismissable alert-info">
+            <strong>Không có dữ liệu</strong>
+        </div>
+    </div>
+    <div class="col-sm-12 " style="margin:5px 0 0 0;">
+
+        <div id="errorID">
+        </div>
+    </div>
+
+    <div class="col-sm-12 text-center">
+
+        <button id="btnLuuPhieu"
+                type="button"
+                title="Lưu thông tin khóa phòng"
+                class="btn btn-success"
+                data-otf-id="@ViewBag.UserGuid"
+                ng-click="savePhieu()"
+                ng-show="listAdd.length > 0 && Check > 0 && idParameter == ''"
+                >
+            Lưu thông tin khóa phòng
+        </button>
+        <button id="btnLuuPhieu"
+                type="button"
+                title="Kiểm tra tình trạng phòng"
+                class="btn btn-primary"
+                data-otf-id="@ViewBag.UserGuid"
+                ng-click="checkPhieu()"
+                ng-show="listAdd.length > 0 && Check == 0 && idParameter == ''">
+            Kiểm tra tình trạng phòng
+        </button>
+
+        <button id="btnXoaPhieu"
+                type="button"
+                title="Xóa phiếu"
+                class="btn btn-danger"
+                ng-click="deletePhieu(ThongTinPhieuView.PhieuKhoaPhongGuid)"
+                ng-show="idParameter != ''"
+                confirm-click="Bạn có chắc chắn xóa phiếu này?">
+            Xóa phiếu
+        </button>
+        <button id="btnQuayLai"
+                type="button"
+                title="Quay lại"
+                class="btn btn-default"
+                ng-click="BackPage()"
+                ng-show="idParameter == ''">
+            Hủy và quay lại
+        </button>
+        <button id="btnQuayLai"
+                type="button"
+                title="Quay lại"
+                class="btn btn-default"
+                ng-click="BackPage()"
+                ng-show="idParameter != ''">
+            Quay lại
+        </button>
+        
+    </div>
+    <div class="col-sm-12">
+        <div id="mySidenav" class="sidenav">
+
+            <div class="row col-sm-12 form-group">
+                <h4>Chọn lớp bù</h4>
+            </div>
+            <div class="row form-group">
+                <div class="col-sm-8">
+                    <div class="col-sm-5">
+                        <select class="form-control"
+                                ng-model="NamID"
+                                ng-options="itemValue.NamHocID as itemValue.NamHocName for itemValue in listNamHoc"
+                                ng-init="NamID=checkChonNamHoc(NamID)"
+                                ng-change="loadListMon()"></select>
+
+                    </div>
+                    <div class="col-sm-7">
+                        <input style="width:100%" ng-model="SearchMaMon" class="form-control" placeholder="Tìm theo lớp học" />
+                    </div>
+                   
+                    
+
+
+                </div>
+                <div class="col-sm-4 text-right">
+                    <button id="btnThoat"
+                            type="button"
+                            title="Thoát"
+                            class="btn btn-default"
+                            onclick="closeNav()"
+                            ng-click="closeAddBuoi()">
+                        Thoát
+                    </button>
+                </div>
+
+
+            </div>
+            <div class="row col-sm-12 form-group" ng-show="listShow.length > 0">
+                <table cellpadding="0" cellspacing="0" border="0" class="table table-bordered datatables">
+                    <thead>
+                        <tr>
+                            <th>Lớp</th>
+                            <th>Môn học</th>
+                            <th>TBĐ</th>
+                            <th>TC</th>
+                            <th class="text-center">Chọn</th>
+                        </tr>
+                    </thead>
+
+                    <tbody ng-repeat="item in listShow  | filter:SearchMaMon">
+                        <tr>
+                            <td>{{item.LopThucTeGhep}}</td>
+                            <td>{{item.MonHocName}}</td>
+                            <td>{{item.TietBatDau}}</td>
+                            <td ng-if="item.NhomThucHanh == null">LT</td>
+                            <td ng-if="item.NhomThucHanh != null">TH</td>
+                            <td class="text-center">
+                                <input type="checkbox" ng-click="addBuoi(item.LopHocGuid)" ng-checked="VailCheckBox(item.LopHocGuid)" />
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-sm-12" ng-show="listShow.length == 0">
+                <br />
+                <div class="text-center">
+                    <b>Năm học {{NamID}}-{{(NamID * 1) + (1 * 1)}} Không có dữ liệu</b>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+@section dialog {
+}
+
+@section Styles {
+<style>
+    .w-100 {
+        width: 100px;
+    }
+</style>
+@*<link href="~/Content/plugins/EasyAutocomplete/easy-autocomplete.css" rel="stylesheet" />*@
+}
+
+
+@section Scripts {
+@*<script src="~/Content/plugins/EasyAutocomplete/jquery.easy-autocomplete.js"></script>*@
+<script src="~/angularApp/app/GiamSatHoatDongGiangDay/KhoaPhong/KhoaPhongCtrl.js"></script>
+<script type="text/javascript">
+    AutoCompleteSearchPhong('#PhongID', '#PhongID');
+
+    function openNav() {
+        document.getElementById("mySidenav").style.width = "55%";
+        document.getElementById("mySidenav").style.border = "1px solid #ccc";
+        document.getElementById("mySidenav").style.paddingLeft = "2%";
+        document.getElementById("mySidenav").style.paddingRight = "2%";
+    }
+
+    function closeNav() {
+        document.getElementById("mySidenav").style.width = "0";
+        document.getElementById("mySidenav").style.border = "0px";
+        document.getElementById("mySidenav").style.paddingLeft = "0";
+        document.getElementById("mySidenav").style.paddingRight = "0";
+    }
+
+    function AutoCompleteSearchPhong(element, valueset) {
+
+        var $input = $(element);
+        function CreateAutoCompleteSearchPhong() {
+            var options = {
+                columns: ["value", "label", "valuequery"],
+                delay: 700,
+                source: $input.attr("data-otf-action"),
+                select: function (event, ui) {
+                    this.value = (ui.item ? ui.item.manv : '');
+                    //$(valueset).val(ui.item.value);
+                    //alert($(valueset).val());
+                    return false;
+                },
+                focus: function (event, ui) {
+                    $(this).val(ui.item.manv);
+                    return false;
+                },
+            };
+            $input.autocomplete(options);
+
+        }
+        CreateAutoCompleteSearchPhong();
+    }
+</script>
+}

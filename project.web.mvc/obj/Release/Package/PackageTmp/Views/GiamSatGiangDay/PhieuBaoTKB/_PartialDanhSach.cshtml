@@ -1,0 +1,84 @@
+﻿@*
+    Author:   			pdgiai
+    Created: 			2016-2-1
+    Last Modified: 		2016-2-1
+*@
+
+@model List<nvngoc31122015.giamsatgiangday.library.Models.GiamSatGiangDay_PhieuBaoTKB_ntdai_GetToDashboard_Result>
+
+<div class="table-responsive">
+    @if (Model.Count > 0)
+    {
+
+        <text><h3>Phiếu báo vắng bù</h3>
+            <table class="table table-bordered ">
+                <thead>
+                    <tr>
+
+                        <th class="text-center w-100">
+                            Ngày gửi
+                        </th>
+                        
+                      
+                        <th class="text-center ">
+
+                            Giảng viên
+                        </th>
+                        <th class="text-center w-100">
+                            Trạng thái
+                        </th>
+                    </tr>
+                </thead>
+
+                <tbody id="listcheckall">
+                    @foreach (var item in Model)
+                    {
+                        string trangthai = "";
+                        string text = "";
+                        switch (item.TrangThai.Value)
+                        {
+                            case 0: trangthai = "Lưu tạm";// "<i class='fa fa-floppy-o '></i>";//luu
+                                text = "label-primary";
+                                break;
+                            case 1: trangthai = "Đã gửi";// "<i class='fa fa-pause-circle-o'></i>";//gửi
+                                text = "label-warning";
+                                break;
+                            case 2: trangthai = "Đã duyệt";// "<i class='fa fa-check'></i>";//duyệt
+                                text = "label-success";
+                                break;
+                            default: trangthai = ""; break;
+                        }
+
+                        <tr >
+
+                            <td class="text-center">
+                                @Html.Raw(item.NgayGui.Value.ToString("dd/MM/yyyy"))
+                            </td>
+
+                         
+                            <td class="text-left">
+                           
+                                    <a data-tooltip="
+                                        <i class=' fa fa-credit-card'></i>&nbsp;<b>Mã GV</b>: @Html.Raw(item.NhanVienID)<br /><i class='fa fa-calendar'></i>&nbsp;&nbsp;<b>Họ tên</b>: @Html.Raw(item.HoVaTen)
+                                         <br /><i class='fa fa-building-o'></i>&nbsp;&nbsp;<b>Đơn vị</b>: @Html.Raw(item.DonViName)
+                                        <br /><i class='fa fa-building-o'></i>&nbsp;&nbsp;<b>Môn học</b>: @Html.Raw(item.MonHocName)
+                                        <br /><i class='fa fa-building-o'></i>&nbsp;&nbsp;<b>Ca học</b>: @Html.Raw(item.CaID)
+                                        <br /><i class='fa fa-building-o'></i>&nbsp;&nbsp;<b>Lớp học</b>: @Html.Raw(item.LopHocName)
+                                "
+                                        href="#">@Html.Raw(item.NhanVienID + " - " + item.HoVaTen)
+                                    </a>
+                             
+                            </td>
+                            <td class="text-center">
+                                <span class="label label-pill @text " title="@trangthai">@Html.Raw(trangthai)</span>
+                             
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+               
+            </table>
+        </text>
+    }
+</div>
+

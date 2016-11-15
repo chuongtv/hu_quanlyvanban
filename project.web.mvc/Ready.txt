@@ -1,0 +1,16 @@
+﻿---------------Cai dat ve format tien te--------------------
+1. Dinh dang tren client cach luu tru tien te trong Resource/js/formatcurrency
+	$.formatCurrency.regions[''] = {
+	    symbol: '',
+	    positiveFormat: '%n %s',
+	    negativeFormat: '-%n %s',
+	    decimalSymbol: ',',
+	    digitGroupSymbol: '.',
+	    groupDigits: true
+	};
+
+2. Dinh dang tren server trong webconfig
+<globalization culture="vi-VN" uiCulture="vi-VN" requestEncoding="utf-8" responseEncoding="utf-8" fileEncoding="iso-8859-15" />
+  
+
+

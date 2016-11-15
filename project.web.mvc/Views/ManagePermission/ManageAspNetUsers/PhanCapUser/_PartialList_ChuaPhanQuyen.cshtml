@@ -1,0 +1,109 @@
+﻿@*
+    Author:   			ntdai
+    Created: 			2015-11-12
+    Last Modified: 		2015-11-12
+*@
+
+@model MvcPaging.IPagedList<nvngoc29082015.permission.library.ManageUserRoleDetail.ListInfoUserRoleDetailView>
+@using MvcPaging
+
+@{var i = 1;}
+
+
+
+
+<div class="">
+    @if (Model.TotalItemCount > 0)
+    {
+        <div class="p-b-10">
+            Kết quả tìm kiếm: <b>@Model.TotalItemCount</b> Chưa thêm
+        </div>
+        <div class="row">
+
+            <div class="searchable-container">
+
+                @foreach (var item in Model)
+                {
+                    <div class="items  col-xs-12 clearfix">
+                        <a  href="javascript:void(0)" onclick="Set_PhanQuyen(this, 'add')"
+                           data-otf-action-target1="@Url.Action("ManagePhanCapUserGet_List", "ManagePermission")?id=@Request["id"]&k="
+                           data-otf-action-target2="@Url.Action("ManagePhanCapUserGet_List_ChuaPhanQuyen", "ManagePermission")?id=@Request["id"]&k="
+                           data-otf-target1="#ManageUserRoleDetail_InfoUserRoleDetail_DS_content"
+                           data-otf-target2="#ManageUserRoleDetail_InfoUserRoleDetail_DS_content1"
+                           data-otf-target3="#@item.NGuoiDungGuid"
+                           data-otf-action="@Url.Action("ManagePhanCapUserCreate", "ManagePermission", null, Request.Url.Scheme)?id=@Request["id"]&u=@item.NGuoiDungGuid">
+                            <div class="info-block block-info clearfix">
+                                @*<div class="square-box pull-left">
+                                    <img height="74" src="~/Data/HRM/@item.NGuoiDungGuid/@item.LinkAvatar" class="list-avatar custom-polaroid-5 polaroid" alt="image">
+                                </div>*@
+                                @item.MaNguoiDung - <strong>@item.NguoiDungName</strong>
+                                @*<p>@item.DonViName</p>*@
+
+                            </div>
+                        </a>
+                    </div>
+
+
+
+                }
+
+            </div>
+        </div>
+    }
+
+    else
+    {
+        <text><br />
+    <div class="alert alert-dismissable alert-info">
+        <strong>Yêu cầu tìm kiếm lúc @{ var date = DateTime.Now; } @date.ToString("HH:mm:ss dd/MM/yyyy") không có dữ liệu</strong>
+        <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+    </div>
+        </text>
+    }
+    <div class="pager">
+        @if (Model.TotalItemCount > Model.PageSize)
+        {
+
+            <text>
+
+                @Html.Raw(Ajax.Pager(
+                       new Options
+                       {
+                           PageSize = Model.PageSize,
+                           TotalItemCount = Model.TotalItemCount,
+                           CurrentPage = Model.PageNumber,
+                           ItemTexts = new ItemTexts() { Next = "Next", Previous = "Previous", Page = "" },
+                           ItemIcon = new ItemIcon() { First = "icon-backward", Previous = "icon-chevron-left", Next = "icon-chevron-right", Last = "icon-forward" },
+                           TooltipTitles = new TooltipTitles() { Next = "Next page", Previous = "Previous page", Page = "Page {0}." },
+                           Size = Size.normal,
+                           Alignment = Alignment.centered,
+                           IsShowControls = true,
+                           IsShowFirstLast = true,
+                           CssClass = ""
+                       },
+                       new AjaxOptions
+                       {
+                           UpdateTargetId = "ManageUserRoleDetail_InfoUserRoleDetail_DS_content1"
+                       }, new
+                       {
+                           controller = "ManagePermission",
+                           action = "ManagePhanCapUserGet_List_ChuaPhanQuyen",
+                           k = @ViewData["keysearch"],
+                           id = @ViewData["id"]
+                       }))
+            </text>
+        }
+    </div>
+</div>
+
+@using (Html.BeginScriptContext())
+{
+    Html.AddScriptBlock(
+        @<script type="text/javascript">
+            loadSelect("ManagePhanCapUser", "InfoUserRoleDetail");
+        </script>
+, true);
+}
+
+
+

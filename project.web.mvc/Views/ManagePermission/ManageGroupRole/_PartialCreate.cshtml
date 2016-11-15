@@ -1,0 +1,108 @@
+﻿@*
+    Author:   			ntdai
+    Created: 			2015-11-25
+    Last Modified: 		2015-11-25
+*@
+
+@model nvngoc29082015.permission.library.ManageGroupRole.CreateGroupRoleView
+<div class="row">
+    <div class="col-sm-12">
+
+        @using (Ajax.BeginForm(
+                                    "GroupRoleCreate",
+                                    "ManagePermission",
+                                    new AjaxOptions
+                                {
+                                    InsertionMode = InsertionMode.Replace,
+                                    HttpMethod = "POST",
+                                    UpdateTargetId = "CPManageGroupRole",
+                                    LoadingElementId = "loader"
+                                }, new { @class = "form-horizontal", id = "frm_CreateGroupRole" }))
+        {
+            @Html.HiddenFor(model => Model.AspNetRoleGroupGuid)
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+
+
+            <div class="form-group">
+                @Html.LabelFor(model => Model.AspNetRoleGroupID, new { @class = "col-sm-2 control-label", @for = "text_GroupRoleID" })
+                <div class="col-sm-4">
+                    @Html.TextBoxFor(model => Model.AspNetRoleGroupID, new { @class = "form-control", id = "text_GroupRoleID" })
+                    @Html.ValidationMessageFor(model => Model.AspNetRoleGroupID, null, new { @class = "text-danger" })
+                </div>
+                <div class="col-sm-2">
+
+                </div>
+            </div>
+
+            <div class="form-group ">
+                @Html.LabelFor(model => Model.GroupAspNetRoleName, new { @class = "col-sm-2 control-label", @for = "text_GroupRoleName" })
+                <div class="col-sm-4">
+                    @Html.TextBoxFor(model => Model.GroupAspNetRoleName, new { @class = "form-control", id = "text_GroupRoleName" })
+                    @Html.ValidationMessageFor(model => Model.GroupAspNetRoleName, null, new { @class = "text-danger" })
+                </div>
+                <div class="col-sm-2">
+
+                </div>
+            </div>
+
+            @*
+            *@
+
+            
+            <div class="form-group">
+                @Html.LabelFor(model => Model.IsActive, new { @class = "col-sm-2 control-label", @for = "chek_IsActive" })
+                <div class="col-sm-4">
+                    @Html.CheckBoxFor(model => Model.IsActive, new { @class = "checkbox", @checked = "checked", id = "chek_IsActive" })
+                    @Html.ValidationMessageFor(model => Model.IsActive, null, new { @class = "text-danger" })
+                </div>
+                <div class="col-sm-2">
+
+                </div>
+            </div>
+
+            
+            
+        }
+       
+
+        <div class="row">
+            <div class="col-sm-6 col-sm-offset-3 text-center">
+                <div class="btn-toolbar">
+                    <button type="submit" onclick="ManageGroupRole_GroupRole_OnSaveExit('#callbackManageGroupRole_GroupRole', 'true', '#frm_CreateGroupRole')" class="btn">Lưu & Thoát</button>
+                    <button type="submit" onclick="ManageGroupRole_GroupRole_OnSaveExit('#callbackManageGroupRole_GroupRole', 'false', '#frm_CreateGroupRole')" class="btn btn-primary"><i class="fa fa-floppy-o"></i> Lưu dữ liệu</button>&nbsp;hoặc&nbsp;
+                    <a class="btn btn-link" href="@Url.Action("ManageGroupRole", "ManagePermission", null, Request.Url.Scheme)">Quay lại</a>
+
+                    <input type="hidden" id="callbackManageGroupRole_GroupRole"
+                           data-otf-action-exit="@Url.Action("ManageGroupRole", "ManagePermission", null, Request.Url.Scheme)"
+                           data-otf-action="@Url.Action("GroupRoleEdit", "ManagePermission", null, Request.Url.Scheme)?id=@Model.AspNetRoleGroupGuid" />
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@using (Html.BeginScriptContext())
+{
+    Html.AddScriptBlock(
+        @<script type="text/javascript">
+             //Su dung cau hinh dropdownlist
+            //var config = {
+            //    '.chosen-select': {},
+            //    '.chosen-select-deselect': { allow_single_deselect: true },
+            //    '.chosen-select-no-single': { disable_search_threshold: 10 },
+            //    '.chosen-select-no-results': { no_results_text: 'Lỗi! Vui lòng chọn ít nhất 1 mục.' },
+            //    '.chosen-select-width': { width: "95%" }
+            //}
+            //for (var selector in config) {
+            //    $(selector).chosen(config[selector]);
+            //}
+            
+
+        </script>
+, true);
+}
+
+
+

@@ -1,0 +1,449 @@
+﻿@*
+    Author:   			pdgiai
+    Created: 			2016-2-1
+    Last Modified: 		2016-2-1
+*@
+@{
+    ViewBag.Title = "Thông tin phiếu báo";
+}
+<div id="page-heading">
+    <ol class="breadcrumb">
+        <li>
+            <a href="@Url.Action("Index", "Home")">
+                <i class="fa fa-lg fa-home text-warning text-size-20">
+                </i> Trang chủ
+            </a>
+        </li>
+        <li class="active">
+            Quản lý thông tin vi pham
+        </li>
+    </ol>
+</div>
+<div class="container">
+    <div class="row">
+        @*các thao tác*@
+        <div class="panel panel-primary">
+            <div class="panel-body">
+                @Html.Action("TinhHinhThanhTra_LoadSearch", "GiamSatGiangDay")
+               
+
+                <div class="row form-group">
+                    <div class="col-sm-12">
+                        <button id="GiamSatGiangDay_PhieuBaoTKB_buttonsearch"
+                                type="button"
+                                title="Tìm kiếm"
+                                class="btn btn-primary"
+                                data-otf-target="#GiamSatGiangDay_DS_content"
+                                data-otf-Nam="#DDL_NamHoc_Guid"
+                                data-otf-DonVi="#DDL_DonVi_Guid"
+                                data-otf-ViPham="#DDL_LoaiViPham_Guid"
+                                data-otf-NhanVien="#NhanVienGuid"
+                                data-otf-MonHoc="#MonHocID"
+                                data-otf-action="@Url.Action("TinhHinhThanhTraGet_List", "GiamSatGiangDay", null, Request.Url.Scheme)"
+                                onclick="GiamSatGiangDay_PhieuGhiNhanThanhTra_IsSearch(this)">
+                            Tìm kiếm
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row form-group">
+
+            <div class="col-sm-12 text-right">
+                @*<button type="button"
+                        title="Hủy ghi nhận"
+                        class="btn btn-default"
+                        data-otf-confirm="Bạn có chắc muôn hủy ghi nhận?"
+                        data-otf-target="#GiamSatGiangDay_PhieuBaoTKB_DS_content"
+                        data-otf-action="@Url.Action("PhieuBaoTKB_UpdateTrangThai", "GiamSatGiangDay", null, Request.Url.Scheme)?trangthai=1"
+                        onclick="GiamSatGiangDay_PhieuBaoTKB_UpdateTrangThai(this)">
+                    In phiếu ghi nhận
+                </button>*@
+                <a title="Hướng dẫn" href="#myModal" data-toggle="modal">
+                    <i aria-hidden="true" class="fa fa-question-circle fa-lg"></i> Hướng dẫn
+                </a>
+                <a class="btn btn-default"
+                   data-otf-action="@Url.Action("LoadPhieuGhiNhanPrint", "GiamSatGiangDay", null, Request.Url.Scheme)"
+                   data-otf-action-print="@Url.Action("ConvertPhieuGhiNhan", "GiamSatGiangDay", null, Request.Url.Scheme)"
+                   data-otf-action-download="@Url.Action("PhieuGhiNhan_DownloadPdf", "GiamSatGiangDay", null, Request.Url.Scheme)"
+                   data-otf-action-delete="@Url.Action("DeletePhieuGhiNhanPDF", "GiamSatGiangDay", null, Request.Url.Scheme)?all=1"
+                   data-otf-idlist="#GiamSatGiangDay_DS_content"
+                   data-toggle="modal"
+                   onclick="DichVuSinhVien_GhiNhanThanhTra_LoadDetail_Print_More(this)"
+                   data-otf-target="#DetailBieuMauPrint"
+                   title="In phiếu ghi nhận">
+                    In phiếu ghi nhận
+                </a>
+                <a href="@Url.Action("ImportPhieuGhiNhanThanhTraStep1", "GiamSatGiangDay", null, Request.Url.Scheme)"
+                   class="btn btn-success"
+                   title="Import dữ liệu vi phạm">
+                    Import dữ liệu vi phạm
+                </a>
+                
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12" id="GiamSatGiangDay_DS_content">
+                @Html.Action("TinhHinhThanhTraGet_List", "GiamSatGiangDay", new { namhoc = @ViewBag.NamHocID })
+            </div>
+        </div>
+        <div class="row">
+            <div id="DetailBieuMauPrint"></div>
+        </div>
+    </div>
+</div>
+<!--Chép đoạn này vào page để khai báo popup-->
+@section dialog {
+
+    <!-- GiamSatGiangDay_PhieuBaoTKB UNIT MODAL -->
+    <div class="modal inmodal fade" id="modalGiamSatGiangDay_PhieuBaoTKB" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg" id="modalGiamSatGiangDay_PhieuBaoTKB_c">
+        </div>
+    </div>
+
+    <!-- Modal huong dan -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Hướng dẫn</h4>
+                </div>
+                <div class="modal-body">
+                    <b>Tìm kiếm</b>
+                    <ul>
+                        <li>Chọn năm học - nhập tên giảng viên - nhập mã môn học để tìm kiếm dữ liệu</li>
+                    </ul>
+                    <b>Trạng thái</b>
+                    <ul>
+                        <li>Biểu tượng <i class="fa fa-lock" aria-hidden="true"></i>: Dữ liệu đã khóa</li>
+                        <li>Biểu tượng <i class="fa fa-check text-info"></i>: Không bị kỷ luật</li>
+                    </ul>
+                    <b>Xem chi tiết vi phạm</b>
+                    <ul>
+                        <li>Nhấn vào "Tên giảng viên" để xem chi tiết phiếu ghi nhận</li>
+                        <li>Xóa vi phạm: nhấn vào nút "Xóa ghi nhận vi phạm"</li>
+                        <li>Xác nhận không kỷ luật: nhấn vào nút "Xác nhận không kỷ luật", cần upload File minh chứng từ Khoa/Viện/Trung tâm</li>
+                    </ul>
+                    <b>In phiếu ghi nhận</b>
+                    <ul>
+                        <li>Chọn các dòng dữ liệu cần In từ danh sách (Check vào nút checkbox đầu mội dòng)</li>
+                        <li>Nhấn vào nút "In phiếu ghi nhận" để in các dòng đã chọn</li>
+                    </ul>
+                    <b>Import dữ liệu</b>
+                    <ul>
+                        <li>Nhấn vào nút "Import dữ liệu vi phạm" để import dữ liệu ghi nhận vi phạm</li>
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+
+    <!-- GiamSatGiangDay_PhieuBaoTKB UNIT END-->
+}
+
+@section Styles {
+    <link href="~/Content/plugins/EasyAutocomplete/easy-autocomplete.css" rel="stylesheet" />
+    @Styles.Render("~/plugins/chosenStyles")
+    @Styles.Render("~/plugins/dataPickerStyles")
+}
+@section Scripts {
+    <script src="~/Content/plugins/EasyAutocomplete/jquery.easy-autocomplete.js"></script>
+    <script src="~/Content/plugins/metro-ui/docs/js/metro.js"></script>
+    <script src="~/Content/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+    @Scripts.Render("~/plugins/dropZone")
+    @Scripts.Render("~/plugins/chosen")
+    @Scripts.Render("~/plugins/dataPicker")
+    @Scripts.Render("~/module/GiamSatGiangDay/PhieuGhiNhanThanhTra")
+    @Scripts.Render("~/plugins/fancybox")
+
+    <script type="text/javascript">
+        //Su dung cau hinh dropdownlist
+        var config = {
+            '.chosen-select': {},
+            '.chosen-select-deselect': { allow_single_deselect: true },
+            '.chosen-select-no-single': { disable_search_threshold: 10 },
+            '.chosen-select-no-results': { no_results_text: 'Lỗi! Vui lòng chọn ít nhất 1 mục.' },
+            '.chosen-select-width': { width: "95%" }
+        }
+        for (var selector in config) {
+            $(selector).chosen(config[selector]);
+        }
+
+        @*$('#data_TuNgay_Time .input-group.date').datepicker({
+            format: 'dd/mm/yyyy',
+            todayBtn: "linked",
+            keyboardNavigation: false,
+            forceParse: false,
+            calendarWeeks: true,
+            autoclose: true
+        });
+
+        $('#data_DenNgay_Time .input-group.date').datepicker({
+            format: 'dd/mm/yyyy',
+            todayBtn: "linked",
+            keyboardNavigation: false,
+            forceParse: false,
+            calendarWeeks: true,
+            autoclose: true
+        });
+
+        window.addEventListener('load', function (event) {
+            //LoadDefaultTextNgay();
+        });
+
+        function DangKyPhieuBao_PhieuBaoTKB_Update(value,idPhieuBao,GiangVienGuid) {
+            var txtnoidung = document.getElementById("txt_noidung");
+            if(value == -1)
+            {
+                if(document.getElementById("txt_noidungphanhoi").value == '')
+                {
+                    alert("Xin vui lòng nhập phản hồi!");
+                    return;
+                }
+                else
+                {
+                    DangKyPhieuBao_ThongTinPhanHoi_Insert(idPhieuBao);
+                }
+            }
+
+            $.ajax({
+                type: 'Post',
+                cache: false,
+                url: '/GiamSatGiangDay/PhieuBaoTKBNghi_Update',
+                data: {
+                    PhieuBaoGuid: idPhieuBao,
+                    NoiDung: txtnoidung.value,
+                    TrangThai: value,
+                    NhanVien_Guid: GiangVienGuid
+                },
+                //contentType: 'application/json; charset=utf-8',
+                success: function (msg) {
+                    if (msg == 'ok')
+                    {
+                        $("#modalGiamSatGiangDay_PhieuBaoTKB").modal('hide');
+                        GiamSatGiangDay_PhieuBaoTKB_IsSearch("#GiamSatGiangDay_PhieuBaoTKB_buttonsearch");
+                    }
+                    //window.location.href = "/GiamSatGiangDay/PhieuBaoTKB";
+                    //else
+                    //    DialogAlert('Lỗi', 'Bạn phải chưa đăng ký ca nghỉ!', 'info');
+                }
+            }).done(function () {
+
+            });
+        }
+
+        function DangKyPhieuBao_PhieuBaoTKB_ThuKyUpdate(value,idPhieuBao,GiangVienGuid) {
+            var txtnoidung = document.getElementById("txt_noidung");
+            if(value == -1)
+            {
+                if(document.getElementById("txt_noidungphanhoi").value == '')
+                {
+                    alert("Xin vui lòng nhập phản hồi!");
+                    return;
+                }
+                else
+                {
+                    DangKyPhieuBao_ThongTinPhanHoi_Insert(idPhieuBao);
+                }
+            }
+
+            $.ajax({
+                type: 'Post',
+                cache: false,
+                url: '/GiamSatGiangDay/PhieuBaoTKBNghi_ThuKyUpdate',
+                data: {
+                    PhieuBaoGuid: idPhieuBao,
+                    NoiDung: txtnoidung.value,
+                    TrangThai: value,
+                    NhanVien_Guid: GiangVienGuid
+                },
+                //contentType: 'application/json; charset=utf-8',
+                success: function (msg) {
+                    if (msg == 'ok')
+                    {
+                        $("#modalGiamSatGiangDay_PhieuBaoTKB").modal('hide');
+                        GiamSatGiangDay_PhieuBaoTKB_IsSearch("#GiamSatGiangDay_PhieuBaoTKB_buttonsearch");
+                    }
+                    //window.location.href = "/GiamSatGiangDay/PhieuBaoTKB";
+                    //else
+                    //    DialogAlert('Lỗi', 'Bạn phải chưa đăng ký ca nghỉ!', 'info');
+                }
+            }).done(function () {
+
+            });
+        }
+
+        function DangKyPhieuBao_ThongTinPhanHoi_Insert(idPhieuBao) {
+            var txtnoidung = document.getElementById("txt_noidungphanhoi");
+            if(txtnoidung.value == '')
+            {
+                alert("Xin vui lòng nhập phản hồi!");
+                return;
+            }
+
+            $.ajax({
+                type: 'Post',
+                cache: false,
+                url: '/GiamSatGiangDay/ThongTinPhanHoiCreate',
+                data: {
+                    ItemGuid: idPhieuBao,
+                    NoiDung: txtnoidung.value
+                },
+                //contentType: 'application/json; charset=utf-8',
+                success: function (msg) {
+                    if (msg == 'ok')
+                        $("#GiamSatGiangDay_ThongTinPhanHoi_DS_content").load('/GiamSatGiangDay/DangKyPhieuBao_GetThongTinPhanHoi?T=1&ItemGuid=' + idPhieuBao);
+                }
+            }).done(function () {
+
+            });
+        }
+
+        //function LoadDefaultTextNgay() {
+        //    //var txttungay = document.getElementById("tungay_time");
+        //    //var txtdenngay = document.getElementById("denngay_time");
+        //    //var split = GetDateForQuery('homnay').split('_');
+
+        //    //txttungay.value = split[1];
+        //    //txtdenngay.value = split[2];
+        //}
+
+        //function GetDateForQuery(index) {
+        //    var chuoisearch = "";
+        //    var fd = " ", td = " ";
+        //    var today = new Date();
+        //    switch (index) {
+        //        case "homnay":
+        //            fd = td = (today.getDate() + '/' + (today.getMonth() + 1) + '/' + today.getFullYear());
+        //            chuoisearch = "_" + fd + "_" + td;
+        //            return chuoisearch;
+        //        default:
+        //            chuoisearch = "_" + fd + "_" + td;
+        //            return chuoisearch;
+        //    }
+        //}
+
+        function GiamSatGiangDay_PhieuBaoTKB_DangKyPhieuNghi(element) {
+
+            var nhanvienguid = '';
+            var action = $(element).attr('data-otf-action');
+            if (document.getElementById("DDL_NhanVien_Guid") == null) {
+                //nhanvienguid = '';
+                $(location).attr('href', action + '?T=0&GiangVienGuid=' + @Html.Raw(Json.Encode(ViewData["GiangVienGuid"])) );
+                //alert("ok");
+            }
+            else {
+                nhanvienguid = document.getElementById("DDL_NhanVien_Guid").value;
+                if (nhanvienguid == "00000000-0000-0000-0000-000000000000")
+                    alert("Xin vui lòng chọn giảng viên!");
+                else
+                    $(location).attr('href', action + '?T=0&GiangVienGuid=' + document.getElementById("DDL_NhanVien_Guid").value);
+            }
+        }
+
+
+        //Sự kiện tìm kiếm
+        function GiamSatGiangDay_PhieuBaoTKB_IsSearch(element) {
+            //$.removeCookie('pageperPhieuBaoTKB', { path: '/' });
+            //var idinput = $(element).attr('data-otf-input');
+            //var idloadTo = $(element).attr('data-otf-target');
+            //var action = $(element).attr('data-otf-action');
+            //$(idloadTo).load(action + $(idinput).val().replace(/ /g, '+'));+
+
+            BeginWaiting();
+            var donvi = '', giangvien = '';
+            $.removeCookie('pageperPhieuBaoTKB', { path: '/' });
+            var txttungay = document.getElementById("tungay_time");
+            var txtdenngay = document.getElementById("denngay_time");
+            var trangthai = document.getElementById("DDL_TrangThai");
+            var namhoc = document.getElementById("DDL_NamHoc_Guid");
+            var hocky = document.getElementById("DDL_HocKy_Guid");
+
+            if (document.getElementById("DDL_NhanVien_Guid") == null) giangvien = @Html.Raw(Json.Encode(ViewData["GiangVienGuid"]));
+            else giangvien = document.getElementById("DDL_NhanVien_Guid").value;
+
+            if (document.getElementById("DDL_DonVi_Guid") == null) donvi = '00000000-0000-0000-0000-000000000000';
+            else donvi = document.getElementById("DDL_DonVi_Guid").value;
+
+
+            var date_regex = /^([1-9]|[1][012])\/|\/([1-9]|[1][0-9]|[2][0-9]|[3][01])\/|\/([1][6-9][0-9][0-9]|[2][0][01][0-9])$/;
+
+            if (txttungay.value != "") {
+                if (!(date_regex.test(txttungay.value))) {
+                    alert("Từ ngày không đúng định dạng dd/MM/yyyy");
+                    EndWaiting();
+                    return;
+                }
+            }
+            //else {
+            //    EndWaiting();
+            //    alert("Xin vui lòng chọn Từ ngày");
+            //    return;
+            //}
+
+            if (txtdenngay.value != "") {
+                if (!(date_regex.test(txtdenngay.value))) {
+                    alert("Đến ngày không đúng định dạng dd/MM/yyyy");
+                    EndWaiting();
+                    return;
+                }
+            }
+            //else {
+            //    EndWaiting();
+            //    alert("Xin vui lòng chọn Đến ngày");
+            //    return;
+            //}
+
+            var idloadTo = $(element).attr('data-otf-target');
+            var action = $(element).attr('data-otf-action');
+
+            $(idloadTo).load(action + '?namhoc=' + namhoc.value.replace(/ /g, '+') + '&hocky=' + hocky.value.replace(/ /g, '+') + '&trangthai=' + trangthai.value.replace(/ /g, '+') + '&donvi=' + donvi.replace(/ /g, '+') + '&giangvien=' + giangvien.replace(/ /g, '+') + '&tungay=' + txttungay.value.replace(/ /g, '+') + '&denngay=' + txtdenngay.value.replace(/ /g, '+'));
+            EndWaiting();
+
+        }
+
+        function FillListGiangVien() {
+            var abbr = $("#DDL_DonVi_Guid").val();
+            getListGiangVien(abbr);
+        }
+
+        function getListGiangVien(abbr) {
+            $.ajax({
+                url: "@Url.Action("PhieuBaoBu_FillListGiangVien", "GiamSatGiangDay")",
+                data: { DonViGuid: abbr },
+                dataType: "json",
+                type: "POST",
+                error: function () {
+                    alert("An error occurred.");
+                },
+                success: function (data) {
+                    var items = "";
+                    $("#DDL_NhanVien_Guid").empty().append('<option value="00000000-0000-0000-0000-000000000000">---Chọn giảng viên---</option>');
+                    $.each(data, function (i, item) {
+                        items += "<option value=\"" + item.ValueString + "\">" + item.Name + "</option>";
+                    });
+                    $("#DDL_NhanVien_Guid").html(items);
+                    $('#DDL_NhanVien_Guid').trigger('chosen:updated');
+                }
+            });
+
+        }*@
+
+    </script>
+}
+
+
+
+
+
+
+
+

@@ -1,0 +1,198 @@
+﻿@model MvcPaging.IPagedList<nvngoc29082015.permission.library.ManageAspNetUsers.ListTimKiemTaiKhoanView>
+@using MvcPaging
+
+@{var i = 1;}
+
+<div class="">
+    @if (Model.TotalItemCount > 0)
+    {
+        <div class="p-b-10">
+            Kết quả tìm kiếm: <b>@Model.TotalItemCount</b> Dòng.
+        </div>
+        <text>
+            <table class="table table-bordered datatables dataTable">
+                <thead>
+                    <tr>
+
+                        <th class="text-center">
+                            #
+                        </th>
+                        <th class="text-left w-150">
+
+                        </th>
+                        <th class="text-left w-150">
+                            @Html.DisplayNameFor(model => Model[0].NhanVienID)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => Model[0].HoVaten)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => Model[0].EmailCaNhan)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => Model[0].DonViName)
+                        </th>
+                        <th class="text-center w-100" colspan="3">Trạng thái</th>
+
+                    </tr>
+                </thead>
+                <tbody id="listcheckall">
+                    @foreach (var item in Model)
+                    {
+                        <tr data="@item.NhanVienGuid" class="showhim">
+
+                            <td class="text-center w-50">
+                                @Html.Raw((Model.PageNumber - 1) * Model.PageSize + i)
+                                @{i++;}
+                            </td>
+                            <td class="text-left w-100">
+                                <div class="square-box pull-left">
+                                    @*<span class="glyphicon glyphicon-user glyphicon-lg"></span>*@
+                                    <img height="50" src="~/Data/HRM/@item.NhanVienGuid/@item.HinhAnhCaNhan_Link" class="list-avatar custom-polaroid-5 polaroid" alt="image">
+                                </div>
+
+                            </td>
+                            <td>
+                                @Html.Raw(item.NhanVienID)
+                            </td>
+                            <td>
+                                @Html.Raw(item.HoVaten)
+                            </td>
+                            <td>
+                                @Html.Raw(item.EmailCaNhan)
+                            </td>
+                            <td>
+                                @Html.Raw(item.DonViName)
+                            </td>
+                          
+
+
+                            <td class="text-center w-50" style="vertical-align:middle">
+                                @if (item.TrangThai != null)
+                                {
+                                    if (!item.TrangThai.Value)
+                                    {
+                                        <text>
+                                <button class="btn btn-sm btn-success-alt " data-otf-action="@Url.Action("CreateUser_YeuCauTuHRM", "ManagePermission")?id=@item.NhanVienGuid&ma=@item.NhanVienID"
+                                        data-otf-action-target="@Url.Action("Account_TimKiemUser", "ManagePermission", null, Request.Url.Scheme)?key="
+                                        data-otf-input="#Account_KhoiTaoTaikhoan_SearchInput"
+                                        data-otf-target="#Account_KhoiTaoTaikhoan_DS_content"
+                                        onclick="ManageUserRoleDetail_InfoUserRoleDetail_CreateAcount(this)" title="Chưa có tài khoản, nhấn để tạo tài khoản!">
+                                    <i title="Yêu cầu cấp tài khoản chưa xử lý." class="fa fa-flag text-warning"></i>
+                                </button>
+
+                                        </text>
+                                    }
+                                }
+                            </td>
+                            <td class="text-center w-50" style="vertical-align:middle">
+                                @if (item.IsSendedEmail != null)
+                                {
+                                    if (!item.IsSendedEmail.Value)
+                                    {
+                                        <text>
+                                <button class="btn btn-sm btn-success-alt " data-otf-action="@Url.Action("UdateUserSendEmail_YeuCauTuHRM", "ManagePermission")?id=@item.NhanVienGuid&ma=@item.NhanVienID"
+                                        data-otf-action-target="@Url.Action("Account_TimKiemUser", "ManagePermission", null, Request.Url.Scheme)?key="
+                                        data-otf-input="#Account_KhoiTaoTaikhoan_SearchInput"
+                                        data-otf-target="#Account_KhoiTaoTaikhoan_DS_content"
+                                        onclick="ManageUserRoleDetail_InfoUserRoleDetail_CreateAcount(this)"
+                                        title="Chưa gửi email, nhấn để gửi lại email.">
+                                    <i class="fa fa-envelope text-primary"></i>
+                                </button>
+                                        </text>
+                                    }
+                                }
+                            </td>
+                            @*<td class="text-center w-50" style="vertical-align:middle">
+                                @if (item.IsSendedEmail != null)
+                                {
+                                    if (item.IsSendedEmail.Value)
+                                    {
+                                        <text>
+
+                                            <i class="fa fa-user"></i>
+                                        </text>
+                                    }
+                                }
+                            </td>*@
+                            <td class="text-center w-50" style="vertical-align:middle">
+                                @if (item.IsSendedEmail == null)
+                                {
+                                    <text>
+                                        <button class="btn btn-sm btn-success " data-otf-action="@Url.Action("CreateUser_HRM", "ManagePermission")?id=@item.NhanVienGuid&ma=@item.NhanVienID"
+                                                data-otf-action-target="@Url.Action("Account_TimKiemUser", "ManagePermission", null, Request.Url.Scheme)?key="
+                                                data-otf-input="#Account_KhoiTaoTaikhoan_SearchInput"
+                                                data-otf-target="#Account_KhoiTaoTaikhoan_DS_content"
+                                                onclick="ManageUserRoleDetail_InfoUserRoleDetail_CreateAcount(this)"
+                                                title="Tạo mới tài khoản.">
+                                            <i class="fa fa-plus-square"></i>
+                                        </button>
+                                    </text>
+                                }
+                                else
+                                {
+                                    <text>
+                                        <button class="btn btn-sm btn-success-alt " data-otf-action="@Url.Action("AspNetUsersDelete", "ManagePermission")?id=@item.NhanVienGuid"
+                                                data-otf-action-target="@Url.Action("Account_TimKiemUser", "ManagePermission", null, Request.Url.Scheme)?key="
+                                                data-otf-input="#Account_KhoiTaoTaikhoan_SearchInput"
+                                                data-otf-target="#Account_KhoiTaoTaikhoan_DS_content"
+                                                onclick="ManageUserRoleDetail_InfoUserRoleDetail_CreateAcount(this)"
+                                               
+                                                 title="Xóa tài khoản.">
+                                            <i class="fa fa-lg fa-trash-o text-danger"></i>
+                                        </button>
+                                    </text>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </text>
+    }
+    else
+    {
+        <text><br />
+    <div class="alert alert-dismissable alert-info">
+        <strong>Yêu cầu tìm kiếm lúc @{ var date = DateTime.Now; } @date.ToString("HH:mm:ss dd/MM/yyyy") không có dữ liệu</strong>
+        <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+    </div>
+        </text>
+    }
+    <div class="pager">
+        @if (Model.TotalItemCount > Model.PageSize)
+        {
+            <text>
+                @Html.Raw(Ajax.Pager(
+                       new Options
+                       {
+                           PageSize = Model.PageSize,
+                           TotalItemCount = Model.TotalItemCount,
+                           CurrentPage = Model.PageNumber,
+                           ItemTexts = new ItemTexts() { Next = "Next", Previous = "Previous", Page = "" },
+                           ItemIcon = new ItemIcon() { First = "icon-backward", Previous = "icon-chevron-left", Next = "icon-chevron-right", Last = "icon-forward" },
+                           TooltipTitles = new TooltipTitles() { Next = "Next page", Previous = "Previous page", Page = "Page {0}." },
+                           Size = Size.normal,
+                           Alignment = Alignment.centered,
+                           IsShowControls = true,
+                           IsShowFirstLast = true,
+                           CssClass = ""
+                       },
+                       new AjaxOptions
+                       {
+                           UpdateTargetId = "Account_KhoiTaoTaikhoan_DS_content"
+                       },
+                           new { controller = "ManagePermission", action = "Account_TimKiemUser" , k = @ViewData["keysearch"]}
+                       ))
+            </text>
+        }
+    </div>
+</div>
+@using (Html.BeginScriptContext())
+{
+    Html.AddScriptBlock(
+        @<script type="text/javascript">
+            loadSelect("QLTTNhanSu");
+        </script>
+, true);
+}

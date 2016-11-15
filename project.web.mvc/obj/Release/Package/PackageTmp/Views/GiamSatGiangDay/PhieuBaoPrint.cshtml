@@ -1,0 +1,467 @@
+﻿@{
+    ViewBag.Title = "Phiếu báo của thư ký";
+    Layout = "~/Views/Shared/_LayoutNone.cshtml";
+}
+
+<style type="text/css">
+    body {
+        padding-top: 0 !important;
+        font-size: 15px !important;
+        font-family: 'Times New Roman' !important;
+    }
+
+    .content-print {
+        background: none repeat scroll 0 0 white;
+        display: block;
+        margin: 0 auto !important;
+        padding: 0 !important;
+        width: 850px !important;
+        color: #000;
+    }
+
+        .content-print table.table-bordered, .content-print table.table-bordered tr th, .content-print table.table-bordered tr td {
+            border: 1px solid #000 !important;
+            padding: 2px !important;
+        }
+
+        .content-print h3 {
+            font-size: 20px;
+            font-family: 'Times New Roman';
+        }
+
+        .content-print h4 {
+            font-weight: bold;
+            font-size: 18px;
+            font-family: 'Times New Roman';
+        }
+
+        .content-print h5 {
+            font-size: 16px;
+            font-family: 'Times New Roman';
+            margin-bottom: 5px;
+        }
+
+    .w-30 {
+        width: 30px;
+    }
+
+    .w-40 {
+        width: 40px;
+    }
+
+    .w-50 {
+        width: 50px;
+    }
+
+    .w-60 {
+        width: 60px;
+    }
+
+    .w-65 {
+        width: 65px;
+    }
+
+    .w-80 {
+        width: 80px;
+    }
+
+    .w-85 {
+        width: 85px;
+    }
+
+    .w-90 {
+        width: 90px;
+    }
+
+    .w-100 {
+        width: 100px;
+    }
+
+    .w-110 {
+        width: 110px;
+    }
+
+    .w-150 {
+        width: 150px;
+    }
+
+    .w-200 {
+        width: 200px;
+    }
+
+    .w-250 {
+        width: 250px;
+    }
+
+    .w-300 {
+        width: 300px;
+    }
+
+    .w-350 {
+        width: 350px;
+    }
+
+    .m-w-300 {
+        min-width: 300px;
+    }
+
+    .m-w-250 {
+        min-width: 250px;
+    }
+
+    .m-w-200 {
+        min-width: 200px;
+    }
+
+    .m-w-150 {
+        min-width: 150px;
+    }
+
+    .m-w-120 {
+        min-width: 120px;
+    }
+
+    .m-w-85 {
+        min-width: 85px;
+    }
+
+    .m-w-80 {
+        min-width: 80px;
+    }
+
+    .m-w-85 {
+        min-width: 85px;
+    }
+
+    .m-w-60 {
+        min-width: 60px;
+    }
+
+    .m-w-50 {
+        min-width: 50px;
+    }
+
+    .m-w-40 {
+        min-width: 40px;
+    }
+
+    .m-w-35 {
+        min-width: 35px;
+    }
+
+    .text-left {
+        text-align: left;
+    }
+
+    .text-right {
+        text-align: right;
+    }
+
+    .text-center {
+        text-align: center;
+    }
+
+    .text-justify {
+        text-align: justify;
+    }
+
+    .text-muted {
+        color: #aeafb1;
+    }
+
+    .text-middle {
+        vertical-align: middle !important;
+    }
+
+    .text-italic {
+        font-style: italic;
+    }
+
+    .text-bold {
+        font-weight: bold;
+    }
+
+    /*responsive*/
+    .container {
+        margin-right: auto;
+        margin-left: auto;
+        padding-left: 10px;
+        padding-right: 10px;
+        width: 100%;
+        min-height: 500px;
+    }
+
+    .row {
+        margin-left: -10px;
+        margin-right: -10px;
+    }
+
+    .col-sm-1, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-10, .col-sm-11, .col-sm-12 {
+        position: relative;
+        min-height: 1px;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .col-sm-1, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-10, .col-sm-11, .col-sm-12 {
+        float: left;
+    }
+
+    .col-sm-12 {
+        width: 100%;
+    }
+
+    .col-sm-11 {
+        width: 91.66666666666666%;
+    }
+
+    .col-sm-10 {
+        width: 83.33333333333334%;
+    }
+
+    .col-sm-9 {
+        width: 75%;
+    }
+
+    .col-sm-8 {
+        width: 66.66666666666666%;
+    }
+
+    .col-sm-7 {
+        width: 58.333333333333336%;
+    }
+
+    .col-sm-6 {
+        width: 50%;
+    }
+
+    .col-sm-5 {
+        width: 41.66666666666667%;
+    }
+
+    .col-sm-4 {
+        width: 33.33333333333333%;
+    }
+
+    .col-sm-3 {
+        width: 25%;
+    }
+
+    .col-sm-2 {
+        width: 16.666666666666664%;
+    }
+
+    .col-sm-1 {
+        width: 8.333333333333332%;
+    }
+
+    h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+        font-weight: 400;
+    }
+
+    table {
+        max-width: 100%;
+        background-color: transparent;
+    }
+
+    .table {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+        .table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
+            padding: 5px;
+            line-height: 1.428571429;
+            vertical-align: top;
+            border-top: 1px solid #e6e7e8;
+            text-overflow: ellipsis;
+            white-space: normal;
+        }
+
+        .table > thead > tr > th {
+            vertical-align: bottom;
+            border-bottom: 2px solid #e6e7e8;
+        }
+
+        .table > caption + thead > tr:first-child > th, .table > colgroup + thead > tr:first-child > th, .table > thead:first-child > tr:first-child > th,
+        .table > caption + thead > tr:first-child > td, .table > colgroup + thead > tr:first-child > td, .table > thead:first-child > tr:first-child > td {
+            border-top: 0;
+        }
+
+        .table > tbody + tbody {
+            border-top: 2px solid #e6e7e8;
+        }
+
+        .table .table {
+            background-color: #f7f8fa;
+        }
+
+    .table-bordered {
+        border: 1px solid #e6e7e8;
+    }
+
+        .table-bordered > thead > tr > th, .table-bordered > tbody > tr > th, .table-bordered > tfoot > tr > th, .table-bordered > thead > tr > td, .table-bordered > tbody > tr > td, .table-bordered > tfoot > tr > td {
+            border: 1px solid #e6e7e8;
+        }
+
+        .table-bordered > thead > tr > th, .table-bordered > thead > tr > td {
+            border-bottom-width: 2px;
+        }
+
+    .hightline {
+        border: 3px solid black;
+    }
+</style>
+
+<div style="width: 100%;">
+    <div class="container content-print">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="row">
+                    <div class="col-sm-12" style="padding-bottom: 15px;">
+                        <table class="col-sm-12">
+                            <tbody>
+                                <tr>
+                                    <td class="col-sm-6 text-center">
+                                        <h4>TRƯỜNG ĐẠI HỌC CÔNG NGHỆ TP.HCM</h4>
+                                    </td>
+                                    <td class="col-sm-6 text-right"></td>
+                                </tr>
+                                <tr>
+                                    <td class="col-sm-6 text-center">
+                                        <h5 style="margin-top: 0 !important;">KHOA CÔNG NGHỆ THÔNG TIN</h5>
+                                    </td>
+                                    <td class="col-sm-6 text-right"></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"><br /></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" style="text-align: center;">
+                                        <h3 style="font-weight:bold;">PHIẾU ĐĂNG KÝ MƯỢN PHÒNG HỌC</h3>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div class="form-group ">
+                <div class="col-sm-12 " style="line-height: 20px;">
+                    <table class="table table-bordered datatables dataTable">
+                        <thead>
+                            <tr>
+                                <th class="text-center text-middle m-w-40 w-40">STT</th>
+                                <th class="text-center text-middle m-w-90 w-110">LỚP</th>
+                                <th class="text-center text-middle m-w-50 w-50">SĨ SỐ</th>
+                                <th class="text-center text-middle m-w-50 w-60">PHÒNG</th>
+                                <th class="text-center text-middle m-w-50 w-50">THỨ</th>
+                                <th class="text-center text-middle m-w-90 w-100">NGÀY</th>
+                                <th class="text-center text-middle m-w-50 w-50">CA</th>
+                                <th class="text-center text-middle m-w-50 w-50">TUẦN</th>
+                                <th class="text-center text-middle">LÝ DO</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="text-center">1</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">2</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">3</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">4</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">5</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <table class="col-sm-12">
+                    <tbody>
+                        <tr>
+                            <td class="col-sm-6"></td>
+                            <td class="col-sm-6 text-center">
+                                <i>
+                                    TP.HCM,
+                                    @{
+                                        var ngay = DateTime.Now.Day.ToString();
+                                        var thang = DateTime.Now.Month.ToString();
+                                        var nam = DateTime.Now.Year.ToString();
+                                        <text>
+                                            ngày @ngay tháng @thang năm @nam
+                                        </text>
+
+
+                                    }
+                                </i>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-sm-6 text-center">
+                                <b>PHÒNG ĐÀO TẠO</b><br>
+                            </td>
+                            <td class="col-sm-6 text-center">
+                                <b>NGƯỜI LẬP PHIẾU</b><br>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-sm-2" colspan="2" style="padding-bottom: 100px;"><br /></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
