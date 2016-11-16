@@ -1258,3 +1258,8 @@ C:\Users\CTV0010291\Documents\GitHub\hu_quanlyvanban\project.web.mvc\bin\System.
 C:\Users\CTV0010291\Documents\GitHub\hu_quanlyvanban\project.web.mvc\bin\System.Web.WebPages.Deployment.xml
 C:\Users\CTV0010291\Documents\GitHub\hu_quanlyvanban\project.web.mvc\bin\System.Web.WebPages.Razor.xml
 C:\Users\CTV0010291\Documents\GitHub\hu_quanlyvanban\project.web.mvc\bin\pl\System.Web.Optimization.resources.dll
+D:\ĐACN_QLvanban\hu_quanlyvanban\project.web.mvc\obj\Debug\project.web.mvc.csprojResolveAssemblyReference.cache
+D:\ĐACN_QLvanban\hu_quanlyvanban\project.web.mvc\obj\Debug\project.web.mvc.Migrations.Update1.resources
+D:\ĐACN_QLvanban\hu_quanlyvanban\project.web.mvc\obj\Debug\project.web.mvc.csproj.GenerateResource.Cache
+D:\ĐACN_QLvanban\hu_quanlyvanban\project.web.mvc\obj\Debug\project.web.mvc.dll
+D:\ĐACN_QLvanban\hu_quanlyvanban\project.web.mvc\obj\Debug\project.web.mvc.pdb

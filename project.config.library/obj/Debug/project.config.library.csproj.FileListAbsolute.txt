@@ -125,3 +125,13 @@ C:\Users\CTV0010291\Documents\GitHub\hu_quanlyvanban\project.config.library\bin\
 C:\Users\CTV0010291\Documents\GitHub\hu_quanlyvanban\project.config.library\bin\Debug\EPPlus.dll
 C:\Users\CTV0010291\Documents\GitHub\hu_quanlyvanban\project.config.library\bin\Debug\ioiort.settingdata.library.pdb
 C:\Users\CTV0010291\Documents\GitHub\hu_quanlyvanban\project.config.library\bin\Debug\nvn.Library.pdb
+D:\ĐACN_QLvanban\hu_quanlyvanban\project.config.library\bin\Debug\project.config.library.dll
+D:\ĐACN_QLvanban\hu_quanlyvanban\project.config.library\bin\Debug\project.config.library.pdb
+D:\ĐACN_QLvanban\hu_quanlyvanban\project.config.library\bin\Debug\ioiort.settingdata.library.dll
+D:\ĐACN_QLvanban\hu_quanlyvanban\project.config.library\bin\Debug\nvn.Library.dll
+D:\ĐACN_QLvanban\hu_quanlyvanban\project.config.library\bin\Debug\EPPlus.dll
+D:\ĐACN_QLvanban\hu_quanlyvanban\project.config.library\bin\Debug\ioiort.settingdata.library.pdb
+D:\ĐACN_QLvanban\hu_quanlyvanban\project.config.library\bin\Debug\nvn.Library.pdb
+D:\ĐACN_QLvanban\hu_quanlyvanban\project.config.library\obj\Debug\project.config.library.csprojResolveAssemblyReference.cache
+D:\ĐACN_QLvanban\hu_quanlyvanban\project.config.library\obj\Debug\project.config.library.dll
+D:\ĐACN_QLvanban\hu_quanlyvanban\project.config.library\obj\Debug\project.config.library.pdb
