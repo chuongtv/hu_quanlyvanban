@@ -8,3 +8,13 @@ C:\Users\CTV0010291\Documents\GitHub\hu_quanlyvanban\quanlyvanban151116.tvchuong
 C:\Users\CTV0010291\Documents\GitHub\hu_quanlyvanban\quanlyvanban151116.tvchuong.library\obj\Debug\quanlyvanban151116.tvchuong.library.csprojResolveAssemblyReference.cache
 C:\Users\CTV0010291\Documents\GitHub\hu_quanlyvanban\quanlyvanban151116.tvchuong.library\obj\Debug\quanlyvanban151116.tvchuong.library.dll
 C:\Users\CTV0010291\Documents\GitHub\hu_quanlyvanban\quanlyvanban151116.tvchuong.library\obj\Debug\quanlyvanban151116.tvchuong.library.pdb
+D:\ĐACN_QLvanban\hu_quanlyvanban\quanlyvanban151116.tvchuong.library\bin\Debug\quanlyvanban151116.tvchuong.library.dll.config
+D:\ĐACN_QLvanban\hu_quanlyvanban\quanlyvanban151116.tvchuong.library\bin\Debug\quanlyvanban151116.tvchuong.library.dll
+D:\ĐACN_QLvanban\hu_quanlyvanban\quanlyvanban151116.tvchuong.library\bin\Debug\quanlyvanban151116.tvchuong.library.pdb
+D:\ĐACN_QLvanban\hu_quanlyvanban\quanlyvanban151116.tvchuong.library\bin\Debug\EntityFramework.dll
+D:\ĐACN_QLvanban\hu_quanlyvanban\quanlyvanban151116.tvchuong.library\bin\Debug\EntityFramework.SqlServer.dll
+D:\ĐACN_QLvanban\hu_quanlyvanban\quanlyvanban151116.tvchuong.library\bin\Debug\EntityFramework.xml
+D:\ĐACN_QLvanban\hu_quanlyvanban\quanlyvanban151116.tvchuong.library\bin\Debug\EntityFramework.SqlServer.xml
+D:\ĐACN_QLvanban\hu_quanlyvanban\quanlyvanban151116.tvchuong.library\obj\Debug\quanlyvanban151116.tvchuong.library.csprojResolveAssemblyReference.cache
+D:\ĐACN_QLvanban\hu_quanlyvanban\quanlyvanban151116.tvchuong.library\obj\Debug\quanlyvanban151116.tvchuong.library.dll
+D:\ĐACN_QLvanban\hu_quanlyvanban\quanlyvanban151116.tvchuong.library\obj\Debug\quanlyvanban151116.tvchuong.library.pdb
