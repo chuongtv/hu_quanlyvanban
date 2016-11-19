@@ -1,0 +1,269 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="QLVanBanModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="DanhMuc">
+          <Key>
+            <PropertyRef Name="DanhMucID" />
+          </Key>
+          <Property Name="DanhMucID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TenDanhMuc" Type="nvarchar" MaxLength="1000" />
+          <Property Name="TenDanhMucKhongDau" Type="nvarchar" MaxLength="1000" />
+          <Property Name="LFT" Type="int" />
+          <Property Name="RGT" Type="int" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="UpdatedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="FileVanBan">
+          <Key>
+            <PropertyRef Name="FileID" />
+          </Key>
+          <Property Name="FileID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="VanBanID" Type="int" Nullable="false" />
+          <Property Name="FileName" Type="nvarchar" MaxLength="1000" />
+          <Property Name="FileType" Type="nvarchar" MaxLength="20" />
+          <Property Name="FileSize" Type="bigint" />
+          <Property Name="ClientFileName" Type="nvarchar" MaxLength="2000" />
+          <Property Name="ServerFileName" Type="nvarchar" MaxLength="1000" />
+          <Property Name="UpdatedDate" Type="datetime" />
+          <Property Name="UpdatedUser" Type="nvarchar" MaxLength="1000" />
+          <Property Name="MapPath" Type="nvarchar" MaxLength="2000" />
+          <Property Name="PageNumber" Type="int" />
+          <Property Name="DownloadCount" Type="int" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="VanBan">
+          <Key>
+            <PropertyRef Name="VanBanID" />
+          </Key>
+          <Property Name="VanBanID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TieuDe" Type="nvarchar" MaxLength="2000" />
+          <Property Name="TieuDeKhongDau" Type="nvarchar" MaxLength="2000" />
+          <Property Name="SoVanBan" Type="nvarchar" MaxLength="200" />
+          <Property Name="TomTatNoiDung" Type="text" />
+          <Property Name="TomTatNoiDungKhongDau" Type="text" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="CreatedUser" Type="nvarchar" MaxLength="1000" />
+          <Property Name="UpdatedDate" Type="datetime" />
+          <Property Name="UpdatedUser" Type="nvarchar" MaxLength="1000" />
+          <Property Name="IsPublish" Type="bit" />
+          <Property Name="GhimLenDau" Type="bit" />
+          <Property Name="Tag" Type="nvarchar" MaxLength="1000" />
+          <Property Name="PublishDate" Type="datetime" />
+        </EntityType>
+        <Association Name="FK_FileVanBan_VanBan">
+          <End Role="VanBan" Type="Self.VanBan" Multiplicity="1" />
+          <End Role="FileVanBan" Type="Self.FileVanBan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VanBan">
+              <PropertyRef Name="VanBanID" />
+            </Principal>
+            <Dependent Role="FileVanBan">
+              <PropertyRef Name="VanBanID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="QLVanBanModelStoreContainer">
+          <EntitySet Name="DanhMuc" EntityType="Self.DanhMuc" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FileVanBan" EntityType="Self.FileVanBan" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VanBan" EntityType="Self.VanBan" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_FileVanBan_VanBan" Association="Self.FK_FileVanBan_VanBan">
+            <End Role="VanBan" EntitySet="VanBan" />
+            <End Role="FileVanBan" EntitySet="FileVanBan" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="QLVanBanModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="DanhMuc">
+          <Key>
+            <PropertyRef Name="DanhMucID" />
+          </Key>
+          <Property Name="DanhMucID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TenDanhMuc" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="TenDanhMucKhongDau" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="LFT" Type="Int32" />
+          <Property Name="RGT" Type="Int32" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="FileVanBan">
+          <Key>
+            <PropertyRef Name="FileID" />
+          </Key>
+          <Property Name="FileID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="VanBanID" Type="Int32" Nullable="false" />
+          <Property Name="FileName" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="FileType" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="FileSize" Type="Int64" />
+          <Property Name="ClientFileName" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="ServerFileName" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedUser" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="MapPath" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="PageNumber" Type="Int32" />
+          <Property Name="DownloadCount" Type="Int32" />
+          <NavigationProperty Name="VanBan" Relationship="Self.FK_FileVanBan_VanBan" FromRole="FileVanBan" ToRole="VanBan" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="VanBan">
+          <Key>
+            <PropertyRef Name="VanBanID" />
+          </Key>
+          <Property Name="VanBanID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TieuDe" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="TieuDeKhongDau" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="SoVanBan" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="TomTatNoiDung" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="TomTatNoiDungKhongDau" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="CreatedUser" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedUser" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="IsPublish" Type="Boolean" />
+          <Property Name="GhimLenDau" Type="Boolean" />
+          <Property Name="Tag" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="PublishDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="FileVanBans" Relationship="Self.FK_FileVanBan_VanBan" FromRole="VanBan" ToRole="FileVanBan" />
+        </EntityType>
+        <Association Name="FK_FileVanBan_VanBan">
+          <End Role="VanBan" Type="Self.VanBan" Multiplicity="1" />
+          <End Role="FileVanBan" Type="Self.FileVanBan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VanBan">
+              <PropertyRef Name="VanBanID" />
+            </Principal>
+            <Dependent Role="FileVanBan">
+              <PropertyRef Name="VanBanID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="QLVanBanEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="DanhMucs" EntityType="Self.DanhMuc" />
+          <EntitySet Name="FileVanBans" EntityType="Self.FileVanBan" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+          <EntitySet Name="VanBans" EntityType="Self.VanBan" />
+          <AssociationSet Name="FK_FileVanBan_VanBan" Association="Self.FK_FileVanBan_VanBan">
+            <End Role="VanBan" EntitySet="VanBans" />
+            <End Role="FileVanBan" EntitySet="FileVanBans" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="QLVanBanModelStoreContainer" CdmEntityContainer="QLVanBanEntities">
+          <EntitySetMapping Name="DanhMucs">
+            <EntityTypeMapping TypeName="QLVanBanModel.DanhMuc">
+              <MappingFragment StoreEntitySet="DanhMuc">
+                <ScalarProperty Name="DanhMucID" ColumnName="DanhMucID" />
+                <ScalarProperty Name="TenDanhMuc" ColumnName="TenDanhMuc" />
+                <ScalarProperty Name="TenDanhMucKhongDau" ColumnName="TenDanhMucKhongDau" />
+                <ScalarProperty Name="LFT" ColumnName="LFT" />
+                <ScalarProperty Name="RGT" ColumnName="RGT" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FileVanBans">
+            <EntityTypeMapping TypeName="QLVanBanModel.FileVanBan">
+              <MappingFragment StoreEntitySet="FileVanBan">
+                <ScalarProperty Name="FileID" ColumnName="FileID" />
+                <ScalarProperty Name="VanBanID" ColumnName="VanBanID" />
+                <ScalarProperty Name="FileName" ColumnName="FileName" />
+                <ScalarProperty Name="FileType" ColumnName="FileType" />
+                <ScalarProperty Name="FileSize" ColumnName="FileSize" />
+                <ScalarProperty Name="ClientFileName" ColumnName="ClientFileName" />
+                <ScalarProperty Name="ServerFileName" ColumnName="ServerFileName" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="UpdatedUser" ColumnName="UpdatedUser" />
+                <ScalarProperty Name="MapPath" ColumnName="MapPath" />
+                <ScalarProperty Name="PageNumber" ColumnName="PageNumber" />
+                <ScalarProperty Name="DownloadCount" ColumnName="DownloadCount" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="QLVanBanModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VanBans">
+            <EntityTypeMapping TypeName="QLVanBanModel.VanBan">
+              <MappingFragment StoreEntitySet="VanBan">
+                <ScalarProperty Name="VanBanID" ColumnName="VanBanID" />
+                <ScalarProperty Name="TieuDe" ColumnName="TieuDe" />
+                <ScalarProperty Name="TieuDeKhongDau" ColumnName="TieuDeKhongDau" />
+                <ScalarProperty Name="SoVanBan" ColumnName="SoVanBan" />
+                <ScalarProperty Name="TomTatNoiDung" ColumnName="TomTatNoiDung" />
+                <ScalarProperty Name="TomTatNoiDungKhongDau" ColumnName="TomTatNoiDungKhongDau" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="UpdatedUser" ColumnName="UpdatedUser" />
+                <ScalarProperty Name="IsPublish" ColumnName="IsPublish" />
+                <ScalarProperty Name="GhimLenDau" ColumnName="GhimLenDau" />
+                <ScalarProperty Name="Tag" ColumnName="Tag" />
+                <ScalarProperty Name="PublishDate" ColumnName="PublishDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

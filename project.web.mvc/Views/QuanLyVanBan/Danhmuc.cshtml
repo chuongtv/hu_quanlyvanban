@@ -1,0 +1,52 @@
+﻿@model IEnumerable<quanlyvanban151116.tvchuong.library.Models.DanhMuc>
+@{
+    ViewBag.Title = "Danhmuc";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Danhmuc</h2>
+<p>
+    @Html.ActionLink("Add", "Add")
+</p>
+<table class="table">
+    <tr>
+        <th style="width:300px">Tên danh mục</th>
+        <th style="width:100px">Sử dụng</th>
+        <th style="width:100px">Ngày tạo</th>
+        <th style="width:100px">Ngày update</th>
+        <th style="width:100px">Quản lý</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.TenDanhMuc)
+            </td>
+            @*<td>
+                    @Html.DisplayFor(modelItem => item.TenDanhMucKhongDau)
+                </td>*@
+            @*<td>
+                    @Html.DisplayFor(modelItem => item.LFT)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RGT)
+                </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.IsActive)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UpdatedDate)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.DanhMucID }) |
+                @Html.ActionLink("Details", "Details", new { id = item.DanhMucID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.DanhMucID })
+            </td>
+        </tr>
+    }
+
+</table>
