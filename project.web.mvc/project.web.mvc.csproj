@@ -454,6 +454,10 @@
     <Content Include="Views\CauHinh\Index.cshtml" />
     <Content Include="Views\CauHinh\_CauHinhBuoiTrucList.cshtml" />
     <Content Include="Views\QuanLyVanBan\Index.cshtml" />
+    <Content Include="Views\QuanLyVanBan\Danhmuc.cshtml" />
+    <Content Include="Views\QuanLyVanBan\Delete.cshtml" />
+    <Content Include="Views\QuanLyVanBan\Add.cshtml" />
+    <Content Include="Views\QuanLyVanBan\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\uploads\" />

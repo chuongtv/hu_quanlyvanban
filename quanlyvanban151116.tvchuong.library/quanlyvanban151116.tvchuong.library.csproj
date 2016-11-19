@@ -51,6 +51,27 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\DanhMuc.cs">
+      <DependentUpon>ModelQuanLyDanhMucVanBan.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\FileVanBan.cs">
+      <DependentUpon>ModelQuanLyDanhMucVanBan.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ModelQuanLyDanhMucVanBan.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelQuanLyDanhMucVanBan.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ModelQuanLyDanhMucVanBan.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelQuanLyDanhMucVanBan.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ModelQuanLyDanhMucVanBan.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelQuanLyDanhMucVanBan.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Models\ModelQuanLyVanBan.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -66,6 +87,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ModelQuanLyVanBan.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\sysdiagram.cs">
+      <DependentUpon>ModelQuanLyDanhMucVanBan.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\VanBan.cs">
+      <DependentUpon>ModelQuanLyDanhMucVanBan.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QuanLyDanhMuc\QuanLyDanhMuc.cs" />
   </ItemGroup>
@@ -77,12 +104,29 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.Config" />
+    <EntityDeploy Include="Models\ModelQuanLyDanhMucVanBan.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>ModelQuanLyDanhMucVanBan.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Models\ModelQuanLyDanhMucVanBan.edmx.diagram">
+      <DependentUpon>ModelQuanLyDanhMucVanBan.edmx</DependentUpon>
+    </None>
     <None Include="Models\ModelQuanLyVanBan.edmx.diagram">
       <DependentUpon>ModelQuanLyVanBan.edmx</DependentUpon>
     </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Models\ModelQuanLyDanhMucVanBan.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ModelQuanLyDanhMucVanBan.edmx</DependentUpon>
+      <LastGenOutput>ModelQuanLyDanhMucVanBan.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\ModelQuanLyDanhMucVanBan.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ModelQuanLyDanhMucVanBan.edmx</DependentUpon>
+      <LastGenOutput>ModelQuanLyDanhMucVanBan.cs</LastGenOutput>
+    </Content>
     <Content Include="Models\ModelQuanLyVanBan.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>ModelQuanLyVanBan.edmx</DependentUpon>
