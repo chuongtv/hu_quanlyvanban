@@ -1,0 +1,130 @@
+﻿@model quanlyvanban151116.tvchuong.library.Models.VanBan
+@{
+    ViewBag.Title = "Vanban_Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script>
+    $(function () {
+        $("#datepicker").datepicker();
+    });
+</script>
+<h2 style="text-align:center"><b>THÊM MỚI VĂN BẢN</b></h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Văn Bản</h4>
+        <hr />
+        @Html.ValidationSummary(true)
+        <div class="form-group">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label style="padding-left:20px">Mã Văn Bản</label><br />
+                    <div class="col-md-10">
+                        <input type="text" name="Ma" class="form-control" />
+                        @Html.ValidationMessageFor(model => model.VanBanID)
+                    </div>
+
+
+                </div>
+
+                <div class="form-group">
+                    <label style="padding-left:20px">Tên Văn Bản</label><br />
+                    <div class="col-md-10">
+                        <input type="text" name="Ten" class="form-control" />
+                        @Html.ValidationMessageFor(model => model.TieuDe)
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <label style="padding-left:20px">Nội dung</label><br />
+                    <div class="col-md-10">
+                        <input type="number" name="TrangThai" class="form-control" />
+                        @Html.ValidationMessageFor(model => model.TomTatNoiDung)
+                    </div>
+                </div>
+            </div>
+
+            @*<div class="col-md-6">
+
+                <div class="form-group">
+                    <label style="padding-left:20px">Tên Danh mục</label><br />
+                    <div class="col-md-10">
+                        Html.DropDownList("LoaiID", String.Empty)
+                            Html.ValidationMessageFor(model => model.LoaiID)
+                        @Html.DropDownListFor(model => model.LoaiID, ViewBag.listCate as
+                    IEnumerable<SelectListItem>, new { @class = "form-control" })
+                    </div>
+                </div>*@
+
+
+
+             
+                @*<div class="form-group">
+                    <label style="padding-left:20px">Ngày Cập Nhật</label><br />
+                    <div class="col-md-10">
+                        <input type="datetime" name="NgayCapNhat" class="form-control" />
+                        @Html.ValidationMessageFor(model => model.u
+                    </div>
+                </div>*@
+
+                <div class="form-group">
+                    <label style="padding-left:20px">Tag</label><br />
+                    <div class="col-md-10">
+                        <input type="text" name="BiDanh" class="form-control" />
+                        @Html.ValidationMessageFor(model => model.Tag)
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+            @*<div class="form-group col-md-10">
+                <label style="padding-left:20px">Hình Ảnh</label><br />
+                Html.LabelFor(model => model.Hinh, new { @class = "control-label col-md-2" })
+                <div class="">
+
+                    <input type="text" name="Hinh" id="Hinh" class="form-control " />
+                    <input type="button" value="Chọn Ảnh ..." onclick="BrowseServer('');" />
+                    @Html.ValidationMessageFor(model => model.Hinh)
+                </div>
+            </div>
+        </div>*@
+
+        @*<div class="col-md-12">
+            <div class="form-group">
+                Mô tả:
+                <textarea name="MoTa" class="ckeditor" id="ckeditor"></textarea>
+                @Html.ValidationMessageFor(model => model.Mota)
+            </div>
+        </div>*@
+
+
+        @*<div class="form-group">
+                @Html.LabelFor(model => model.NgungBan, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.NgungBan)
+                    @Html.ValidationMessageFor(model => model.NgungBan)
+                </div>
+            </div>*@
+
+
+
+
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Thêm mới" class="btn btn-default" />
+            </div>
+        </div>
+
+}
+
+<div>
+    @Html.ActionLink("Trở về", "Index")
+</div>

@@ -1,0 +1,88 @@
+﻿@model quanlyvanban151116.tvchuong.library.Models.VanBan
+@{
+    ViewBag.Title = "Vanban_Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1 style="font-family:'Times New Roman';text-align:center"><b>CHỈNH SỮA THÔNG TIN Văn Bản</b></h1>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal" style="font-family:'Times New Roman';font-size: 20px">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.VanBanID)
+
+        <div class="container">
+            <div class="row ">
+                <div class="col-md-6" style="padding-left:150px;">
+                  
+
+                        <div class="form-group">
+                            Trạng thái:<small>0 là Khóa, 1 là Mở</small>
+                            @Html.EditorFor(model => model.IsPublish, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.IsPublish, "", new { @class = "text-danger" })
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6" style="padding-left:150px;">
+                    <div class="form-group">
+                        Tên sản phẩm:
+                        @Html.EditorFor(model => model.TieuDe, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.TieuDe, "", new { @class = "text-danger" })
+                    </div>
+
+                </div>
+
+                <div class="col-md-12">
+                    <div class="form-group">
+
+                        Mô tả:
+                        <textarea name="MoTa" class="ckeditor" id="ckeditor">@Model.TomTatNoiDung</textarea>
+                        @Html.ValidationMessageFor(model => model.TomTatNoiDung)
+
+                    </div>
+                </div>
+
+
+                        <div class="form-group">
+
+                            Tag:
+                            @Html.EditorFor(model => model.Tag, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Tag, "", new { @class = "text-danger" })
+
+                        </div>
+
+                       
+
+                    </div>
+                </div>
+
+                <div class="col-md-6" style="padding-left:150px;">
+                    <div class="form-group">
+
+                        Ngày cập nhật:
+                        @Html.EditorFor(model => model.UpdatedDate, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.UpdatedDate, "", new { @class = "text-danger" })
+
+                    </div>
+
+
+
+
+                </div>
+        <div class="form-group">
+            <div class="col-md-offset-5 col-md-6">
+                <input type="submit" value="Lưu thông tin" class="btn btn-lg" />
+            </div>
+        </div>
+}
+
+<div class="col-md-offset-5 " style="padding-left:60px">
+    @Html.ActionLink("Trở về", "Index")
+</div>
