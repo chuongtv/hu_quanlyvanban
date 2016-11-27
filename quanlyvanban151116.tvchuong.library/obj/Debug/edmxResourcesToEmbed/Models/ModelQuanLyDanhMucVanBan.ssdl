@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="QLVanBanModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="DanhMuc">
+    <Key>
+      <PropertyRef Name="DanhMucID" />
+    </Key>
+    <Property Name="DanhMucID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TenDanhMuc" Type="nvarchar" MaxLength="1000" />
+    <Property Name="TenDanhMucKhongDau" Type="nvarchar" MaxLength="1000" />
+    <Property Name="LFT" Type="int" />
+    <Property Name="RGT" Type="int" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="UpdatedDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="FileVanBan">
+    <Key>
+      <PropertyRef Name="FileID" />
+    </Key>
+    <Property Name="FileID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="VanBanID" Type="int" Nullable="false" />
+    <Property Name="FileName" Type="nvarchar" MaxLength="1000" />
+    <Property Name="FileType" Type="nvarchar" MaxLength="20" />
+    <Property Name="FileSize" Type="bigint" />
+    <Property Name="ClientFileName" Type="nvarchar" MaxLength="2000" />
+    <Property Name="ServerFileName" Type="nvarchar" MaxLength="1000" />
+    <Property Name="UpdatedDate" Type="datetime" />
+    <Property Name="UpdatedUser" Type="nvarchar" MaxLength="1000" />
+    <Property Name="MapPath" Type="nvarchar" MaxLength="2000" />
+    <Property Name="PageNumber" Type="int" />
+    <Property Name="DownloadCount" Type="int" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="VanBan">
+    <Key>
+      <PropertyRef Name="VanBanID" />
+    </Key>
+    <Property Name="VanBanID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TieuDe" Type="nvarchar" MaxLength="2000" />
+    <Property Name="TieuDeKhongDau" Type="nvarchar" MaxLength="2000" />
+    <Property Name="SoVanBan" Type="nvarchar" MaxLength="200" />
+    <Property Name="TomTatNoiDung" Type="text" />
+    <Property Name="TomTatNoiDungKhongDau" Type="text" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="CreatedUser" Type="nvarchar" MaxLength="1000" />
+    <Property Name="UpdatedDate" Type="datetime" />
+    <Property Name="UpdatedUser" Type="nvarchar" MaxLength="1000" />
+    <Property Name="IsPublish" Type="bit" />
+    <Property Name="GhimLenDau" Type="bit" />
+    <Property Name="Tag" Type="nvarchar" MaxLength="1000" />
+    <Property Name="PublishDate" Type="datetime" />
+  </EntityType>
+  <Association Name="FK_FileVanBan_VanBan">
+    <End Role="VanBan" Type="Self.VanBan" Multiplicity="1" />
+    <End Role="FileVanBan" Type="Self.FileVanBan" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="VanBan">
+        <PropertyRef Name="VanBanID" />
+      </Principal>
+      <Dependent Role="FileVanBan">
+        <PropertyRef Name="VanBanID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="QLVanBanModelStoreContainer">
+    <EntitySet Name="DanhMuc" EntityType="Self.DanhMuc" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="FileVanBan" EntityType="Self.FileVanBan" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="VanBan" EntityType="Self.VanBan" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_FileVanBan_VanBan" Association="Self.FK_FileVanBan_VanBan">
+      <End Role="VanBan" EntitySet="VanBan" />
+      <End Role="FileVanBan" EntitySet="FileVanBan" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
